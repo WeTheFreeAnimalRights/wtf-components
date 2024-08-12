@@ -1,0 +1,81 @@
+{
+    "name": "wtf-components",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.17.0",
+        "@testing-library/react": "^15.0.6",
+        "@testing-library/user-event": "^13.5.0",
+        "@vidstack/react": "^1.11.30",
+        "hls.js": "^1.5.13",
+        "lodash": "^4.17.21",
+        "node-sass": "^7.0.3",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-icons": "^5.2.1",
+        "react-router": "^6.25.1",
+        "react-router-dom": "^6.25.1",
+        "react-scripts": "5.0.1",
+        "recoil": "^0.7.7",
+        "store2": "^2.14.3",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start": "storybook dev -p 6006 --no-open",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "clear": "node ./update-build.js",
+        "storybook": "storybook dev -p 6006 --no-open",
+        "build-storybook": "storybook build"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest",
+            "plugin:storybook/recommended"
+        ],
+        "rules": {
+            "import/no-anonymous-default-export": "off",
+            "react-hooks/exhaustive-deps": "off"
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@chromatic-com/storybook": "^1.6.1",
+        "@eslint/js": "^9.7.0",
+        "@storybook/addon-backgrounds": "^8.2.8",
+        "@storybook/addon-essentials": "^8.2.8",
+        "@storybook/addon-interactions": "^8.2.8",
+        "@storybook/addon-links": "^8.2.8",
+        "@storybook/blocks": "^8.2.8",
+        "@storybook/manager-api": "^8.2.8",
+        "@storybook/preset-create-react-app": "^8.2.8",
+        "@storybook/react": "^8.2.8",
+        "@storybook/react-webpack5": "^8.2.8",
+        "@storybook/test": "^8.2.8",
+        "@storybook/theming": "^8.2.8",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.35.0",
+        "eslint-plugin-storybook": "^0.8.0",
+        "globals": "^15.8.0",
+        "prettier": "^3.3.3",
+        "prop-types": "^15.8.1",
+        "storybook": "^8.2.8",
+        "storybook-dark-mode": "^4.0.2",
+        "tailwindcss": "^3.4.6",
+        "webpack": "^5.93.0"
+    },
+    "buildDate": 1722346149990
+}
