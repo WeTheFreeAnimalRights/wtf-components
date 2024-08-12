@@ -74,7 +74,7 @@ TextInput.propTypes = {
     /**
      * Max length of the input
      */
-    maxLength: PropTypes.bool,
+    maxLength: PropTypes.number,
 
     /**
      * Is the input required
