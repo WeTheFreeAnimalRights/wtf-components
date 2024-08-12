@@ -12,7 +12,9 @@ npm ci
 
 In the project directory, you can run:
 
-### `npm start`
+```bash
+npm start
+```
 
 Runs StoryBook in the development mode.\
 Open [http://localhost:6006](http://localhost:6006) to view it in your browser.
