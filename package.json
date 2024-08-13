@@ -1,6 +1,8 @@
 {
     "name": "wtf-components",
     "version": "0.0.1",
+    "author": "Ciprian Mocanu",
+    "license": "ISC",
     "private": true,
     "main": "dist/index.js",
     "dependencies": {
@@ -12,11 +14,16 @@
         "store2": "^2.14.3",
         "web-vitals": "^2.1.4"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/WeTheFreeAnimalRights/wtf-components.git"
+    },
     "peerDependencies": {
         "react": "^18.3.1",
         "recoil": "^0.7.7",
         "lodash": "^4.17.21"
     },
+
     "scripts": {
         "start": "storybook dev -p 6006 --no-open",
         "build": "babel src --out-dir dist --copy-files",
