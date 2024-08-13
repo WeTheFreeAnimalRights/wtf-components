@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Tab = ({ visible, children }) => (
+export const BigTab = ({ visible, children }) => (
     <div
         className={`rounded-lg p-6
         bg-gray-700 dark:bg-gray-100
@@ -12,7 +13,7 @@ export const Tab = ({ visible, children }) => (
     </div>
 );
 
-Tab.propTypes = {
+BigTab.propTypes = {
     /**
      * Name of the tab
      */

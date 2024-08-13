@@ -2,27 +2,24 @@
     "name": "wtf-components",
     "version": "0.0.1",
     "private": true,
+    "main": "dist/index.js",
     "dependencies": {
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^15.0.6",
         "@testing-library/user-event": "^13.5.0",
         "@vidstack/react": "^1.11.30",
         "hls.js": "^1.5.13",
-        "lodash": "^4.17.21",
-        "node-sass": "^7.0.3",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-icons": "^5.2.1",
-        "react-router": "^6.25.1",
-        "react-router-dom": "^6.25.1",
-        "react-scripts": "5.0.1",
-        "recoil": "^0.7.7",
         "store2": "^2.14.3",
         "web-vitals": "^2.1.4"
     },
+    "peerDependencies": {
+        "react": "^18.3.1",
+        "recoil": "^0.7.7",
+        "lodash": "^4.17.21"
+    },
     "scripts": {
         "start": "storybook dev -p 6006 --no-open",
-        "build": "react-scripts build",
+        "build": "babel src --out-dir dist --copy-files",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "clear": "node ./update-build.js",
@@ -40,19 +37,23 @@
             "react-hooks/exhaustive-deps": "off"
         }
     },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
+    "babel": {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
         ]
     },
     "devDependencies": {
+        "lodash": "^4.17.21",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-scripts": "5.0.1",
+        "node-sass": "^7.0.3",
+        "react-icons": "^5.2.1",
+        "recoil": "^0.7.7",
+        "@babel/cli": "^7.24.8",
+        "@babel/preset-env": "^7.25.3",
+        "@babel/preset-react": "^7.24.7",
         "@chromatic-com/storybook": "^1.6.1",
         "@eslint/js": "^9.7.0",
         "@storybook/addon-backgrounds": "^8.2.8",

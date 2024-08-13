@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';

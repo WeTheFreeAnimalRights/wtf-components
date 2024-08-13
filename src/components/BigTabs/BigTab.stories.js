@@ -1,9 +1,9 @@
-import { Tab } from './index';
+import { BigTab } from './index';
 import '../../base.css';
 
 export default {
-    title: 'Components/BigTabs/Tab',
-    component: Tab,
+    title: 'Components/BigTabs/BigTab',
+    component: BigTab,
     tags: ['autodocs'],
     argTypes: {
         children: {

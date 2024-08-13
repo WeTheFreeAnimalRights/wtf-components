@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 
 export const CloseButton = ({ onHeader, onClick }) => {

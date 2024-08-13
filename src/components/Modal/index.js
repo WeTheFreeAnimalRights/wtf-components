@@ -1,5 +1,5 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 import { CloseButton } from './CloseButton';
 
 export const Modal = ({
@@ -18,7 +18,7 @@ export const Modal = ({
     setOverflow = true,
 }) => {
     // If the escape key is pressed, then consider it a close
-    useEffect(() => {
+    React.useEffect(() => {
         const handleEsc = (e) => {
             if (
                 e.key === 'Escape' &&
@@ -36,7 +36,7 @@ export const Modal = ({
     }, [closeMethods]);
 
     // If the modal is visible disable the overflow of the body
-    useEffect(() => {
+    React.useEffect(() => {
         document.body.style.overflow =
             visible && setOverflow ? 'hidden' : 'unset';
 
@@ -136,7 +136,7 @@ Modal.propTypes = {
      * - button: when the user clicks on the close button
      */
     closeMethods: PropTypes.arrayOf(
-        PropTypes.oneOf('key', 'overlay', 'button')
+        PropTypes.oneOf(['key', 'overlay', 'button'])
     ),
 
     /**

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Tab } from './Tab';
+import React, { useState } from 'react';
+import { BigTab } from './BigTab';
 import './style.scss';
 import { TabButton } from './TabButton';
 
@@ -11,9 +11,9 @@ export const BigTabs = ({ children }) => {
             <div className="border-b border-gray-200 dark:border-gray-700">
                 <ul className="text-sm font-medium text-center text-gray-500 rounded-lg shadow flex items-stretch dark:divide-gray-700 dark:text-gray-400">
                     {children.map((child, index) => {
-                        if (child.type.name !== 'Tab') {
+                        if (child.type.name !== 'BigTab') {
                             throw new Error(
-                                'Only "Tab" elements are allowed under "BigTabs" component'
+                                'Only "BigTab" elements are allowed under "BigTabs" component'
                             );
                         }
 
@@ -39,12 +39,12 @@ export const BigTabs = ({ children }) => {
 
             <div className="mt-6">
                 {(children || []).map((child, index) => (
-                    <Tab
+                    <BigTab
                         visible={index === selected}
                         key={`tab-content-${index}`}
                     >
                         {child.props.children}
-                    </Tab>
+                    </BigTab>
                 ))}
             </div>
         </>
@@ -53,4 +53,4 @@ export const BigTabs = ({ children }) => {
 
 BigTabs.propTypes = {};
 
-export { Tab };
+export { BigTab };
