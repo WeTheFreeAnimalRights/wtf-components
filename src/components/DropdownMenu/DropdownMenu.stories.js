@@ -18,12 +18,12 @@ export const Primary = {
         items: [
             {
                 label: 'Home',
-                link: '/',
+                href: '/',
                 description: 'This is the homepage',
             },
             {
                 label: 'About',
-                link: '/about',
+                href: '/about',
                 description: 'This is the about page',
             },
         ],
