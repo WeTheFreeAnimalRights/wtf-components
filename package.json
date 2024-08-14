@@ -23,7 +23,6 @@
         "recoil": "^0.7.7",
         "lodash": "^4.17.21"
     },
-
     "scripts": {
         "start": "storybook dev -p 6006 --no-open",
         "build": "babel src --out-dir dist --copy-files",
@@ -43,12 +42,6 @@
             "import/no-anonymous-default-export": "off",
             "react-hooks/exhaustive-deps": "off"
         }
-    },
-    "babel": {
-        "presets": [
-            "@babel/preset-env",
-            "@babel/preset-react"
-        ]
     },
     "devDependencies": {
         "lodash": "^4.17.21",

@@ -8,7 +8,6 @@ export const DropdownMenu = ({
     items = [],
     icon,
     withDivider = false,
-    withBackground = true,
     linkComponent = 'a',
     align = 'start',
     onSelect,
@@ -38,11 +37,7 @@ export const DropdownMenu = ({
                 <button
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className={` ${
-                        withBackground
-                            ? 'bg-white dark:bg-gray-700 shadow-sm'
-                            : ''
-                    } flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500`}
+                    className="bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                     id="options-menu"
                 >
                     {icon}
@@ -58,7 +53,10 @@ export const DropdownMenu = ({
 
             {isOpen && (
                 <div
-                    className={`absolute ${align}-0 w-56 mt-2 origin-top-${align} bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5`}
+                    className={`absolute
+                        ${align === 'start' ? 'start-0 origin-top-start' : 'end-0 origin-top-end'}
+                        w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5 overflow-auto max-h-96
+                    `}
                 >
                     <div
                         className={`py-1 ${withDivider ? 'divide-y divide-gray-100' : ''}`}
@@ -141,7 +139,7 @@ DropdownMenu.propTypes = {
     /**
      * Optional icon for the dropdown
      */
-    icon: PropTypes.elementType,
+    icon: PropTypes.element,
 
     /**
      * Whether to show divider between items
@@ -151,12 +149,10 @@ DropdownMenu.propTypes = {
     /**
      * Whether to add background to the dropdown or not
      */
-    withBackground: PropTypes.bool,
-
-    /**
-     * Whether to add background to the dropdown or not
-     */
-    linkComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    linkComponent: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.elementType,
+    ]),
 
     /**
      * Align component to the start or the end

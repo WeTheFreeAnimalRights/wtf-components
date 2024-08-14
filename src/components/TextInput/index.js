@@ -13,6 +13,7 @@ export const TextInput = forwardRef(
             maxLength,
             required = false,
             disabled = false,
+            onChange,
             className,
         },
         ref
@@ -39,6 +40,7 @@ export const TextInput = forwardRef(
                     required={required}
                     disabled={disabled}
                     maxLength={maxLength}
+                    onChange={onChange}
                     ref={ref}
                 />
             </div>
@@ -91,4 +93,9 @@ TextInput.propTypes = {
      * Optional extra classname to the input
      */
     className: PropTypes.string,
+
+    /**
+     * Optional handler when the input is being changed
+     */
+    onChange: PropTypes.func,
 };

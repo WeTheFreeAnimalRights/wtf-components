@@ -22,7 +22,7 @@ BigTab.propTypes = {
     /**
      * An icon to be shown on the left side of the alert
      */
-    icon: PropTypes.elementType,
+    icon: PropTypes.element,
 
     /**
      * If there is a title, then it will be shown

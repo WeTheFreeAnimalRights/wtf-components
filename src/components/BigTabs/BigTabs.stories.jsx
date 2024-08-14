@@ -1,3 +1,4 @@
+import React from 'react';
 import { BigTabs, BigTab } from './index';
 import '../../base.css';
 
@@ -7,13 +8,10 @@ export default {
     tags: ['autodocs'],
 };
 
-const Template = (args) => <BigTabs {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-    children: [
-        <BigTab name="Tab 1">Content for Tab 1</BigTab>,
-        <BigTab name="Tab 2">Content for Tab 2</BigTab>,
-        <BigTab name="Tab 3">Content for Tab 3</BigTab>,
-    ],
-};
+export const Primary = () => (
+    <BigTabs>
+        <BigTab name="Tab 1">Content for Tab 1</BigTab>
+        <BigTab name="Tab 2">Content for Tab 2</BigTab>
+        <BigTab name="Tab 3">Content for Tab 3</BigTab>
+    </BigTabs>
+);
