@@ -6,7 +6,7 @@ export const Button = ({
     theme = 'full',
     type = 'button',
     full = false,
-    onClick,
+    onPress,
     children,
     className = '',
     href,
@@ -47,7 +47,7 @@ export const Button = ({
         return (
             <a
                 className={wrapperClasses}
-                onClick={onClick}
+                onClick={onPress}
                 href={href}
                 target={target}
             >
@@ -58,7 +58,7 @@ export const Button = ({
 
     // By default it's a button
     return (
-        <Pressable className={wrapperClasses} onPress={onClick} role="button">
+        <Pressable className={wrapperClasses} onPress={onPress} role="button">
             {textPart}
         </Pressable>
     );
@@ -94,7 +94,7 @@ Button.propTypes = {
     /**
      * Optional click handler
      */
-    onClick: PropTypes.func,
+    onPress: PropTypes.func,
 
     /**
      * Optional extra classname to the card

@@ -10,7 +10,7 @@ export default {
             control: 'text',
             defaultValue: 'Default Button Text',
         },
-        onClick: {
+        onPress: {
             action: 'clicked',
         },
     },
