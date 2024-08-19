@@ -6,11 +6,16 @@
     "private": true,
     "main": "dist/index.js",
     "dependencies": {
+        "@storybook/react-native": "^7.6.20",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^15.0.6",
         "@testing-library/user-event": "^13.5.0",
         "@vidstack/react": "^1.11.30",
         "hls.js": "^1.5.13",
+        "nativewind": "^4.0.36",
+        "react-native": "^0.75.1",
+        "react-native-reanimated": "^3.15.0",
+        "react-native-web": "^0.19.12",
         "store2": "^2.14.3",
         "web-vitals": "^2.1.4"
     },
@@ -19,9 +24,9 @@
         "url": "git+https://github.com/WeTheFreeAnimalRights/wtf-components.git"
     },
     "peerDependencies": {
+        "lodash": "^4.17.21",
         "react": "^18.3.1",
-        "recoil": "^0.7.7",
-        "lodash": "^4.17.21"
+        "recoil": "^0.7.7"
     },
     "scripts": {
         "start": "storybook dev -p 6006 --no-open",
@@ -44,13 +49,6 @@
         }
     },
     "devDependencies": {
-        "lodash": "^4.17.21",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-scripts": "5.0.1",
-        "node-sass": "^7.0.3",
-        "react-icons": "^5.2.1",
-        "recoil": "^0.7.7",
         "@babel/cli": "^7.24.8",
         "@babel/preset-env": "^7.25.3",
         "@babel/preset-react": "^7.24.7",
@@ -67,15 +65,26 @@
         "@storybook/react-webpack5": "^8.2.8",
         "@storybook/test": "^8.2.8",
         "@storybook/theming": "^8.2.8",
+        "babel-plugin-react-native-web": "^0.19.12",
         "eslint": "^8.57.0",
         "eslint-plugin-react": "^7.35.0",
         "eslint-plugin-storybook": "^0.8.0",
         "globals": "^15.8.0",
+        "lodash": "^4.17.21",
+        "metro-react-native-babel-preset": "^0.77.0",
+        "node-sass": "^7.0.3",
         "prettier": "^3.3.3",
         "prop-types": "^15.8.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-icons": "^5.2.1",
+        "react-scripts": "5.0.1",
+        "recoil": "^0.7.7",
         "storybook": "^8.2.8",
         "storybook-dark-mode": "^4.0.2",
+        "stream-browserify": "^3.0.0",
         "tailwindcss": "^3.4.6",
+        "tty-browserify": "^0.0.1",
         "webpack": "^5.93.0"
     },
     "buildDate": 1722346149990

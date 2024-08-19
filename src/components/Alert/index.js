@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 export const Alert = ({
@@ -10,9 +11,9 @@ export const Alert = ({
     children,
 }) => {
     return (
-        <div
+        <View
             className={`${className || ''}
-                p-4 border rounded-lg
+                p-4 border rounded-lg text-left
                 ${theme === 'info' ? 'text-blue-800 border-blue-300 bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800' : ''}
                 ${theme === 'error' ? 'text-red-800 border-red-300 bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800' : ''}
                 ${theme === 'success' ? 'text-green-800 border-green-300 bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800' : ''}
@@ -22,13 +23,35 @@ export const Alert = ({
             role="alert"
         >
             {showTitle && (
-                <div className="flex items-center mb-2">
+                <View className="flex items-center mb-2 flex-row">
                     {icon && <span className="mr-2">{icon}</span>}
-                    <h3 className="text-lg font-medium">{title}</h3>
-                </div>
+                    <Text
+                        accessibilityRole="heading"
+                        aria-level="3"
+                        className={`text-lg font-medium text-left
+                            ${theme === 'info' ? 'text-blue-800 dark:text-blue-400' : ''}
+                            ${theme === 'error' ? 'text-red-800 dark:text-red-400' : ''}
+                            ${theme === 'success' ? 'text-green-800 dark:text-green-400' : ''}
+                            ${theme === 'warning' ? 'text-yellow-800 dark:text-yellow-400' : ''}
+                            ${theme === 'empty' ? 'text-gray-800 dark:text-gray-400' : ''}`}
+                    >
+                        {title}
+                    </Text>
+                </View>
             )}
-            <div className="text-sm">{children}</div>
-        </div>
+            <View className="text-sm">
+                <Text
+                    className={`text-sm text-left
+                        ${theme === 'info' ? 'text-blue-800 dark:text-blue-400' : ''}
+                        ${theme === 'error' ? 'text-red-800 dark:text-red-400' : ''}
+                        ${theme === 'success' ? 'text-green-800 dark:text-green-400' : ''}
+                        ${theme === 'warning' ? 'text-yellow-800 dark:text-yellow-400' : ''}
+                        ${theme === 'empty' ? 'text-gray-800 dark:text-gray-400' : ''}`}
+                >
+                    {children}
+                </Text>
+            </View>
+        </View>
     );
 };
 

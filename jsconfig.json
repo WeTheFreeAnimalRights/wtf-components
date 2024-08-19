@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "nativewind",
+        "baseUrl": "./src",
+        "paths": {
+            "react-native$": ["react-native-web"]
+        }
+    },
+    "include": ["src/**/*"]
+}

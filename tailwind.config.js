@@ -1,5 +1,6 @@
 module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
+    presets: [require('nativewind/preset')],
     safelist: [
         {
             pattern: /(min-h|min-w|max-w|w|h|aspect|p|border)-.+/,
