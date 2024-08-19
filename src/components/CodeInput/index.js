@@ -81,7 +81,7 @@ export const CodeInput = forwardRef(
                                                 ? 'bg-blue-500'
                                                 : 'bg-gray-50 dark:bg-gray-600'
                                         }
-                                        ${index > 0 ? 'ml-3' : ''}
+                                        ${index > 0 ? 'ms-3' : ''}
                                         ${current && focused ? 'ring-2 ring-blue-500' : ''}
                                     `}
                                 />

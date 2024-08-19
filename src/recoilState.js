@@ -11,3 +11,13 @@ export const currentThemeState = atom({
     key: 'theme',
     default: store.get('theme') || (isDarkMode() ? 'dark' : 'light'),
 });
+
+export const languagesState = atom({
+    key: 'languages',
+    default: [],
+});
+
+export const currentLanguageState = atom({
+    key: 'currentLanguage',
+    default: '',
+});

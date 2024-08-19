@@ -6,6 +6,7 @@ export { Card } from './components/Card';
 export { Checkbox } from './components/Checkbox';
 export { CodeInput } from './components/CodeInput';
 export { DropdownMenu } from './components/DropdownMenu';
+export { LanguagePicker } from './components/LanguagePicker';
 export { Modal } from './components/Modal';
 export { Preloader } from './components/Preloader';
 export { Select } from './components/Select';
@@ -18,8 +19,8 @@ export { currentThemeState, translationsState } from './recoilState';
 
 // Helpers
 export { isDarkMode } from './helpers/isDarkMode';
-export { getInterpolatedString } from './helpers/getInterpolatedString';
 export { useTranslations } from './hooks/useTranslations';
+export { useTheme } from './hooks/useTheme';
 
 // Request
 export { fetchRequest } from './helpers/fetchRequest';

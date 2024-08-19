@@ -6,7 +6,7 @@ export default {
     title: 'Components/Button',
     component: Button,
     tags: ['autodocs'],
-    args: { onClick: fn() },
+    args: { onPress: fn() },
     argTypes: {
         children: {
             control: 'text',
@@ -19,5 +19,6 @@ export const Primary = {
     args: {
         children: 'Button',
         theme: 'full',
+        type: 'button',
     },
 };

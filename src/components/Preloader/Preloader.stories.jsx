@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Preloader } from './index';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
 import '../../base.css';
@@ -12,12 +12,14 @@ export default {
 export const Primary = () => {
     const [response, setResponse] = useState('');
 
-    setupApi({
-        base: 'https://jsonplaceholder.typicode.com',
-        endpoints: {
-            users: '/users/1',
-        },
-    });
+    useEffect(() => {
+        setupApi({
+            base: 'https://jsonplaceholder.typicode.com',
+            endpoints: {
+                users: '/users/1',
+            },
+        });
+    }, []);
 
     const requests = [
         {

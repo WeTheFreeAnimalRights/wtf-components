@@ -23,7 +23,7 @@ export const Alert = ({
         >
             {showTitle && (
                 <div className="flex items-center mb-2">
-                    {icon && <span className="mr-2">{icon}</span>}
+                    {icon && <span className="me-2">{icon}</span>}
                     <h3 className="text-lg font-medium">{title}</h3>
                 </div>
             )}

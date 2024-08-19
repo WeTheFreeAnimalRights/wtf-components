@@ -5,7 +5,7 @@ export const Button = ({
     theme = 'full',
     type = 'button',
     full = false,
-    onClick,
+    onPress,
     children,
     className = '',
 
@@ -20,8 +20,8 @@ export const Button = ({
 
     return (
         <Tag
-            type={type}
-            className={`${className}
+            role="button"
+            className={`${className || ''}
                 ${full ? 'w-full' : ''}
                 ${theme === 'full' ? 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300' : ''}
                 ${theme === 'half' ? 'border border-gray-200 text-gray-900 hover:text-blue-700 bg-white hover:bg-gray-100 focus:ring-gray-100' : ''}
@@ -29,13 +29,13 @@ export const Button = ({
                 ${theme === 'wtf-pink' ? 'text-white bg-wtf-pink hover:bg-gray-900 focus:ring-wtf-pink' : ''}
                 focus:ring-4 focus:outline-none
                 font-medium text-sm
-                text-center
+                text-center cursor-pointer
                 ${theme === 'full' ? 'rounded-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : ''}
                 ${theme === 'half' ? 'rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600' : ''}
                 ${theme === 'empty' ? 'rounded-md underline dark:text-gray-400 hover:text-blue-700 dark:hover:text-white' : ''}
                 ${theme === 'wtf-pink' ? 'rounded-full px-8 py-3' : ''}
                 `}
-            onClick={onClick}
+            onClick={onPress}
             href={href}
             target={target}
         >
@@ -54,7 +54,7 @@ Button.propTypes = {
      * The html button type. If this is set to "link", then the button becomes
      * a link
      */
-    type: PropTypes.string,
+    type: PropTypes.oneOf(['button', 'link']),
 
     /**
      * Is this button gonna have a full width or not
@@ -74,7 +74,12 @@ Button.propTypes = {
     /**
      * Optional click handler
      */
-    onClick: PropTypes.func,
+    onPress: PropTypes.func,
+
+    /**
+     * Optional extra classname to the card
+     */
+    className: PropTypes.string,
 };
 
 // <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>

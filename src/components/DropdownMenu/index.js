@@ -44,9 +44,9 @@ export const DropdownMenu = ({
                     {label}
 
                     {isOpen ? (
-                        <IoIosArrowUp className="ml-1" size="20px" />
+                        <IoIosArrowUp className="ms-1" size="20px" />
                     ) : (
-                        <IoIosArrowDown className="ml-1" size="20px" />
+                        <IoIosArrowDown className="ms-1" size="20px" />
                     )}
                 </button>
             </div>
@@ -147,7 +147,7 @@ DropdownMenu.propTypes = {
     withDivider: PropTypes.bool,
 
     /**
-     * Whether to add background to the dropdown or not
+     * The type of link to use to display in the dropdown items
      */
     linkComponent: PropTypes.oneOfType([
         PropTypes.string,
