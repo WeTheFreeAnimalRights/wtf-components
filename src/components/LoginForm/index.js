@@ -50,15 +50,17 @@ export const LoginForm = ({
                     required
                     placeholder={t('your-email-here')}
                     errored={Boolean(error)}
+                    disabled={loading}
                     autoComplete="username"
                 />
 
                 <PasswordInput
                     className="mt-6"
                     label={t('your-password')}
-                    errored={Boolean(error)}
-                    autoComplete="current-password"
                     required
+                    errored={Boolean(error)}
+                    disabled={loading}
+                    autoComplete="current-password"
                 />
 
                 <div className="flex items-center justify-between mt-2">
@@ -66,6 +68,7 @@ export const LoginForm = ({
                         <Checkbox
                             label={t('remember-me')}
                             labelTextColor="text-gray-500 dark:text-gray-300"
+                            disabled={loading}
                         />
                     </div>
 
