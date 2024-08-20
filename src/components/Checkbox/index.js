@@ -10,6 +10,7 @@ export const Checkbox = ({
     required,
     disabled,
     className,
+    labelTextColor = 'text-gray-900 dark:text-gray-300',
 }) => {
     const checkId = useId();
 
@@ -28,7 +29,7 @@ export const Checkbox = ({
             {label && (
                 <label
                     htmlFor={`check-${checkId}`}
-                    className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className={`ms-2 text-sm font-medium ${labelTextColor}`}
                 >
                     {label}
                 </label>
@@ -72,4 +73,9 @@ Checkbox.propTypes = {
      * Optional extra classname to the checkbox
      */
     className: PropTypes.string,
+
+    /**
+     * Optional extra classes to use for the label text color
+     */
+    labelTextColor: PropTypes.string,
 };
