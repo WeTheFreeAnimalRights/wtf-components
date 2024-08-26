@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { View, Text } from 'react-native';
 
 export const Separator = ({ label = '', className = '' }) => {
     return (
-        <div className={`${className} relative flex items-center`}>
-            <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+        <View className={`${className} relative flex flex-row items-center`}>
+            <View className="flex-grow border-t border-gray-300 dark:border-gray-700"></View>
             {label && (
-                <span className="flex-shrink mx-2.5 text-gray-400 dark:text-gray-600">
+                <Text className="flex-shrink mx-2.5 text-gray-400 dark:text-gray-600">
                     {label}
-                </span>
+                </Text>
             )}
-            <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
-        </div>
+            <View className="flex-grow border-t border-gray-300 dark:border-gray-700"></View>
+        </View>
     );
 };
 

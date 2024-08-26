@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Pressable, Text } from 'react-native';
+import { getButtonClasses } from './getButtonClasses';
 
 export const Button = ({
     theme = 'full',
@@ -10,40 +11,17 @@ export const Button = ({
     disabled = false,
     className = '',
 }) => {
-    // Classes to be used for the button or the link
-    const wrapperClasses = `${className || ''}
-        inline-block group cursor-pointer
-        ${full ? 'w-full' : ''}
-        ${theme === 'full' ? 'bg-blue-700 hover:bg-blue-800 focus:ring-blue-300' : ''}
-        ${theme === 'half' ? 'border border-gray-200 bg-white hover:bg-gray-100 focus:ring-gray-100' : ''}
-        ${theme === 'empty' ? 'rounded-md' : ''}
-        ${theme === 'wtf-pink' ? 'bg-wtf-pink hover:bg-gray-900 focus:ring-wtf-pink' : ''}
-        focus:ring-4 focus:outline-none
-        font-medium text-sm
-        text-center
-        ${theme === 'full' ? 'rounded-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : ''}
-        ${theme === 'half' ? 'rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-600' : ''}
-        ${theme === 'wtf-pink' ? 'rounded-full px-8 py-3' : ''}
-    `;
-
-    // Text part of the button
-    const textPart = (
-        <Text
-            className={`
-                ${theme === 'full' ? 'text-white' : ''}
-                ${theme === 'half' ? 'text-gray-900 group-hover:text-blue-700 dark:text-gray-400 dark:group-hover:text-white' : ''}
-                ${theme === 'empty' ? 'underline text-black hover:text-blue-700 dark:text-gray-400 group-hover:text-blue-700 dark:group-hover:text-white' : ''}
-                ${theme === 'wtf-pink' ? 'text-white' : ''}
-            `}
-        >
-            {children}
-        </Text>
-    );
+    const classes = getButtonClasses({ full, theme });
 
     // By default it's a button
     return (
-        <Pressable className={wrapperClasses} onPress={onPress} role="button" disabled={disabled}>
-            {textPart}
+        <Pressable
+            className={`${className || ''} ${classes.wrapper}`}
+            onPress={onPress}
+            role="button"
+            disabled={disabled}
+        >
+            <Text className={classes.text}>{children}</Text>
         </Pressable>
     );
 };

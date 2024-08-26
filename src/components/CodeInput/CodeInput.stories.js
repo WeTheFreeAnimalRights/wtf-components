@@ -1,4 +1,3 @@
-import { fn } from '@storybook/test';
 import { CodeInput } from './index';
 import '../../base.css';
 
@@ -6,6 +5,11 @@ export default {
     title: 'Components/CodeInput',
     component: CodeInput,
     tags: ['autodocs'],
+    argTypes: {
+        onEnd: {
+            action: 'end',
+        },
+    },
 };
 
 export const Primary = {
@@ -13,6 +17,5 @@ export const Primary = {
         label: 'Code',
         name: 'code',
         codeLength: 5,
-        onEnd: fn(),
     },
 };

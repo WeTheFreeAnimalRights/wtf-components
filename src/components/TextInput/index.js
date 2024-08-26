@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useImperativeHandle, useRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { useId, forwardRef } from 'react';
+import {
+    View,
+    Text,
+    Pressable,
+    TextInput as NativeTextInput,
+} from 'react-native';
 
 export const TextInput = forwardRef(
     (
@@ -20,32 +25,34 @@ export const TextInput = forwardRef(
             innerLeftContent,
             innerRightContent,
         },
-        ref
+        outerRef
     ) => {
-        const inputId = useId();
+        const innerRef = useRef(null);
+        useImperativeHandle(outerRef, () => innerRef.current, []);
 
         return (
-            <div className={className || ''}>
+            <View className={className || ''}>
                 {label && (
-                    <label
-                        htmlFor={`input-${inputId}`}
+                    <Pressable
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        onPress={() => {
+                            innerRef.current.focus();
+                        }}
                     >
-                        {label}
-                    </label>
+                        <Text>{label}</Text>
+                    </Pressable>
                 )}
-                <div className="relative">
+                <View className="relative">
                     {innerLeftContent && (
-                        <div className="absolute start-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
+                        <View className="absolute start-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
                             {innerLeftContent}
-                        </div>
+                        </View>
                     )}
 
-                    <input
+                    <NativeTextInput
                         type={type}
                         name={name}
                         value={value || undefined}
-                        id={`input-${inputId}`}
                         className={`
                             bg-gray-50 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white
 
@@ -64,16 +71,17 @@ export const TextInput = forwardRef(
                         maxLength={maxLength}
                         autoComplete={autoComplete}
                         onChange={onChange}
-                        ref={ref}
+                        ref={innerRef}
+                        secureTextEntry={type === 'password'}
                     />
 
                     {innerRightContent && (
-                        <div className="absolute end-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
+                        <View className="absolute end-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
                             {innerRightContent}
-                        </div>
+                        </View>
                     )}
-                </div>
-            </div>
+                </View>
+            </View>
         );
     }
 );

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from '../Alert';
 import { Spinner } from '../Spinner';
 import { fetchRequest } from '../../helpers/fetchRequest';
+import { View } from 'react-native';
 
 /**
  * Fetches something and then runs a callback. While fetching, the preloader
@@ -61,19 +62,19 @@ export const Preloader = ({ children, requests = [], refetch = [] }) => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center w-screen h-screen">
+            <View className="flex justify-center items-center w-screen h-screen">
                 <Spinner />
-            </div>
+            </View>
         );
     }
 
     if (error) {
         return (
-            <div className="flex justify-center items-center w-screen h-screen">
+            <View className="flex justify-center items-center w-screen h-screen">
                 <Alert theme="error" className="mb-4">
                     {error.message}
                 </Alert>
-            </div>
+            </View>
         );
     }
 

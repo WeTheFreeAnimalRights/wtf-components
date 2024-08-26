@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { View } from 'react-native';
 
 export const BigTab = ({ visible, children }) => (
-    <div
+    <View
         className={`rounded-lg p-6
         bg-gray-700 dark:bg-gray-100
         text-white dark:text-gray-900
@@ -10,7 +11,7 @@ export const BigTab = ({ visible, children }) => (
     `}
     >
         {children}
-    </div>
+    </View>
 );
 
 BigTab.propTypes = {

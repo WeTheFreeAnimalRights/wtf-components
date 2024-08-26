@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { RiLockPasswordLine, RiEyeLine, RiEyeOffLine } from 'react-icons/ri';
 import { TextInput } from '../TextInput';
 import { useState } from 'react';
+import { View, Pressable } from 'react-native';
 
 export const PasswordInput = ({
     showLock = true,
@@ -13,21 +14,22 @@ export const PasswordInput = ({
     const [visible, setVisible] = useState(false);
 
     const leftContent = !showLock ? undefined : (
-        <div className="text-gray-500 dark:text-gray-300">
+        <View className="text-gray-500 dark:text-gray-300">
             <RiLockPasswordLine />
-        </div>
+        </View>
     );
     const rightContent = !showShowHideButton ? undefined : (
-        <button
+        <Pressable
+            role="button"
             className="py-2 px-1 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
-            onClick={(e) => {
+            onPress={(e) => {
                 e.preventDefault();
                 setVisible(!visible);
             }}
             type="button"
         >
             {visible ? <RiEyeLine /> : <RiEyeOffLine />}
-        </button>
+        </Pressable>
     );
 
     return (

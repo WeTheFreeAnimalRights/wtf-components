@@ -1,4 +1,5 @@
 import React from 'react';
+import { Pressable, Text, View } from 'react-native';
 
 export const TabButton = ({
     icon,
@@ -8,10 +9,11 @@ export const TabButton = ({
 
     selected,
     children,
-    onClick,
+    onPress,
 }) => (
-    <button
-        className={`inline-block w-full h-full px-4 py-6
+    <Pressable
+        role="button"
+        className={`inline-block h-full px-4 py-6
             ${
                 selected
                     ? 'bg-gray-700 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-600 dark:hover:bg-gray-50'
@@ -22,9 +24,21 @@ export const TabButton = ({
             ${first ? 'rounded-s-lg' : ''}
             ${last ? 'rounded-e-lg' : ''}
             focus:ring-4 focus:ring-blue-300 active focus:outline-none`}
-        onClick={onClick}
+        onPress={onPress}
     >
-        {icon && <div className="icon-container text-center mb-2">{icon}</div>}
-        <div className="uppercase font-semibold">{children}</div>
-    </button>
+        {icon && (
+            <View className="icon-container text-center mb-2">{icon}</View>
+        )}
+        <Text
+            className={`uppercase font-semibold
+            ${
+                selected
+                    ? 'text-white dark:text-gray-900'
+                    : 'text-gray-900 dark:text-white'
+            }
+            `}
+        >
+            {children}
+        </Text>
+    </Pressable>
 );

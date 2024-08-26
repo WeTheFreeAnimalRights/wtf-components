@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { View, Text, Pressable } from 'react-native';
 import { useRef, useEffect, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
@@ -32,33 +33,33 @@ export const DropdownMenu = ({
     const LinkTag = linkComponent;
 
     return (
-        <div className="relative inline-block text-left" ref={ref}>
-            <div>
-                <button
-                    type="button"
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
+        <View className="relative inline-block text-start" ref={ref}>
+            <View>
+                <Pressable
+                    role="button"
+                    onPress={() => setIsOpen(!isOpen)}
+                    className="bg-white dark:bg-gray-700 shadow-sm flex flex-row items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                     id="options-menu"
                 >
                     {icon}
-                    {label}
+                    <Text>{label}</Text>
 
                     {isOpen ? (
                         <IoIosArrowUp className="ms-1" size="20px" />
                     ) : (
                         <IoIosArrowDown className="ms-1" size="20px" />
                     )}
-                </button>
-            </div>
+                </Pressable>
+            </View>
 
             {isOpen && (
-                <div
+                <View
                     className={`absolute
                         ${align === 'start' ? 'start-0 origin-top-start' : 'end-0 origin-top-end'}
                         w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5 overflow-auto max-h-96
                     `}
                 >
-                    <div
+                    <View
                         className={`py-1 ${withDivider ? 'divide-y divide-gray-100' : ''}`}
                         role="menu"
                         aria-orientation="vertical"
@@ -85,21 +86,21 @@ export const DropdownMenu = ({
                                 >
                                     {item.icon}
 
-                                    <span className="flex flex-col">
-                                        <span>{item.label}</span>
+                                    <View className="flex flex-col">
+                                        <Text>{item.label}</Text>
                                         {item.description && (
-                                            <span className="text-xs text-gray-400">
+                                            <Text className="text-xs text-gray-400">
                                                 {item.description}
-                                            </span>
+                                            </Text>
                                         )}
-                                    </span>
+                                    </View>
                                 </LinkTag>
                             );
                         })}
-                    </div>
-                </div>
+                    </View>
+                </View>
             )}
-        </div>
+        </View>
     );
 };
 

@@ -6,7 +6,7 @@ export default {
     component: Card,
     tags: ['autodocs'],
     argTypes: {
-        onClick: {
+        onPress: {
             action: 'clicked',
         },
     },

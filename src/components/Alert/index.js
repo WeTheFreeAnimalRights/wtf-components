@@ -41,7 +41,7 @@ export const Alert = ({
             )}
             <View className="text-sm">
                 <Text
-                    className={`text-sm text-left
+                    className={`text-sm text-start
                         ${theme === 'info' ? 'text-blue-800 dark:text-blue-400' : ''}
                         ${theme === 'error' ? 'text-red-800 dark:text-red-400' : ''}
                         ${theme === 'success' ? 'text-green-800 dark:text-green-400' : ''}

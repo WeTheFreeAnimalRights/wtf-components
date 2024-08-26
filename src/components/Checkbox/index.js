@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Text, CheckBox, Pressable } from 'react-native';
 import PropTypes from 'prop-types';
-import { useId } from 'react';
 
 export const Checkbox = ({
     label,
     name,
-    value = '1',
-    checked,
+    checked: propChecked,
     required = false,
     disabled = false,
     errored = false,
     className,
     labelTextColor = 'text-gray-900 dark:text-gray-300',
 }) => {
-    const checkId = useId();
+    const [checked, setChecked] = useState(propChecked || false);
 
     return (
-        <div className={`${className || ''} flex items-center`}>
-            <input
-                id={`check-${checkId}`}
+        <Pressable
+            className={`${className || ''} flex flex-row items-center cursor-default`}
+            onPress={() => {
+                if (!disabled) {
+                    setChecked(!checked);
+                }
+            }}
+        >
+            <CheckBox
                 type="checkbox"
                 name={name}
-                value={value}
                 className={`
                     w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700
                     ${
@@ -30,19 +34,21 @@ export const Checkbox = ({
                             : 'border border-gray-300 dark:border-gray-600'
                     }
                 `}
-                checked={checked}
+                value={checked}
                 required={required}
                 disabled={disabled}
+                onChange={(e) => {
+                    setChecked(!checked);
+                }}
             />
             {label && (
-                <label
-                    htmlFor={`check-${checkId}`}
-                    className={`ms-2 text-sm font-medium ${labelTextColor}`}
+                <Text
+                    className={`ms-2 text-sm font-medium select-none ${labelTextColor}`}
                 >
                     {label}
-                </label>
+                </Text>
             )}
-        </div>
+        </Pressable>
     );
 };
 
@@ -56,11 +62,6 @@ Checkbox.propTypes = {
      * The name of the checkbox input
      */
     name: PropTypes.string,
-
-    /**
-     * The value of the checkbox input
-     */
-    value: PropTypes.string,
 
     /**
      * Is the checkbox already checked, or not

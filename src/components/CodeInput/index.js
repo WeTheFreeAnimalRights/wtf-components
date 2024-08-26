@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {
+    useImperativeHandle,
+    useRef,
+    forwardRef,
+    useState,
+    useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
-import { useId, forwardRef, useState, useEffect } from 'react';
+import { View, Text, Pressable, TextInput } from 'react-native';
 import { range } from 'lodash';
 import './style.scss';
 
@@ -18,13 +24,15 @@ export const CodeInput = forwardRef(
             errored = false,
             disabled = false,
         },
-        ref
+        outerRef
     ) => {
-        const inputId = useId();
         const [code, setCode] = useState('');
         const [focused, setFocused] = useState(false);
         const [caretStart, setCaretStart] = useState(0);
         const [caretEnd, setCaretEnd] = useState(0);
+
+        const innerRef = useRef(null);
+        useImperativeHandle(outerRef, () => innerRef.current, []);
 
         const maxCodeLengthArr = range(codeLength);
         const inputSize = 14;
@@ -38,8 +46,9 @@ export const CodeInput = forwardRef(
         };
 
         const selectionChange = (e) => {
-            setCaretStart(e.currentTarget.selectionStart);
-            setCaretEnd(e.currentTarget.selectionEnd);
+            const { start, end } = e.nativeEvent.selection;
+            setCaretStart(start);
+            setCaretEnd(end);
         };
 
         useEffect(() => {
@@ -51,23 +60,26 @@ export const CodeInput = forwardRef(
         }, [value]);
 
         return (
-            <div className={`${className || ''}`}>
+            <View className={`${className || ''}`}>
                 {label && (
-                    <label
-                        htmlFor={`input-${inputId}`}
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    <Pressable
+                        onPress={() => {
+                            innerRef.current.focus();
+                        }}
                     >
-                        {label}
-                    </label>
+                        <Text className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {label}
+                        </Text>
+                    </Pressable>
                 )}
-                <div className="relative code-input inline-block">
-                    <div className="flex flex-row">
+                <View className="relative code-input inline-block">
+                    <View className="flex flex-row">
                         {maxCodeLengthArr.map((item, index) => {
                             const current =
                                 index <= caretEnd && index >= caretStart;
                             const filledIn = index < getValue().length;
                             return (
-                                <div
+                                <View
                                     key={`square-${index}`}
                                     className={`rounded-lg
                                         w-${inputSize} h-${inputSize}
@@ -87,10 +99,9 @@ export const CodeInput = forwardRef(
                                 />
                             );
                         })}
-                    </div>
-                    <input
+                    </View>
+                    <TextInput
                         type="text"
-                        id={`input-${inputId}`}
                         name={name}
                         value={getValue()}
                         onChange={(e) => {
@@ -109,17 +120,18 @@ export const CodeInput = forwardRef(
                         }}
                         required={required}
                         maxLength={codeLength}
-                        ref={ref}
+                        ref={innerRef}
                         disabled={disabled}
                         autoComplete="off"
+                        autoCorrect="off"
                         onFocus={() => setFocused(true)}
                         onBlur={() => setFocused(false)}
-                        onSelectCapture={selectionChange}
-                        onSelect={selectionChange}
+                        onSelectionChange={selectionChange}
+                        selectTextOnFocus
                         className={`absolute z-10 start-0 top-0 ps-4 pt-2 bg-transparent text-4xl tracking-[2.9rem] outline-none uppercase font-mono w-[calc(100%+2rem)] text-white`}
                     />
-                </div>
-            </div>
+                </View>
+            </View>
         );
     }
 );
