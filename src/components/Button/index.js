@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pressable, Link, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
 export const Button = ({
     theme = 'full',
-    type = 'button',
     full = false,
     onPress,
     children,
+    disabled = false,
     className = '',
-    href,
-    target,
 }) => {
     // Classes to be used for the button or the link
     const wrapperClasses = `${className || ''}
@@ -42,23 +40,9 @@ export const Button = ({
         </Text>
     );
 
-    // In case it's a link
-    if (type === 'link') {
-        return (
-            <a
-                className={wrapperClasses}
-                onClick={onPress}
-                href={href}
-                target={target}
-            >
-                {textPart}
-            </a>
-        );
-    }
-
     // By default it's a button
     return (
-        <Pressable className={wrapperClasses} onPress={onPress} role="button">
+        <Pressable className={wrapperClasses} onPress={onPress} role="button" disabled={disabled}>
             {textPart}
         </Pressable>
     );
@@ -71,15 +55,14 @@ Button.propTypes = {
     theme: PropTypes.oneOf(['empty', 'half', 'full', 'wtf-pink']),
 
     /**
-     * The html button type. If this is set to "link", then the button becomes
-     * a link
-     */
-    type: PropTypes.oneOf(['button', 'link']),
-
-    /**
      * Is this button gonna have a full width or not
      */
     full: PropTypes.bool,
+
+    /**
+     * Is this button disabled or not
+     */
+    disabled: PropTypes.bool,
 
     /**
      * If it's a link, what's its href

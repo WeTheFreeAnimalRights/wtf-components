@@ -13,7 +13,7 @@ export const Alert = ({
     return (
         <View
             className={`${className || ''}
-                p-4 border rounded-lg text-left
+                p-4 border rounded-lg text-start
                 ${theme === 'info' ? 'text-blue-800 border-blue-300 bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800' : ''}
                 ${theme === 'error' ? 'text-red-800 border-red-300 bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800' : ''}
                 ${theme === 'success' ? 'text-green-800 border-green-300 bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800' : ''}
@@ -24,11 +24,11 @@ export const Alert = ({
         >
             {showTitle && (
                 <View className="flex items-center mb-2 flex-row">
-                    {icon && <span className="mr-2">{icon}</span>}
+                    {icon && <span className="me-2">{icon}</span>}
                     <Text
                         accessibilityRole="heading"
                         aria-level="3"
-                        className={`text-lg font-medium text-left
+                        className={`text-lg font-medium text-start
                             ${theme === 'info' ? 'text-blue-800 dark:text-blue-400' : ''}
                             ${theme === 'error' ? 'text-red-800 dark:text-red-400' : ''}
                             ${theme === 'success' ? 'text-green-800 dark:text-green-400' : ''}

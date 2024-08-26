@@ -8,7 +8,19 @@
 npm ci
 ```
 
-## Available Scripts
+## Building the library
+
+```bash
+npm run build
+```
+
+To continuously build (maybe while it's linked to another project) run
+
+```bash
+npm run build -- --watch
+```
+
+## Storybook
 
 In the project directory, you can run:
 

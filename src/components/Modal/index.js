@@ -71,9 +71,11 @@ export const Modal = ({
             className={`overflow-hidden fixed top-0 right-0 left-0 z-100 flex justify-center items-center w-screen md:inset-0 h-screen max-h-full bg-black/30 ${visible ? '' : 'hidden'}`}
             onClick={onOutsideClick}
         >
-            <div className={`relative p-4 w-full max-w-${width} max-h-full`}>
+            <div
+                className={`relative p-4 w-full flex flex-col max-w-${width} max-h-full`}
+            >
                 <div
-                    className="relative bg-white rounded-lg shadow dark:bg-gray-800"
+                    className="relative flex flex-col bg-white overflow-hidden rounded-lg shadow dark:bg-gray-800"
                     data-modal="1"
                 >
                     {showTitle ? (
@@ -93,12 +95,12 @@ export const Modal = ({
                         </>
                     )}
                     <div
-                        className={`${noPadding ? '' : 'p-6'} max-h-[50rem] overflow-auto rounded-b aspect-${aspectRatio}`}
+                        className={`${noPadding ? '' : 'p-6'} max-h-[50rem] flex flex-grow flex-col overflow-auto rounded-b aspect-${aspectRatio}`}
                     >
                         {children}
                     </div>
                     {showFooter && (
-                        <div className="p-6 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 border-t">
+                        <div className="px-6 py-4 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 border-t">
                             {footer}
                         </div>
                     )}
@@ -112,7 +114,7 @@ Modal.propTypes = {
     /**
      * Optional title for the modal
      */
-    title: PropTypes.string,
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
     /**
      * Whether to show the title of the modal or not
@@ -163,7 +165,7 @@ Modal.propTypes = {
     /**
      * Footer contents for the modal
      */
-    footer: PropTypes.elementType,
+    footer: PropTypes.element,
 
     /**
      * Whether to show the footer or not

@@ -13,8 +13,12 @@ export const TextInput = forwardRef(
             maxLength,
             required = false,
             disabled = false,
+            errored = false,
             onChange,
             className,
+            autoComplete,
+            innerLeftContent,
+            innerRightContent,
         },
         ref
     ) => {
@@ -30,19 +34,45 @@ export const TextInput = forwardRef(
                         {label}
                     </label>
                 )}
-                <input
-                    type={type}
-                    name={name}
-                    value={value || undefined}
-                    id={`input-${inputId}`}
-                    className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder={placeholder}
-                    required={required}
-                    disabled={disabled}
-                    maxLength={maxLength}
-                    onChange={onChange}
-                    ref={ref}
-                />
+                <div className="relative">
+                    {innerLeftContent && (
+                        <div className="absolute start-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
+                            {innerLeftContent}
+                        </div>
+                    )}
+
+                    <input
+                        type={type}
+                        name={name}
+                        value={value || undefined}
+                        id={`input-${inputId}`}
+                        className={`
+                            bg-gray-50 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white
+
+                            ${
+                                errored
+                                    ? 'border-2 border-red-300 dark:border-red-800'
+                                    : 'border border-gray-300 dark:border-gray-500'
+                            }
+                            py-2.5
+                            ${innerLeftContent ? 'ps-8' : 'ps-3'}
+                            ${innerRightContent ? 'pe-10' : 'pe-3'}
+                            `}
+                        placeholder={placeholder}
+                        required={required}
+                        disabled={disabled}
+                        maxLength={maxLength}
+                        autoComplete={autoComplete}
+                        onChange={onChange}
+                        ref={ref}
+                    />
+
+                    {innerRightContent && (
+                        <div className="absolute end-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
+                            {innerRightContent}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }
@@ -90,6 +120,11 @@ TextInput.propTypes = {
     disabled: PropTypes.bool,
 
     /**
+     * If the input is errrored, then a different style applies to it
+     */
+    errored: PropTypes.bool,
+
+    /**
      * Optional extra classname to the input
      */
     className: PropTypes.string,
@@ -98,4 +133,14 @@ TextInput.propTypes = {
      * Optional handler when the input is being changed
      */
     onChange: PropTypes.func,
+
+    /**
+     * Optional content to be shown left side of the input
+     */
+    innerLeftContent: PropTypes.element,
+
+    /**
+     * Optional content to be shown right side of the input
+     */
+    innerRightContent: PropTypes.element,
 };
