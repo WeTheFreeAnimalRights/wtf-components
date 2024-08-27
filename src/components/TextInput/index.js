@@ -34,12 +34,14 @@ export const TextInput = forwardRef(
             <View className={className || ''}>
                 {label && (
                     <Pressable
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2"
                         onPress={() => {
                             innerRef.current.focus();
                         }}
                     >
-                        <Text>{label}</Text>
+                        <Text className="text-sm font-medium text-gray-900 dark:text-white">
+                            {label}
+                        </Text>
                     </Pressable>
                 )}
                 <View className="relative">

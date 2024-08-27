@@ -1,54 +1,114 @@
-import React from 'react';
+import React, {
+    forwardRef,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from 'react';
 import PropTypes from 'prop-types';
-import { useId } from 'react';
-import './style.scss';
+import { View, Pressable, Text, StyleSheet } from 'react-native';
+import { useTheme } from 'hooks/useTheme';
+import { useTranslations } from 'hooks/useTranslations';
+import { Dropdown } from 'react-native-element-dropdown';
+import { styles } from './styles';
+import { TextInput } from 'components/TextInput';
 
-export const Select = ({
-    label,
-    name,
-    value,
-    options = [],
-    placeholder,
-    required = false,
-    disabled = false,
-    className,
-}) => {
-    const selectId = useId();
+export const Select = forwardRef(
+    (
+        {
+            label,
+            name,
+            value,
+            options = [],
+            placeholder,
+            required = false,
+            disabled = false,
+            className,
+            search = false,
+            searchPlaceholder,
+            onChange = () => {},
+        },
+        outerRef
+    ) => {
+        const innerRef = useRef(null);
+        useImperativeHandle(outerRef, () => innerRef.current, []);
 
-    return (
-        <div className={className || ''}>
-            {label && (
-                <label
-                    htmlFor={`select-${selectId}`}
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                    {label}
-                </label>
-            )}
-            <select
-                name={name}
-                id={`select-${selectId}`}
-                placeholder={placeholder}
-                required={required}
-                disabled={disabled}
-                value={value || undefined}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-                {placeholder && (
-                    <option value="" default>
-                        {placeholder}
-                    </option>
+        // Whether focused or not
+        const [isFocused, setIsFocused] = useState(false);
+
+        // Theme
+        const { theme } = useTheme();
+        const isDark = theme === 'dark';
+
+        // Translations
+        const { t } = useTranslations();
+
+        return (
+            <View className={className || ''}>
+                {label && (
+                    <Pressable
+                        className="block mb-2"
+                        onPress={() => {
+                            innerRef.current.open();
+                        }}
+                    >
+                        <Text className="text-sm font-medium text-gray-900 dark:text-white">
+                            {label}
+                        </Text>
+                    </Pressable>
                 )}
-
-                {options.map((item) => (
-                    <option key={`option-${item.value}`} value={item.value}>
-                        {item.label || item.value}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
-};
+                <Dropdown
+                    data={options}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={placeholder}
+                    style={[
+                        styles.dropdown,
+                        isDark && styles.darkDropdown,
+                        isFocused && styles.dropdownFocus,
+                    ]}
+                    placeholderStyle={[
+                        styles.placeholderStyle,
+                        isDark && styles.darkPlaceholderStyle,
+                    ]}
+                    selectedTextStyle={[
+                        styles.selectedTextStyle,
+                        isDark && styles.darkSelectedTextStyle,
+                    ]}
+                    containerStyle={[
+                        styles.containerStyle,
+                        isDark && styles.darkContainerStyle,
+                    ]}
+                    search={search}
+                    renderInputSearch={(onSearch) => (
+                        <View className="p-2.5">
+                            <TextInput
+                                onChange={(e) => {
+                                    onSearch(e.currentTarget.value);
+                                }}
+                                placeholder={searchPlaceholder || t('search')}
+                            />
+                        </View>
+                    )}
+                    renderItem={(item, selected) => (
+                        <View
+                            className={`px-5 py-2.5 ${selected ? 'bg-blue-500 hover:bg-blue-400 dark:hover:bg-blue-600' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                        >
+                            <Text
+                                className={`text-sm ${selected ? 'text-white' : 'text-gray-900 dark:text-white'}`}
+                            >
+                                {item.label}
+                            </Text>
+                        </View>
+                    )}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    onChange={onChange}
+                    ref={innerRef}
+                />
+            </View>
+        );
+    }
+);
 
 Select.propTypes = {
     /**
