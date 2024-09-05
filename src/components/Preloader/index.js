@@ -52,6 +52,11 @@ export const Preloader = ({ children, requests = [], refetch = [] }) => {
                     error
                 );
                 setError(error);
+
+                // If there is a callback, let's call it
+                if (typeof requestConfig.errorCallback === 'function') {
+                    requestConfig.errorCallback(error);
+                }
             } finally {
                 setLoading(false);
             }
@@ -62,7 +67,7 @@ export const Preloader = ({ children, requests = [], refetch = [] }) => {
 
     if (loading) {
         return (
-            <View className="flex justify-center items-center w-screen h-screen">
+            <View className="flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-900">
                 <Spinner />
             </View>
         );
@@ -70,7 +75,7 @@ export const Preloader = ({ children, requests = [], refetch = [] }) => {
 
     if (error) {
         return (
-            <View className="flex justify-center items-center w-screen h-screen">
+            <View className="flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-900">
                 <Alert theme="error" className="mb-4">
                     {error.message}
                 </Alert>

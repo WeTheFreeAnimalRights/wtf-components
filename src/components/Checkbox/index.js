@@ -11,15 +11,20 @@ export const Checkbox = ({
     errored = false,
     className,
     labelTextColor = 'text-gray-900 dark:text-gray-300',
+    onChange,
 }) => {
     const [checked, setChecked] = useState(propChecked || false);
 
     return (
         <Pressable
             className={`${className || ''} flex flex-row items-center cursor-default`}
-            onPress={() => {
+            onPress={(e) => {
                 if (!disabled) {
                     setChecked(!checked);
+
+                    if (typeof onChange === 'function') {
+                        onChange(!checked, e);
+                    }
                 }
             }}
         >
@@ -39,6 +44,10 @@ export const Checkbox = ({
                 disabled={disabled}
                 onChange={(e) => {
                     setChecked(!checked);
+
+                    if (typeof onChange === 'function') {
+                        onChange(!checked, e);
+                    }
                 }}
             />
             {label && (
@@ -92,4 +101,9 @@ Checkbox.propTypes = {
      * Optional extra classes to use for the label text color
      */
     labelTextColor: PropTypes.string,
+
+    /**
+     * Optional onChange callback
+     */
+    onChange: PropTypes.func,
 };

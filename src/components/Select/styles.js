@@ -3,7 +3,6 @@ import resolveConfig from 'tailwindcss/resolveConfig';
 
 const fullConfig = resolveConfig({});
 const tailwind = fullConfig.theme;
-console.log('>>>tailwind', tailwind);
 
 export const styles = StyleSheet.create({
     dropdown: {
@@ -19,7 +18,7 @@ export const styles = StyleSheet.create({
     darkDropdown: {
         color: tailwind.textColor.white,
         borderColor: tailwind.borderColor.gray[600],
-        backgroundColor: tailwind.backgroundColor.gray[700],
+        backgroundColor: tailwind.backgroundColor.gray[600],
     },
     dropdownFocus: {
         borderColor: tailwind.borderColor.blue[500],
@@ -54,8 +53,8 @@ export const styles = StyleSheet.create({
         overflow: 'scroll',
     },
     darkContainerStyle: {
-        color: tailwind.textColor.white,
         borderColor: tailwind.borderColor.gray[600],
         backgroundColor: tailwind.backgroundColor.gray[900],
+        color: tailwind.textColor.white,
     },
 });

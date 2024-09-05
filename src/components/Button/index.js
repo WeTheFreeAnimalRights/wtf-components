@@ -30,7 +30,7 @@ Button.propTypes = {
     /**
      * The theme of the button - this controls the overall look of the button
      */
-    theme: PropTypes.oneOf(['empty', 'half', 'full', 'wtf-pink']),
+    theme: PropTypes.oneOf(['empty', 'half', 'half-empty', 'full', 'wtf-pink']),
 
     /**
      * Is this button gonna have a full width or not

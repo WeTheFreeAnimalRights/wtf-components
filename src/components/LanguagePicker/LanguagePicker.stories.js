@@ -46,6 +46,6 @@ export default {
 
 export const Primary = {
     args: {
-        align: 'start',
+        align: 'bottom-bottom-left',
     },
 };

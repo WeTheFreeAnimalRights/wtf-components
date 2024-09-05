@@ -5,24 +5,22 @@ import React, {
     useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import { View, Pressable, Text, StyleSheet } from 'react-native';
-import { useTheme } from 'hooks/useTheme';
-import { useTranslations } from 'hooks/useTranslations';
+import { View, Pressable, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { useTheme } from '../../hooks/useTheme';
+import { useTranslations } from '../../hooks/useTranslations';
+import { TextInput } from '../TextInput';
 import { styles } from './styles';
-import { TextInput } from 'components/TextInput';
 
 export const Select = forwardRef(
     (
         {
             label,
-            name,
             value,
             options = [],
             placeholder,
-            required = false,
-            disabled = false,
             className,
+            disabled = false,
             search = false,
             searchPlaceholder,
             onChange = () => {},
@@ -61,6 +59,8 @@ export const Select = forwardRef(
                     labelField="label"
                     valueField="value"
                     placeholder={placeholder}
+                    value={value}
+                    disable={disabled}
                     style={[
                         styles.dropdown,
                         isDark && styles.darkDropdown,
@@ -91,10 +91,10 @@ export const Select = forwardRef(
                     )}
                     renderItem={(item, selected) => (
                         <View
-                            className={`px-5 py-2.5 ${selected ? 'bg-blue-500 hover:bg-blue-400 dark:hover:bg-blue-600' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            className={`${search ? 'px-5 py-2.5' : 'p-2.5'} ${selected ? 'bg-blue-500 hover:bg-blue-400 dark:hover:bg-blue-600' : 'hover:bg-gray-100 dark:hover:bg-gray-700'} text-start`}
                         >
                             <Text
-                                className={`text-sm ${selected ? 'text-white' : 'text-gray-900 dark:text-white'}`}
+                                className={`text-sm text-start ${selected ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}
                             >
                                 {item.label}
                             </Text>
@@ -146,14 +146,24 @@ Select.propTypes = {
     placeholder: PropTypes.string,
 
     /**
-     * Is the select box required
-     */
-    required: PropTypes.bool,
-
-    /**
      * Is the select box disabled
      */
     disabled: PropTypes.bool,
+
+    /**
+     * Should the select have a search through the items?
+     */
+    search: PropTypes.bool,
+
+    /**
+     * Placeholder for the search input
+     */
+    searchPlaceholder: PropTypes.string,
+
+    /**
+     * Called when the selected item changes
+     */
+    onChange: PropTypes.func,
 
     /**
      * Optional extra classname to the select box

@@ -13,6 +13,7 @@
         "@vidstack/react": "^1.11.30",
         "hls.js": "^1.5.13",
         "nativewind": "^4.0.36",
+        "patch-package": "^8.0.0",
         "react-native": "^0.75.1",
         "react-native-element-dropdown": "^2.12.1",
         "react-native-reanimated": "^3.15.0",
@@ -36,7 +37,9 @@
         "eject": "react-scripts eject",
         "clear": "node ./update-build.js",
         "storybook": "storybook dev -p 6006 --no-open",
-        "build-storybook": "storybook build"
+        "build-storybook": "storybook build",
+        "postinstall": "patch-package",
+        "prepare": "postinstall-postinstall"
     },
     "eslintConfig": {
         "extends": [
@@ -74,6 +77,7 @@
         "lodash": "^4.17.21",
         "metro-react-native-babel-preset": "^0.77.0",
         "node-sass": "^7.0.3",
+        "postinstall-postinstall": "^2.1.0",
         "prettier": "^3.3.3",
         "prop-types": "^15.8.1",
         "react": "^18.3.1",
@@ -82,6 +86,7 @@
         "react-scripts": "5.0.1",
         "recoil": "^0.7.7",
         "storybook": "^8.2.8",
+        "storybook-addon-rtl": "^1.0.1",
         "storybook-dark-mode": "^4.0.2",
         "stream-browserify": "^3.0.0",
         "tailwindcss": "^3.4.6",

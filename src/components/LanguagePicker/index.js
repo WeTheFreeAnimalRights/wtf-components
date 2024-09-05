@@ -4,11 +4,12 @@ import { map } from 'lodash';
 import { DropdownMenu } from '../DropdownMenu';
 import { useTranslations } from '../../hooks/useTranslations';
 import globe from './globe.png';
+import { alignOptions } from '../DropdownMenu/alignOptions';
 
 export const LanguagePicker = ({
     onChange,
     linkComponent,
-    align = 'start',
+    align = 'top-left',
 }) => {
     const { languages, currentLanguage, setCurrentLanguage } =
         useTranslations();
@@ -46,7 +47,7 @@ LanguagePicker.propTypes = {
     /**
      * Align component to the start or the end
      */
-    align: PropTypes.oneOf(['start', 'end']),
+    align: PropTypes.oneOf(alignOptions),
 
     /**
      * The type of link to use to display in the dropdown items

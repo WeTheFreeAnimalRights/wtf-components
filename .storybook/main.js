@@ -10,6 +10,7 @@ const config = {
         '@storybook/addon-interactions',
         '@storybook/addon-backgrounds',
         '@chromatic-com/storybook',
+        'storybook-addon-rtl',
     ],
     framework: {
         name: '@storybook/react-webpack5',

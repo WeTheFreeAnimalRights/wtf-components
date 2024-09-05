@@ -54,4 +54,7 @@ export const Primary = {
             },
         ],
     },
+    parameters: {
+        direction: 'rtl',
+    },
 };
