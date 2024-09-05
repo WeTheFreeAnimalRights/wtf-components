@@ -6,7 +6,7 @@ export const Button = ({
     theme = 'full',
     type = 'button',
     full = false,
-    onPress,
+    onClick,
     children,
     disabled = false,
     className = '',
@@ -25,8 +25,9 @@ export const Button = ({
     return (
         <Tag
             role="button"
-            className={`${className || ''} ${buttonClasses}`}
-            onClick={onPress}
+            type={type}
+            className={`${className || ''} ${buttonClasses.wrapper} ${buttonClasses.text}`}
+            onClick={onClick}
             href={href}
             target={target}
             disabled={disabled}
@@ -40,13 +41,13 @@ Button.propTypes = {
     /**
      * The theme of the button - this controls the overall look of the button
      */
-    theme: PropTypes.oneOf(['empty', 'half', 'full', 'wtf-pink']),
+    theme: PropTypes.oneOf(['empty', 'half', 'half-empty', 'full', 'wtf-pink']),
 
     /**
      * The html button type. If this is set to "link", then the button becomes
      * a link
      */
-    type: PropTypes.oneOf(['button', 'link']),
+    type: PropTypes.oneOf(['button', 'submit', 'link']),
 
     /**
      * Is this button gonna have a full width or not
@@ -71,7 +72,7 @@ Button.propTypes = {
     /**
      * Optional click handler
      */
-    onPress: PropTypes.func,
+    onClick: PropTypes.func,
 
     /**
      * Optional extra classname to the card

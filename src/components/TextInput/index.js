@@ -47,7 +47,7 @@ export const TextInput = forwardRef(
                         value={value || undefined}
                         id={`input-${inputId}`}
                         className={`
-                            bg-gray-50 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white
+                            bg-gray-50 text-gray-800 text-sm text-start rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white
 
                             ${
                                 errored

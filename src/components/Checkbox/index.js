@@ -10,6 +10,7 @@ export const Checkbox = ({
     required = false,
     disabled = false,
     errored = false,
+    onChange,
     className,
     labelTextColor = 'text-gray-900 dark:text-gray-300',
 }) => {
@@ -33,6 +34,7 @@ export const Checkbox = ({
                 checked={checked}
                 required={required}
                 disabled={disabled}
+                onChange={onChange}
             />
             {label && (
                 <label
@@ -91,4 +93,9 @@ Checkbox.propTypes = {
      * Optional extra classes to use for the label text color
      */
     labelTextColor: PropTypes.string,
+
+    /**
+     * Optional handler when the button changes
+     */
+    onChange: PropTypes.func,
 };

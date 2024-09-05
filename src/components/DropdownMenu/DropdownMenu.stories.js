@@ -27,6 +27,7 @@ export const Primary = {
                 description: 'This is the about page',
             },
         ],
-        align: 'start',
+        align: 'bottom-bottom-left',
+        showArrow: true,
     },
 };

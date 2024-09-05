@@ -14,6 +14,10 @@ export const fetchRequest = async (requestConfig = {}) => {
         'Content-Type': 'application/json',
     };
 
+    if (requestConfig.bearer) {
+        headers['Authorization'] = `Bearer ${requestConfig.bearer}`;
+    }
+
     // If there is a language being requested
     if (requestConfig.language) {
         headers['Accept-Language'] = requestConfig.language;
@@ -26,5 +30,16 @@ export const fetchRequest = async (requestConfig = {}) => {
     });
 
     // Parse the response
-    return response.json();
+    const data = await response.json();
+
+    // If the status code is bigger than 400, then probably an error
+    if (response.status >= 400) {
+        const error = new Error(
+            data.message || `Request returned with code ${response.status}`
+        );
+        error.status = response.status;
+        throw error;
+    }
+
+    return data;
 };

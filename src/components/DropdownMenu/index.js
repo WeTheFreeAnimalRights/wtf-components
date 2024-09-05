@@ -1,24 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { Menu } from './Menu';
+import { alignOptions } from './alignOptions';
+import { getFits } from './getFits';
+import { getArrows } from './getArrows';
 
 export const DropdownMenu = ({
     label,
     items = [],
     icon,
     withDivider = false,
+    showArrow = true,
     linkComponent = 'a',
-    align = 'start',
+    align = 'top-left',
     onSelect,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const ref = useRef(null);
+    const [menuPosition, setMenuPosition] = useState(align);
+    const containerRef = useRef(null);
+    const menuRef = useRef(null);
+    const buttonRef = useRef(null);
 
     // If the escape key is pressed, then consider it a close
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (ref.current && !ref.current.contains(e.target)) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(e.target)
+            ) {
                 setIsOpen(false);
             }
         };
@@ -30,74 +40,74 @@ export const DropdownMenu = ({
     }, []);
 
     const LinkTag = linkComponent;
+    let Arrows = getArrows(menuPosition);
+
+    useEffect(() => {
+        if (!isOpen) {
+            setMenuPosition(align);
+            return;
+        }
+        const fits = getFits(buttonRef, menuRef);
+        if (!fits(align)) {
+            const aligned = alignOptions.some((alignItem) => {
+                if (fits(alignItem)) {
+                    setMenuPosition(alignItem);
+                    return true;
+                }
+
+                return false;
+            });
+            if (!aligned) {
+                setMenuPosition(align);
+            }
+        } else {
+            setMenuPosition(align);
+        }
+    }, [isOpen, align]);
 
     return (
-        <div className="relative inline-block text-left" ref={ref}>
+        <div className="relative inline-block text-start" ref={containerRef}>
             <div>
                 <button
+                    ref={buttonRef}
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
-                    id="options-menu"
+                    className={`bg-white dark:bg-gray-700 shadow-sm flex flex-row items-center justify-center w-full rounded-md ${label ? 'px-4 py-2' : 'p-2'} hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500`}
                 >
                     {icon}
-                    {label}
+                    {label && (
+                        <div className="text-sm hidden sm:block font-medium text-gray-700 dark:text-gray-50">
+                            {label}
+                        </div>
+                    )}
 
-                    {isOpen ? (
-                        <IoIosArrowUp className="ms-1" size="20px" />
-                    ) : (
-                        <IoIosArrowDown className="ms-1" size="20px" />
+                    {showArrow && (
+                        <>
+                            {isOpen ? (
+                                <Arrows.Open className="sm:ms-1" size="20px" />
+                            ) : (
+                                <Arrows.Close className="sm:ms-1" size="20px" />
+                            )}
+                        </>
                     )}
                 </button>
             </div>
 
             {isOpen && (
-                <div
-                    className={`absolute
-                        ${align === 'start' ? 'start-0 origin-top-start' : 'end-0 origin-top-end'}
-                        w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5 overflow-auto max-h-96
-                    `}
-                >
-                    <div
-                        className={`py-1 ${withDivider ? 'divide-y divide-gray-100' : ''}`}
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="options-menu"
-                    >
-                        {items.map((item) => {
-                            return (
-                                <LinkTag
-                                    key={item.label}
-                                    href={item.href}
-                                    onClick={(e) => {
-                                        setIsOpen(!isOpen);
+                <Menu
+                    ref={menuRef}
+                    items={items}
+                    align={menuPosition}
+                    withDivider={withDivider}
+                    onSelect={(e, item) => {
+                        setIsOpen(!isOpen);
 
-                                        if (typeof onSelect === 'function') {
-                                            onSelect(e, item);
-                                        }
-                                    }}
-                                    className={`${
-                                        item.icon
-                                            ? 'flex items-center'
-                                            : 'block'
-                                    } block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600`}
-                                    role="menuitem"
-                                >
-                                    {item.icon}
-
-                                    <span className="flex flex-col">
-                                        <span>{item.label}</span>
-                                        {item.description && (
-                                            <span className="text-xs text-gray-400">
-                                                {item.description}
-                                            </span>
-                                        )}
-                                    </span>
-                                </LinkTag>
-                            );
-                        })}
-                    </div>
-                </div>
+                        if (typeof onSelect === 'function') {
+                            onSelect(e, item);
+                        }
+                    }}
+                    LinkTag={LinkTag}
+                />
             )}
         </div>
     );
@@ -107,7 +117,7 @@ DropdownMenu.propTypes = {
     /**
      * Label to show on the dropdown menu
      */
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
 
     /**
      * Items in the dropdown
@@ -147,6 +157,11 @@ DropdownMenu.propTypes = {
     withDivider: PropTypes.bool,
 
     /**
+     * Whether to show the dropdown icon
+     */
+    showArrow: PropTypes.bool,
+
+    /**
      * The type of link to use to display in the dropdown items
      */
     linkComponent: PropTypes.oneOfType([
@@ -155,9 +170,9 @@ DropdownMenu.propTypes = {
     ]),
 
     /**
-     * Align component to the start or the end
+     * Prefered alignment of the menu component
      */
-    align: PropTypes.oneOf(['start', 'end']),
+    align: PropTypes.oneOf(alignOptions),
 
     /**
      * Optional select handler

@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import { DropdownMenu } from '../DropdownMenu';
+import { alignOptions } from '../DropdownMenu/alignOptions';
 import { useTranslations } from '../../hooks/useTranslations';
 import globe from './globe.png';
 
 export const LanguagePicker = ({
     onChange,
     linkComponent,
-    align = 'start',
+    showArrow,
+    align = 'bottom-bottom-left',
 }) => {
     const { languages, currentLanguage, setCurrentLanguage } =
         useTranslations();
@@ -26,6 +28,7 @@ export const LanguagePicker = ({
             label={selectedLanguage.label || '-'}
             items={items}
             align={align}
+            showArrow={showArrow}
             linkComponent={linkComponent}
             onSelect={(e, item) => {
                 e.preventDefault();
@@ -46,7 +49,7 @@ LanguagePicker.propTypes = {
     /**
      * Align component to the start or the end
      */
-    align: PropTypes.oneOf(['start', 'end']),
+    align: PropTypes.oneOf(alignOptions),
 
     /**
      * The type of link to use to display in the dropdown items
@@ -55,6 +58,11 @@ LanguagePicker.propTypes = {
         PropTypes.string,
         PropTypes.elementType,
     ]),
+
+    /**
+     * Whether to show the dropdown icon
+     */
+    showArrow: PropTypes.bool,
 
     /**
      * Optional on language change handler

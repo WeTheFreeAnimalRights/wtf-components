@@ -27,7 +27,6 @@ export const CodeInput = forwardRef(
         const [caretEnd, setCaretEnd] = useState(0);
 
         const maxCodeLengthArr = range(codeLength);
-        const inputSize = 14;
 
         const getValue = () => {
             if (typeof value !== 'undefined') {
@@ -70,7 +69,7 @@ export const CodeInput = forwardRef(
                                 <div
                                     key={`square-${index}`}
                                     className={`rounded-lg
-                                        w-${inputSize} h-${inputSize}
+                                        w-10 sm:w-14 h-10 sm:h-14
                                         ${
                                             errored
                                                 ? 'border-2 border-red-300 dark:border-red-800'
@@ -116,7 +115,7 @@ export const CodeInput = forwardRef(
                         onBlur={() => setFocused(false)}
                         onSelectCapture={selectionChange}
                         onSelect={selectionChange}
-                        className={`absolute z-10 start-0 top-0 ps-4 pt-2 bg-transparent text-4xl tracking-[2.9rem] outline-none uppercase font-mono w-[calc(100%+2rem)] text-white`}
+                        className={`absolute z-10 start-0 top-0 ps-3 sm:ps-4 pt-1 sm:pt-2 bg-transparent text-2xl sm:text-4xl tracking-[2.35rem] sm:tracking-[2.9rem] outline-none uppercase font-mono w-[calc(100%+2rem)] text-white`}
                     />
                 </div>
             </div>

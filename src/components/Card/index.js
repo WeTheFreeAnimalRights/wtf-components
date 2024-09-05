@@ -19,7 +19,7 @@ export const Card = ({
             <article
                 className={`${className || ''}
                     rounded-lg shadow w-full
-                    ${layout === 'horizontal' ? 'flex flex-row items-stretch' : ''}
+                    ${layout === 'horizontal' ? 'sm:flex sm:flex-row items-stretch' : ''}
                     ${clickable && !highlighted ? 'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer' : ''}
 
                     ${highlighted ? 'border-4 border-gray-700 dark:border-gray-100 bg-gray-700 dark:bg-gray-100' : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'}
@@ -37,14 +37,14 @@ export const Card = ({
                 )}
                 <div
                     className={`
-                        p-5
+                        p-4 sm:p-5
                         ${layout === 'horizontal' ? 'flex-1' : ''}
                     `}
                 >
                     {title && (
                         <h1
                             className={`
-                            text-2xl font-bold tracking-tight
+                            text-xl sm:text-2xl font-bold tracking-tight
                             ${highlighted ? 'text-white dark:text-gray-900' : 'text-gray-900 dark:text-white'}
                         `}
                         >
@@ -53,7 +53,7 @@ export const Card = ({
                     )}
                     {description && (
                         <p
-                            className={`font-normal mt-3
+                            className={`font-normal mt-2 sm:mt-3 text-sm sm:text-md
                             ${highlighted ? 'text-gray-400 dark:text-gray-700' : 'text-gray-700 dark:text-gray-400'}
                         `}
                         >
