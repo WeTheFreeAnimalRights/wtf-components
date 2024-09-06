@@ -1,123 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from 'react';
-import { Menu } from './Menu';
-import { alignOptions } from './alignOptions';
-import { getFits } from './getFits';
-import { getArrows } from './getArrows';
+import { useState } from 'react';
+import { Button } from '../Button';
+
+// ShadCN
+import {
+    DropdownMenu as ShadDropdownMenu,
+    DropdownMenuTrigger as ShadDropdownMenuTrigger,
+    DropdownMenuContent as ShadDropdownMenuContent,
+    DropdownMenuLabel as ShadDropdownMenuLabel,
+    DropdownMenuSeparator as ShadDropdownMenuSeparator,
+    DropdownMenuItem as ShadDropdownMenuItem,
+} from '_/components/dropdown-menu';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export const DropdownMenu = ({
     label,
+    menuLabel,
     items = [],
     icon,
-    withDivider = false,
     showArrow = true,
-    linkComponent = 'a',
-    align = 'top-left',
     onSelect,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [menuPosition, setMenuPosition] = useState(align);
-    const containerRef = useRef(null);
-    const menuRef = useRef(null);
-    const buttonRef = useRef(null);
-
-    // If the escape key is pressed, then consider it a close
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (
-                containerRef.current &&
-                !containerRef.current.contains(e.target)
-            ) {
-                setIsOpen(false);
-            }
-        };
-        window.addEventListener('click', handleClickOutside);
-
-        return () => {
-            window.removeEventListener('click', handleClickOutside);
-        };
-    }, []);
-
-    const LinkTag = linkComponent;
-    let Arrows = getArrows(menuPosition);
-
-    useEffect(() => {
-        if (!isOpen) {
-            setMenuPosition(align);
-            return;
-        }
-        const fits = getFits(buttonRef, menuRef);
-        if (!fits(align)) {
-            const aligned = alignOptions.some((alignItem) => {
-                if (fits(alignItem)) {
-                    setMenuPosition(alignItem);
-                    return true;
-                }
-
-                return false;
-            });
-            if (!aligned) {
-                setMenuPosition(align);
-            }
-        } else {
-            setMenuPosition(align);
-        }
-    }, [isOpen, align]);
 
     return (
-        <div className="relative inline-block text-start" ref={containerRef}>
-            <div>
-                <button
-                    ref={buttonRef}
-                    type="button"
-                    onClick={() => setIsOpen(!isOpen)}
-                    className={`bg-white dark:bg-gray-700 shadow-sm flex flex-row items-center justify-center w-full rounded-md ${label ? 'px-4 py-2' : 'p-2'} hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500`}
-                >
+        <ShadDropdownMenu onOpenChange={() => setIsOpen(!isOpen)} open={isOpen}>
+            <ShadDropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white dark:bg-gray-700">
                     {icon}
-                    {label && (
-                        <div className="text-sm hidden sm:block font-medium text-gray-700 dark:text-gray-50">
-                            {label}
-                        </div>
-                    )}
-
+                    {label}
                     {showArrow && (
                         <>
                             {isOpen ? (
-                                <Arrows.Open className="sm:ms-1" size="20px" />
+                                <ChevronUp className="ms-1" />
                             ) : (
-                                <Arrows.Close className="sm:ms-1" size="20px" />
+                                <ChevronDown className="ms-1" />
                             )}
                         </>
                     )}
-                </button>
-            </div>
+                </Button>
+            </ShadDropdownMenuTrigger>
+            <ShadDropdownMenuContent className="max-h-72 overflow-auto">
+                {menuLabel && (
+                    <>
+                        <ShadDropdownMenuLabel>
+                            {menuLabel}
+                        </ShadDropdownMenuLabel>
+                        <ShadDropdownMenuSeparator />
+                    </>
+                )}
+                {items.map((item, index) => (
+                    <ShadDropdownMenuItem
+                        className="cursor-pointer"
+                        key={`item-${index}`}
+                        onSelect={() => onSelect(item)}
+                    >
+                        {item.icon}
 
-            {isOpen && (
-                <Menu
-                    ref={menuRef}
-                    items={items}
-                    align={menuPosition}
-                    withDivider={withDivider}
-                    onSelect={(e, item) => {
-                        setIsOpen(!isOpen);
-
-                        if (typeof onSelect === 'function') {
-                            onSelect(e, item);
-                        }
-                    }}
-                    LinkTag={LinkTag}
-                />
-            )}
-        </div>
+                        <div className="flex flex-col">
+                            <div className="text-md text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white">
+                                {item.label}
+                            </div>
+                            {item.description && (
+                                <div className="text-xs text-gray-400 group-hover:text-gray-300 dark:text-gray-600">
+                                    {item.description}
+                                </div>
+                            )}
+                        </div>
+                    </ShadDropdownMenuItem>
+                ))}
+            </ShadDropdownMenuContent>
+        </ShadDropdownMenu>
     );
 };
 
 DropdownMenu.propTypes = {
     /**
-     * Label to show on the dropdown menu
+     * Label to show on the dropdown trigger
      */
     label: PropTypes.string,
+
+    /**
+     * Label to show on the dropdown menu
+     */
+    menuLabel: PropTypes.string,
 
     /**
      * Items in the dropdown
@@ -128,11 +95,6 @@ DropdownMenu.propTypes = {
              * Label of the item
              */
             label: PropTypes.string.isRequired,
-
-            /**
-             * Href for the item (where to send the user to)
-             */
-            href: PropTypes.string.isRequired,
 
             /**
              * Optional icon for the item
@@ -152,27 +114,9 @@ DropdownMenu.propTypes = {
     icon: PropTypes.element,
 
     /**
-     * Whether to show divider between items
-     */
-    withDivider: PropTypes.bool,
-
-    /**
      * Whether to show the dropdown icon
      */
     showArrow: PropTypes.bool,
-
-    /**
-     * The type of link to use to display in the dropdown items
-     */
-    linkComponent: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.elementType,
-    ]),
-
-    /**
-     * Prefered alignment of the menu component
-     */
-    align: PropTypes.oneOf(alignOptions),
 
     /**
      * Optional select handler

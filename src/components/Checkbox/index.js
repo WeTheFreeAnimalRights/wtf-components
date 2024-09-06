@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useId } from 'react';
 
+// ShadCN
+import { Checkbox as ShadCheckbox } from '_/components/checkbox';
+
 export const Checkbox = ({
     label,
     name,
@@ -9,7 +12,6 @@ export const Checkbox = ({
     checked,
     required = false,
     disabled = false,
-    errored = false,
     onChange,
     className,
     labelTextColor = 'text-gray-900 dark:text-gray-300',
@@ -18,19 +20,11 @@ export const Checkbox = ({
 
     return (
         <div className={`${className || ''} flex items-center`}>
-            <input
+            <ShadCheckbox
                 id={`check-${checkId}`}
                 type="checkbox"
                 name={name}
                 value={value}
-                className={`
-                    w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700
-                    ${
-                        errored
-                            ? 'border-2 border-red-300 dark:border-red-800'
-                            : 'border border-gray-300 dark:border-gray-600'
-                    }
-                `}
                 checked={checked}
                 required={required}
                 disabled={disabled}
@@ -78,11 +72,6 @@ Checkbox.propTypes = {
      * Is the checkbox disabled
      */
     disabled: PropTypes.bool,
-
-    /**
-     * Is the checkbox errored
-     */
-    errored: PropTypes.bool,
 
     /**
      * Optional extra classname to the checkbox

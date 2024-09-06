@@ -15,6 +15,7 @@ export default {
 export const Primary = {
     args: {
         label: 'Menu Dropdown',
+        menuLabel: 'Please select',
         items: [
             {
                 label: 'Home',

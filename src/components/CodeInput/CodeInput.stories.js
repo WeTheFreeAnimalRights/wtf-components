@@ -6,8 +6,8 @@ export default {
     component: CodeInput,
     tags: ['autodocs'],
     argTypes: {
-        onEnd: {
-            action: 'end',
+        onComplete: {
+            action: 'complete',
         },
     },
 };
@@ -15,7 +15,6 @@ export default {
 export const Primary = {
     args: {
         label: 'Code',
-        name: 'code',
         codeLength: 5,
     },
 };

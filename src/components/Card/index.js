@@ -44,7 +44,7 @@ export const Card = ({
                     {title && (
                         <h1
                             className={`
-                            text-xl sm:text-2xl font-bold tracking-tight
+                            text-xl sm:text-2xl font-semibold leading-none tracking-tight
                             ${highlighted ? 'text-white dark:text-gray-900' : 'text-gray-900 dark:text-white'}
                         `}
                         >

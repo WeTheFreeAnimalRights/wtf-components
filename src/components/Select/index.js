@@ -1,10 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useId } from 'react';
-import './style.scss';
+
+// ShadCN
+import {
+    Select as ShadSelect,
+    SelectTrigger as ShadSelectTrigger,
+    SelectContent as ShadSelectContent,
+    SelectGroup as ShadSelectGroup,
+    SelectValue as ShadSelectValue,
+    SelectLabel as ShadSelectLabel,
+    SelectItem as ShadSelectItem,
+} from '_/components/select';
 
 export const Select = ({
-    label,
     name,
     value,
     options = [],
@@ -16,46 +25,36 @@ export const Select = ({
     const selectId = useId();
 
     return (
-        <div className={className || ''}>
-            {label && (
-                <label
-                    htmlFor={`select-${selectId}`}
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                    {label}
-                </label>
-            )}
-            <select
-                name={name}
-                id={`select-${selectId}`}
-                placeholder={placeholder}
-                required={required}
-                disabled={disabled}
-                value={value || undefined}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-                {placeholder && (
-                    <option value="" default>
-                        {placeholder}
-                    </option>
-                )}
-
-                {options.map((item) => (
-                    <option key={`option-${item.value}`} value={item.value}>
-                        {item.label || item.value}
-                    </option>
-                ))}
-            </select>
-        </div>
+        <ShadSelect
+            name={name}
+            id={`select-${selectId}`}
+            required={required}
+            disabled={disabled}
+            value={value}
+        >
+            <ShadSelectTrigger className={className || ''}>
+                {placeholder && <ShadSelectValue placeholder={placeholder} />}
+            </ShadSelectTrigger>
+            <ShadSelectContent>
+                <ShadSelectGroup>
+                    {placeholder && (
+                        <ShadSelectLabel>{placeholder}</ShadSelectLabel>
+                    )}
+                    {options.map((item) => (
+                        <ShadSelectItem
+                            key={`option-${item.value}`}
+                            value={item.value}
+                        >
+                            {item.label || item.value}
+                        </ShadSelectItem>
+                    ))}
+                </ShadSelectGroup>
+            </ShadSelectContent>
+        </ShadSelect>
     );
 };
 
 Select.propTypes = {
-    /**
-     * The label to display next to the select box
-     */
-    label: PropTypes.string,
-
     /**
      * The name of the select box (useful for forms)
      */
@@ -66,6 +65,9 @@ Select.propTypes = {
      */
     value: PropTypes.string,
 
+    /**
+     * Options of the select
+     */
     options: PropTypes.arrayOf(
         PropTypes.shape({
             /**

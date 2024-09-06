@@ -15,7 +15,7 @@ export const ThemeToggle = ({ className = '' }) => {
         <div className={`flex flex-col justify-center ${className || ''}`}>
             <button
                 type="button"
-                className={`bg-transparent hover:bg-gray-700 flex items-center justify-center rounded-md p-2 text-sm font-medium text-gray-300 hover:text-gray-100 group`}
+                className={`bg-transparent hover:bg-gray-700 transition-colors flex items-center justify-center rounded-md p-2 text-sm font-medium text-gray-300 hover:text-gray-100 group`}
                 title={
                     theme === 'dark'
                         ? t('theme-set-light')

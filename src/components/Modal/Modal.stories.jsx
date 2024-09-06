@@ -1,6 +1,6 @@
-import { RecoilRoot } from 'recoil';
-import { Modal } from './index';
+import { Modal, ModalTrigger, ModalContainer } from './index';
 import '../../base.css';
+import { Button } from '../Button';
 
 export default {
     title: 'Components/Modal',
@@ -11,23 +11,17 @@ export default {
             action: 'closed',
         },
     },
-    decorators: [
-        (Story) => (
-            <div style={{ height: '400px' }}>
-                <RecoilRoot>
-                    <Story />
-                </RecoilRoot>
-            </div>
-        ),
-    ],
 };
 
-export const Primary = {
-    args: {
-        children: 'Modal content here',
-        title: 'Modal Title',
-        visible: true,
-        showTitle: true,
-        setOverflow: false,
-    },
+export const Primary = () => {
+    return (
+        <ModalContainer>
+            <ModalTrigger>
+                <Button>Click me</Button>
+            </ModalTrigger>
+            <Modal title="Modal Title" description="Modal description">
+                Content goes here
+            </Modal>
+        </ModalContainer>
+    );
 };

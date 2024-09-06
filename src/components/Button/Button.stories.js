@@ -19,7 +19,7 @@ export default {
 export const Primary = {
     args: {
         children: 'Button',
-        theme: 'full',
-        type: 'button',
+        variant: 'default',
+        size: 'default',
     },
 };

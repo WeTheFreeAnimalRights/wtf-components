@@ -1,112 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CloseButton } from './CloseButton';
+
+// ShadCN
+import {
+    Dialog as ShadDialog,
+    DialogTrigger as ShadDialogTrigger,
+    DialogContent as ShadDialogContent,
+    DialogHeader as ShadDialogHeader,
+    DialogTitle as ShadDialogTitle,
+    DialogDescription as ShadDialogDescription,
+    DialogFooter as ShadDialogFooter,
+} from '_/components/dialog';
+
+// Trigger and container
+export const ModalTrigger = React.forwardRef(({ ...props }, ref) => (
+    <ShadDialogTrigger ref={ref} asChild={true} {...props} />
+));
+export const ModalContainer = ShadDialog;
 
 export const Modal = ({
     title,
-    showTitle = false,
+    description,
     children,
-    visible = false,
+    className = '',
+    footer,
+    showCloseButton = true,
+    setWidth = true,
+    overflow = false,
+
+    //
     onClose,
     closeMethods = ['key', 'overlay', 'button'],
-    destroyOnHidden = false,
-    noPadding = false,
-    width = 'md',
-    aspectRatio = 'auto',
-    footer,
-    showFooter = false,
-    setOverflow = true,
 }) => {
-    // If the escape key is pressed, then consider it a close
-    React.useEffect(() => {
-        const handleEsc = (e) => {
-            if (
-                e.key === 'Escape' &&
-                typeof onClose === 'function' &&
-                closeMethods.indexOf('key') >= 0
-            ) {
-                onClose(e);
-            }
-        };
-        window.addEventListener('keydown', handleEsc);
-
-        return () => {
-            window.removeEventListener('keydown', handleEsc);
-        };
-    }, [closeMethods]);
-
-    // If the modal is visible disable the overflow of the body
-    React.useEffect(() => {
-        document.body.style.overflow =
-            visible && setOverflow ? 'hidden' : 'unset';
-
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [visible]);
-
-    // Method called when the user clicks outside
-    const onOutsideClick = (e) => {
-        // If within the modal or overlay exit is disabled
-        if (
-            e.target.closest('[data-modal]') ||
-            closeMethods.indexOf('overlay') < 0
-        ) {
-            return;
-        }
-
-        if (typeof onClose === 'function') {
-            onClose(e);
-        }
-    };
-
-    if (!visible && destroyOnHidden) {
-        return null;
-    }
-
-    const hasCloseButton = closeMethods.indexOf('button') >= 0;
-
     return (
-        <div
-            className={`overflow-hidden fixed top-0 right-0 left-0 z-100 flex justify-center items-center w-screen md:inset-0 h-screen max-h-full bg-black/30 ${visible ? '' : 'hidden'}`}
-            onClick={onOutsideClick}
+        <ShadDialogContent
+            className={className}
+            showCloseButton={showCloseButton}
+            setWidth={setWidth}
         >
-            <div
-                className={`relative p-4 w-full flex flex-col max-w-${width} max-h-full`}
-            >
-                <div
-                    className="relative flex flex-col bg-white overflow-hidden rounded-lg shadow dark:bg-gray-800"
-                    data-modal="1"
-                >
-                    {showTitle ? (
-                        <div className="flex items-center justify-between p-3 md:p-4 border-b bg-gray-700 rounded-t-lg dark:border-gray-600 relative">
-                            <h3 className="text-xl grow font-semibold text-white text-center">
-                                {title}
-                            </h3>
-                            {hasCloseButton && (
-                                <CloseButton onHeader onClick={onClose} />
-                            )}
-                        </div>
-                    ) : (
-                        <>
-                            {hasCloseButton && (
-                                <CloseButton onClick={onClose} />
-                            )}
-                        </>
-                    )}
-                    <div
-                        className={`${noPadding ? '' : 'p-6'} max-h-[50rem] flex flex-grow flex-col overflow-auto rounded-b aspect-${aspectRatio}`}
-                    >
-                        {children}
-                    </div>
-                    {showFooter && (
-                        <div className="px-6 py-4 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 border-t">
-                            {footer}
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
+            {title && (
+                <ShadDialogHeader>
+                    <ShadDialogTitle>{title}</ShadDialogTitle>
+                    <ShadDialogDescription>{description}</ShadDialogDescription>
+                </ShadDialogHeader>
+            )}
+            <div className={overflow ? 'overflow-y-auto flex-grow' : ''}>{children}</div>
+            {footer && <ShadDialogFooter>{footer}</ShadDialogFooter>}
+        </ShadDialogContent>
     );
 };
 
@@ -117,50 +57,14 @@ Modal.propTypes = {
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
     /**
-     * Whether to show the title of the modal or not
+     * Optional description for the modal
      */
-    showTitle: PropTypes.bool,
+    description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
     /**
-     * Whether the modal should be visible or not
+     * Optional extra classname to the modal
      */
-    visible: PropTypes.bool,
-
-    /**
-     * Callback when the modal is told to close
-     */
-    onClose: PropTypes.func,
-
-    /**
-     * Which methods are available to trigger the `onClose` callback
-     * - key: when user presses Escape key
-     * - overlay: when the user clicks on the overlay
-     * - button: when the user clicks on the close button
-     */
-    closeMethods: PropTypes.arrayOf(
-        PropTypes.oneOf(['key', 'overlay', 'button'])
-    ),
-
-    /**
-     * Whether the modal contents should get destroyed when it's no longer
-     * visible
-     */
-    destroyOnHidden: PropTypes.bool,
-
-    /**
-     * Whether the modal should have padding for the inner content or not
-     */
-    noPadding: PropTypes.bool,
-
-    /**
-     * Width of the modal (as defined by tailwind)
-     */
-    width: PropTypes.string,
-
-    /**
-     * Aspect ratio of the modal (as defined by tailwind)
-     */
-    aspectRatio: PropTypes.string,
+    className: PropTypes.string,
 
     /**
      * Footer contents for the modal
@@ -168,12 +72,17 @@ Modal.propTypes = {
     footer: PropTypes.element,
 
     /**
-     * Whether to show the footer or not
+     * Whether to show the close button or not
      */
-    showFooter: PropTypes.bool,
+    showCloseButton: PropTypes.bool,
 
     /**
-     * Set the overflow of the body where the modal is
+     * Whether to set the width of the modal or not
      */
-    setOverflow: PropTypes.bool,
+    setWidth: PropTypes.bool,
+
+    /**
+     * Whether the content should overflow or not
+     */
+    overflow: PropTypes.bool,
 };

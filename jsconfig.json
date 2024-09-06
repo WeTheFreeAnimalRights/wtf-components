@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {}
+    },
+    "include": ["src/**/*.js"],
+    "exclude": [
+        "node_modules",
+        "**/node_modules",
+        "build",
+        "dist",
+        "storybook-static"
+    ]
+}

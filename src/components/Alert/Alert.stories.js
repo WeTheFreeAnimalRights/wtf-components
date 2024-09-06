@@ -16,8 +16,7 @@ export default {
 export const Primary = {
     args: {
         children: 'This is an alert and it will be shown like this',
-        theme: 'empty',
+        variant: 'default',
         title: 'Alert title',
-        showTitle: true,
     },
 };

@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useId, forwardRef } from 'react';
 
+// ShadCN
+import { Input } from '_/components/input';
+
 export const TextInput = forwardRef(
     (
         {
@@ -41,23 +44,11 @@ export const TextInput = forwardRef(
                         </div>
                     )}
 
-                    <input
+                    <Input
                         type={type}
                         name={name}
                         value={value || undefined}
                         id={`input-${inputId}`}
-                        className={`
-                            bg-gray-50 text-gray-800 text-sm text-start rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white
-
-                            ${
-                                errored
-                                    ? 'border-2 border-red-300 dark:border-red-800'
-                                    : 'border border-gray-300 dark:border-gray-500'
-                            }
-                            py-2.5
-                            ${innerLeftContent ? 'ps-8' : 'ps-3'}
-                            ${innerRightContent ? 'pe-10' : 'pe-3'}
-                            `}
                         placeholder={placeholder}
                         required={required}
                         disabled={disabled}
@@ -65,6 +56,11 @@ export const TextInput = forwardRef(
                         autoComplete={autoComplete}
                         onChange={onChange}
                         ref={ref}
+                        className={`
+                            ${errored ? 'border-red-500 dark:border-red-800' : ''}
+                            ${innerLeftContent ? 'ps-8' : 'ps-3'}
+                            ${innerRightContent ? 'pe-10' : 'pe-3'}
+                        `}
                     />
 
                     {innerRightContent && (
