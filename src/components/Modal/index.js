@@ -27,10 +27,6 @@ export const Modal = ({
     showCloseButton = true,
     setWidth = true,
     overflow = false,
-
-    //
-    onClose,
-    closeMethods = ['key', 'overlay', 'button'],
 }) => {
     return (
         <ShadDialogContent
@@ -44,7 +40,9 @@ export const Modal = ({
                     <ShadDialogDescription>{description}</ShadDialogDescription>
                 </ShadDialogHeader>
             )}
-            <div className={overflow ? 'overflow-y-auto flex-grow' : ''}>{children}</div>
+            <div className={overflow ? 'overflow-y-auto flex-grow' : ''}>
+                {children}
+            </div>
             {footer && <ShadDialogFooter>{footer}</ShadDialogFooter>}
         </ShadDialogContent>
     );

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { useId } from 'react';
 
 // ShadCN
 import {
@@ -12,47 +11,59 @@ import {
     SelectLabel as ShadSelectLabel,
     SelectItem as ShadSelectItem,
 } from '_/components/select';
+import { FormControl } from '_/components/form';
 
-export const Select = ({
-    name,
-    value,
-    options = [],
-    placeholder,
-    required = false,
-    disabled = false,
-    className,
-}) => {
-    const selectId = useId();
-
-    return (
-        <ShadSelect
-            name={name}
-            id={`select-${selectId}`}
-            required={required}
-            disabled={disabled}
-            value={value}
-        >
+export const Select = forwardRef(
+    (
+        {
+            name,
+            value,
+            options = [],
+            placeholder,
+            formControl = false,
+            required = false,
+            disabled = false,
+            className,
+            ...props
+        },
+        ref
+    ) => {
+        const trigger = (
             <ShadSelectTrigger className={className || ''}>
                 {placeholder && <ShadSelectValue placeholder={placeholder} />}
             </ShadSelectTrigger>
-            <ShadSelectContent>
-                <ShadSelectGroup>
-                    {placeholder && (
-                        <ShadSelectLabel>{placeholder}</ShadSelectLabel>
-                    )}
-                    {options.map((item) => (
-                        <ShadSelectItem
-                            key={`option-${item.value}`}
-                            value={item.value}
-                        >
-                            {item.label || item.value}
-                        </ShadSelectItem>
-                    ))}
-                </ShadSelectGroup>
-            </ShadSelectContent>
-        </ShadSelect>
-    );
-};
+        );
+        return (
+            <ShadSelect
+                name={name}
+                required={required}
+                disabled={disabled}
+                value={value}
+                ref={ref}
+                {...props}
+            >
+                {formControl ? <FormControl>{trigger}</FormControl> : trigger}
+                <ShadSelectContent>
+                    <ShadSelectGroup>
+                        {placeholder && (
+                            <ShadSelectLabel>{placeholder}</ShadSelectLabel>
+                        )}
+                        {options.map((item) => (
+                            <ShadSelectItem
+                                key={`option-${item.value}`}
+                                value={item.value}
+                            >
+                                {item.label || item.value}
+                            </ShadSelectItem>
+                        ))}
+                    </ShadSelectGroup>
+                </ShadSelectContent>
+            </ShadSelect>
+        );
+    }
+);
+
+export { FormFieldSelect } from './FormFieldSelect';
 
 Select.propTypes = {
     /**
@@ -86,6 +97,11 @@ Select.propTypes = {
      * The placeholder to be shown on the select
      */
     placeholder: PropTypes.string,
+
+    /**
+     * Optional if select is used within a form
+     */
+    formControl: PropTypes.bool,
 
     /**
      * Is the select box required

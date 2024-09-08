@@ -9,7 +9,6 @@ export default {
 
 export const Primary = {
     args: {
-        label: 'Name',
         placeholder: 'Put your name here',
         name: 'name',
         type: 'text',
@@ -19,7 +18,6 @@ export const Primary = {
 
 export const Email = {
     args: {
-        label: 'Email',
         placeholder: 'Put your email here',
         name: 'email',
         type: 'email',

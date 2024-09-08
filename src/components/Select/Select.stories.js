@@ -9,7 +9,6 @@ export default {
 
 export const Primary = {
     args: {
-        label: 'How are you today',
         placeholder: 'Select one',
         options: [
             {

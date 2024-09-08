@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { RiLockPasswordLine, RiEyeLine, RiEyeOffLine } from 'react-icons/ri';
 import { TextInput } from '../TextInput';
 import { useState } from 'react';
 
-export const PasswordInput = ({
+export const PasswordInput = forwardRef(({
     showLock = true,
     showShowHideButton = true,
     placeholder = '',
     ...props
-}) => {
+},ref) => {
     const [visible, setVisible] = useState(false);
 
     const leftContent = !showLock ? undefined : (
@@ -32,14 +32,16 @@ export const PasswordInput = ({
 
     return (
         <TextInput
-            {...props}
-            type={visible ? 'text' : 'password'}
-            innerLeftContent={leftContent}
-            innerRightContent={rightContent}
-            placeholder={placeholder || '••••••••'}
+        type={visible ? 'text' : 'password'}
+        innerLeftContent={leftContent}
+        innerRightContent={rightContent}
+        placeholder={placeholder || '••••••••'}
+        ref={ref}
+        {...props}
         />
     );
-};
+});
+export { FormFieldPasswordInput } from './FormFieldPasswordInput';
 
 PasswordInput.propTypes = {
     /**

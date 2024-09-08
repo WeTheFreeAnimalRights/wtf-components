@@ -13,7 +13,5 @@ export default {
 };
 
 export const Primary = {
-    args: {
-        label: 'This is a sexy checkbox shown especially for you',
-    },
+    args: {},
 };

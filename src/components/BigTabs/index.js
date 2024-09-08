@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BigTab } from './BigTab';
-import './style.scss';
+import './style.css';
 import { TabButton } from './TabButton';
 
 export const BigTabs = ({ children }) => {
