@@ -19,9 +19,9 @@ export const Alert = ({
         <ShadAlert className={className} variant={variant}>
             {title && (
                 <>
-                    {variant === 'default' && <Info className="w-4 h-4" />}
+                    {variant === 'default' && <Info className="w-6 h-6" />}
                     {variant === 'destructive' && (
-                        <TriangleAlert className="w-4 h-4" />
+                        <TriangleAlert className="w-6 h-6" />
                     )}
                     <ShadAlertTitle>{title}</ShadAlertTitle>
                 </>

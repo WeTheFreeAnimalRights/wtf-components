@@ -42,13 +42,15 @@ export const Card = forwardRef(({
                 </>
             )}
             <div className="flex-grow basis-0">
-                <ShadCardHeader>
-                    {title && <ShadCardTitle>{title}</ShadCardTitle>}
-                    {description && (
-                        <ShadCardDescription>{description}</ShadCardDescription>
-                    )}
-                </ShadCardHeader>
-                {children && <ShadCardContent>{children}</ShadCardContent>}
+                {(title || description) &&
+                    <ShadCardHeader>
+                        {title && <ShadCardTitle>{title}</ShadCardTitle>}
+                        {description && (
+                            <ShadCardDescription>{description}</ShadCardDescription>
+                        )}
+                    </ShadCardHeader>
+}
+                {children && <ShadCardContent className={!title && !description ? 'pt-6' : ''}>{children}</ShadCardContent>}
             </div>
         </ShadCard>
     );

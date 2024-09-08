@@ -21,7 +21,7 @@ export const FormFieldCheckbox = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={className}>
+                <FormItem className={['space-y-0 space-x-2 items-center flex flex-row', className]}>
                     <FormControl>
                         <Checkbox
                             checked={field.value}
