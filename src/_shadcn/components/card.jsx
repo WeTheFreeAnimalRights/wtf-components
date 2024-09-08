@@ -66,7 +66,10 @@ const CardImage = React.forwardRef(({ className, ...props }, ref) => (
         )}
         ref={ref}
     >
-        <img className="object-cover w-full h-auto flex-grow aspect-video" {...props} />
+        <img
+            className="object-cover w-full h-auto flex-grow aspect-video"
+            {...props}
+        />
     </figure>
 ));
 CardImage.displayName = 'CardImage';

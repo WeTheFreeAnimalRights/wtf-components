@@ -11,50 +11,69 @@ import {
     CardImage as ShadCardImage,
 } from '_/components/card';
 
-export const Card = forwardRef(({
-    layout = 'vertical',
-    onClick,
-    className = '',
-    highlighted = false,
-    children,
+export const Card = forwardRef(
+    (
+        {
+            layout = 'vertical',
+            onClick,
+            className = '',
+            highlighted = false,
+            children,
 
-    image = '',
-    title = '',
-    description = '',
-},ref ) => {
-    const clickable = typeof onClick === 'function';
-    return (
-        <ShadCard
-            className={[{
-                'sm:flex sm:flex-row sm:items-stretch': layout === 'horizontal',
-                'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer':
-                    clickable,
-            }, className]}
-            onClick={onClick}
-            ref={ref}
-        >
-            {image && (
-                <>
-                    <ShadCardImage
-                        src={image}
-                        className={layout === 'horizontal' ? 'sm:w-1/3' : ''}
-                    />
-                </>
-            )}
-            <div className="flex-grow basis-0">
-                {(title || description) &&
-                    <ShadCardHeader>
-                        {title && <ShadCardTitle>{title}</ShadCardTitle>}
-                        {description && (
-                            <ShadCardDescription>{description}</ShadCardDescription>
-                        )}
-                    </ShadCardHeader>
-}
-                {children && <ShadCardContent className={!title && !description ? 'pt-6' : ''}>{children}</ShadCardContent>}
-            </div>
-        </ShadCard>
-    );
-});
+            image = '',
+            title = '',
+            description = '',
+        },
+        ref
+    ) => {
+        const clickable = typeof onClick === 'function';
+        return (
+            <ShadCard
+                className={[
+                    {
+                        'sm:flex sm:flex-row sm:items-stretch':
+                            layout === 'horizontal',
+                        'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer':
+                            clickable,
+                    },
+                    className,
+                ]}
+                onClick={onClick}
+                ref={ref}
+            >
+                {image && (
+                    <>
+                        <ShadCardImage
+                            src={image}
+                            className={
+                                layout === 'horizontal' ? 'sm:w-1/3' : ''
+                            }
+                        />
+                    </>
+                )}
+                <div className="flex-grow basis-0">
+                    {(title || description) && (
+                        <ShadCardHeader>
+                            {title && <ShadCardTitle>{title}</ShadCardTitle>}
+                            {description && (
+                                <ShadCardDescription>
+                                    {description}
+                                </ShadCardDescription>
+                            )}
+                        </ShadCardHeader>
+                    )}
+                    {children && (
+                        <ShadCardContent
+                            className={!title && !description ? 'pt-6' : ''}
+                        >
+                            {children}
+                        </ShadCardContent>
+                    )}
+                </div>
+            </ShadCard>
+        );
+    }
+);
 
 Card.propTypes = {
     /**
