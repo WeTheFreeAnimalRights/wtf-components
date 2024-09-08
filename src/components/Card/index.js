@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { CardImage } from './CardImage';
 
-export const Card = ({
+import {
+    Card as ShadCard,
+    CardHeader as ShadCardHeader,
+    CardTitle as ShadCardTitle,
+    CardDescription as ShadCardDescription,
+    CardContent as ShadCardContent,
+    CardImage as ShadCardImage,
+} from '_/components/card';
+
+export const Card = forwardRef(({
     layout = 'vertical',
     onClick,
     className = '',
@@ -12,60 +21,38 @@ export const Card = ({
     image = '',
     title = '',
     description = '',
-}) => {
+},ref ) => {
     const clickable = typeof onClick === 'function';
     return (
-        <>
-            <article
-                className={`${className || ''}
-                    rounded-lg shadow w-full
-                    ${layout === 'horizontal' ? 'sm:flex sm:flex-row items-stretch' : ''}
-                    ${clickable && !highlighted ? 'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer' : ''}
-
-                    ${highlighted ? 'border-4 border-gray-700 dark:border-gray-100 bg-gray-700 dark:bg-gray-100' : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'}
-                    ${clickable && highlighted ? 'hover:bg-gray-600 dark:hover:bg-gray-50 cursor-pointer' : ''}
-                `}
-                onClick={onClick}
-            >
-                {image && (
-                    <CardImage
-                        layout={layout}
+        <ShadCard
+            className={[{
+                'sm:flex sm:flex-row sm:items-stretch': layout === 'horizontal',
+                'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer':
+                    clickable,
+            }, className]}
+            onClick={onClick}
+            ref={ref}
+        >
+            {image && (
+                <>
+                    <ShadCardImage
                         src={image}
-                        name={title}
-                        highlighted={highlighted}
+                        className={layout === 'horizontal' ? 'sm:w-1/3' : ''}
                     />
-                )}
-                <div
-                    className={`
-                        p-4 sm:p-5
-                        ${layout === 'horizontal' ? 'flex-1' : ''}
-                    `}
-                >
-                    {title && (
-                        <h1
-                            className={`
-                            text-xl sm:text-2xl font-semibold leading-none tracking-tight
-                            ${highlighted ? 'text-white dark:text-gray-900' : 'text-gray-900 dark:text-white'}
-                        `}
-                        >
-                            {title}
-                        </h1>
-                    )}
+                </>
+            )}
+            <div className="flex-grow basis-0">
+                <ShadCardHeader>
+                    {title && <ShadCardTitle>{title}</ShadCardTitle>}
                     {description && (
-                        <p
-                            className={`font-normal mt-2 sm:mt-3 text-sm sm:text-md
-                            ${highlighted ? 'text-gray-400 dark:text-gray-700' : 'text-gray-700 dark:text-gray-400'}
-                        `}
-                        >
-                            {description}
-                        </p>
+                        <ShadCardDescription>{description}</ShadCardDescription>
                     )}
-                    {children}
-                </div>
-            </article>
-        </>
+                </ShadCardHeader>
+                {children && <ShadCardContent>{children}</ShadCardContent>}
+            </div>
+        </ShadCard>
     );
-};
+});
 
 Card.propTypes = {
     /**

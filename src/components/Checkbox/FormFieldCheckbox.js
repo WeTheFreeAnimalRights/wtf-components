@@ -9,7 +9,13 @@ import {
     FormMessage,
 } from '_/components/form';
 
-export const FormFieldCheckbox = ({ form, name, label, className, ...props }) => {
+export const FormFieldCheckbox = ({
+    form,
+    name,
+    label,
+    className,
+    ...props
+}) => {
     return (
         <FormField
             control={form.control}

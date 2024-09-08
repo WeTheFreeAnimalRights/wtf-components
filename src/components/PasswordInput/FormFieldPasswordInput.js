@@ -24,10 +24,7 @@ export const FormFieldPasswordInput = ({
                 <FormItem className={className}>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <PasswordInput
-                            {...props}
-                            {...field}
-                        />
+                        <PasswordInput {...props} {...field} />
                     </FormControl>
                     <FormMessage />
                 </FormItem>

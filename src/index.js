@@ -12,7 +12,10 @@ export { Preloader } from './components/Preloader';
 export { Select, FormFieldSelect } from './components/Select';
 export { Separator } from './components/Separator';
 export { Spinner } from './components/Spinner';
-export { PasswordInput, FormFieldPasswordInput } from './components/PasswordInput';
+export {
+    PasswordInput,
+    FormFieldPasswordInput,
+} from './components/PasswordInput';
 export { TextInput, FormFieldTextInput } from './components/TextInput';
 export { ThemeToggle } from './components/ThemeToggle';
 export { Tooltip } from './components/Tooltip';
@@ -36,7 +39,7 @@ export { currentThemeState, translationsState } from './recoilState';
 export { isDarkMode } from './helpers/isDarkMode';
 export { useTranslations } from './hooks/useTranslations';
 export { useTheme } from './hooks/useTheme';
-export { useFormSubmit } from './hooks/useFormSubmit'
+export { useFormSubmit } from './hooks/useFormSubmit';
 
 // Request
 export { fetchRequest } from './helpers/fetchRequest';

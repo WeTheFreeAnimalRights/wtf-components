@@ -1,11 +1,7 @@
-import { useState } from "react";
-import { fetchRequest} from '../helpers/fetchRequest';
+import { useState } from 'react';
+import { fetchRequest } from '../helpers/fetchRequest';
 
-export const useFormSubmit = ({
-    requestObject,
-    onSuccess,
-    onError,
-}) => {
+export const useFormSubmit = ({ requestObject, onSuccess, onError }) => {
     // Form statuses
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -42,4 +38,4 @@ export const useFormSubmit = ({
         loading,
         formSubmit,
     };
-}
+};
