@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '../Button';
 
 // ShadCN
@@ -12,7 +12,7 @@ import {
     DropdownMenuSeparator as ShadDropdownMenuSeparator,
     DropdownMenuItem as ShadDropdownMenuItem,
 } from '_/components/dropdown-menu';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { cn } from '_/lib/utils';
 
 export const DropdownMenu = ({
     label,
@@ -21,25 +21,32 @@ export const DropdownMenu = ({
     icon,
     showArrow = true,
     onSelect,
+    children,
+    className,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <ShadDropdownMenu onOpenChange={() => setIsOpen(!isOpen)} open={isOpen}>
             <ShadDropdownMenuTrigger asChild>
-                <Button variant="outline" className="bg-white dark:bg-gray-700">
-                    {icon}
-                    {label}
-                    {showArrow && (
-                        <>
-                            {isOpen ? (
-                                <ChevronUp className="ms-1" />
-                            ) : (
-                                <ChevronDown className="ms-1" />
-                            )}
-                        </>
-                    )}
-                </Button>
+                {children || (
+                    <Button
+                        variant="outline"
+                        className={cn('bg-white dark:bg-gray-700', className)}
+                    >
+                        {icon}
+                        {label}
+                        {showArrow && (
+                            <>
+                                {isOpen ? (
+                                    <ChevronUp className="ms-1 w-4 h-4" />
+                                ) : (
+                                    <ChevronDown className="ms-1 w-4 h-4" />
+                                )}
+                            </>
+                        )}
+                    </Button>
+                )}
             </ShadDropdownMenuTrigger>
             <ShadDropdownMenuContent className="max-h-72 overflow-auto">
                 {menuLabel && (
@@ -59,7 +66,12 @@ export const DropdownMenu = ({
                         {item.icon}
 
                         <div className="flex flex-col">
-                            <div className="text-md text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white">
+                            <div
+                                className={cn(
+                                    'text-md text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white',
+                                    item.labelClassName
+                                )}
+                            >
                                 {item.label}
                             </div>
                             {item.description && (
@@ -99,7 +111,12 @@ DropdownMenu.propTypes = {
             /**
              * Optional icon for the item
              */
-            icon: PropTypes.elementType,
+            icon: PropTypes.element,
+
+            /**
+             * Optional classname of the label of the item
+             */
+            labelClassName: PropTypes.string,
 
             /**
              * Optional description of the item

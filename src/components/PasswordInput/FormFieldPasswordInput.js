@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { PasswordInput } from './index';
+import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
 import {
@@ -10,12 +12,15 @@ import {
 } from '_/components/form';
 
 export const FormFieldPasswordInput = ({
-    form,
+    form: formParam,
     name,
     label,
     className,
     ...props
 }) => {
+    const standardForm = useContext(StandardFormContext);
+    const form = formParam || standardForm.instance;
+
     return (
         <FormField
             control={form.control}

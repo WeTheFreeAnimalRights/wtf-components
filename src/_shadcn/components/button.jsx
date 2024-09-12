@@ -11,6 +11,7 @@ const buttonVariants = cva(
             variant: {
                 default:
                     'bg-primary text-primary-foreground hover:bg-primary/90',
+                simple: 'bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90',
                 destructive:
                     'bg-destructive text-destructive-foreground hover:bg-destructive/90',
                 outline:
@@ -27,6 +28,7 @@ const buttonVariants = cva(
                 sm: 'h-9 rounded-md px-3',
                 lg: 'h-11 rounded-md px-8',
                 icon: 'h-10 w-10',
+                'small-icon': 'h-8 w-8',
                 auto: 'p-0 h-auto',
                 wide: 'h-10 px-8 py-2',
             },

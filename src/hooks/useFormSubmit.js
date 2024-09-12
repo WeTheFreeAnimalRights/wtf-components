@@ -1,35 +1,28 @@
-import { useState } from 'react';
-import { fetchRequest } from '../helpers/fetchRequest';
+import { useRequest } from './useRequest';
 
-export const useFormSubmit = ({ requestObject, onSuccess, onError }) => {
-    // Form statuses
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+export const useFormSubmit = ({
+    requestObject,
+    onSuccess,
+    onError,
+    options,
+}) => {
+    const { loading, error, request } = useRequest();
+
+    // Whether to send the data to the server
+    const { sendToServer } = options || {};
 
     // Submit method
     const formSubmit = async (values) => {
-        try {
-            // No error and is loading
-            setError(false);
-            setLoading(true);
-
-            // Validate the code
-            const data = await fetchRequest(requestObject(values));
+        if (sendToServer === false) {
+            if (typeof onSuccess === 'function') {
+                onSuccess(values);
+            }
+        } else {
+            const data = await request(requestObject(values), onError);
 
             if (typeof onSuccess === 'function') {
                 onSuccess(data);
             }
-        } catch (error) {
-            console.error(`Error in form submit:`, error);
-
-            if (typeof onError === 'function') {
-                onError(error);
-            }
-
-            // Set the error
-            setError(error.message);
-        } finally {
-            setLoading(false);
         }
     };
 

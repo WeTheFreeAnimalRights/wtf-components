@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from '../Alert';
 import { Spinner } from '../Spinner';
 import { fetchRequest } from '../../helpers/fetchRequest';
+import { cn } from '_/lib/utils';
 
 /**
  * Fetches something and then runs a callback. While fetching, the preloader
@@ -13,7 +14,12 @@ import { fetchRequest } from '../../helpers/fetchRequest';
  *  - validateResponse({ data }): Function that validates the response
  *  - callback({ data }): Function that gets called back when success happens
  */
-export const Preloader = ({ children, requests = [], refetch = [] }) => {
+export const Preloader = ({
+    children,
+    requests = [],
+    refetch = [],
+    className,
+}) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
@@ -66,7 +72,12 @@ export const Preloader = ({ children, requests = [], refetch = [] }) => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-90">
+            <div
+                className={cn(
+                    'flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-900 p-24',
+                    className
+                )}
+            >
                 <Spinner />
             </div>
         );
@@ -74,8 +85,13 @@ export const Preloader = ({ children, requests = [], refetch = [] }) => {
 
     if (error) {
         return (
-            <div className="flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-90">
-                <Alert theme="error" className="mb-4">
+            <div
+                className={cn(
+                    'flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-900 p-24',
+                    className
+                )}
+            >
+                <Alert variant="destructive">
                     {error.message}
                 </Alert>
             </div>

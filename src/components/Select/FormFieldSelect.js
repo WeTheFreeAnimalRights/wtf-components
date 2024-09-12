@@ -1,16 +1,21 @@
+import { useContext } from 'react';
 import { Select } from './index';
+import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
 import { FormField, FormItem, FormLabel, FormMessage } from '_/components/form';
 
 export const FormFieldSelect = ({
-    form,
+    form: formParam,
     name,
     label,
     placeholder,
     options,
     ...props
 }) => {
+    const standardForm = useContext(StandardFormContext);
+    const form = formParam || standardForm.instance;
+
     return (
         <FormField
             control={form.control}
@@ -20,7 +25,7 @@ export const FormFieldSelect = ({
                     <FormLabel>{label}</FormLabel>
                     <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                         options={options}
                         placeholder={placeholder}
                         formControl

@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { RiLockPasswordLine, RiEyeLine, RiEyeOffLine } from 'react-icons/ri';
+import { Eye, EyeOff, LockKeyhole } from 'lucide-react';
 import { TextInput } from '../TextInput';
-import { useState } from 'react';
+import { Button } from '../Button';
 
 export const PasswordInput = forwardRef(
     (
@@ -18,20 +18,25 @@ export const PasswordInput = forwardRef(
 
         const leftContent = !showLock ? undefined : (
             <div className="text-gray-500 dark:text-gray-300">
-                <RiLockPasswordLine />
+                <LockKeyhole className="w-4 h-4" />
             </div>
         );
         const rightContent = !showShowHideButton ? undefined : (
-            <button
-                className="py-2 px-1 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+            <Button
+                variant="ghost"
+                size="small-icon"
                 onClick={(e) => {
                     e.preventDefault();
                     setVisible(!visible);
                 }}
                 type="button"
             >
-                {visible ? <RiEyeLine /> : <RiEyeOffLine />}
-            </button>
+                {visible ? (
+                    <Eye className="w-4 h-4" />
+                ) : (
+                    <EyeOff className="w-4 h-4" />
+                )}
+            </Button>
         );
 
         return (

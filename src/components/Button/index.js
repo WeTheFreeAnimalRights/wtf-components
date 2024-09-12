@@ -36,6 +36,7 @@ Button.propTypes = {
      */
     variant: PropTypes.oneOf([
         'default',
+        'simple',
         'destructive',
         'outline',
         'secondary',
@@ -47,7 +48,15 @@ Button.propTypes = {
     /**
      * The size of the button
      */
-    size: PropTypes.oneOf(['default', 'sm', 'lg', 'icon', 'auto', 'wide']),
+    size: PropTypes.oneOf([
+        'default',
+        'sm',
+        'lg',
+        'icon',
+        'auto',
+        'wide',
+        'small-icon',
+    ]),
 
     /**
      * Use the first child as the tag

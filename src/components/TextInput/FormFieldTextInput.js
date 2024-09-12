@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { TextInput } from './index';
+import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
 import {
@@ -10,7 +12,7 @@ import {
 } from '_/components/form';
 
 export const FormFieldTextInput = ({
-    form,
+    form: formParam,
     name,
     label,
     type = 'text',
@@ -18,6 +20,9 @@ export const FormFieldTextInput = ({
     placeholder,
     ...props
 }) => {
+    const standardForm = useContext(StandardFormContext);
+    const form = formParam || standardForm.instance;
+
     return (
         <FormField
             control={form.control}

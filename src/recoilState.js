@@ -21,3 +21,8 @@ export const currentLanguageState = atom({
     key: 'currentLanguage',
     default: '',
 });
+
+export const confirmState = atom({
+    key: 'confirm',
+    default: {},
+});

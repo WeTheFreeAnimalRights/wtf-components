@@ -36,7 +36,7 @@ export const TextInput = forwardRef(
                     />
 
                     {innerRightContent && (
-                        <div className="absolute end-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
+                        <div className="absolute end-0 top-0 bottom-0 flex flex-row justify-center items-center px-1">
                             {innerRightContent}
                         </div>
                     )}

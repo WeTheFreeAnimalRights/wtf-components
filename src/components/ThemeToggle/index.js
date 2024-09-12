@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { Sun, Moon } from 'lucide-react';
 import { currentThemeState } from '../../recoilState';
-import { BsFillSunFill, BsMoonStarsFill } from 'react-icons/bs';
 import store from 'store2';
 import { useTranslations } from '../../hooks/useTranslations';
 
@@ -31,8 +31,8 @@ export const ThemeToggle = ({ className = '' }) => {
                     return setCurrentTheme('dark');
                 }}
             >
-                {theme === 'dark' && <BsFillSunFill size="16px" />}
-                {theme === 'light' && <BsMoonStarsFill size="16px" />}
+                {theme === 'dark' && <Sun className="w-4 h-4" />}
+                {theme === 'light' && <Moon className="w-4 h-4" />}
             </button>
         </div>
     );

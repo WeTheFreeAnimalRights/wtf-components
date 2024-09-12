@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { CardImage } from './CardImage';
 
 import {
     Card as ShadCard,
@@ -45,6 +44,7 @@ export const Card = forwardRef(
                     <>
                         <ShadCardImage
                             src={image}
+                            alt={title}
                             className={
                                 layout === 'horizontal' ? 'sm:w-1/3' : ''
                             }

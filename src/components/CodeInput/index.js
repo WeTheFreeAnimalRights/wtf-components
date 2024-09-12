@@ -14,13 +14,13 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 export const CodeInput = forwardRef(
     (
         {
-            label,
             value,
             className,
             codeLength = 5,
             onComplete,
             onChange,
             errored = false,
+            ...props
         },
         ref
     ) => {
@@ -29,15 +29,6 @@ export const CodeInput = forwardRef(
 
         return (
             <div className={`${className || ''}`}>
-                {label && (
-                    <label
-                        htmlFor={`input-${inputId}`}
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                        {label}
-                    </label>
-                )}
-
                 <ShadInputOTP
                     maxLength={codeLength}
                     pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
@@ -48,6 +39,7 @@ export const CodeInput = forwardRef(
                     onChange={onChange}
                     value={value}
                     ref={ref}
+                    {...props}
                 >
                     <ShadInputOTPGroup>
                         {maxCodeLengthArr.map((item, index) => (
@@ -65,6 +57,8 @@ export const CodeInput = forwardRef(
         );
     }
 );
+
+export { FormFieldCodeInput } from './FormFieldCodeInput';
 
 CodeInput.propTypes = {
     /**

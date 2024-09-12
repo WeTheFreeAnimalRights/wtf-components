@@ -1,0 +1,186 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "code": "TDL38",
+            "description": "use for lorem ipsum",
+            "is_active": true
+        },
+        {
+            "id": 2,
+            "code": "MD95F",
+            "description": "use for lorem ipsum 2",
+            "is_active": true
+        },
+        {
+            "id": 3,
+            "code": "FP26V",
+            "description": "use for lorem ipsum 3",
+            "is_active": true
+        },
+        {
+            "id": 4,
+            "code": "PF872",
+            "description": "use for lorem ipsum 4",
+            "is_active": false
+        },
+        {
+            "id": 5,
+            "code": "VM3IO",
+            "description": "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "is_active": false
+        },
+        {
+            "id": 6,
+            "code": "GUEST",
+            "description": "Popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "is_active": true
+        },
+        {
+            "id": 7,
+            "code": "FB001",
+            "description": "testing",
+            "is_active": true
+        },
+        {
+            "id": 8,
+            "code": "ALEXA",
+            "description": "Testing 1 code",
+            "is_active": true
+        },
+        {
+            "id": 9,
+            "code": "TEXTI",
+            "description": "testing",
+            "is_active": false
+        },
+        {
+            "id": 10,
+            "code": "JAM01",
+            "description": "my new code for insta posts",
+            "is_active": true
+        },
+        {
+            "id": 11,
+            "code": "WTF01",
+            "description": "to be shared on WTF Instagram bio",
+            "is_active": true
+        },
+        {
+            "id": 12,
+            "code": "WTF02",
+            "description": "to be shared on WTF's facebook posts",
+            "is_active": true
+        },
+        {
+            "id": 13,
+            "code": "WTF03",
+            "description": "to be shared on our website",
+            "is_active": true
+        },
+        {
+            "id": 14,
+            "code": "WTF04",
+            "description": "to be shared on youtube videos",
+            "is_active": true
+        },
+        {
+            "id": 15,
+            "code": "BRI01",
+            "description": "my code for WTF Diamond events in Bristol, UK",
+            "is_active": true
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8000/api/v1/codes?page=1",
+        "last": "http://localhost:8000/api/v1/codes?page=133",
+        "prev": null,
+        "next": "http://localhost:8000/api/v1/codes?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 133,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=2",
+                "label": "2",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=3",
+                "label": "3",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=4",
+                "label": "4",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=5",
+                "label": "5",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=6",
+                "label": "6",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=7",
+                "label": "7",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=8",
+                "label": "8",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=9",
+                "label": "9",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=10",
+                "label": "10",
+                "active": false
+            },
+            {
+                "url": null,
+                "label": "...",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=132",
+                "label": "132",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=133",
+                "label": "133",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1/codes?page=2",
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://localhost:8000/api/v1/codes",
+        "per_page": 15,
+        "to": 15,
+        "total": 1995
+    }
+}
