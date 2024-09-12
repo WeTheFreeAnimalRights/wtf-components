@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { fetchRequest } from '../helpers/fetchRequest';
 
-export const useRequest = ({loadingInit = false} = {}) => {
+export const useRequest = ({ loadingInit = false } = {}) => {
     // Form statuses
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(loadingInit);

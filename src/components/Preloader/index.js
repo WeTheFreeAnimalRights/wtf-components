@@ -91,9 +91,7 @@ export const Preloader = ({
                     className
                 )}
             >
-                <Alert variant="destructive">
-                    {error.message}
-                </Alert>
+                <Alert variant="destructive">{error.message}</Alert>
             </div>
         );
     }

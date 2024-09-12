@@ -48,9 +48,12 @@ export const Primary = () => {
             <Column type="description" name="description">
                 Description
             </Column>
-            <Column type="custom" render={(value, item) => {
-                return 'test' + item.id;
-            }}>
+            <Column
+                type="custom"
+                render={(value, item) => {
+                    return 'test' + item.id;
+                }}
+            >
                 My cusotm column
             </Column>
             <Column

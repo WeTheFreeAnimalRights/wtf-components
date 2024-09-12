@@ -6,7 +6,13 @@ export { Button } from './components/Button';
 export { Card } from './components/Card';
 export { Checkbox, FormFieldCheckbox } from './components/Checkbox';
 export { CodeInput, FormFieldCodeInput } from './components/CodeInput';
-export { DataTable, Column, Filter, Order, Search } from './components/DataTable';
+export {
+    DataTable,
+    Column,
+    Filter,
+    Order,
+    Search,
+} from './components/DataTable';
 export { DropdownMenu } from './components/DropdownMenu';
 export { LanguagePicker } from './components/LanguagePicker';
 export { Modal, ModalTrigger, ModalContainer } from './components/Modal';

@@ -25,7 +25,10 @@ export const parseChildren = (children = []) => {
         if (item.type.displayName === 'Column') {
             columns[props.name] = {
                 ...defaultColumnProps,
-                sortable: props.type === 'custom' ? false : defaultColumnProps.sortable,
+                sortable:
+                    props.type === 'custom'
+                        ? false
+                        : defaultColumnProps.sortable,
                 serverName: snakeCase(props.name),
                 label: itemLabel || props.label || startCase(props.name),
                 ...props,
