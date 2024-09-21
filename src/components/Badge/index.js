@@ -14,6 +14,7 @@ export const Badge = forwardRef(({ className, variant, ...props }, ref) => {
         />
     );
 });
+Badge.displayName = 'Badge';
 
 Badge.propTypes = {
     /**

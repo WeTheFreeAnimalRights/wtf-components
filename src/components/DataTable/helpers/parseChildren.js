@@ -14,6 +14,8 @@ export const parseChildren = (children = []) => {
             text: '',
         },
         filters: {},
+        topRight: null,
+        rowActions: null,
     };
 
     const defaultColumnProps = getDefaultColumnProps();
@@ -30,6 +32,10 @@ export const parseChildren = (children = []) => {
                         ? false
                         : defaultColumnProps.sortable,
                 serverName: snakeCase(props.name),
+                headerClassName:
+                    typeof props.headerClassName !== 'undefined'
+                        ? props.headerClassName
+                        : props.className,
                 label: itemLabel || props.label || startCase(props.name),
                 ...props,
             };
@@ -54,6 +60,17 @@ export const parseChildren = (children = []) => {
         if (item.type.displayName === 'Search') {
             meta.search.visible = true;
             meta.search.text = itemLabel;
+        }
+
+        if (item.type.displayName === 'TopRight') {
+            meta.topRight = {
+                children: itemLabel,
+                className: props.className,
+            };
+        }
+
+        if (item.type.displayName === 'RowActions') {
+            meta.rowActions = props.render;
         }
     });
 

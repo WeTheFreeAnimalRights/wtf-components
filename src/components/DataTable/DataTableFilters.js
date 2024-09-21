@@ -26,7 +26,7 @@ export const DataTableFilters = ({ meta, filters, onFiltersApplied }) => {
             open={filtersOpen}
         >
             <PopoverTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="ms-3">
                     <Filter className="w-4 h-4 me-2" />
                     {t('filters')}
                     {filtersCount > 0 && (
@@ -36,7 +36,7 @@ export const DataTableFilters = ({ meta, filters, onFiltersApplied }) => {
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent align="end">
+            <PopoverContent>
                 <GeneratedStandardForm
                     schema={filters}
                     options={{

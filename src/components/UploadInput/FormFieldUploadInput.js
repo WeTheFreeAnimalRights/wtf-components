@@ -9,6 +9,7 @@ import {
     FormControl,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from '_/components/form';
 
 export const FormFieldUploadInput = ({
@@ -17,6 +18,7 @@ export const FormFieldUploadInput = ({
     label,
     currentImage,
     className,
+    description,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -36,6 +38,9 @@ export const FormFieldUploadInput = ({
                             {...field}
                         />
                     </FormControl>
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormMessage />
                 </FormItem>
             )}

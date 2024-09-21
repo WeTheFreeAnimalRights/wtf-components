@@ -74,7 +74,7 @@ export const Preloader = ({
         return (
             <div
                 className={cn(
-                    'flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-900 p-24',
+                    'flex justify-center items-center w-screen h-screen bg-background p-24',
                     className
                 )}
             >
@@ -87,7 +87,7 @@ export const Preloader = ({
         return (
             <div
                 className={cn(
-                    'flex justify-center items-center w-screen h-screen bg-gray-50 dark:bg-gray-900 p-24',
+                    'flex justify-center items-center w-screen h-screen bg-background p-24',
                     className
                 )}
             >

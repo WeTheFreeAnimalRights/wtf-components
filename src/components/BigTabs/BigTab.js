@@ -12,6 +12,7 @@ export const BigTab = ({ visible, children }) => (
         {children}
     </div>
 );
+BigTab.displayName = 'BigTab';
 
 BigTab.propTypes = {
     /**

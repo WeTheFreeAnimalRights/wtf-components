@@ -27,12 +27,14 @@ export const Modal = ({
     showCloseButton = true,
     setWidth = true,
     overflow = false,
+    onClick,
 }) => {
     return (
         <ShadDialogContent
             className={className}
             showCloseButton={showCloseButton}
             setWidth={setWidth}
+            onClick={onClick}
         >
             {title && (
                 <ShadDialogHeader>

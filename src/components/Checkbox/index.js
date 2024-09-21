@@ -7,6 +7,7 @@ import { Checkbox as ShadCheckbox } from '_/components/checkbox';
 export const Checkbox = forwardRef(({ className, ...props }, ref) => {
     return <ShadCheckbox ref={ref} className={className} {...props} />;
 });
+Checkbox.displayName = 'Checkbox';
 
 export { FormFieldCheckbox } from './FormFieldCheckbox';
 

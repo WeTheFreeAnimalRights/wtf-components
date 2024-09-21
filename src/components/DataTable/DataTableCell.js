@@ -6,16 +6,16 @@ import { Badge } from '../Badge';
 import { TableCell } from '_/components/table';
 
 export const DataTableCell = ({ field, item, onClick }) => {
-    const value = item[field.name];
+    const value = renderCell(field, item);
 
     return (
         <TableCell className={field.className} onClick={onClick}>
-            {(field.type === 'id' && (
+            {(field.type === 'badge' && (
                 <Badge variant="secondary" className="inline-block">
                     {value}
                 </Badge>
             )) ||
-                (field.type === 'description' && (
+                (field.type === 'small-text' && (
                     <div className="text-xs line-clamp-2">{value || '-'}</div>
                 )) ||
                 (field.type === 'boolean' &&
@@ -24,7 +24,7 @@ export const DataTableCell = ({ field, item, onClick }) => {
                     ) : (
                         <X className="inline-block" />
                     ))) ||
-                renderCell(field, item)}
+                value}
         </TableCell>
     );
 };

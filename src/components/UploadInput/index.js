@@ -62,7 +62,7 @@ export const UploadInput = forwardRef(
                 )}
                 <div {...getRootProps({ className: '' })}>
                     <input ref={ref} {...getInputProps()} {...props} />
-                    <Button onClick={() => open()} className="w-full">
+                    <Button onClick={() => open()} className="w-32" variant="outline">
                         {isThereImage ? t('change') : t('upload')}
                     </Button>
                 </div>

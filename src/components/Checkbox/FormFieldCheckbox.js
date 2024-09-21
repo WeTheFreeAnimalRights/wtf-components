@@ -9,6 +9,7 @@ import {
     FormControl,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from '_/components/form';
 
 export const FormFieldCheckbox = ({
@@ -16,6 +17,7 @@ export const FormFieldCheckbox = ({
     name,
     label,
     className,
+    description,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -40,6 +42,9 @@ export const FormFieldCheckbox = ({
                         />
                     </FormControl>
                     <FormLabel>{label}</FormLabel>
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormMessage />
                 </FormItem>
             )}

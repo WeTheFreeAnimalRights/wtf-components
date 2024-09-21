@@ -19,9 +19,15 @@ export const getStandardRequestObject = (requestObject, standardSchema) => {
     }
 
     return (values) => {
+        // Make the body
+        let body = getStandardRequestBody(standardSchema, values);
+        if (typeof requestObject.parseStandardBody === 'function') {
+            body = requestObject.parseStandardBody(body);
+        }
+
         return {
             ...requestObject,
-            body: getStandardRequestBody(standardSchema, values),
+            body,
         };
     };
 };

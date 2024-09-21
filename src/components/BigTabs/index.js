@@ -47,6 +47,7 @@ export const BigTabs = ({ children }) => {
         </>
     );
 };
+BigTabs.displayName = 'BigTabs';
 
 BigTabs.propTypes = {};
 

@@ -8,9 +8,11 @@ export const Column = ({
     sortable,
     label,
     className,
+    headerClassName,
     defaultOrderBy,
     children,
     render,
+    handleClick,
     ...props
 }) => {
     return null;

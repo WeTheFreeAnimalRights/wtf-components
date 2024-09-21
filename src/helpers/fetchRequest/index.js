@@ -30,7 +30,11 @@ export const fetchRequest = async (requestConfig = {}) => {
     });
 
     // Parse the response
-    const data = await response.json();
+    if (requestConfig.blob) {
+        data = await response.blob();
+    } else {
+        data = await response.json();
+    }
 
     // If the status code is bigger than 400, then probably an error
     if (response.status >= 400) {

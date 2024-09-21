@@ -40,3 +40,4 @@ export const Confirm = () => {
         </ModalContainer>
     );
 };
+Confirm.displayName = 'Confirm';

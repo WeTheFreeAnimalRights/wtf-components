@@ -22,6 +22,7 @@ export const useActions = () => {
         });
     }
     if (canRemove) {
+        actions.push({ separator: true });
         actions.push({
             label: t('remove'),
             action: 'remove',

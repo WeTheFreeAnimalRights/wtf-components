@@ -9,6 +9,7 @@ import {
     CardContent as ShadCardContent,
     CardImage as ShadCardImage,
 } from '_/components/card';
+import { cn } from '_/lib/utils';
 
 export const Card = forwardRef(
     (
@@ -16,6 +17,8 @@ export const Card = forwardRef(
             layout = 'vertical',
             onClick,
             className = '',
+            headerClassName = '',
+            contentClassName = '',
             highlighted = false,
             children,
 
@@ -53,7 +56,7 @@ export const Card = forwardRef(
                 )}
                 <div className="flex-grow basis-0">
                     {(title || description) && (
-                        <ShadCardHeader>
+                        <ShadCardHeader className={headerClassName}>
                             {title && <ShadCardTitle>{title}</ShadCardTitle>}
                             {description && (
                                 <ShadCardDescription>
@@ -64,7 +67,10 @@ export const Card = forwardRef(
                     )}
                     {children && (
                         <ShadCardContent
-                            className={!title && !description ? 'pt-6' : ''}
+                            className={cn(
+                                !title && !description ? 'pt-6' : '',
+                                contentClassName
+                            )}
                         >
                             {children}
                         </ShadCardContent>
@@ -74,6 +80,7 @@ export const Card = forwardRef(
         );
     }
 );
+Card.displayName = 'Card';
 
 Card.propTypes = {
     /**
@@ -94,7 +101,7 @@ Card.propTypes = {
     /**
      * Title to be shown on the card component
      */
-    title: PropTypes.string,
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
     /**
      * Description to be shown on the card component
@@ -110,4 +117,14 @@ Card.propTypes = {
      * Optional extra classname to the card
      */
     className: PropTypes.string,
+
+    /**
+     * Optional extra classname to the card header
+     */
+    headerClassName: PropTypes.string,
+
+    /**
+     * Optional extra classname to the card content
+     */
+    contentClassName: PropTypes.string,
 };

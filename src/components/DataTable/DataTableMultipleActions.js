@@ -9,6 +9,8 @@ import { DataTableSearch } from './DataTableSearch';
 import { useConfirm } from '../Confirm/useConfirm';
 import { DataTableContext } from './index';
 
+import { cn } from '_/lib/utils';
+
 export const DataTableMultipleActions = ({
     meta = {},
     selectedItems = [],
@@ -31,7 +33,7 @@ export const DataTableMultipleActions = ({
     const actions = useMultipleActions();
 
     return (
-        <div className="flex flex-row items-center mb-4">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center mb-4">
             <div className="flex flex-row flex-grow basis-0 items-center">
                 {multiple && canRemove && selectedItems.length > 0 && (
                     <>
@@ -40,7 +42,7 @@ export const DataTableMultipleActions = ({
                             label={t('with-selected')}
                             items={actions}
                             menuLabel={t('actions')}
-                            className="me-4"
+                            className="me-3 bg-transparent dark:bg-transparent"
                             onSelect={(action) => {
                                 if (action.action === 'remove-selected') {
                                     confirm({
@@ -71,15 +73,23 @@ export const DataTableMultipleActions = ({
                 )}
 
                 <DataTableSearch meta={meta} onSearch={onSearch} />
-            </div>
-
-            <div className="flex flex-shrink justify-end basis-0">
                 <DataTableFilters
                     meta={meta}
                     filters={filters}
                     onFiltersApplied={onFiltersApplied}
                 />
             </div>
+
+            {meta.topRight && (
+                <div
+                    className={cn(
+                        'flex sm:flex-shrink justify-end basis-0  mb-3 sm:mb-0',
+                        meta.topRight.className
+                    )}
+                >
+                    {meta.topRight.children}
+                </div>
+            )}
         </div>
     );
 };

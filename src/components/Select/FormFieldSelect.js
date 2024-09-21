@@ -3,7 +3,13 @@ import { Select } from './index';
 import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
-import { FormField, FormItem, FormLabel, FormMessage } from '_/components/form';
+import {
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    FormDescription,
+} from '_/components/form';
 
 export const FormFieldSelect = ({
     form: formParam,
@@ -11,6 +17,7 @@ export const FormFieldSelect = ({
     label,
     placeholder,
     options,
+    description,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -31,6 +38,9 @@ export const FormFieldSelect = ({
                         formControl
                         {...props}
                     />
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormMessage />
                 </FormItem>
             )}

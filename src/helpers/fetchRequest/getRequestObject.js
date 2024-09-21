@@ -1,3 +1,4 @@
+import { isArray } from 'lodash';
 import { getUrl } from './api/getUrl';
 /**
  * Form the request object to be sent to the fetch method
@@ -18,6 +19,10 @@ export const getRequestObject = (requestConfig) => {
 
     // Form the url
     let url = getUrl(requestConfig.url, requestConfig.api || 'public');
+    if (isArray(requestConfig.segments)) {
+        // If there is any suffix to the url
+        url += '/' + requestConfig.segments.join('/');
+    }
     if (typeof requestConfig.params === 'object') {
         const urlParams = new URLSearchParams();
         for (const param in requestConfig.params) {

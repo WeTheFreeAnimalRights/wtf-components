@@ -53,7 +53,7 @@ export const Select = forwardRef(
                                 key={`option-${item.value}`}
                                 value={item.value}
                             >
-                                {item.label || item.value}
+                                {item.label || item.name || item.value}
                             </ShadSelectItem>
                         ))}
                     </ShadSelectGroup>

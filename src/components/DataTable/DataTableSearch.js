@@ -44,6 +44,7 @@ export const DataTableSearch = ({ meta, onSearch }) => {
                     </Button>
                 }
                 value={text}
+                className="w-full sm:w-auto"
                 onChange={(e) => setText(e.target.value)}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {

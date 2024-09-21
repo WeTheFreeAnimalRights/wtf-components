@@ -30,6 +30,7 @@ export const Alert = ({
         </ShadAlert>
     );
 };
+Alert.displayName = 'Alert';
 
 Alert.propTypes = {
     /**

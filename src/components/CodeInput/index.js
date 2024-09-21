@@ -57,6 +57,7 @@ export const CodeInput = forwardRef(
         );
     }
 );
+CodeInput.displayName = 'CodeInput';
 
 export { FormFieldCodeInput } from './FormFieldCodeInput';
 

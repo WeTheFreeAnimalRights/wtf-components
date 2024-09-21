@@ -9,7 +9,7 @@ import { parseChildren } from './helpers/parseChildren';
 import { EmptyDataTable } from './EmptyDataTable';
 
 // ShadCN
-import { Table } from '_/components/table';
+import { Table, TableCaption } from '_/components/table';
 
 // Create a context to pass the form object
 export const DataTableContext = createContext(null);
@@ -18,6 +18,7 @@ export const DataTable = ({
     data,
     pagination,
     onItemAction,
+    onItemClick,
     onMultipleAction,
     onPageChange,
     onFiltersApplied,
@@ -27,6 +28,7 @@ export const DataTable = ({
     children,
     multiple,
     permissions,
+    render,
 }) => {
     const { t } = useTranslations();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -49,32 +51,54 @@ export const DataTable = ({
                 onFiltersApplied={onFiltersApplied}
                 onSearch={onSearch}
             />
-            <div className="rounded-md border">
-                <Table>
-                    {data.length > 0 ? (
-                        <>
-                            <DataTableHeader
-                                columns={columns}
-                                meta={meta}
-                                data={data}
-                                selectedItems={selectedItems}
-                                onSelectedItemsChange={setSelectedItems}
-                                onSortingChange={onSortingChange}
-                            />
-                            <DataTableContent
-                                columns={columns}
-                                meta={meta}
-                                data={data}
-                                selectedItems={selectedItems}
-                                onSelectedItemsChange={setSelectedItems}
-                                onItemAction={onItemAction}
-                            />
-                        </>
-                    ) : (
-                        <EmptyDataTable />
-                    )}
-                </Table>
-            </div>
+            {typeof render === 'function' ? (
+                data.length > 0 ? (
+                    render({
+                        data,
+                        columns,
+                        meta,
+                        pagination,
+                        selectedItems,
+                        onSelectedItemsChange: setSelectedItems,
+                        onSortingChange,
+                        onItemAction,
+                        onItemClick,
+                    })
+                ) : (
+                    <EmptyDataTable />
+                )
+            ) : (
+                <div className="rounded-md border">
+                    <Table>
+                        {data.length > 0 ? (
+                            <>
+                                <DataTableHeader
+                                    columns={columns}
+                                    meta={meta}
+                                    data={data}
+                                    selectedItems={selectedItems}
+                                    onSelectedItemsChange={setSelectedItems}
+                                    onSortingChange={onSortingChange}
+                                />
+                                <DataTableContent
+                                    columns={columns}
+                                    meta={meta}
+                                    data={data}
+                                    pagination={pagination}
+                                    selectedItems={selectedItems}
+                                    onSelectedItemsChange={setSelectedItems}
+                                    onItemAction={onItemAction}
+                                    onItemClick={onItemClick}
+                                />
+                            </>
+                        ) : (
+                            <TableCaption>
+                                <EmptyDataTable />
+                            </TableCaption>
+                        )}
+                    </Table>
+                </div>
+            )}
 
             <div className="flex flex-row items-center justify-end space-x-2 mt-4">
                 <div className="flex-1 text-sm text-muted-foreground">
@@ -98,8 +122,11 @@ export const DataTable = ({
         </DataTableContext.Provider>
     );
 };
+DataTable.displayName = 'DataTable';
 
 export { Column } from './definitions/Column';
 export { Filter } from './definitions/Filter';
 export { Order } from './definitions/Order';
 export { Search } from './definitions/Search';
+export { TopRight } from './definitions/TopRight';
+export { RowActions } from './definitions/RowActions';

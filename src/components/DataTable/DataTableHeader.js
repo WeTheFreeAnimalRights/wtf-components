@@ -53,36 +53,43 @@ export const DataTableHeader = ({
     return (
         <TableHeader>
             <TableRow>
-                {multiple && canRemove && (
-                    <TableHead className="w-[50px]">
-                        <Tooltip
-                            message={
-                                selectedItems.length === data.length
-                                    ? t('unselect-all')
-                                    : t('select-all')
-                            }
-                        >
-                            <Checkbox
-                                checked={selectedItems.length === data.length}
-                                onCheckedChange={() => {
-                                    if (selectedItems.length === data.length) {
-                                        onSelectedItemsChange([]);
-                                    } else {
-                                        onSelectedItemsChange([...data]);
-                                    }
-                                }}
-                                aria-label={
-                                    selectedItems.length === data.length
-                                        ? t('unselect-all')
-                                        : t('select-all')
-                                }
-                            />
-                        </Tooltip>
-                    </TableHead>
-                )}
+                <TableHead className="w-[50px]">
+                    {multiple
+                        ? canRemove && (
+                              <Tooltip
+                                  message={
+                                      selectedItems.length === data.length
+                                          ? t('unselect-all')
+                                          : t('select-all')
+                                  }
+                              >
+                                  <Checkbox
+                                      checked={
+                                          selectedItems.length === data.length
+                                      }
+                                      onCheckedChange={() => {
+                                          if (
+                                              selectedItems.length ===
+                                              data.length
+                                          ) {
+                                              onSelectedItemsChange([]);
+                                          } else {
+                                              onSelectedItemsChange([...data]);
+                                          }
+                                      }}
+                                      aria-label={
+                                          selectedItems.length === data.length
+                                              ? t('unselect-all')
+                                              : t('select-all')
+                                      }
+                                  />
+                              </Tooltip>
+                          )
+                        : t('No.')}
+                </TableHead>
                 {columnsList.map((column) => (
                     <TableHead
-                        className={column.className}
+                        className={column.headerClassName}
                         key={`column-${column.name}`}
                     >
                         {column.sortable ? (

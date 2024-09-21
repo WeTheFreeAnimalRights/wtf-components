@@ -9,6 +9,7 @@ import {
     FormControl,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from '_/components/form';
 
 export const FormFieldSwitch = ({
@@ -16,6 +17,7 @@ export const FormFieldSwitch = ({
     name,
     label,
     className,
+    description,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -40,6 +42,9 @@ export const FormFieldSwitch = ({
                         />
                     </FormControl>
                     <FormLabel>{label}</FormLabel>
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormMessage />
                 </FormItem>
             )}

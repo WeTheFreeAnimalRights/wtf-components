@@ -9,6 +9,7 @@ import {
     FormControl,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from '_/components/form';
 
 export const FormFieldTextInput = ({
@@ -18,6 +19,7 @@ export const FormFieldTextInput = ({
     type = 'text',
     className,
     placeholder,
+    description,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -38,6 +40,9 @@ export const FormFieldTextInput = ({
                             {...field}
                         />
                     </FormControl>
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormMessage />
                 </FormItem>
             )}

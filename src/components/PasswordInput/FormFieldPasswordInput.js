@@ -9,6 +9,7 @@ import {
     FormControl,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from '_/components/form';
 
 export const FormFieldPasswordInput = ({
@@ -16,6 +17,7 @@ export const FormFieldPasswordInput = ({
     name,
     label,
     className,
+    description,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -31,6 +33,9 @@ export const FormFieldPasswordInput = ({
                     <FormControl>
                         <PasswordInput {...props} {...field} />
                     </FormControl>
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormMessage />
                 </FormItem>
             )}

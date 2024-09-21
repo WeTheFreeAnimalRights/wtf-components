@@ -23,6 +23,7 @@ export const DropdownMenu = ({
     onSelect,
     children,
     className,
+    align = "center",
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -48,7 +49,7 @@ export const DropdownMenu = ({
                     </Button>
                 )}
             </ShadDropdownMenuTrigger>
-            <ShadDropdownMenuContent className="max-h-72 overflow-auto">
+            <ShadDropdownMenuContent className="max-h-72 overflow-auto" align={align}>
                 {menuLabel && (
                     <>
                         <ShadDropdownMenuLabel>
@@ -57,31 +58,35 @@ export const DropdownMenu = ({
                         <ShadDropdownMenuSeparator />
                     </>
                 )}
-                {items.map((item, index) => (
-                    <ShadDropdownMenuItem
-                        className="cursor-pointer"
-                        key={`item-${index}`}
-                        onSelect={() => onSelect(item)}
-                    >
-                        {item.icon}
+                {items.map((item, index) =>
+                    item.separator ? (
+                        <ShadDropdownMenuSeparator key={`separator-${index}`} />
+                    ) : (
+                        <ShadDropdownMenuItem
+                            className="cursor-pointer"
+                            key={`item-${index}`}
+                            onSelect={() => onSelect(item)}
+                        >
+                            {item.icon}
 
-                        <div className="flex flex-col">
-                            <div
-                                className={cn(
-                                    'text-md text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white',
-                                    item.labelClassName
-                                )}
-                            >
-                                {item.label}
-                            </div>
-                            {item.description && (
-                                <div className="text-xs text-gray-400 group-hover:text-gray-300 dark:text-gray-600">
-                                    {item.description}
+                            <div className="flex flex-col">
+                                <div
+                                    className={cn(
+                                        'text-md text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white',
+                                        item.labelClassName
+                                    )}
+                                >
+                                    {item.label}
                                 </div>
-                            )}
-                        </div>
-                    </ShadDropdownMenuItem>
-                ))}
+                                {item.description && (
+                                    <div className="text-xs text-gray-400 group-hover:text-gray-300 dark:text-gray-600">
+                                        {item.description}
+                                    </div>
+                                )}
+                            </div>
+                        </ShadDropdownMenuItem>
+                    )
+                )}
             </ShadDropdownMenuContent>
         </ShadDropdownMenu>
     );
@@ -106,7 +111,12 @@ DropdownMenu.propTypes = {
             /**
              * Label of the item
              */
-            label: PropTypes.string.isRequired,
+            label: PropTypes.string,
+
+            /**
+             * If the item is a separator
+             */
+            separator: PropTypes.bool,
 
             /**
              * Optional icon for the item

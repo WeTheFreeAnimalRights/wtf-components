@@ -41,11 +41,11 @@ export const Primary = () => {
             <Order field="id" order="asc" />
             <Search>test232</Search>
 
-            <Column name="id" type="id" className="w-[100px] text-start">
+            <Column name="id" type="badge" className="w-[100px] text-start">
                 ID
             </Column>
             <Column name="code">Code</Column>
-            <Column type="description" name="description">
+            <Column type="small-text" name="description">
                 Description
             </Column>
             <Column
