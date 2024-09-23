@@ -1,5 +1,4 @@
 import React, { useState, createContext } from 'react';
-import { isEmpty } from 'lodash';
 import { DataTableHeader } from './DataTableHeader';
 import { DataTableContent } from './DataTableContent';
 import { DataTableMultipleActions } from './DataTableMultipleActions';

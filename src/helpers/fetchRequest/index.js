@@ -30,6 +30,7 @@ export const fetchRequest = async (requestConfig = {}) => {
     });
 
     // Parse the response
+    let data;
     if (requestConfig.blob) {
         data = await response.blob();
     } else {

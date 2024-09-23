@@ -1,5 +1,4 @@
-import { isArray, isString, snakeCase, startCase } from 'lodash';
-import { getDefaultColumnProps } from './getDefaultColumnProps';
+import { isArray, isString } from 'lodash';
 
 // Definitions
 import { StandardCheckbox } from '../definitions/StandardCheckbox';
