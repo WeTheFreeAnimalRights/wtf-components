@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Alert } from '../Alert';
-import { Spinner } from '../Spinner';
 import { fetchRequest } from '../../helpers/fetchRequest';
-import { cn } from '_/lib/utils';
+import { PreloaderStates } from './PreloaderStates';
 
 /**
  * Fetches something and then runs a callback. While fetching, the preloader
@@ -19,6 +17,7 @@ export const Preloader = ({
     requests = [],
     refetch = [],
     className,
+    render,
 }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -34,6 +33,9 @@ export const Preloader = ({
         };
 
         const fetchData = async () => {
+            // Set the loading as true
+            setLoading(true);
+
             let requestConfig;
             try {
                 for (requestConfig of requests) {
@@ -70,33 +72,16 @@ export const Preloader = ({
         fetchData();
     }, refetch);
 
-    if (loading) {
-        return (
-            <div
-                className={cn(
-                    'flex justify-center items-center w-screen h-screen bg-background p-24',
-                    className
-                )}
-            >
-                <Spinner />
-            </div>
-        );
+    // Perhaps there is a method on how to render
+    if (typeof render === 'function') {
+        return render({ loading, error, className, children });
     }
 
-    if (error) {
-        return (
-            <div
-                className={cn(
-                    'flex justify-center items-center w-screen h-screen bg-background p-24',
-                    className
-                )}
-            >
-                <Alert variant="destructive">{error.message}</Alert>
-            </div>
-        );
-    }
-
-    return children;
+    return (
+        <PreloaderStates loading={loading} error={error} className={className}>
+            {children}
+        </PreloaderStates>
+    );
 };
 
 Preloader.propTypes = {
@@ -160,4 +145,12 @@ Preloader.propTypes = {
      * An array of items used by the react's `useEffect` to know whether to refetch all the supplied requests or not
      */
     refetch: PropTypes.array,
+
+    /**
+     * Redo how the rendering is done
+     */
+    render: PropTypes.func,
 };
+
+export {PreloaderStates} from './PreloaderStates';
+export {PreloaderOutlet} from './PreloaderOutlet';

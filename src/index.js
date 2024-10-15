@@ -28,7 +28,7 @@ export {
     FormFieldPasswordInput,
 } from './components/PasswordInput';
 export { Popover, PopoverContent, PopoverTrigger } from './components/Popover';
-export { Preloader } from './components/Preloader';
+export { Preloader, PreloaderStates, PreloaderOutlet } from './components/Preloader';
 export { Resource } from './components/Resource';
 export { Select, FormFieldSelect } from './components/Select';
 export { Separator } from './components/Separator';
@@ -135,6 +135,7 @@ export { filtersDecode } from './helpers/filtersDecode';
 export { getServerFilters } from './helpers/getServerFilters';
 export { parseResources } from './helpers/parseResources';
 export { parseResourceFeedbackOptions } from './helpers/parseResourceFeedbackOptions';
+export { replaceElement } from './helpers/replaceElement';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
