@@ -10,6 +10,7 @@ import {
     CardImage as ShadCardImage,
 } from '_/components/card';
 import { cn } from '_/lib/utils';
+import { CardActiveTitle } from './CardActiveTitle';
 
 export const Card = forwardRef(
     (
@@ -19,47 +20,85 @@ export const Card = forwardRef(
             className = '',
             headerClassName = '',
             contentClassName = '',
+            imageClassName = '',
+            size = 'md',
             highlighted = false,
             children,
 
             image = '',
             title = '',
+            active,
+            activeLabels,
             description = '',
+            customizer = false,
         },
         ref
     ) => {
         const clickable = typeof onClick === 'function';
         return (
             <ShadCard
-                className={[
-                    {
-                        'sm:flex sm:flex-row sm:items-stretch':
-                            layout === 'horizontal',
-                        'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer':
-                            clickable,
-                    },
-                    className,
-                ]}
+                className={cn(
+                    layout === 'horizontal'
+                        ? size === 'sm'
+                            ? 'flex flex-row items-stretch'
+                            : 'sm:flex sm:flex-row sm:items-stretch'
+                        : '',
+                    clickable
+                        ? 'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'
+                        : '',
+                    className
+                )}
                 onClick={onClick}
                 ref={ref}
+                customizer={customizer}
             >
                 {image && (
                     <>
                         <ShadCardImage
                             src={image}
                             alt={title}
-                            className={
-                                layout === 'horizontal' ? 'sm:w-1/3' : ''
-                            }
+                            className={cn(
+                                imageClassName,
+                                layout === 'horizontal'
+                                    ? size === 'md'
+                                        ? 'sm:w-1/3'
+                                        : 'w-1/4'
+                                    : ''
+                            )}
+                            customizer={customizer}
                         />
                     </>
                 )}
                 <div className="flex-grow basis-0">
                     {(title || description) && (
-                        <ShadCardHeader className={headerClassName}>
-                            {title && <ShadCardTitle>{title}</ShadCardTitle>}
+                        <ShadCardHeader
+                            className={headerClassName}
+                            size={size}
+                            layout={layout}
+                            customizer={customizer}
+                        >
+                            {title && (
+                                <ShadCardTitle
+                                    size={size}
+                                    customizer={customizer}
+                                >
+                                    {typeof active === 'undefined' ? (
+                                        title
+                                    ) : (
+                                        <CardActiveTitle
+                                            active={active}
+                                            labels={activeLabels}
+                                        >
+                                            {title}
+                                        </CardActiveTitle>
+                                    )}
+                                </ShadCardTitle>
+                            )}
                             {description && (
-                                <ShadCardDescription>
+                                <ShadCardDescription
+                                    size={size}
+                                    customizer={customizer}
+                                >
                                     {description}
                                 </ShadCardDescription>
                             )}
@@ -68,9 +107,14 @@ export const Card = forwardRef(
                     {children && (
                         <ShadCardContent
                             className={cn(
-                                !title && !description ? 'pt-6' : '',
+                                !title && !description
+                                    ? size === 'md'
+                                        ? 'pt-6'
+                                        : 'pt-3'
+                                    : '',
                                 contentClassName
                             )}
+                            size={size}
                         >
                             {children}
                         </ShadCardContent>
@@ -117,6 +161,16 @@ Card.propTypes = {
      * Optional extra classname to the card
      */
     className: PropTypes.string,
+
+    /**
+     * Optional size of the card
+     */
+    size: PropTypes.oneOf(['sm', 'md']),
+
+    /**
+     * Optional to show a checkbox if the item is active or not
+     */
+    active: PropTypes.bool,
 
     /**
      * Optional extra classname to the card header

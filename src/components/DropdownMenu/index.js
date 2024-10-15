@@ -23,12 +23,12 @@ export const DropdownMenu = ({
     onSelect,
     children,
     className,
-    align = "center",
+    align = 'center',
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <ShadDropdownMenu onOpenChange={() => setIsOpen(!isOpen)} open={isOpen}>
+        <ShadDropdownMenu onOpenChange={setIsOpen} open={isOpen}>
             <ShadDropdownMenuTrigger asChild>
                 {children || (
                     <Button
@@ -49,7 +49,10 @@ export const DropdownMenu = ({
                     </Button>
                 )}
             </ShadDropdownMenuTrigger>
-            <ShadDropdownMenuContent className="max-h-72 overflow-auto" align={align}>
+            <ShadDropdownMenuContent
+                className="max-h-72 overflow-auto"
+                align={align}
+            >
                 {menuLabel && (
                     <>
                         <ShadDropdownMenuLabel>
@@ -65,7 +68,10 @@ export const DropdownMenu = ({
                         <ShadDropdownMenuItem
                             className="cursor-pointer"
                             key={`item-${index}`}
-                            onSelect={() => onSelect(item)}
+                            onSelect={(e) => {
+                                onSelect(item, e);
+                            }}
+                            onClick={(e) => e.stopPropagation()}
                         >
                             {item.icon}
 

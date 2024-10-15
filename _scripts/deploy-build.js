@@ -2,6 +2,7 @@ const fs = require('fs');
 const { Client } = require('node-scp');
 require('dotenv').config();
 
+console.log(`Uploading the build to "${process.env.SCP_HOST}"...`);
 Client({
     host: process.env.SCP_HOST,
     port: process.env.SCP_PORT || 22,

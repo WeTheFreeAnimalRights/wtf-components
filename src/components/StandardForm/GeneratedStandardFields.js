@@ -6,8 +6,10 @@ import { FormFieldPasswordInput } from '../PasswordInput';
 import { FormFieldSwitch } from '../Switch';
 import { FormFieldCheckbox } from '../Checkbox';
 import { FormFieldTextarea } from '../Textarea';
+import { FormFieldDatePicker } from '../DatePicker';
 import { FormFieldUploadInput } from '../UploadInput';
 import { getGeneratedStandardFieldProps } from './helpers/getGeneratedStandardFieldProps';
+import { FormFieldNumberInput } from '../NumberInput';
 
 export const GeneratedStandardFields = ({ fields = [], loading, error }) => {
     return fields.map((fieldSchema) => {
@@ -54,6 +56,24 @@ export const GeneratedStandardFields = ({ fields = [], loading, error }) => {
                 return (
                     <FormFieldTextarea
                         key={`textarea-${fieldSchema.name}`}
+                        name={fieldSchema.name}
+                        disabled={loading}
+                        {...props}
+                    />
+                );
+            case 'datepicker':
+                return (
+                    <FormFieldDatePicker
+                        key={`datepicker-${fieldSchema.name}`}
+                        name={fieldSchema.name}
+                        disabled={loading}
+                        {...props}
+                    />
+                );
+            case 'number':
+                return (
+                    <FormFieldNumberInput
+                        key={`number-${fieldSchema.name}`}
                         name={fieldSchema.name}
                         disabled={loading}
                         {...props}

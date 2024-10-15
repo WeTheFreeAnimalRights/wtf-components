@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UploadInput } from './index';
+import { NumberInput } from './index';
 import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
@@ -12,12 +12,12 @@ import {
     FormDescription,
 } from '_/components/form';
 
-export const FormFieldUploadInput = ({
+export const FormFieldNumberInput = ({
     form: formParam,
     name,
     label,
-    currentImage,
     className,
+    placeholder,
     description,
     ...props
 }) => {
@@ -28,18 +28,14 @@ export const FormFieldUploadInput = ({
         <FormField
             control={form.control}
             name={name}
-            render={({ field: { value, onChange, ...fieldProps } }) => (
+            render={({ field }) => (
                 <FormItem className={className}>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <UploadInput
-                            currentImage={currentImage}
+                        <NumberInput
+                            placeholder={placeholder}
                             {...props}
-                            {...fieldProps}
-                            currentImage={value}
-                            onChange={(event) =>
-                                onChange(event.target.files && event.target.files[0])
-                            }}
+                            {...field}
                         />
                     </FormControl>
                     {description && (

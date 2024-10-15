@@ -3,7 +3,9 @@ import { isArray, isString } from 'lodash';
 // Definitions
 import { StandardCheckbox } from '../definitions/StandardCheckbox';
 import { StandardCodeInput } from '../definitions/StandardCodeInput';
+import { StandardDatePicker } from '../definitions/StandardDatePicker';
 import { StandardInput } from '../definitions/StandardInput';
+import { StandardNumberInput } from '../definitions/StandardNumberInput';
 import { StandardPasswordInput } from '../definitions/StandardPasswordInput';
 import { StandardSelect } from '../definitions/StandardSelect';
 import { StandardSwitch } from '../definitions/StandardSwitch';
@@ -16,7 +18,9 @@ export const parseChildren = (children = []) => {
     const generatedComponents = {
         [StandardCheckbox.displayName]: 'boolean',
         [StandardCodeInput.displayName]: 'code',
-        [StandardInput.displayName]: 'input',
+        [StandardDatePicker.displayName]: 'datepicker',
+        [StandardInput.displayName]: 'text',
+        [StandardNumberInput.displayName]: 'number',
         [StandardPasswordInput.displayName]: 'password',
         [StandardSelect.displayName]: 'select',
         [StandardSwitch.displayName]: 'boolean',

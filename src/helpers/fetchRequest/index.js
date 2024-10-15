@@ -1,3 +1,4 @@
+import { camelizeObject } from '../camelizeObject';
 import { getRequestObject } from './getRequestObject';
 
 export const fetchRequest = async (requestConfig = {}) => {
@@ -34,7 +35,11 @@ export const fetchRequest = async (requestConfig = {}) => {
     if (requestConfig.blob) {
         data = await response.blob();
     } else {
+        // Parse the JSON
         data = await response.json();
+
+        // Camelize it
+        data = camelizeObject(data);
     }
 
     // If the status code is bigger than 400, then probably an error

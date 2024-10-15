@@ -20,13 +20,19 @@ export const getServerFilters = ({
     );
 
     // Add the search
-    params['filter[search]'] = search;
+    if (search !== false) {
+        params['filter[search]'] = search;
+    }
 
     // Add the order
-    params['sort'] = (order === 'asc' ? '' : '-') + snakeCase(orderField);
+    if (order !== false) {
+        params['sort'] = (order === 'asc' ? '' : '-') + snakeCase(orderField);
+    }
 
     // Fetch the page
-    params['page'] = page;
+    if (page !== false) {
+        params['page'] = page;
+    }
 
     return params;
 };

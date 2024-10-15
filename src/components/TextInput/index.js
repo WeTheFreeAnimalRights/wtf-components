@@ -4,12 +4,14 @@ import { forwardRef } from 'react';
 
 // ShadCN
 import { Input } from '_/components/input';
+import { cn } from '_/lib/utils';
 
 export const TextInput = forwardRef(
     (
         {
             type = 'text',
             className,
+            inputClassName,
             innerLeftContent,
             innerRightContent,
             ...props
@@ -28,10 +30,11 @@ export const TextInput = forwardRef(
                     <Input
                         type={type}
                         ref={ref}
-                        className={`
-                            ${innerLeftContent ? 'ps-8' : 'ps-3'}
-                            ${innerRightContent ? 'pe-10' : 'pe-3'}
-                        `}
+                        className={cn(
+                            innerLeftContent ? 'ps-8' : 'ps-3',
+                            innerRightContent ? 'pe-10' : 'pe-3',
+                            inputClassName
+                        )}
                         {...props}
                     />
 
@@ -55,9 +58,14 @@ TextInput.propTypes = {
     type: PropTypes.string,
 
     /**
-     * Optional extra classname to the input
+     * Optional extra classname to the container
      */
     className: PropTypes.string,
+
+    /**
+     * Optional extra classname to the input
+     */
+    inputClassName: PropTypes.string,
 
     /**
      * Optional content to be shown left side of the input

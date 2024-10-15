@@ -1,8 +1,10 @@
 export { validateBoolean } from './validateBoolean';
 export { validateCode } from './validateCode';
 export { validateCountry } from './validateCountry';
+export { validateDatepicker } from './validateDatepicker';
 export { validateEmail } from './validateEmail';
 export { validateNot } from './validateNot';
+export { validateNumber } from './validateNumber';
 export { validatePassword } from './validatePassword';
 export { validateSelect } from './validateSelect';
 export { validateText } from './validateText';

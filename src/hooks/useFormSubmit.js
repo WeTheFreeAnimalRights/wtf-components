@@ -18,11 +18,7 @@ export const useFormSubmit = ({
                 onSuccess(values);
             }
         } else {
-            const data = await request(requestObject(values), onError);
-
-            if (typeof onSuccess === 'function') {
-                onSuccess(data);
-            }
+            await request(requestObject(values), onError, onSuccess);
         }
     };
 

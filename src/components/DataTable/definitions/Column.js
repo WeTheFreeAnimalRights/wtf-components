@@ -4,7 +4,6 @@
 export const Column = ({
     name,
     type,
-    serverName,
     sortable,
     label,
     className,

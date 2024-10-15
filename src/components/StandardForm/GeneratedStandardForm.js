@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Spinner } from '../Spinner';
 import { Alert } from '../Alert';
-import { Button } from '../Button';
 import { StandardForm } from './index';
 import { GeneratedStandardFields } from './GeneratedStandardFields';
+import { GeneratedStandardFooter } from './GeneratedStandardFooter';
 import { getStandardSchema } from '../../helpers/getStandardSchema';
 import { useTranslations } from '../../hooks/useTranslations';
 import { useStandardForm } from '../../hooks/useStandardForm';
 import { parseChildren } from './helpers/parseChildren';
 import { cn } from '_/lib/utils';
+import { useToast } from '_/hooks/use-toast';
 
 export const GeneratedStandardForm = ({
     schema,
@@ -20,6 +21,11 @@ export const GeneratedStandardForm = ({
     values,
     children,
     className,
+
+    cancelUrl,
+    onCancel,
+    footerLabels = {},
+    toastMessage,
 }) => {
     const { t } = useTranslations();
 
@@ -35,25 +41,44 @@ export const GeneratedStandardForm = ({
         }
     }
 
+    // Toast for when succesfully edited
+    const { toast } = useToast();
+
+    // To set also the label on the button (for desktop)
+    const [submitted, setSubmitted] = useState(false);
+    useEffect(() => {
+        if (submitted) {
+            setTimeout(() => {
+                setSubmitted(false);
+            }, 1000);
+        }
+    }, [submitted]);
+
+    // Standard form
     const { error, loading, form } = useStandardForm({
         schema: usedSchema,
         requestObject: requestObject || {},
-        onSuccess,
+        onSuccess: (...props) => {
+            if (typeof toastMessage !== 'undefined') {
+                toast({
+                    title: toastMessage,
+                });
+            }
+
+            setSubmitted(true);
+
+            if (typeof onSuccess === 'function') {
+                onSuccess(...props);
+            }
+        },
         onError,
         options,
     });
 
+    // Get the fields
     const fields = getStandardSchema(usedSchema, options);
-    console.log('>>Fields', usedSchema);
-    const submitArea =
-        typeof footer === 'function' ? (
-            footer({ error, loading })
-        ) : (
-            <Button type="submit" className="w-full" disabled={loading}>
-                {t('submit')}
-            </Button>
-        );
 
+    // Reset the form when values change
     useEffect(() => {
         if (values) {
             form.reset(values);
@@ -87,7 +112,15 @@ export const GeneratedStandardForm = ({
                 </Alert>
             )}
 
-            {submitArea}
+            <GeneratedStandardFooter
+                cancelUrl={cancelUrl}
+                onCancel={onCancel}
+                footerLabels={footerLabels}
+                footer={footer}
+                error={error}
+                loading={loading}
+                submitted={submitted}
+            />
         </StandardForm>
     );
 };

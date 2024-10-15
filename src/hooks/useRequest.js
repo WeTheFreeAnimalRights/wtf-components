@@ -16,6 +16,11 @@ export const useRequest = ({ loadingInit = false } = {}) => {
 
             // Fetch the request
             data = await fetchRequest(requestObject);
+
+            // If there is a success function
+            if (typeof onSuccess === 'function') {
+                onSuccess(data);
+            }
         } catch (error) {
             console.error(`Error in request`, error);
 

@@ -26,7 +26,14 @@ export const getRequestObject = (requestConfig) => {
     if (typeof requestConfig.params === 'object') {
         const urlParams = new URLSearchParams();
         for (const param in requestConfig.params) {
-            urlParams.set(param, requestConfig.params[param]);
+            const paramValue = requestConfig.params[param];
+            if (isArray(paramValue)) {
+                paramValue.forEach((paramItem) => {
+                    urlParams.append(param + '[]', paramItem);
+                });
+            } else {
+                urlParams.set(param, requestConfig.params[param]);
+            }
         }
         url += '?' + urlParams.toString();
     }
