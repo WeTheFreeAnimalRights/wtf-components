@@ -18,8 +18,15 @@ export const GeneratedStandardFooter = ({
 
     if (typeof cancelUrl === 'undefined' && typeof onCancel !== 'function') {
         return (
-            <Button type="submit" className="w-full" disabled={loading}>
-                {footerLabels.submit || t('Submit')}
+            <Button
+                type="submit"
+                variant={submitted ? 'simple' : 'default'}
+                className="w-full"
+                disabled={loading}
+            >
+                {submitted
+                    ? footerLabels.done || t('Done')
+                    : footerLabels.submit || t('Submit')}
             </Button>
         );
     }

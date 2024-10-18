@@ -1,4 +1,4 @@
-import { isArray } from "lodash";
+import { isArray } from 'lodash';
 
 export const replaceElement = (children, displayName, callback) => {
     const handleChild = (child) => {
@@ -7,7 +7,11 @@ export const replaceElement = (children, displayName, callback) => {
         }
 
         if (child?.props?.children) {
-            const children = replaceElement(child.props.children, displayName, callback);
+            const children = replaceElement(
+                child.props.children,
+                displayName,
+                callback
+            );
             return {
                 ...child,
                 props: {
@@ -18,11 +22,11 @@ export const replaceElement = (children, displayName, callback) => {
         }
 
         return child;
-    }
+    };
 
     if (!isArray(children)) {
         return handleChild(children);
-    };
+    }
 
     return children.map(handleChild);
-}
+};

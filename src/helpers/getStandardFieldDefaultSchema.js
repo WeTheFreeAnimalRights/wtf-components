@@ -23,5 +23,9 @@ export const getStandardFieldDefaultSchema = () => {
 
         // Whether to even validate this field or not
         validate: true,
+
+        // Not allowed values
+        notAllowed: false,
+        notAllowedMessage: false,
     };
 };

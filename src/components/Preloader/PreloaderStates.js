@@ -1,7 +1,7 @@
 import { Alert } from '../Alert';
 import { Spinner } from '../Spinner';
 
-import {cn} from '_/lib/utils';
+import { cn } from '_/lib/utils';
 
 export const PreloaderStates = ({ loading, error, className, children }) => {
     if (loading) {

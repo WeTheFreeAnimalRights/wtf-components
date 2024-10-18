@@ -28,7 +28,11 @@ export {
     FormFieldPasswordInput,
 } from './components/PasswordInput';
 export { Popover, PopoverContent, PopoverTrigger } from './components/Popover';
-export { Preloader, PreloaderStates, PreloaderOutlet } from './components/Preloader';
+export {
+    Preloader,
+    PreloaderStates,
+    PreloaderOutlet,
+} from './components/Preloader';
 export { Resource } from './components/Resource';
 export { Select, FormFieldSelect } from './components/Select';
 export { Separator } from './components/Separator';

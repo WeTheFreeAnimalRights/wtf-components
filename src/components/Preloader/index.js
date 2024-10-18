@@ -152,5 +152,5 @@ Preloader.propTypes = {
     render: PropTypes.func,
 };
 
-export {PreloaderStates} from './PreloaderStates';
-export {PreloaderOutlet} from './PreloaderOutlet';
+export { PreloaderStates } from './PreloaderStates';
+export { PreloaderOutlet } from './PreloaderOutlet';

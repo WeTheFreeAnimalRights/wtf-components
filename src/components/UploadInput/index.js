@@ -9,6 +9,7 @@ export const UploadInput = forwardRef(
         const { t } = useTranslations();
         const [files, setFiles] = useState([]);
         const { getRootProps, getInputProps, open } = useDropzone({
+            ...props,
             maxFiles: 1,
             accept: {
                 'image/*': [],
@@ -61,11 +62,12 @@ export const UploadInput = forwardRef(
                     </div>
                 )}
                 <div {...getRootProps({ className: '' })}>
-                    <input ref={ref} {...getInputProps()} {...props} />
+                    <input ref={ref} {...getInputProps()} />
                     <Button
                         onClick={() => open()}
                         className="w-32"
                         variant="outline"
+                        type="button"
                     >
                         {isThereImage ? t('change') : t('upload')}
                     </Button>

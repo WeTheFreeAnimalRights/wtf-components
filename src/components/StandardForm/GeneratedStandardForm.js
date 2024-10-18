@@ -26,19 +26,20 @@ export const GeneratedStandardForm = ({
     onCancel,
     footerLabels = {},
     toastMessage,
+    onAllDone,
 }) => {
     const { t } = useTranslations();
 
     // Try to get the schema from the children
     let usedSchema = schema;
     if (!usedSchema) {
-        if (children) {
-            usedSchema = parseChildren(children);
-        } else {
-            throw new Error(
-                'A schema needs to be sent to the GeneratedStandardForm component'
-            );
-        }
+        usedSchema = parseChildren(children);
+        // if (children) {
+        // } else {
+        //     throw new Error(
+        //         'A schema needs to be sent to the GeneratedStandardForm component'
+        //     );
+        // }
     }
 
     // Toast for when succesfully edited
@@ -50,6 +51,11 @@ export const GeneratedStandardForm = ({
         if (submitted) {
             setTimeout(() => {
                 setSubmitted(false);
+
+                // Call when the submitted returns to normal
+                if (typeof onAllDone === 'function') {
+                    onAllDone();
+                }
             }, 1000);
         }
     }, [submitted]);
