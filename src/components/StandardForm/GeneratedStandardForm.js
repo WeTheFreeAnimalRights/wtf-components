@@ -122,11 +122,12 @@ export const GeneratedStandardForm = ({
                 cancelUrl={cancelUrl}
                 onCancel={onCancel}
                 footerLabels={footerLabels}
-                footer={footer}
                 error={error}
                 loading={loading}
                 submitted={submitted}
             />
+
+            {footer}
         </StandardForm>
     );
 };

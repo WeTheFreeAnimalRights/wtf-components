@@ -6,15 +6,11 @@ export const GeneratedStandardFooter = ({
     cancelUrl,
     onCancel,
     footerLabels,
-    footer,
-    error,
+    // error,
     loading,
     submitted,
 }) => {
     const { t } = useTranslations();
-    if (typeof footer === 'function') {
-        return footer({ error, loading });
-    }
 
     if (typeof cancelUrl === 'undefined' && typeof onCancel !== 'function') {
         return (

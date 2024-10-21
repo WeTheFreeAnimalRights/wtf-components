@@ -27,14 +27,19 @@ export const FormFieldUploadInput = ({
         <FormField
             control={form.control}
             name={name}
-            render={({ field: { value, ...fieldProps } }) => (
+            render={({ field: { value, onChange, ...fieldProps } }) => (
                 <FormItem className={className}>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <UploadInput
                             {...props}
                             {...fieldProps}
-                            currentImage={value.preview}
+                            onSelect={(selectedFile) => {
+                                onChange(selectedFile.file);
+                            }}
+                            onRemove={() => {
+                                onChange(null);
+                            }}
                         />
                     </FormControl>
                     {description && (

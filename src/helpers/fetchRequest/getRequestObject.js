@@ -1,4 +1,4 @@
-import { isArray } from 'lodash';
+import { each, isArray } from 'lodash';
 import { getUrl } from './api/getUrl';
 /**
  * Form the request object to be sent to the fetch method
@@ -11,7 +11,14 @@ export const getRequestObject = (requestConfig) => {
     // Form the body (if any)
     let body;
     if (requestConfig.body) {
-        body = JSON.stringify(requestConfig.body);
+        if (requestConfig.upload) {
+            body = new FormData();
+            each(requestConfig.body, (value, key) => {
+                body.append(key, value);
+            });
+        } else {
+            body = JSON.stringify(requestConfig.body);
+        }
     }
 
     // Form the method
@@ -38,8 +45,9 @@ export const getRequestObject = (requestConfig) => {
         url += '?' + urlParams.toString();
     }
 
-    return new Request(url, {
+    return {
+        url,
         method,
         body,
-    });
+    };
 };

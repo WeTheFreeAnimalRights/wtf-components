@@ -17,6 +17,7 @@ export {
 } from './components/DataTable';
 export { DatePicker, FormFieldDatePicker } from './components/DatePicker';
 export { DropdownMenu } from './components/DropdownMenu';
+export { ErrorBoundary } from './components/ErrorBoundary';
 export { LanguagePicker } from './components/LanguagePicker';
 export { Modal, ModalTrigger, ModalContainer } from './components/Modal';
 export { MultiSelect } from './components/MultiSelect';
@@ -123,6 +124,7 @@ export {
     TableCell,
     TableCaption,
 } from './_shadcn/components/table';
+export { VisuallyHidden } from './_shadcn/components/visually-hidden';
 export { Toaster } from './_shadcn/components/toaster';
 export { cn } from './_shadcn/lib/utils';
 export { useToast } from './_shadcn/hooks/use-toast';
@@ -140,6 +142,8 @@ export { getServerFilters } from './helpers/getServerFilters';
 export { parseResources } from './helpers/parseResources';
 export { parseResourceFeedbackOptions } from './helpers/parseResourceFeedbackOptions';
 export { replaceElement } from './helpers/replaceElement';
+export { objectToArray } from './helpers/objectToArray';
+export { arrayToObject } from './helpers/arrayToObject';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
