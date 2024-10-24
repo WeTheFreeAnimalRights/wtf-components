@@ -1,5 +1,6 @@
 import { each, isArray } from 'lodash';
 import { getUrl } from './api/getUrl';
+import { getParamName } from './getParamName';
 /**
  * Form the request object to be sent to the fetch method
  *
@@ -36,10 +37,10 @@ export const getRequestObject = (requestConfig) => {
             const paramValue = requestConfig.params[param];
             if (isArray(paramValue)) {
                 paramValue.forEach((paramItem) => {
-                    urlParams.append(param + '[]', paramItem);
+                    urlParams.append(getParamName(param) + '[]', paramItem);
                 });
             } else {
-                urlParams.set(param, requestConfig.params[param]);
+                urlParams.set(getParamName(param), requestConfig.params[param]);
             }
         }
         url += '?' + urlParams.toString();
