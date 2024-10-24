@@ -31,7 +31,10 @@ export const FormFieldSelect = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={visible === false && 'hidden'}>
+                <FormItem
+                    className={visible === false && 'hidden'}
+                    hidden={visible === false ? true : undefined}
+                >
                     <FormLabel>{label}</FormLabel>
                     <Select
                         onValueChange={(newValue) => {

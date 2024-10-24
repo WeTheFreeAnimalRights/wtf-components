@@ -34,6 +34,7 @@ export const FormFieldPasswordInput = ({
             render={({ field }) => (
                 <FormItem
                     className={cn(visible === false && 'hidden', className)}
+                    hidden={visible === false ? true : undefined}
                 >
                     <FormLabel>{label}</FormLabel>
                     <FormControl>

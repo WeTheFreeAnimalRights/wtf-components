@@ -38,6 +38,7 @@ export const FormFieldSwitch = ({
                         visible === false && 'hidden',
                         className,
                     ]}
+                    hidden={visible === false ? true : undefined}
                 >
                     <FormControl>
                         <Switch

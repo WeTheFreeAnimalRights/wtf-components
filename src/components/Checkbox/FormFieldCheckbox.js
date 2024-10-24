@@ -38,6 +38,7 @@ export const FormFieldCheckbox = ({
                         visible === false && 'hidden',
                         className
                     )}
+                    hidden={visible === false ? true : undefined}
                 >
                     <FormControl>
                         <Checkbox
