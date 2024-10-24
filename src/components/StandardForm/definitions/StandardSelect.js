@@ -7,6 +7,8 @@ export const StandardSelect = ({
     className,
     placeholder,
     options,
+    onChange,
+    visible,
     ...props
 }) => {
     return null;

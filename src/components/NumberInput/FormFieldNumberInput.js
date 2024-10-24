@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { NumberInput } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,6 +12,7 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldNumberInput = ({
     form: formParam,
@@ -19,6 +21,8 @@ export const FormFieldNumberInput = ({
     className,
     placeholder,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -29,13 +33,21 @@ export const FormFieldNumberInput = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={className}>
+                <FormItem
+                    className={cn(visible === false && 'hidden', className)}
+                >
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <NumberInput
                             placeholder={placeholder}
                             {...props}
                             {...field}
+                            onChange={(newValue) => {
+                                if (isFunction(onChange)) {
+                                    onChange(newValue);
+                                }
+                                field.onChange(newValue);
+                            }}
                         />
                     </FormControl>
                     {description && (

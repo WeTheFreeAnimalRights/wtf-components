@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { CodeInput } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,6 +12,7 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldCodeInput = ({
     form: formParam,
@@ -18,6 +20,8 @@ export const FormFieldCodeInput = ({
     label,
     className,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -28,10 +32,21 @@ export const FormFieldCodeInput = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={className}>
+                <FormItem
+                    className={cn(visible === false && 'hidden', className)}
+                >
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <CodeInput {...props} {...field} />
+                        <CodeInput
+                            {...props}
+                            {...field}
+                            onChange={(newValue) => {
+                                if (isFunction(onChange)) {
+                                    onChange(newValue);
+                                }
+                                field.onChange(newValue);
+                            }}
+                        />
                     </FormControl>
                     {description && (
                         <FormDescription>{description}</FormDescription>

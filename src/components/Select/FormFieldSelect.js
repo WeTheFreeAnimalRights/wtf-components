@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { Select } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -18,6 +19,8 @@ export const FormFieldSelect = ({
     placeholder,
     options,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -28,10 +31,15 @@ export const FormFieldSelect = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem>
+                <FormItem className={visible === false && 'hidden'}>
                     <FormLabel>{label}</FormLabel>
                     <Select
-                        onValueChange={field.onChange}
+                        onValueChange={(newValue) => {
+                            if (isFunction(onChange)) {
+                                onChange(newValue);
+                            }
+                            field.onChange(newValue);
+                        }}
                         value={field.value}
                         options={options}
                         placeholder={placeholder}

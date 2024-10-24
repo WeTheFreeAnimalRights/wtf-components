@@ -6,6 +6,8 @@ export const StandardNumberInput = ({
     label,
     className,
     placeholder,
+    onChange,
+    visible,
     ...props
 }) => {
     return null;

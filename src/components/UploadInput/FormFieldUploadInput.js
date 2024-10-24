@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { UploadInput } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,6 +12,7 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldUploadInput = ({
     form: formParam,
@@ -18,6 +20,8 @@ export const FormFieldUploadInput = ({
     label,
     className,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -27,15 +31,20 @@ export const FormFieldUploadInput = ({
         <FormField
             control={form.control}
             name={name}
-            render={({ field: { value, onChange, ...fieldProps } }) => (
-                <FormItem className={className}>
+            render={({ field: { value, ...fieldProps } }) => (
+                <FormItem
+                    className={cn(visible === false && 'hidden', className)}
+                >
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <UploadInput
                             {...props}
                             {...fieldProps}
                             onSelect={(selectedFile) => {
-                                onChange(selectedFile.file);
+                                if (isFunction(onChange)) {
+                                    onChange(selectedFile.file);
+                                }
+                                fieldProps.onChange(selectedFile.file);
                             }}
                             onRemove={() => {
                                 onChange(null);

@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { Textarea } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,6 +12,7 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldTextarea = ({
     form: formParam,
@@ -19,6 +21,8 @@ export const FormFieldTextarea = ({
     className,
     placeholder,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -29,13 +33,21 @@ export const FormFieldTextarea = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={className}>
+                <FormItem
+                    className={cn(visible === false && 'hidden', className)}
+                >
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <Textarea
                             placeholder={placeholder}
                             {...props}
                             {...field}
+                            onChange={(event) => {
+                                if (isFunction(onChange)) {
+                                    onChange(event.target.value);
+                                }
+                                field.onChange(event);
+                            }}
                         />
                     </FormControl>
                     {description && (

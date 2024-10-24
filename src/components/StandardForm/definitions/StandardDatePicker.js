@@ -6,6 +6,8 @@ export const StandardDatePicker = ({
     label,
     className,
     placeholder,
+    onChange,
+    visible,
     ...props
 }) => {
     return null;

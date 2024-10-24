@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { DatePicker } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -6,11 +7,11 @@ import { StandardFormContext } from '../StandardForm';
 import {
     FormField,
     FormItem,
-    FormControl,
     FormLabel,
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldDatePicker = ({
     form: formParam,
@@ -19,6 +20,8 @@ export const FormFieldDatePicker = ({
     className,
     placeholder,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -29,12 +32,20 @@ export const FormFieldDatePicker = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={className}>
+                <FormItem
+                    className={cn(visible === false && 'hidden', className)}
+                >
                     <FormLabel>{label}</FormLabel>
                     <DatePicker
                         placeholder={placeholder}
                         {...props}
                         {...field}
+                        onChange={(newValue) => {
+                            if (isFunction(onChange)) {
+                                onChange(newValue);
+                            }
+                            field.onChange(newValue);
+                        }}
                         formControl
                     />
                     {description && (

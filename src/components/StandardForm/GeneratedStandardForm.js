@@ -31,16 +31,7 @@ export const GeneratedStandardForm = ({
     const { t } = useTranslations();
 
     // Try to get the schema from the children
-    let usedSchema = schema;
-    if (!usedSchema) {
-        usedSchema = parseChildren(children);
-        // if (children) {
-        // } else {
-        //     throw new Error(
-        //         'A schema needs to be sent to the GeneratedStandardForm component'
-        //     );
-        // }
-    }
+    const usedSchema = schema || parseChildren(children);
 
     // Toast for when succesfully edited
     const { toast } = useToast();

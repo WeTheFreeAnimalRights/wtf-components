@@ -6,6 +6,8 @@ export const StandardTextarea = ({
     label,
     className,
     placeholder,
+    onChange,
+    visible,
     ...props
 }) => {
     return null;

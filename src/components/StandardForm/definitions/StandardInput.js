@@ -7,6 +7,8 @@ export const StandardInput = ({
     type,
     className,
     placeholder,
+    onChange,
+    visible,
     ...props
 }) => {
     return null;

@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { Switch } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,6 +12,7 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldSwitch = ({
     form: formParam,
@@ -18,6 +20,8 @@ export const FormFieldSwitch = ({
     label,
     className,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -31,13 +35,19 @@ export const FormFieldSwitch = ({
                 <FormItem
                     className={[
                         'space-y-0 space-x-2 items-center flex flex-row',
+                        visible === false && 'hidden',
                         className,
                     ]}
                 >
                     <FormControl>
                         <Switch
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={(newValue) => {
+                                if (isFunction(onChange)) {
+                                    onChange(newValue);
+                                }
+                                field.onChange(newValue);
+                            }}
                             {...props}
                         />
                     </FormControl>

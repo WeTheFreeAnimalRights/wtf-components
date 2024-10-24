@@ -7,6 +7,8 @@ export const StandardUploadInput = ({
     currentImage,
     className,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     return null;

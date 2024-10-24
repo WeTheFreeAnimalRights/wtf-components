@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useContext } from 'react';
 import { Checkbox } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,6 +12,7 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldCheckbox = ({
     form: formParam,
@@ -18,6 +20,8 @@ export const FormFieldCheckbox = ({
     label,
     className,
     description,
+    onChange,
+    visible,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -29,15 +33,21 @@ export const FormFieldCheckbox = ({
             name={name}
             render={({ field }) => (
                 <FormItem
-                    className={[
+                    className={cn(
                         'space-y-0 space-x-2 items-center flex flex-row',
-                        className,
-                    ]}
+                        visible === false && 'hidden',
+                        className
+                    )}
                 >
                     <FormControl>
                         <Checkbox
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={(newValue) => {
+                                if (isFunction(onChange)) {
+                                    onChange(newValue);
+                                }
+                                field.onChange(newValue);
+                            }}
                             {...props}
                         />
                     </FormControl>
