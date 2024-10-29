@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../Button';
+import { Image } from '../Image';
 
 export const UploadInput = forwardRef(
     ({ currentImage, defaultImage, onSelect, onRemove, ...props }, ref) => {
@@ -50,13 +51,13 @@ export const UploadInput = forwardRef(
             <div className="block">
                 {displayImage && (
                     <div className="bg-gray-50 rounded-lg dark:bg-gray-600 border border-gray-300 dark:border-gray-500 text-center mb-3 w-32 h-32 overflow-hidden">
-                        <img
+                        <Image
                             src={displayImage}
                             alt=""
                             className="w-full h-full object-cover rounded-lg"
                             onLoad={() => {
                                 // If It's a blob
-                                if (/^blob\:http/i.test(displayImage)) {
+                                if (/^blob:http/i.test(displayImage)) {
                                     URL.revokeObjectURL(displayImage);
                                 }
                             }}

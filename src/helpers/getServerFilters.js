@@ -1,4 +1,4 @@
-import { reduce, snakeCase } from 'lodash';
+import { reduce, snakeCase, isFunction } from 'lodash';
 
 export const getServerFilters = ({
     filters = {},
@@ -6,14 +6,19 @@ export const getServerFilters = ({
     orderField,
     search,
     page,
+    parseFilter,
 }) => {
     // Add the filters
     const params = reduce(
         filters,
         (result, value, key) => {
+            let filter = { name: key, value };
+            if (isFunction(parseFilter)) {
+                filter = parseFilter(filter);
+            }
             return {
                 ...result,
-                [`filter[${snakeCase(key)}]`]: value,
+                [`filter[${snakeCase(filter.name)}]`]: filter.value,
             };
         },
         {}

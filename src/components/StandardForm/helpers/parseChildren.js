@@ -1,80 +1,44 @@
-import { isArray, isString } from 'lodash';
+import { omit } from 'lodash';
+import { traverseElements } from '../../../helpers/traverseElements';
+import { getGeneratedComponentMatrix } from './getGeneratedComponentMatrix';
 
-// Definitions
-import { StandardCheckbox } from '../definitions/StandardCheckbox';
-import { StandardCodeInput } from '../definitions/StandardCodeInput';
-import { StandardDatePicker } from '../definitions/StandardDatePicker';
-import { StandardInput } from '../definitions/StandardInput';
-import { StandardNumberInput } from '../definitions/StandardNumberInput';
-import { StandardPasswordInput } from '../definitions/StandardPasswordInput';
-import { StandardSelect } from '../definitions/StandardSelect';
-import { StandardSwitch } from '../definitions/StandardSwitch';
-import { StandardTextarea } from '../definitions/StandardTextarea';
-import { StandardUploadInput } from '../definitions/StandardUploadInput';
+export const parseChildren = (children, { loading, form }) => {
+    const matrix = getGeneratedComponentMatrix();
+    const searchableElements = Object.keys(matrix);
 
-export const parseChildren = (children = []) => {
-    const schema = {};
+    return traverseElements(
+        children,
+        searchableElements,
+        (child, index, level) => {
+            const {
+                props: { value, children, label, ...props },
+            } = child;
 
-    const generatedComponents = {
-        [StandardCheckbox.displayName]: 'boolean',
-        [StandardCodeInput.displayName]: 'code',
-        [StandardDatePicker.displayName]: 'datepicker',
-        [StandardInput.displayName]: 'text',
-        [StandardNumberInput.displayName]: 'number',
-        [StandardPasswordInput.displayName]: 'password',
-        [StandardSelect.displayName]: 'select',
-        [StandardSwitch.displayName]: 'boolean',
-        [StandardTextarea.displayName]: 'textarea',
-        [StandardUploadInput.displayName]: 'upload',
-    };
-
-    const usedChildren = isArray(children) ? children : [children];
-    usedChildren.forEach((item, index) => {
-        let fieldSchema = {};
-        let name = '';
-
-        // Get the type
-        if (isString(item)) {
-            return;
-        }
-        if (isString(item.type)) {
-            if (item.type !== 'div') {
-                throw new Error(
-                    'Only divs are allowed in the GeneratedStandardForm schema'
-                );
+            // If, for some reason, this component doesn't exist
+            if (!matrix[child.type.displayName]) {
+                return child;
             }
 
-            name = 'div' + index;
-            fieldSchema.type = 'div';
-        } else {
-            fieldSchema.type = generatedComponents[item.type.displayName];
+            // Get the type and the component
+            const { Component } = matrix[child.type.displayName];
 
-            if (item.type.displayName === StandardCheckbox.displayName) {
-                fieldSchema.checkbox = true;
-            }
+            // Generate the key of the component
+            const key = `${child.type.displayName}-${index}-${level}`;
+
+            // Get the generated props
+            const keysToOmit = ['optional', 'includeInRequest'];
+            const generatedProps = omit(props, keysToOmit);
+
+            // Return (to replace) the component
+            return (
+                <Component
+                    key={key}
+                    form={form}
+                    disabled={loading}
+                    label={children || label}
+                    {...generatedProps}
+                />
+            );
         }
-
-        const { props: allProps = {} } = item || {};
-        const { children: itemChildren, ...props } = allProps;
-
-        if (fieldSchema.type !== 'div') {
-            name = props.name;
-        }
-
-        // Add the properties
-        fieldSchema = {
-            ...fieldSchema,
-            ...props,
-        };
-
-        if (isString(itemChildren) || !itemChildren) {
-            fieldSchema.label = itemChildren || props.label;
-        } else {
-            fieldSchema.children = parseChildren(itemChildren);
-        }
-
-        schema[name] = fieldSchema;
-    });
-
-    return schema;
+    );
 };

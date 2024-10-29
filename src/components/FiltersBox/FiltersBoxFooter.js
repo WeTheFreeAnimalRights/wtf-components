@@ -3,7 +3,7 @@ import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';
 import { StandardFormContext } from '../StandardForm';
 
-export const DataTableFiltersFooter = ({ loading, onClose }) => {
+export const FiltersBoxFooter = ({ loading }) => {
     const { t } = useTranslations();
     const standardForm = useContext(StandardFormContext);
     return (

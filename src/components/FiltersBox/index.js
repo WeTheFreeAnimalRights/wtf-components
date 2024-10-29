@@ -1,24 +1,25 @@
+import { isFunction } from 'lodash';
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Filter } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { Badge } from '../Badge';
 import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';
 import { GeneratedStandardForm } from '../StandardForm';
-import { DataTableFiltersFooter } from './DataTableFiltersFooter';
+import { FiltersBoxFooter } from './FiltersBoxFooter';
 import { getAppliedFiltersCount } from './helpers/getAppliedFiltersCount';
+import { getSchema } from '../StandardForm/helpers/getSchema';
 
-export const DataTableFilters = ({ meta, filters, onFiltersApplied }) => {
+export const FiltersBox = ({ children, className, onApplied }) => {
     const { t } = useTranslations();
+
+    // Are the filters open
     const [filtersOpen, setFiltersOpen] = useState(false);
 
-    // If no filters are set up
-    if (!filters) {
-        return null;
-    }
-
-    const { filters: appliedFilters } = meta || {};
-    const filtersCount = getAppliedFiltersCount(appliedFilters);
+    // Count the applied filters
+    const { values } = getSchema(children);
+    const filtersCount = getAppliedFiltersCount(values);
 
     return (
         <Popover
@@ -26,9 +27,9 @@ export const DataTableFilters = ({ meta, filters, onFiltersApplied }) => {
             open={filtersOpen}
         >
             <PopoverTrigger asChild>
-                <Button variant="outline" className="ms-3">
+                <Button variant="outline" className={className}>
                     <Filter className="w-4 h-4 me-2" />
-                    {t('filters')}
+                    {t('Filters')}
                     {filtersCount > 0 && (
                         <Badge variant="simple" className="ms-2">
                             {filtersCount}
@@ -38,7 +39,6 @@ export const DataTableFilters = ({ meta, filters, onFiltersApplied }) => {
             </PopoverTrigger>
             <PopoverContent>
                 <GeneratedStandardForm
-                    schema={filters}
                     options={{
                         sendToServer: false,
                         eachField: {
@@ -47,16 +47,31 @@ export const DataTableFilters = ({ meta, filters, onFiltersApplied }) => {
                     }}
                     onSuccess={(values) => {
                         setFiltersOpen(false);
-                        if (typeof onFiltersApplied === 'function') {
-                            onFiltersApplied(values);
+                        if (isFunction(onApplied)) {
+                            onApplied(values);
                         }
                     }}
                     footer={({ loading }) => (
-                        <DataTableFiltersFooter loading={loading} />
+                        <FiltersBoxFooter loading={loading} />
                     )}
-                    values={appliedFilters}
-                />
+                >
+                    {children}
+                </GeneratedStandardForm>
             </PopoverContent>
         </Popover>
     );
+};
+
+FiltersBox.displayName = 'FiltersBox';
+
+FiltersBox.propTypes = {
+    /**
+     * When the user applies the filters
+     */
+    onApplied: PropTypes.func,
+
+    /**
+     * Optional extra classname to the filters box
+     */
+    className: PropTypes.string,
 };

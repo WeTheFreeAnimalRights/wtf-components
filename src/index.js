@@ -9,7 +9,7 @@ export { CodeInput, FormFieldCodeInput } from './components/CodeInput';
 export {
     DataTable,
     Column,
-    Filter,
+    Filters,
     Order,
     Search,
     TopRight,
@@ -35,7 +35,13 @@ export {
     PreloaderOutlet,
 } from './components/Preloader';
 export { Resource } from './components/Resource';
+export { AnimalIcon } from './components/AnimalIcon';
+export { Image } from './components/Image';
+export { Empty } from './components/Empty';
+export { SearchBox } from './components/SearchBox';
+export { FiltersBox } from './components/FiltersBox';
 export { Select, FormFieldSelect } from './components/Select';
+export { Combobox, FormFieldCombobox } from './components/Combobox';
 export { Separator } from './components/Separator';
 export { SortableContainer, SortableItem } from './components/Sortable';
 export { Spinner } from './components/Spinner';
@@ -45,8 +51,9 @@ export {
     GeneratedStandardForm,
     StandardCheckbox,
     StandardCodeInput,
+    StandardCombobox,
     StandardDatePicker,
-    StandardInput,
+    StandardTextInput,
     StandardNumberInput,
     StandardPasswordInput,
     StandardSelect,
@@ -141,7 +148,7 @@ export { filtersDecode } from './helpers/filtersDecode';
 export { getServerFilters } from './helpers/getServerFilters';
 export { parseResources } from './helpers/parseResources';
 export { parseResourceFeedbackOptions } from './helpers/parseResourceFeedbackOptions';
-export { replaceElement } from './helpers/replaceElement';
+export { traverseElements } from './helpers/traverseElements';
 export { objectToArray } from './helpers/objectToArray';
 export { arrayToObject } from './helpers/arrayToObject';
 

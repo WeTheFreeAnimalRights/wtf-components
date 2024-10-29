@@ -10,7 +10,7 @@ export default {
     prefix: '',
     theme: {
         container: {
-            center: true,
+            center: 'true',
             padding: '2rem',
             screens: {
                 lgxl: '1150px',
@@ -53,6 +53,18 @@ export default {
                     foreground: 'hsl(var(--card-foreground))',
                 },
                 'wtf-pink': '#ff6cd4',
+                sidebar: {
+                    DEFAULT: 'hsl(var(--sidebar-background))',
+                    foreground: 'hsl(var(--sidebar-foreground))',
+                    primary: 'hsl(var(--sidebar-primary))',
+                    'primary-foreground':
+                        'hsl(var(--sidebar-primary-foreground))',
+                    accent: 'hsl(var(--sidebar-accent))',
+                    'accent-foreground':
+                        'hsl(var(--sidebar-accent-foreground))',
+                    border: 'hsl(var(--sidebar-border))',
+                    ring: 'hsl(var(--sidebar-ring))',
+                },
             },
             zIndex: {
                 100: '100',
@@ -64,12 +76,20 @@ export default {
             },
             keyframes: {
                 'accordion-down': {
-                    from: { height: '0' },
-                    to: { height: 'var(--radix-accordion-content-height)' },
+                    from: {
+                        height: '0',
+                    },
+                    to: {
+                        height: 'var(--radix-accordion-content-height)',
+                    },
                 },
                 'accordion-up': {
-                    from: { height: 'var(--radix-accordion-content-height)' },
-                    to: { height: '0' },
+                    from: {
+                        height: 'var(--radix-accordion-content-height)',
+                    },
+                    to: {
+                        height: '0',
+                    },
                 },
             },
             animation: {

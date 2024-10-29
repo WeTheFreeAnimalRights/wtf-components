@@ -1,23 +1,23 @@
 import { isFunction } from 'lodash';
 import { useContext } from 'react';
-import { Switch } from './index';
+import { Combobox } from './index';
 import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
 import {
     FormField,
     FormItem,
-    FormControl,
     FormLabel,
     FormMessage,
     FormDescription,
 } from '_/components/form';
 
-export const FormFieldSwitch = ({
+export const FormFieldCombobox = ({
     form: formParam,
     name,
     label,
-    className,
+    placeholder,
+    options,
     description,
     onChange,
     visible,
@@ -32,26 +32,24 @@ export const FormFieldSwitch = ({
             name={name}
             render={({ field }) => (
                 <FormItem
-                    className={[
-                        'space-y-0 space-x-2 items-center flex flex-row',
-                        visible === false && 'hidden',
-                        className,
-                    ]}
+                    className={visible === false && 'hidden'}
                     hidden={visible === false ? true : undefined}
                 >
-                    <FormControl>
-                        <Switch
-                            checked={field.value}
-                            onCheckedChange={(newValue) => {
-                                if (isFunction(onChange)) {
-                                    onChange(newValue);
-                                }
-                                field.onChange(newValue);
-                            }}
-                            {...props}
-                        />
-                    </FormControl>
                     <FormLabel>{label}</FormLabel>
+                    <Combobox
+                        onSelect={(newValue) => {
+                            if (isFunction(onChange)) {
+                                onChange(newValue);
+                            }
+
+                            field.onChange(newValue);
+                        }}
+                        value={field.value}
+                        options={options}
+                        placeholder={placeholder}
+                        formControl
+                        {...props}
+                    />
                     {description && (
                         <FormDescription>{description}</FormDescription>
                     )}

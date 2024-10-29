@@ -5,10 +5,6 @@ export const parseSuperRefinements = (
     { values, ctx, t }
 ) => {
     standardSchema.forEach((field) => {
-        if (field.children) {
-            return parseSuperRefinements(field.children, { values, ctx, t });
-        }
-
         // Confirmation property
         if (field.confirmation) {
             if (values[field.name] !== values[field.confirmation]) {

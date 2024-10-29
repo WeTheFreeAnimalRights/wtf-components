@@ -1,5 +1,6 @@
 export { validateBoolean } from './validateBoolean';
 export { validateCode } from './validateCode';
+export { validateCombobox } from './validateCombobox';
 export { validateCountry } from './validateCountry';
 export { validateDatepicker } from './validateDatepicker';
 export { validateEmail } from './validateEmail';

@@ -4,7 +4,7 @@ export const filtersEncode = (obj = {}) => {
     const noEmptyValues = reduce(
         obj,
         (result, value, key) => {
-            if (!value) {
+            if (!value && value !== false) {
                 return result;
             }
 

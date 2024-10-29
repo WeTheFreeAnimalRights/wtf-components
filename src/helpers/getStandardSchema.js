@@ -6,14 +6,6 @@ export const getStandardSchema = (schema, options) => {
     return map(schema, (value, key) => {
         const fieldSchema = getStandardFieldSchema(value, options);
 
-        // If there are children, then recurse
-        if (fieldSchema.children) {
-            fieldSchema.children = getStandardSchema(
-                fieldSchema.children,
-                options
-            );
-        }
-
         return {
             ...fieldSchema,
             name: key,

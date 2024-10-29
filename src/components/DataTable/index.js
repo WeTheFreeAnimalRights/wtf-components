@@ -1,10 +1,10 @@
 import React, { useState, createContext } from 'react';
-import { DataTableHeader } from './DataTableHeader';
+import { DataTableTableHeader } from './DataTableTableHeader';
 import { DataTableContent } from './DataTableContent';
-import { DataTableMultipleActions } from './DataTableMultipleActions';
+import { DataTableHeader } from './DataTableHeader';
 import { Pagination } from '../Pagination';
 import { useTranslations } from '../../hooks/useTranslations';
-import { parseChildren } from './helpers/parseChildren';
+import { parseTableChildren } from './helpers/parseTableChildren';
 import { EmptyDataTable } from './EmptyDataTable';
 
 // ShadCN
@@ -31,7 +31,7 @@ export const DataTable = ({
 }) => {
     const { t } = useTranslations();
     const [selectedItems, setSelectedItems] = useState([]);
-    const { meta, columns, filters } = parseChildren(children);
+    const { meta, columns, filters } = parseTableChildren(children);
 
     // const dataExists = data.length > 0 || !isEmpty(meta.filters) || !isEmpty(meta.search.text);
 
@@ -40,11 +40,11 @@ export const DataTable = ({
             value={{
                 multiple,
                 permissions,
-                filters,
             }}
         >
-            <DataTableMultipleActions
+            <DataTableHeader
                 meta={meta}
+                filters={filters}
                 selectedItems={selectedItems}
                 onMultipleAction={onMultipleAction}
                 onFiltersApplied={onFiltersApplied}
@@ -71,7 +71,7 @@ export const DataTable = ({
                     <Table>
                         {data.length > 0 ? (
                             <>
-                                <DataTableHeader
+                                <DataTableTableHeader
                                     columns={columns}
                                     meta={meta}
                                     data={data}
@@ -124,7 +124,7 @@ export const DataTable = ({
 DataTable.displayName = 'DataTable';
 
 export { Column } from './definitions/Column';
-export { Filter } from './definitions/Filter';
+export { Filters } from './definitions/Filters';
 export { Order } from './definitions/Order';
 export { Search } from './definitions/Search';
 export { TopRight } from './definitions/TopRight';

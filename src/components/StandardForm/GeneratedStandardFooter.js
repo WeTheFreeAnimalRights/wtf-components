@@ -12,6 +12,8 @@ export const GeneratedStandardFooter = ({
 }) => {
     const { t } = useTranslations();
 
+    const navigate = useNavigate();
+
     if (typeof cancelUrl === 'undefined' && typeof onCancel !== 'function') {
         return (
             <Button
@@ -26,8 +28,6 @@ export const GeneratedStandardFooter = ({
             </Button>
         );
     }
-
-    const navigate = useNavigate();
 
     return (
         <div className="flex flex-row items-center gap-4 mt-8">

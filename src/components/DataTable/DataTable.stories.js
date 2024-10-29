@@ -1,12 +1,17 @@
 import { RecoilRoot } from 'recoil';
 import { action } from '@storybook/addon-actions';
-import { DataTable, Column, Filter, Order, Search } from './index';
+import { DataTable, Column, Filters, Order, Search } from './index';
 import { Confirm } from '../Confirm';
 import { transformServerData } from '../../helpers/transformServerData';
 import '../../base.css';
 
 // Mocked data
 import _data from './_data.json';
+import {
+    StandardSelect,
+    StandardSwitch,
+    StandardTextInput,
+} from '../StandardForm';
 
 export default {
     title: 'Components/DataTable',
@@ -64,31 +69,31 @@ export const Primary = () => {
                 Active
             </Column>
 
-            <Filter
-                name="codeSharingMethodId"
-                type="select"
-                options={[
-                    {
-                        value: '1',
-                        label: 'Code Sharee1',
-                    },
-                    {
-                        value: '2',
-                        label: 'Code Share 2',
-                    },
-                ]}
-                placeholder="Filter by Sharing Method"
-            >
-                Code Sharing Method
-            </Filter>
+            <Filters>
+                <StandardSelect
+                    name="codeSharingMethodId"
+                    options={[
+                        {
+                            value: '1',
+                            label: 'Code Sharee1',
+                        },
+                        {
+                            value: '2',
+                            label: 'Code Share 2',
+                        },
+                    ]}
+                    placeholder="Filter by Sharing Method"
+                    value="1"
+                >
+                    Code Sharing Method
+                </StandardSelect>
 
-            <Filter name="isActive" type="boolean">
-                Active
-            </Filter>
+                <StandardSwitch name="isActive">Active</StandardSwitch>
 
-            <Filter name="description" type="text" value="test">
-                Description
-            </Filter>
+                <StandardTextInput name="description">
+                    Description
+                </StandardTextInput>
+            </Filters>
         </DataTable>
     );
 };

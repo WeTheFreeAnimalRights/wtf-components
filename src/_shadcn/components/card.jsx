@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '_/lib/utils';
+import { Image } from '../../components/Image';
 
 const Card = React.forwardRef(({ className, customizer, ...props }, ref) => (
     <article
@@ -92,7 +93,7 @@ const CardFooter = React.forwardRef(
 CardFooter.displayName = 'CardFooter';
 
 const CardImage = React.forwardRef(
-    ({ className, customizer, ...props }, ref) => (
+    ({ className, customizer, alt, ...props }, ref) => (
         <figure
             className={cn(
                 'flex flex-column bg-gray-200 dark:bg-gray-900 text-white dark:text-black',
@@ -101,8 +102,9 @@ const CardImage = React.forwardRef(
             )}
             ref={ref}
         >
-            <img
+            <Image
                 className="object-cover w-full h-auto flex-grow aspect-video"
+                alt={alt}
                 {...props}
             />
         </figure>

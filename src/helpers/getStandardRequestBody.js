@@ -1,6 +1,6 @@
 export const getStandardRequestBody = (standardSchema, values) => {
     return standardSchema.reduce((result, field) => {
-        if (field.children) {
+        if (field.children && field.type !== 'custom') {
             return {
                 ...result,
                 ...getStandardRequestBody(field.children, values),

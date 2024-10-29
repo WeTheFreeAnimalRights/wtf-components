@@ -41,6 +41,7 @@ export const FormFieldSelect = ({
                             if (isFunction(onChange)) {
                                 onChange(newValue);
                             }
+
                             field.onChange(newValue);
                         }}
                         value={field.value}

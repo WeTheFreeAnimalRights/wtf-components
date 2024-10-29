@@ -1,9 +1,9 @@
 import { isPlainObject, isString } from 'lodash';
 
-export const filtersDecode = (str = '') => {
+export const filtersDecode = (str = '', defaultValues = {}) => {
     // If an empty thing is passed, then ignore it
     if (!str || !isString(str)) {
-        return {};
+        return defaultValues;
     }
 
     const jsonStr = atob(str);
@@ -15,7 +15,10 @@ export const filtersDecode = (str = '') => {
     }
 
     if (isPlainObject(final)) {
-        return final;
+        return {
+            ...defaultValues,
+            ...final,
+        };
     }
 
     return {};

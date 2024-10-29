@@ -1,9 +1,17 @@
 import { snakeCase, startCase } from 'lodash';
 import { getDefaultColumnProps } from './getDefaultColumnProps';
 
-export const parseChildren = (children = []) => {
+// Definitions
+import { Filters } from '../definitions/Filters';
+import { Order } from '../definitions/Order';
+import { Search } from '../definitions/Search';
+import { TopRight } from '../definitions/TopRight';
+import { RowActions } from '../definitions/RowActions';
+import { Column } from '../definitions/Column';
+
+export const parseTableChildren = (children = []) => {
     const columns = {};
-    const filters = {};
+    let filters = [];
     const meta = {
         order: {
             field: '',
@@ -24,7 +32,7 @@ export const parseChildren = (children = []) => {
         const { props: allProps = {} } = item || {};
         const { children: itemLabel, ...props } = allProps;
 
-        if (item.type.displayName === 'Column') {
+        if (item.type.displayName === Column.displayName) {
             columns[props.name] = {
                 ...defaultColumnProps,
                 sortable:
@@ -41,35 +49,28 @@ export const parseChildren = (children = []) => {
             };
         }
 
-        if (item.type.displayName === 'Filter') {
-            const { value, ...remainingProps } = props;
-            filters[props.name] = {
-                ...remainingProps,
-                label: itemLabel || props.label,
-            };
-            if (value) {
-                meta.filters[props.name] = value;
-            }
+        if (item.type.displayName === Filters.displayName) {
+            filters = filters.concat(item.props.children);
         }
 
-        if (item.type.displayName === 'Order') {
+        if (item.type.displayName === Order.displayName) {
             meta.order.field = props.field;
             meta.order.order = props.order;
         }
 
-        if (item.type.displayName === 'Search') {
+        if (item.type.displayName === Search.displayName) {
             meta.search.visible = true;
             meta.search.text = itemLabel;
         }
 
-        if (item.type.displayName === 'TopRight') {
+        if (item.type.displayName === TopRight.displayName) {
             meta.topRight = {
                 children: itemLabel,
                 className: props.className,
             };
         }
 
-        if (item.type.displayName === 'RowActions') {
+        if (item.type.displayName === RowActions.displayName) {
             meta.rowActions = props.render;
         }
     });

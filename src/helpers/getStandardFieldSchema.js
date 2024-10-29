@@ -1,6 +1,5 @@
 import { isPlainObject, isString } from 'lodash';
 import { getStandardFieldDefaultSchema } from './getStandardFieldDefaultSchema';
-import { getStandardFieldExceptions } from './getStandardFieldExceptions';
 
 export const getStandardFieldSchema = (field, options) => {
     const defaultFieldSchema = getStandardFieldDefaultSchema();
@@ -9,11 +8,8 @@ export const getStandardFieldSchema = (field, options) => {
     const { eachField = {} } = options || {};
 
     if (isPlainObject(field)) {
-        const fieldException = getStandardFieldExceptions(field);
-
         return {
             ...defaultFieldSchema,
-            ...fieldException,
             ...eachField,
             ...field,
         };

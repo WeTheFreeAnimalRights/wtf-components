@@ -11,7 +11,6 @@ import {
     DialogDescription as ShadDialogDescription,
     DialogFooter as ShadDialogFooter,
 } from '_/components/dialog';
-import { VisuallyHidden } from '_/components/visually-hidden';
 
 // Trigger and container
 export const ModalTrigger = React.forwardRef(({ ...props }, ref) => (

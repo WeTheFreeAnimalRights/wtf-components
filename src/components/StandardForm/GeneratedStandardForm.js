@@ -1,25 +1,23 @@
+import { isFunction } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Spinner } from '../Spinner';
 import { Alert } from '../Alert';
 import { StandardForm } from './index';
-import { GeneratedStandardFields } from './GeneratedStandardFields';
 import { GeneratedStandardFooter } from './GeneratedStandardFooter';
-import { getStandardSchema } from '../../helpers/getStandardSchema';
 import { useTranslations } from '../../hooks/useTranslations';
 import { useStandardForm } from '../../hooks/useStandardForm';
+import { getSchema } from './helpers/getSchema';
 import { parseChildren } from './helpers/parseChildren';
 import { cn } from '_/lib/utils';
 import { useToast } from '_/hooks/use-toast';
 
 export const GeneratedStandardForm = ({
-    schema,
     requestObject,
     onSuccess,
     onError,
     options,
     footer,
-    values,
-    children,
+    children: componentChildren,
     className,
 
     cancelUrl,
@@ -29,9 +27,6 @@ export const GeneratedStandardForm = ({
     onAllDone,
 }) => {
     const { t } = useTranslations();
-
-    // Try to get the schema from the children
-    const usedSchema = schema || parseChildren(children);
 
     // Toast for when succesfully edited
     const { toast } = useToast();
@@ -51,9 +46,12 @@ export const GeneratedStandardForm = ({
         }
     }, [submitted]);
 
+    // Parse the children
+    const { schema } = getSchema(componentChildren);
+
     // Standard form
     const { error, loading, form } = useStandardForm({
-        schema: usedSchema,
+        schema,
         requestObject: requestObject || {},
         onSuccess: (...props) => {
             if (typeof toastMessage !== 'undefined') {
@@ -72,15 +70,7 @@ export const GeneratedStandardForm = ({
         options,
     });
 
-    // Get the fields
-    const fields = getStandardSchema(usedSchema, options);
-
-    // Reset the form when values change
-    useEffect(() => {
-        if (values) {
-            form.reset(values);
-        }
-    }, [values]);
+    const children = parseChildren(componentChildren, { error, loading, form });
 
     return (
         <StandardForm
@@ -93,11 +83,7 @@ export const GeneratedStandardForm = ({
                 </div>
             )}
 
-            <GeneratedStandardFields
-                fields={fields}
-                loading={loading}
-                error={error}
-            />
+            {children}
 
             {error && (
                 <Alert
@@ -109,16 +95,18 @@ export const GeneratedStandardForm = ({
                 </Alert>
             )}
 
-            <GeneratedStandardFooter
-                cancelUrl={cancelUrl}
-                onCancel={onCancel}
-                footerLabels={footerLabels}
-                error={error}
-                loading={loading}
-                submitted={submitted}
-            />
-
-            {footer}
+            {isFunction(footer) ? (
+                footer({ loading })
+            ) : (
+                <GeneratedStandardFooter
+                    cancelUrl={cancelUrl}
+                    onCancel={onCancel}
+                    footerLabels={footerLabels}
+                    error={error}
+                    loading={loading}
+                    submitted={submitted}
+                />
+            )}
         </StandardForm>
     );
 };

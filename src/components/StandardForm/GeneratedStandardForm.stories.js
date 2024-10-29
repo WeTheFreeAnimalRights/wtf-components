@@ -1,5 +1,10 @@
 import { RecoilRoot } from 'recoil';
-import { GeneratedStandardForm } from './index';
+import { BrowserRouter } from 'react-router-dom';
+import {
+    GeneratedStandardForm,
+    StandardCodeInput,
+    StandardTextarea,
+} from './index';
 import '../../base.css';
 
 export default {
@@ -9,7 +14,9 @@ export default {
     decorators: [
         (Story) => (
             <RecoilRoot>
-                <Story />
+                <BrowserRouter>
+                    <Story />
+                </BrowserRouter>
             </RecoilRoot>
         ),
     ],
@@ -23,46 +30,20 @@ export default {
     },
 };
 
-export const Primary = {
-    args: {
-        schema: {
-            codeSharingMethodId: {
-                type: 'select',
-                options: [
-                    {
-                        value: '1',
-                        label: 'Code Sharee1',
-                    },
-                    {
-                        value: '2',
-                        label: 'Code Share 2',
-                    },
-                ],
-                label: 'Code Sharing Method',
-                placeholder: 'Filter by Sharing Method',
-            },
-            d1: {
-                type: 'div',
-                className: 'flex flex-row items-center',
-                children: {
-                    isActive: {
-                        type: 'boolean',
-                        label: 'Active',
-                        className: 'flex-shrink basis-0 pe-4',
-                    },
-                    description: {
-                        type: 'text',
-                        label: 'Description',
-                        className: 'flex-grow basis-0',
-                    },
-                },
-            },
-        },
-        options: {
-            sendToServer: false,
-            eachField: {
-                optional: true,
-            },
-        },
-    },
+export const Primary = () => {
+    return (
+        <GeneratedStandardForm>
+            <div>Something demo</div>
+            <StandardTextarea name="myTextarea" value="some value">
+                Textarea
+            </StandardTextarea>
+
+            <div className="my-text">
+                <div>Red thing</div>
+                <StandardCodeInput name="myCodeInput">
+                    Code Input
+                </StandardCodeInput>
+            </div>
+        </GeneratedStandardForm>
+    );
 };

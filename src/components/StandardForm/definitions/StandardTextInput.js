@@ -1,7 +1,7 @@
 /**
  * Component used to DEFINE an input for the generated form
  */
-export const StandardInput = ({
+export const StandardTextInput = ({
     name,
     label,
     type,
@@ -14,4 +14,4 @@ export const StandardInput = ({
     return null;
 };
 
-StandardInput.displayName = 'StandardInput';
+StandardTextInput.displayName = 'StandardTextInput';

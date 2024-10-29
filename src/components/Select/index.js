@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // ShadCN
@@ -65,6 +65,7 @@ export const Select = forwardRef(
 
 export { FormFieldSelect } from './FormFieldSelect';
 
+Select.displayName = 'Select';
 Select.propTypes = {
     /**
      * The name of the select box (useful for forms)

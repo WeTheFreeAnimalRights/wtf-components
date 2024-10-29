@@ -1,128 +1,102 @@
+import { isEmpty } from 'lodash';
 import React, { useContext } from 'react';
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
-import { Button } from '../Button';
-import { Checkbox } from '../Checkbox';
-import { Tooltip } from '../Tooltip';
+import { CornerLeftDown } from 'lucide-react';
+import { DropdownMenu } from '../DropdownMenu';
 import { useTranslations } from '../../hooks/useTranslations';
 import { usePermissions } from './hooks/usePermissions';
+import { useMultipleActions } from './hooks/useMultipleActions';
+import { useConfirm } from '../Confirm/useConfirm';
 import { DataTableContext } from './index';
+import { SearchBox } from '../SearchBox';
+import { FiltersBox } from '../FiltersBox';
 
-// ShadCN
-import { TableHead, TableHeader, TableRow } from '_/components/table';
+import { cn } from '_/lib/utils';
 
 export const DataTableHeader = ({
-    columns = {},
     meta = {},
-    data = [],
-    onSortingChange,
+    filters = [],
     selectedItems = [],
-    onSelectedItemsChange,
+    onMultipleAction,
+    onFiltersApplied,
+    onSearch,
 }) => {
     const { t } = useTranslations();
 
-    // Called when a column gets clicked
-    const { order } = meta;
-    const handleColumnClick = (column) => {
-        const newOrder = {
-            field: column.name,
-            order:
-                column.name === order.field
-                    ? order.order === 'asc'
-                        ? 'desc'
-                        : 'asc'
-                    : column.defaultOrderBy,
-        };
-
-        if (typeof onSortingChange === 'function') {
-            onSortingChange(newOrder);
-        }
-    };
-
-    // Arrows for the sorting
-    const columnArrowsClassName = 'ms-2 h-4 w-4';
-
-    // Get the list of columns
-    const columnsList = Object.values(columns);
-
     // Get the permissions
-    const { canView, canEdit, canRemove } = usePermissions();
+    const { canRemove } = usePermissions();
 
-    // Should we allow multiple actions
+    // When you want to delete something
+    const { confirm } = useConfirm();
+
+    // Should we allow multiple actions and get the filters
     const { multiple } = useContext(DataTableContext);
 
+    // Multiple actions
+    const actions = useMultipleActions();
+
     return (
-        <TableHeader>
-            <TableRow>
-                <TableHead className="w-[50px]">
-                    {multiple
-                        ? canRemove && (
-                              <Tooltip
-                                  message={
-                                      selectedItems.length === data.length
-                                          ? t('unselect-all')
-                                          : t('select-all')
-                                  }
-                              >
-                                  <Checkbox
-                                      checked={
-                                          selectedItems.length === data.length
-                                      }
-                                      onCheckedChange={() => {
-                                          if (
-                                              selectedItems.length ===
-                                              data.length
-                                          ) {
-                                              onSelectedItemsChange([]);
-                                          } else {
-                                              onSelectedItemsChange([...data]);
-                                          }
-                                      }}
-                                      aria-label={
-                                          selectedItems.length === data.length
-                                              ? t('unselect-all')
-                                              : t('select-all')
-                                      }
-                                  />
-                              </Tooltip>
-                          )
-                        : t('No.')}
-                </TableHead>
-                {columnsList.map((column) => (
-                    <TableHead
-                        className={column.headerClassName}
-                        key={`column-${column.name}`}
-                    >
-                        {column.sortable ? (
-                            <Button
-                                variant="ghost"
-                                onClick={() => handleColumnClick(column)}
-                            >
-                                {column.label}
-                                {order.field === column.name ? (
-                                    order.order === 'asc' ? (
-                                        <ArrowUp
-                                            className={columnArrowsClassName}
-                                        />
-                                    ) : (
-                                        <ArrowDown
-                                            className={columnArrowsClassName}
-                                        />
-                                    )
-                                ) : (
-                                    <ArrowUpDown
-                                        className={columnArrowsClassName}
-                                    />
-                                )}
-                            </Button>
-                        ) : (
-                            column.label
-                        )}
-                    </TableHead>
-                ))}
-                {(canView || canEdit || canRemove) && (
-                    <TableHead className="w-[50px]" />
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center mb-4">
+            <div className="flex flex-row flex-grow basis-0 items-center">
+                {multiple && canRemove && selectedItems.length > 0 && (
+                    <>
+                        <CornerLeftDown className="translate-y-[10px] me-2 ms-4" />
+                        <DropdownMenu
+                            label={t('with-selected')}
+                            items={actions}
+                            menuLabel={t('actions')}
+                            className="me-3 bg-transparent dark:bg-transparent"
+                            onSelect={(action) => {
+                                if (action.action === 'remove-selected') {
+                                    confirm({
+                                        title: t('removing'),
+                                        message: t(
+                                            'are-you-sure-you-want-to-remove-multiple'
+                                        ),
+                                        callback: () => {
+                                            if (
+                                                typeof onMultipleAction ===
+                                                'function'
+                                            ) {
+                                                onMultipleAction(
+                                                    selectedItems,
+                                                    action
+                                                );
+                                            }
+                                        },
+                                    });
+                                } else if (
+                                    typeof onMultipleAction === 'function'
+                                ) {
+                                    onMultipleAction(selectedItems, action);
+                                }
+                            }}
+                        />
+                    </>
                 )}
-            </TableRow>
-        </TableHeader>
+
+                {meta.search.visible && (
+                    <SearchBox value={meta.search.text} onSearch={onSearch} />
+                )}
+                {!isEmpty(filters) && (
+                    <FiltersBox
+                        onApplied={onFiltersApplied}
+                        className={meta.search.visible && 'ms-3'}
+                    >
+                        {filters}
+                    </FiltersBox>
+                )}
+            </div>
+
+            {meta.topRight && (
+                <div
+                    className={cn(
+                        'flex sm:flex-shrink justify-end basis-0  mb-3 sm:mb-0',
+                        meta.topRight.className
+                    )}
+                >
+                    {meta.topRight.children}
+                </div>
+            )}
+        </div>
     );
 };
