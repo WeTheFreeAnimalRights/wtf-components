@@ -26,14 +26,16 @@ export const Combobox = ({
     disabled = false,
     options = [],
     emptyMessage,
+    selected: selectedParam,
     onSelect,
     formControl,
     requestObject,
+    requestObjectParams,
     parseResponse,
 }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState(selectedParam);
 
     const { t } = useTranslations();
     const usedEmptyMessage = emptyMessage || t('No items found');
@@ -53,7 +55,7 @@ export const Combobox = ({
     const performServerSearch = useCallback(
         debounce(async (text) => {
             const usedRequestObject = isFunction(requestObject)
-                ? requestObject(text)
+                ? requestObject(text, requestObjectParams)
                 : requestObject;
 
             // Remove the selected
@@ -81,7 +83,7 @@ export const Combobox = ({
                 }
             );
         }, 250),
-        []
+        [requestObjectParams]
     );
 
     const trigger = (
@@ -245,6 +247,11 @@ Combobox.propTypes = {
      * If this is passed on, then the search is done server side
      */
     requestObject: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+
+    /**
+     * If this is passed on, then it will be passed on to the requestObejct function
+     */
+    requestObjectParams: PropTypes.object,
 
     /**
      * If this is passed on, then parse the results coming from the api

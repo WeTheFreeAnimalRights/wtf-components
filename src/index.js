@@ -18,7 +18,10 @@ export {
 export { DatePicker, FormFieldDatePicker } from './components/DatePicker';
 export { DropdownMenu } from './components/DropdownMenu';
 export { ErrorBoundary } from './components/ErrorBoundary';
-export { LanguagePicker } from './components/LanguagePicker';
+export {
+    LanguagePicker,
+    SidebarLanguagePicker,
+} from './components/LanguagePicker';
 export { Modal, ModalTrigger, ModalContainer } from './components/Modal';
 export { MultiSelect } from './components/MultiSelect';
 export { NumberInput, FormFieldNumberInput } from './components/NumberInput';
@@ -62,11 +65,16 @@ export {
 } from './components/StandardForm';
 export { Textarea, FormFieldTextarea } from './components/Textarea';
 export { TextInput, FormFieldTextInput } from './components/TextInput';
-export { ThemeToggle } from './components/ThemeToggle';
+export { ThemeToggle, SidebarThemeToggle } from './components/ThemeToggle';
 export { Tooltip } from './components/Tooltip';
 export { UploadInput, FormFieldUploadInput } from './components/UploadInput';
 
 // ShadCN Components
+export {
+    Avatar,
+    AvatarImage,
+    AvatarFallback,
+} from './_shadcn/components/avatar';
 export { CardHeader, CardTitle } from './_shadcn/components/card';
 export {
     Carousel,
@@ -114,6 +122,28 @@ export {
     SheetTitle,
     SheetDescription,
 } from './_shadcn/components/sheet';
+export {
+    Sidebar,
+    SidebarHeader,
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarFooter,
+    SidebarProvider,
+    SidebarTrigger,
+    SidebarRail,
+    useSidebar,
+} from './_shadcn/components/sidebar';
+export {
+    Collapsible,
+    CollapsibleTrigger,
+    CollapsibleContent,
+} from './_shadcn/components/collapsible';
+export { Separator as ShadSeparator } from './_shadcn/components/separator';
 export { Skeleton } from './_shadcn/components/skeleton';
 export {
     Tabs,

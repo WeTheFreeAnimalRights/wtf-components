@@ -3,7 +3,13 @@ import { Spinner } from '../Spinner';
 
 import { cn } from '_/lib/utils';
 
-export const PreloaderStates = ({ loading, error, className, children }) => {
+export const PreloaderStates = ({
+    loading,
+    loadingMessage,
+    error,
+    className,
+    children,
+}) => {
     if (loading) {
         return (
             <div
@@ -12,7 +18,14 @@ export const PreloaderStates = ({ loading, error, className, children }) => {
                     className
                 )}
             >
-                <Spinner />
+                <div className="flex flex-col items-center justify-center text-center">
+                    <Spinner />
+                    {loadingMessage && (
+                        <div className="mt-3 italic text-sm">
+                            {loadingMessage}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }

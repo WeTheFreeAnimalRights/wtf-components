@@ -38,6 +38,9 @@ export const ThemeToggle = ({ className = '' }) => {
     );
 };
 
+export { SidebarThemeToggle } from './SidebarThemeToggle';
+
+ThemeToggle.displayName = 'ThemeToggle';
 ThemeToggle.propTypes = {
     /**
      * Optional extra classname to the toggle

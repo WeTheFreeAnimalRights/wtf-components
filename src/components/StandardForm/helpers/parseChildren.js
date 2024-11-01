@@ -11,7 +11,7 @@ export const parseChildren = (children, { loading, form }) => {
         searchableElements,
         (child, index, level) => {
             const {
-                props: { value, children, label, ...props },
+                props: { children, label, ...props },
             } = child;
 
             // If, for some reason, this component doesn't exist

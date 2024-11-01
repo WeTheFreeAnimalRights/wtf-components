@@ -29,7 +29,7 @@ export const getSchema = (children) => {
             type,
             name,
             label: children || props.label,
-            defaultValue: value,
+            value,
             ...props,
         };
 

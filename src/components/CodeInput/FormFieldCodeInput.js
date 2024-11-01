@@ -39,8 +39,9 @@ export const FormFieldCodeInput = ({
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <CodeInput
-                            {...props}
                             {...field}
+                            {...props}
+                            value={field.value || props.value}
                             onChange={(newValue) => {
                                 if (isFunction(onChange)) {
                                     onChange(newValue);

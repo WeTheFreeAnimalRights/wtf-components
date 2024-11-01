@@ -41,8 +41,9 @@ export const FormFieldNumberInput = ({
                     <FormControl>
                         <NumberInput
                             placeholder={placeholder}
-                            {...props}
                             {...field}
+                            {...props}
+                            value={field.value || props.value}
                             onChange={(newValue) => {
                                 if (isFunction(onChange)) {
                                     onChange(newValue);

@@ -38,7 +38,7 @@ export const Select = forwardRef(
                 name={name}
                 required={required}
                 disabled={disabled}
-                value={value}
+                defaultValue={value}
                 ref={ref}
                 {...props}
             >

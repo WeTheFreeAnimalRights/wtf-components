@@ -41,8 +41,9 @@ export const FormFieldTextarea = ({
                     <FormControl>
                         <Textarea
                             placeholder={placeholder}
-                            {...props}
                             {...field}
+                            {...props}
+                            value={field.value || props.value}
                             onChange={(event) => {
                                 if (isFunction(onChange)) {
                                     onChange(event.target.value);

@@ -1,4 +1,4 @@
-import { debounce, isUndefined } from 'lodash';
+import { debounce, isFunction, isUndefined } from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Search, CircleX } from 'lucide-react';
@@ -26,7 +26,7 @@ export const SearchBox = ({
 
     const doSearch = (value) => {
         setText(value);
-        if (typeof onSearch === 'function') {
+        if (isFunction(onSearch)) {
             onSearch(value);
         }
     };

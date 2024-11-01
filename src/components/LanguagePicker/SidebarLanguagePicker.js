@@ -3,9 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DropdownMenu } from '../DropdownMenu';
 import { useTranslations } from '../../hooks/useTranslations';
-import globe from './globe.png';
+import { SidebarMenuButton } from '_/components/sidebar';
+import { Languages } from 'lucide-react';
 
-export const LanguagePicker = ({ onChange, showArrow, children }) => {
+export const SidebarLanguagePicker = ({ onChange }) => {
     const { languages, currentLanguage, setCurrentLanguage, t } =
         useTranslations();
 
@@ -14,11 +15,8 @@ export const LanguagePicker = ({ onChange, showArrow, children }) => {
 
     return (
         <DropdownMenu
-            icon={<img className="h-5 me-2" src={globe} alt="" />}
-            label={!children && (selectedLanguage.label || '-')}
             menuLabel={t('Choose a language')}
             items={items}
-            showArrow={showArrow}
             onSelect={(item) => {
                 // Set the current language
                 setCurrentLanguage(item);
@@ -29,20 +27,19 @@ export const LanguagePicker = ({ onChange, showArrow, children }) => {
                 }
             }}
         >
-            {children}
+            <SidebarMenuButton
+                tooltip={t('Change language')}
+                tooltipVisible={true}
+                className="w-10"
+            >
+                <Languages />
+            </SidebarMenuButton>
         </DropdownMenu>
     );
 };
 
-export { SidebarLanguagePicker } from './SidebarLanguagePicker';
-
-LanguagePicker.displayName = 'LanguagePicker';
-LanguagePicker.propTypes = {
-    /**
-     * Whether to show the dropdown icon
-     */
-    showArrow: PropTypes.bool,
-
+SidebarLanguagePicker.displayName = 'SidebarLanguagePicker';
+SidebarLanguagePicker.propTypes = {
     /**
      * Optional on language change handler
      */

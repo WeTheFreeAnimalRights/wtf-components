@@ -1,7 +1,8 @@
 import { validateText } from './validateText';
 
 export const validateSelect = (field, { t, z }) => {
-    return validateText(field, { t, z }).refine(
+    return validateText(field, { t, z });
+    /* .refine(
         (value) => {
             // If there is no option provided and it's optional then ignore
             // this rule
@@ -15,5 +16,5 @@ export const validateSelect = (field, { t, z }) => {
         {
             message: t('not-in-options'),
         }
-    );
+    ); */
 };

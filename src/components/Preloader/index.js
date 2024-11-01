@@ -18,6 +18,7 @@ export const Preloader = ({
     refetch = [],
     className,
     render,
+    loadingMessage,
 }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -78,7 +79,12 @@ export const Preloader = ({
     }
 
     return (
-        <PreloaderStates loading={loading} error={error} className={className}>
+        <PreloaderStates
+            loading={loading}
+            loadingMessage={loadingMessage}
+            error={error}
+            className={className}
+        >
             {children}
         </PreloaderStates>
     );

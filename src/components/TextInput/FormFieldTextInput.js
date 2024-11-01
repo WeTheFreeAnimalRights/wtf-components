@@ -43,8 +43,9 @@ export const FormFieldTextInput = ({
                         <TextInput
                             type={type}
                             placeholder={placeholder}
-                            {...props}
                             {...field}
+                            {...props}
+                            value={field.value || props.value}
                             onChange={(event) => {
                                 if (isFunction(onChange)) {
                                     onChange(event.target.value);
