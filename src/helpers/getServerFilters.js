@@ -36,7 +36,7 @@ export const getServerFilters = ({
 
     // Fetch the page
     if (page !== false) {
-        params['page'] = page;
+        params['page[number]'] = page;
     }
 
     return params;

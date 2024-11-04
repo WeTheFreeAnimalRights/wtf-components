@@ -20,6 +20,8 @@ export const GeneratedStandardForm = ({
     children: componentChildren,
     className,
 
+    disabledSubmit = false,
+    disabledMessage,
     cancelUrl,
     onCancel,
     footerLabels = {},
@@ -63,7 +65,7 @@ export const GeneratedStandardForm = ({
             setSubmitted(true);
 
             if (typeof onSuccess === 'function') {
-                onSuccess(...props);
+                onSuccess(...props, form);
             }
         },
         onError,
@@ -99,6 +101,8 @@ export const GeneratedStandardForm = ({
                 footer({ loading })
             ) : (
                 <GeneratedStandardFooter
+                    disabledSubmit={disabledSubmit}
+                    disabledMessage={disabledMessage}
                     cancelUrl={cancelUrl}
                     onCancel={onCancel}
                     footerLabels={footerLabels}

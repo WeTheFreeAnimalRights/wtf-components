@@ -23,10 +23,12 @@ export const Preloader = ({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
+    const usedRequests = requests.filter(Boolean);
+
     useEffect(() => {
         // Let's make the abort function (to stop all other requests)
         const abortAll = () => {
-            for (const requestConfig of requests) {
+            for (const requestConfig of usedRequests) {
                 if (requestConfig._abortController) {
                     requestConfig._abortController.abort();
                 }
@@ -39,7 +41,7 @@ export const Preloader = ({
 
             let requestConfig;
             try {
-                for (requestConfig of requests) {
+                for (requestConfig of usedRequests) {
                     // Get the data
                     const data = await fetchRequest(requestConfig);
 
@@ -95,56 +97,59 @@ Preloader.propTypes = {
      * An array of requests for the preloader to do at the same time. Once all of them get resolved, then the content is shown
      */
     requests: PropTypes.arrayOf(
-        PropTypes.shape({
-            /**
-             * Optional, which API to send the request to (depending on the setup apis)
-             */
-            api: PropTypes.string,
+        PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.shape({
+                /**
+                 * Optional, which API to send the request to (depending on the setup apis)
+                 */
+                api: PropTypes.string,
 
-            /**
-             * Which endpoint to send the request to
-             */
-            url: PropTypes.string.isRequired,
+                /**
+                 * Which endpoint to send the request to
+                 */
+                url: PropTypes.string.isRequired,
 
-            /**
-             * Which method to send the request with (default GET)
-             *
-             * @var {[type]}
-             */
-            method: PropTypes.string,
+                /**
+                 * Which method to send the request with (default GET)
+                 *
+                 * @var {[type]}
+                 */
+                method: PropTypes.string,
 
-            /**
-             * Set any get params for the request
-             */
-            params: PropTypes.object,
+                /**
+                 * Set any get params for the request
+                 */
+                params: PropTypes.object,
 
-            /**
-             * Which language to request
-             */
-            language: PropTypes.string,
+                /**
+                 * Which language to request
+                 */
+                language: PropTypes.string,
 
-            /**
-             * Optional body text to send with the request
-             */
-            body: PropTypes.string,
+                /**
+                 * Optional body text to send with the request
+                 */
+                body: PropTypes.string,
 
-            /**
-             * Optional callback to validate the response coming from the API
-             */
-            validateResponse: PropTypes.func,
+                /**
+                 * Optional callback to validate the response coming from the API
+                 */
+                validateResponse: PropTypes.func,
 
-            /**
-             * Optional callback to handle the response (if any)
-             */
-            callback: PropTypes.func,
+                /**
+                 * Optional callback to handle the response (if any)
+                 */
+                callback: PropTypes.func,
 
-            /**
-             * This will be filled in by the request and will contain the abort controller (to cancel the request)
-             *
-             * @var {[type]}
-             */
-            _abortController: PropTypes.object,
-        })
+                /**
+                 * This will be filled in by the request and will contain the abort controller (to cancel the request)
+                 *
+                 * @var {[type]}
+                 */
+                _abortController: PropTypes.object,
+            }),
+        ])
     ),
 
     /**

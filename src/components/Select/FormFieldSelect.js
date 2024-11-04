@@ -44,11 +44,11 @@ export const FormFieldSelect = ({
 
                             field.onChange(newValue);
                         }}
+                        {...props}
                         value={field.value || props.value}
                         options={options}
                         placeholder={placeholder}
                         formControl
-                        {...props}
                     />
                     {description && (
                         <FormDescription>{description}</FormDescription>

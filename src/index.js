@@ -181,6 +181,7 @@ export { parseResourceFeedbackOptions } from './helpers/parseResourceFeedbackOpt
 export { traverseElements } from './helpers/traverseElements';
 export { objectToArray } from './helpers/objectToArray';
 export { arrayToObject } from './helpers/arrayToObject';
+export { serverPermissionsToTablePermissions } from './helpers/serverPermissionsToTablePermissions';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
