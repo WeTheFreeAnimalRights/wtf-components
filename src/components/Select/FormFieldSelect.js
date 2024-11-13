@@ -11,11 +11,13 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldSelect = ({
     form: formParam,
     name,
     label,
+    className,
     placeholder,
     options,
     description,
@@ -32,7 +34,7 @@ export const FormFieldSelect = ({
             name={name}
             render={({ field }) => (
                 <FormItem
-                    className={visible === false && 'hidden'}
+                    className={cn(visible === false && 'hidden', className)}
                     hidden={visible === false ? true : undefined}
                 >
                     <FormLabel>{label}</FormLabel>

@@ -1,3 +1,5 @@
+import { isNumber, isString } from 'lodash';
+
 /**
  * Interpolates variables wrapped with `{}` in `str` with variables in `obj`
  * It will replace what it can, and leave the rest untouched
@@ -10,8 +12,6 @@
 export const getInterpolatedString = (str = '', obj = []) => {
     return str.replace(/{([^{}]*)}/g, (match, keyword) => {
         const replace = obj[keyword];
-        return typeof replace === 'string' || typeof replace === 'number'
-            ? replace
-            : match;
+        return isString(replace) || isNumber(replace) ? replace : match;
     });
 };

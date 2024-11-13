@@ -1,17 +1,16 @@
 import { isFunction } from 'lodash';
+import { Globe } from 'lucide-react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DropdownMenu } from '../DropdownMenu';
 import { useTranslations } from '../../hooks/useTranslations';
 import { SidebarMenuButton } from '_/components/sidebar';
-import { Languages } from 'lucide-react';
 
 export const SidebarLanguagePicker = ({ onChange }) => {
-    const { languages, currentLanguage, setCurrentLanguage, t } =
-        useTranslations();
+    const { languages, setCurrentLanguage, t } = useTranslations();
 
     const items = Object.values(languages);
-    const selectedLanguage = currentLanguage || languages[0] || {};
+    // const selectedLanguage = currentLanguage || languages[0] || {};
 
     return (
         <DropdownMenu
@@ -32,7 +31,7 @@ export const SidebarLanguagePicker = ({ onChange }) => {
                 tooltipVisible={true}
                 className="w-10"
             >
-                <Languages />
+                <Globe />
             </SidebarMenuButton>
         </DropdownMenu>
     );

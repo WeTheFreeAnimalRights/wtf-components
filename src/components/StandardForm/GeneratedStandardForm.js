@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Spinner } from '../Spinner';
 import { Alert } from '../Alert';
@@ -41,7 +41,7 @@ export const GeneratedStandardForm = ({
                 setSubmitted(false);
 
                 // Call when the submitted returns to normal
-                if (typeof onAllDone === 'function') {
+                if (isFunction(onAllDone)) {
                     onAllDone();
                 }
             }, 1000);
@@ -56,7 +56,7 @@ export const GeneratedStandardForm = ({
         schema,
         requestObject: requestObject || {},
         onSuccess: (...props) => {
-            if (typeof toastMessage !== 'undefined') {
+            if (!isUndefined(toastMessage)) {
                 toast({
                     title: toastMessage,
                 });
@@ -64,7 +64,7 @@ export const GeneratedStandardForm = ({
 
             setSubmitted(true);
 
-            if (typeof onSuccess === 'function') {
+            if (isFunction(onSuccess)) {
                 onSuccess(...props, form);
             }
         },
@@ -75,10 +75,7 @@ export const GeneratedStandardForm = ({
     const children = parseChildren(componentChildren, { error, loading, form });
 
     return (
-        <StandardForm
-            form={form}
-            className={cn('relative space-y-4', className)}
-        >
+        <StandardForm form={form} className={cn('relative', className)}>
             {loading && (
                 <div className="absolute left-0 right-0 top-0 bottom-0 rounded-lg bg-white/75 z-10 flex flex-col items-center justify-center dark:bg-gray-800/75">
                     <Spinner />
@@ -89,7 +86,7 @@ export const GeneratedStandardForm = ({
 
             {error && (
                 <Alert
-                    className="mb-3"
+                    className="mt-6"
                     variant="destructive"
                     title={t('form-error')}
                 >

@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import React, { useState, createContext } from 'react';
 import { DataTableTableHeader } from './DataTableTableHeader';
 import { DataTableContent } from './DataTableContent';
@@ -50,7 +51,7 @@ export const DataTable = ({
                 onFiltersApplied={onFiltersApplied}
                 onSearch={onSearch}
             />
-            {typeof render === 'function' ? (
+            {isFunction(render) ? (
                 data.length > 0 ? (
                     render({
                         data,

@@ -5,7 +5,15 @@ import { DropdownMenu } from '../DropdownMenu';
 import { useTranslations } from '../../hooks/useTranslations';
 import globe from './globe.png';
 
-export const LanguagePicker = ({ onChange, showArrow, children }) => {
+export const LanguagePicker = ({
+    icon,
+    variant,
+    className,
+    labelClassName,
+    onChange,
+    showArrow,
+    children,
+}) => {
     const { languages, currentLanguage, setCurrentLanguage, t } =
         useTranslations();
 
@@ -14,9 +22,12 @@ export const LanguagePicker = ({ onChange, showArrow, children }) => {
 
     return (
         <DropdownMenu
-            icon={<img className="h-5 me-2" src={globe} alt="" />}
+            icon={icon || <img className="h-5 me-2" src={globe} alt="" />}
             label={!children && (selectedLanguage.label || '-')}
             menuLabel={t('Choose a language')}
+            variant={variant}
+            className={className}
+            labelClassName={labelClassName}
             items={items}
             showArrow={showArrow}
             onSelect={(item) => {

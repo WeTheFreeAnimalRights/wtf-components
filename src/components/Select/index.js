@@ -18,6 +18,7 @@ export const Select = forwardRef(
         {
             name,
             value,
+            defaultValue,
             options = [],
             placeholder,
             formControl = false,
@@ -28,8 +29,6 @@ export const Select = forwardRef(
         },
         ref
     ) => {
-        console.log('>>value', value);
-
         const trigger = (
             <ShadSelectTrigger className={className || ''}>
                 {placeholder && <ShadSelectValue placeholder={placeholder} />}
@@ -41,6 +40,7 @@ export const Select = forwardRef(
                 name={name}
                 required={required}
                 disabled={disabled}
+                defaultValue={defaultValue}
                 value={value}
                 ref={ref}
                 {...props}

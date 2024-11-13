@@ -23,6 +23,8 @@ export const DropdownMenu = ({
     onSelect,
     children,
     className,
+    labelClassName,
+    variant,
     align = 'center',
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,11 +34,11 @@ export const DropdownMenu = ({
             <ShadDropdownMenuTrigger asChild>
                 {children || (
                     <Button
-                        variant="outline"
-                        className={cn('bg-white dark:bg-gray-700', className)}
+                        variant={variant || 'outline'}
+                        className={className}
                     >
                         {icon}
-                        {label}
+                        <div className={labelClassName}>{label}</div>
                         {showArrow && (
                             <>
                                 {isOpen ? (
@@ -75,14 +77,26 @@ export const DropdownMenu = ({
                         >
                             {item.icon}
 
-                            <div className="flex flex-col">
-                                <div
-                                    className={cn(
-                                        'text-md text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white',
-                                        item.labelClassName
+                            <div className="flex flex-col w-full">
+                                <div className="flex flex-row items-center justify-between">
+                                    <div
+                                        className={cn(
+                                            'text-md text-gray-900 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white',
+                                            item.labelClassName
+                                        )}
+                                    >
+                                        {item.label}
+                                    </div>
+                                    {item.sublabel && (
+                                        <div
+                                            className={cn(
+                                                'text-md text-gray-400 group-hover:text-white dark:text-gray-700 dark:group-hover:text-white ms-2',
+                                                item.sublabelClassName
+                                            )}
+                                        >
+                                            {item.sublabel}
+                                        </div>
                                     )}
-                                >
-                                    {item.label}
                                 </div>
                                 {item.description && (
                                     <div className="text-xs text-gray-400 group-hover:text-gray-300 dark:text-gray-600">
@@ -120,6 +134,11 @@ DropdownMenu.propTypes = {
             label: PropTypes.string,
 
             /**
+             * Sublabel of the item
+             */
+            sublabel: PropTypes.string,
+
+            /**
              * If the item is a separator
              */
             separator: PropTypes.bool,
@@ -130,9 +149,14 @@ DropdownMenu.propTypes = {
             icon: PropTypes.element,
 
             /**
-             * Optional classname of the label of the item
+             * Optional classname for the label of the item
              */
             labelClassName: PropTypes.string,
+
+            /**
+             * Optional classname for the sublabel of the item
+             */
+            sublabelClassName: PropTypes.string,
 
             /**
              * Optional description of the item

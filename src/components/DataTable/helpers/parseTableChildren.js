@@ -1,4 +1,4 @@
-import { snakeCase, startCase } from 'lodash';
+import { isUndefined, snakeCase, startCase } from 'lodash';
 import { getDefaultColumnProps } from './getDefaultColumnProps';
 
 // Definitions
@@ -40,10 +40,9 @@ export const parseTableChildren = (children = []) => {
                         ? false
                         : defaultColumnProps.sortable,
                 serverName: snakeCase(props.name),
-                headerClassName:
-                    typeof props.headerClassName !== 'undefined'
-                        ? props.headerClassName
-                        : props.className,
+                headerClassName: !isUndefined(props.headerClassName)
+                    ? props.headerClassName
+                    : props.className,
                 label: itemLabel || props.label || startCase(props.name),
                 ...props,
             };

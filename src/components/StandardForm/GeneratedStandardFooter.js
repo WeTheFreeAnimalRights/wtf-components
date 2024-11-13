@@ -1,7 +1,7 @@
+import { isFunction, isUndefined } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';
-import { Tooltip } from '../Tooltip';
 import { Alert } from '../Alert';
 
 export const GeneratedStandardFooter = ({
@@ -19,7 +19,7 @@ export const GeneratedStandardFooter = ({
 
     const navigate = useNavigate();
 
-    if (typeof cancelUrl === 'undefined' && typeof onCancel !== 'function') {
+    if (isUndefined(cancelUrl) && !isFunction(onCancel)) {
         return (
             <>
                 {disabledSubmit && disabledMessage && (
@@ -28,7 +28,7 @@ export const GeneratedStandardFooter = ({
                 <Button
                     type="submit"
                     variant={submitted ? 'simple' : 'default'}
-                    className="w-full"
+                    className="w-full mt-8"
                     disabled={disabledSubmit || loading}
                 >
                     {submitted
@@ -62,7 +62,7 @@ export const GeneratedStandardFooter = ({
                     disabled={loading}
                     variant="secondary"
                     onClick={() => {
-                        if (typeof onCancel === 'function') {
+                        if (isFunction(onCancel)) {
                             onCancel();
                         } else {
                             navigate(cancelUrl);

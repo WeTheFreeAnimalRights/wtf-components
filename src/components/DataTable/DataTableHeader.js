@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, isFunction } from 'lodash';
 import React, { useContext } from 'react';
 import { CornerLeftDown } from 'lucide-react';
 import { DropdownMenu } from '../DropdownMenu';
@@ -53,10 +53,7 @@ export const DataTableHeader = ({
                                             'are-you-sure-you-want-to-remove-multiple'
                                         ),
                                         callback: () => {
-                                            if (
-                                                typeof onMultipleAction ===
-                                                'function'
-                                            ) {
+                                            if (isFunction(onMultipleAction)) {
                                                 onMultipleAction(
                                                     selectedItems,
                                                     action
@@ -64,9 +61,7 @@ export const DataTableHeader = ({
                                             }
                                         },
                                     });
-                                } else if (
-                                    typeof onMultipleAction === 'function'
-                                ) {
+                                } else if (isFunction(onMultipleAction)) {
                                     onMultipleAction(selectedItems, action);
                                 }
                             }}

@@ -1,3 +1,4 @@
+import { isFunction, isUndefined } from 'lodash';
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
@@ -34,7 +35,7 @@ export const Card = forwardRef(
         },
         ref
     ) => {
-        const clickable = typeof onClick === 'function';
+        const clickable = isFunction(onClick);
         return (
             <ShadCard
                 className={cn(
@@ -82,7 +83,7 @@ export const Card = forwardRef(
                                     size={size}
                                     customizer={customizer}
                                 >
-                                    {typeof active === 'undefined' ? (
+                                    {isUndefined(active) ? (
                                         title
                                     ) : (
                                         <CardActiveTitle

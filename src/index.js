@@ -63,6 +63,7 @@ export {
     StandardSwitch,
     StandardTextarea,
 } from './components/StandardForm';
+export { Translation } from './components/Translation';
 export { Textarea, FormFieldTextarea } from './components/Textarea';
 export { TextInput, FormFieldTextInput } from './components/TextInput';
 export { ThemeToggle, SidebarThemeToggle } from './components/ThemeToggle';
@@ -75,7 +76,11 @@ export {
     AvatarImage,
     AvatarFallback,
 } from './_shadcn/components/avatar';
-export { CardHeader, CardTitle } from './_shadcn/components/card';
+export {
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from './_shadcn/components/card';
 export {
     Carousel,
     CarouselContent,
@@ -176,6 +181,7 @@ export { transformServerData } from './helpers/transformServerData';
 export { filtersEncode } from './helpers/filtersEncode';
 export { filtersDecode } from './helpers/filtersDecode';
 export { getServerFilters } from './helpers/getServerFilters';
+export { parseLanguages } from './helpers/parseLanguages';
 export { parseResources } from './helpers/parseResources';
 export { parseResourceFeedbackOptions } from './helpers/parseResourceFeedbackOptions';
 export { traverseElements } from './helpers/traverseElements';

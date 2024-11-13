@@ -21,7 +21,7 @@ export const getStandardRequestObject = (requestObject, standardSchema) => {
     return (values) => {
         // Make the body
         let body = getStandardRequestBody(standardSchema, values);
-        if (typeof requestObject.parseStandardBody === 'function') {
+        if (isFunction(requestObject.parseStandardBody)) {
             body = requestObject.parseStandardBody(body);
         }
 

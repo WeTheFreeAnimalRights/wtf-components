@@ -1,3 +1,4 @@
+import { isFunction, isString } from 'lodash';
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
@@ -59,7 +60,7 @@ const SidebarProvider = React.forwardRef(
             (value) => {
                 if (setOpenProp) {
                     return setOpenProp?.(
-                        typeof value === 'function' ? value(open) : value
+                        isFunction(value) ? value(open) : value
                     );
                 }
 
@@ -521,7 +522,7 @@ const SidebarMenuButton = React.forwardRef(
             return button;
         }
 
-        if (typeof tooltip === 'string') {
+        if (isString(tooltip)) {
             tooltip = {
                 children: tooltip,
             };

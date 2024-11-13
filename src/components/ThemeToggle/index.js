@@ -5,36 +5,31 @@ import { Sun, Moon } from 'lucide-react';
 import { currentThemeState } from '../../recoilState';
 import store from 'store2';
 import { useTranslations } from '../../hooks/useTranslations';
+import { Button } from '../Button';
 
-export const ThemeToggle = ({ className = '' }) => {
+export const ThemeToggle = ({ variant, size, className }) => {
     const theme = useRecoilValue(currentThemeState);
     const setCurrentTheme = useSetRecoilState(currentThemeState);
     const { t } = useTranslations();
 
     return (
-        <div className={`flex flex-col justify-center ${className || ''}`}>
-            <button
-                type="button"
-                className={`bg-transparent hover:bg-gray-700 transition-colors flex items-center justify-center rounded-md p-2 text-sm font-medium text-gray-300 hover:text-gray-100 group`}
-                title={
-                    theme === 'dark'
-                        ? t('theme-set-light')
-                        : t('theme-set-dark')
+        <Button
+            variant={variant || 'ghost'}
+            size={size}
+            className={className}
+            onClick={() => {
+                if (theme === 'dark') {
+                    store.set('theme', 'light');
+                    return setCurrentTheme('light');
                 }
-                onClick={() => {
-                    if (theme === 'dark') {
-                        store.set('theme', 'light');
-                        return setCurrentTheme('light');
-                    }
 
-                    store.set('theme', 'dark');
-                    return setCurrentTheme('dark');
-                }}
-            >
-                {theme === 'dark' && <Sun className="w-4 h-4" />}
-                {theme === 'light' && <Moon className="w-4 h-4" />}
-            </button>
-        </div>
+                store.set('theme', 'dark');
+                return setCurrentTheme('dark');
+            }}
+        >
+            {theme === 'dark' && <Sun className="w-4 h-4" />}
+            {theme === 'light' && <Moon className="w-4 h-4" />}
+        </Button>
     );
 };
 

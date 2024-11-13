@@ -44,6 +44,7 @@ Button.propTypes = {
         'ghost',
         'link',
         'wtf-pink',
+        `simple-link`,
     ]),
 
     /**

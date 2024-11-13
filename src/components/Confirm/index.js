@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useRecoilState } from 'recoil';
 import { confirmState } from '../../recoilState';
 import { useTranslations } from '../../hooks/useTranslations';
@@ -13,7 +14,7 @@ export const Confirm = () => {
             <Modal title={confirmObj.title} description={confirmObj.message}>
                 <Button
                     onClick={() => {
-                        if (typeof confirmObj.callback === 'function') {
+                        if (isFunction(confirmObj.callback)) {
                             confirmObj.callback();
                         }
                         setConfirmObj({

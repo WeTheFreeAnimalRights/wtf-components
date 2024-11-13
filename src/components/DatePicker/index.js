@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import React, { forwardRef, useState } from 'react';
 import moment from 'moment';
 import { Calendar as CalendarIcon } from 'lucide-react';
@@ -56,7 +57,7 @@ export const DatePicker = forwardRef(
                         selected={value ? moment(value).toDate() : ''}
                         onSelect={(newValue) => {
                             setOpen(false);
-                            if (typeof onChange === 'function') {
+                            if (isFunction(onChange)) {
                                 onChange(moment(newValue).format('YYYY-MM-DD'));
                             }
                         }}

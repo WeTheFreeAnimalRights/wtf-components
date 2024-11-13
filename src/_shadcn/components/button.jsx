@@ -18,8 +18,10 @@ const buttonVariants = cva(
                     'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
                 secondary:
                     'bg-secondary text-secondary-foreground hover:bg-secondary/60',
-                ghost: 'hover:bg-accent hover:text-accent-foreground',
-                link: 'text-black dark:text-white underline-offset-4 hover:underline',
+                ghost: 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-accent-foreground',
+                link: 'text-wtf-pink dark:text-dark-wtf-pink underline-offset-2 hover:underline',
+                'simple-link':
+                    'underline underline-offset-2 hover:no-underline',
                 'wtf-pink':
                     'bg-wtf-pink text-white hover:bg-wtf-pink/90 rounded-full',
             },

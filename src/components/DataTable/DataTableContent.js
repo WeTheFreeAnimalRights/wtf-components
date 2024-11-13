@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import React, { useContext } from 'react';
 import { MoreHorizontal } from 'lucide-react';
 import { Checkbox } from '../Checkbox';
@@ -56,7 +57,7 @@ export const DataTableContent = ({
     const { confirm } = useConfirm();
 
     // What happens when a user clicks on a row
-    const hasItemClick = typeof onItemClick === 'function';
+    const hasItemClick = isFunction(onItemClick);
     const handleItemClick = (row) => {
         let select = true;
         if (hasItemClick) {
@@ -103,7 +104,7 @@ export const DataTableContent = ({
                             }}
                         />
                     ))}
-                    {typeof meta.rowActions === 'function' ? (
+                    {isFunction(meta.rowActions) ? (
                         <TableCell>{meta.rowActions(row)}</TableCell>
                     ) : (
                         (canView || canEdit || canRemove) && (
@@ -120,8 +121,7 @@ export const DataTableContent = ({
                                                 ),
                                                 callback: () => {
                                                     if (
-                                                        typeof onItemAction ===
-                                                        'function'
+                                                        isFunction(onItemAction)
                                                     ) {
                                                         onItemAction(
                                                             row,
@@ -130,9 +130,7 @@ export const DataTableContent = ({
                                                     }
                                                 },
                                             });
-                                        } else if (
-                                            typeof onItemAction === 'function'
-                                        ) {
+                                        } else if (isFunction(onItemAction)) {
                                             onItemAction(row, action);
                                         }
                                     }}

@@ -1,3 +1,4 @@
+import { isFunction, isUndefined } from 'lodash';
 import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Minus, Plus } from 'lucide-react';
@@ -20,7 +21,7 @@ export const NumberInput = forwardRef(
         ref
     ) => {
         const [internalValue, setInternalValue] = useState(value || min);
-        const isControlled = typeof value !== 'undefined';
+        const isControlled = isUndefined(value);
 
         useEffect(() => {
             if (isControlled) {
@@ -30,12 +31,12 @@ export const NumberInput = forwardRef(
 
         const updateValue = (newValue) => {
             const clampedValue = Math.max(0, newValue);
-            if (isControlled) {
-                if (typeof onChange === 'function') {
-                    onChange(clampedValue);
-                }
-            } else {
+            if (!isControlled) {
                 setInternalValue(clampedValue);
+            }
+
+            if (isFunction(onChange)) {
+                onChange(clampedValue);
             }
         };
         const increment = () =>

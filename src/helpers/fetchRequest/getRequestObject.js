@@ -1,4 +1,4 @@
-import { each, isArray } from 'lodash';
+import { each, isArray, isPlainObject } from 'lodash';
 import { getUrl } from './api/getUrl';
 import { getParamName } from './getParamName';
 /**
@@ -31,7 +31,7 @@ export const getRequestObject = (requestConfig) => {
         // If there is any suffix to the url
         url += '/' + requestConfig.segments.join('/');
     }
-    if (typeof requestConfig.params === 'object') {
+    if (isPlainObject(requestConfig.params)) {
         const urlParams = new URLSearchParams();
         for (const param in requestConfig.params) {
             const paramValue = requestConfig.params[param];

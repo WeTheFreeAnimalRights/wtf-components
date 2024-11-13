@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { fetchRequest } from '../../helpers/fetchRequest';
@@ -64,7 +65,7 @@ export const Preloader = ({
                 setError(error);
 
                 // If there is a callback, let's call it
-                if (typeof requestConfig.errorCallback === 'function') {
+                if (isFunction(requestConfig.errorCallback)) {
                     requestConfig.errorCallback(error);
                 }
             } finally {
@@ -76,7 +77,7 @@ export const Preloader = ({
     }, refetch);
 
     // Perhaps there is a method on how to render
-    if (typeof render === 'function') {
+    if (isFunction(render)) {
         return render({ loading, error, className, children });
     }
 

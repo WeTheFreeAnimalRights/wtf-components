@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import React, { useContext } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { Button } from '../Button';
@@ -33,7 +34,7 @@ export const DataTableTableHeader = ({
                     : column.defaultOrderBy,
         };
 
-        if (typeof onSortingChange === 'function') {
+        if (isFunction(onSortingChange)) {
             onSortingChange(newOrder);
         }
     };

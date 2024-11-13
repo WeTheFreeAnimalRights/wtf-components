@@ -1,5 +1,7 @@
+import { isUndefined } from 'lodash';
+
 export const getStandardFieldDefaultValue = (field) => {
-    if (typeof field.defaultValue !== 'undefined') {
+    if (!isUndefined(field.defaultValue)) {
         return field.defaultValue;
     }
     if (field.type === 'boolean') {

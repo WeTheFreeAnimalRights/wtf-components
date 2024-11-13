@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import React, { Fragment, useState } from 'react';
 
 import {
@@ -60,7 +61,7 @@ export const MultiSelect = ({
                                 key={`item-${index}`}
                                 checked={selected.includes(item)}
                                 onCheckedChange={(checked) => {
-                                    if (typeof onSelect !== 'function') {
+                                    if (!isFunction(onSelect)) {
                                         return;
                                     }
 

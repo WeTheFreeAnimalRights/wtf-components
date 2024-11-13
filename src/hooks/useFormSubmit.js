@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import { useRequest } from './useRequest';
 
 export const useFormSubmit = ({
@@ -14,7 +15,7 @@ export const useFormSubmit = ({
     // Submit method
     const formSubmit = async (values) => {
         if (sendToServer === false) {
-            if (typeof onSuccess === 'function') {
+            if (isFunction(onSuccess)) {
                 onSuccess(values);
             }
         } else {

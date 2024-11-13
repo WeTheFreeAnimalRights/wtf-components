@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import {
     DndContext,
     closestCenter,
@@ -32,7 +33,7 @@ export const SortableContainer = ({ items, children, onReordered }) => {
             const oldIndex = items.findIndex((item) => active.id === item.id);
             const newIndex = items.findIndex((item) => over.id === item.id);
 
-            if (typeof onReordered === 'function') {
+            if (isFunction(onReordered)) {
                 onReordered(arrayMove(items, oldIndex, newIndex));
             }
         }

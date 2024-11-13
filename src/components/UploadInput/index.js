@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash';
 import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
@@ -31,7 +32,7 @@ export const UploadInput = forwardRef(
                 setDisplayImage(file.preview);
 
                 // Call the onselect
-                if (typeof onSelect === 'function') {
+                if (isFunction(onSelect)) {
                     onSelect(file);
                 }
             },
@@ -87,7 +88,7 @@ export const UploadInput = forwardRef(
                             onClick={() => {
                                 setDisplayImage(defaultImage);
 
-                                if (typeof onRemove === 'function') {
+                                if (isFunction(onRemove)) {
                                     onRemove();
                                 }
                             }}

@@ -1,6 +1,6 @@
+import { isFunction, range } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { range } from 'lodash';
 import { useTranslations } from '../../hooks/useTranslations';
 
 // ShadCN
@@ -37,7 +37,7 @@ export const Pagination = ({
                             className="cursor-pointer"
                             onClick={(e) => {
                                 e.preventDefault();
-                                if (typeof onPageChange === 'function') {
+                                if (isFunction(onPageChange)) {
                                     onPageChange(currentPage - 1);
                                 }
                             }}
@@ -61,7 +61,7 @@ export const Pagination = ({
                             onClick={(e) => {
                                 e.preventDefault();
                                 if (
-                                    typeof onPageChange === 'function' &&
+                                    isFunction(onPageChange) &&
                                     pageCount !== currentPage
                                 ) {
                                     onPageChange(pageCount);
@@ -85,7 +85,7 @@ export const Pagination = ({
                             className="cursor-pointer"
                             onClick={(e) => {
                                 e.preventDefault();
-                                if (typeof onPageChange === 'function') {
+                                if (isFunction(onPageChange)) {
                                     onPageChange(currentPage + 1);
                                 }
                             }}
