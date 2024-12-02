@@ -23,7 +23,7 @@ export const Confirm = () => {
                         });
                     }}
                 >
-                    {t('Yes')}
+                    {t('confirm-yes')}
                 </Button>
                 <Button
                     variant="secondary"
@@ -35,7 +35,7 @@ export const Confirm = () => {
                         })
                     }
                 >
-                    {t('Cancel')}
+                    {t('confirm-cancel')}
                 </Button>
             </Modal>
         </ModalContainer>

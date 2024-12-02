@@ -14,7 +14,7 @@ export const SidebarLanguagePicker = ({ onChange }) => {
 
     return (
         <DropdownMenu
-            menuLabel={t('Choose a language')}
+            menuLabel={t('language-picker-choose')}
             items={items}
             onSelect={(item) => {
                 // Set the current language
@@ -27,7 +27,7 @@ export const SidebarLanguagePicker = ({ onChange }) => {
             }}
         >
             <SidebarMenuButton
-                tooltip={t('Change language')}
+                tooltip={t('sidebar-language-picker-tooltip')}
                 tooltipVisible={true}
                 className="w-10"
             >

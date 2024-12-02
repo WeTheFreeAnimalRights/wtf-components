@@ -7,8 +7,10 @@ export const parseResourceItem = (item = {}) => {
         description: item.description,
         image: item.imageUrl,
         type,
-        linkType: item.linkType.toLowerCase(),
-        link: item.link,
+        links: item.links.map(link => ({
+            type: link.type.toLowerCase(),
+            url: link.url,
+        })),
         highlighted: Boolean(item.isHighlighted),
         highlightedType:
             type === 'documentary' || type === 'video'

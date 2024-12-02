@@ -10,6 +10,7 @@ export const Resource = ({
     highlighted = false,
     imageClassName,
     customizer = false,
+    ...props
 }) => {
     return (
         <Card
@@ -22,6 +23,7 @@ export const Resource = ({
             size={size}
             onClick={onClick}
             customizer={customizer}
+            {...props}
         />
     );
 };

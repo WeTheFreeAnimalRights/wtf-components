@@ -4,8 +4,8 @@ import { Check, Archive } from 'lucide-react';
 
 export const CardActiveTitle = ({ active, labels, children }) => {
     const { t } = useTranslations();
-    const activeLabel = labels?.active || t('Active');
-    const inactiveLabel = labels?.inactive || t('Inactive');
+    const activeLabel = labels?.active || t('card-active');
+    const inactiveLabel = labels?.inactive || t('card-inactive');
 
     return (
         <div className="flex flex-row items-center">

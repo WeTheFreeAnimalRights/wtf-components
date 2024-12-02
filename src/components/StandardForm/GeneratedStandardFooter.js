@@ -32,8 +32,8 @@ export const GeneratedStandardFooter = ({
                     disabled={disabledSubmit || loading}
                 >
                     {submitted
-                        ? footerLabels.done || t('Done')
-                        : footerLabels.submit || t('Submit')}
+                        ? footerLabels.done || t('footer-done')
+                        : footerLabels.submit || t('footer-submit')}
                 </Button>
             </>
         );
@@ -52,8 +52,8 @@ export const GeneratedStandardFooter = ({
                     disabled={disabledSubmit || loading}
                 >
                     {submitted
-                        ? footerLabels.done || t('Done')
-                        : footerLabels.submit || t('Submit')}
+                        ? footerLabels.done || t('footer-done')
+                        : footerLabels.submit || t('footer-submit')}
                 </Button>
 
                 <Button
@@ -69,7 +69,7 @@ export const GeneratedStandardFooter = ({
                         }
                     }}
                 >
-                    {footerLabels.cancel || t('Cancel')}
+                    {footerLabels.cancel || t('footer-cancel')}
                 </Button>
             </div>
         </>

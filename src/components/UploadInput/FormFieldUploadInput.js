@@ -48,7 +48,10 @@ export const FormFieldUploadInput = ({
                                 fieldProps.onChange(selectedFile.file);
                             }}
                             onRemove={() => {
-                                onChange(null);
+                                if (isFunction(onChange)) {
+                                    onChange(null);
+                                }
+                                fieldProps.onChange(null);
                             }}
                         />
                     </FormControl>

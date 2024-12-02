@@ -38,9 +38,9 @@ export const Combobox = ({
     const [selected, setSelected] = useState(selectedParam);
 
     const { t } = useTranslations();
-    const usedEmptyMessage = emptyMessage || t('No items found');
-    const usedPlaceholder = placeholder || t('Select an item');
-    const usedSearchPlaceholder = searchPlaceholder || t('Search for an item');
+    const usedEmptyMessage = emptyMessage || t('combo-empty');
+    const usedPlaceholder = placeholder || t('combo-placeholder');
+    const usedSearchPlaceholder = searchPlaceholder || t('combo-search-placeholder');
 
     const [searchText, setSearchText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);

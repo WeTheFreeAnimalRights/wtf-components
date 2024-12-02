@@ -177,6 +177,7 @@ export { currentThemeState, translationsState } from './recoilState';
 // Helpers
 export { isDarkMode } from './helpers/isDarkMode';
 export { camelizeObject } from './helpers/camelizeObject';
+export { snakeObject } from './helpers/snakeObject';
 export { transformServerData } from './helpers/transformServerData';
 export { filtersEncode } from './helpers/filtersEncode';
 export { filtersDecode } from './helpers/filtersDecode';

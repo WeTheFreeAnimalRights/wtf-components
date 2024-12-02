@@ -25,7 +25,7 @@ export const Image = ({ src = '', alt = '', className = '', ...props }) => {
                         <AnimalIcon
                             className={cn('w-8 h-8 mx-auto text-white')}
                         />
-                        <div className="text-white">{t('No Image')}</div>
+                        <div className="text-white">{t('no-image')}</div>
                     </div>
                 </div>
             )}

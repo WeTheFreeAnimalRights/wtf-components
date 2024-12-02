@@ -6,7 +6,7 @@ export const getParamName = (name = '') => {
         .map((part1) =>
             part1
                 .split(']')
-                .map((part2) => snakeCase(part2))
+                .map((part2) => (part2[0] === '_' ? '_' : '') + snakeCase(part2))
                 .join(']')
         )
         .join('[');

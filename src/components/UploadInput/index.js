@@ -75,8 +75,8 @@ export const UploadInput = forwardRef(
                             type="button"
                         >
                             {displayImage !== defaultImage
-                                ? t('Change')
-                                : t('Upload')}
+                                ? t('upload-change')
+                                : t('upload-upload')}
                         </Button>
                     </div>
 
@@ -93,7 +93,7 @@ export const UploadInput = forwardRef(
                                 }
                             }}
                         >
-                            {t('Remove')}
+                            {t('upload-remove')}
                         </Button>
                     )}
                 </div>

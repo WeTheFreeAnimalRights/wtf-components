@@ -12,7 +12,7 @@ export const fetchRequest = async (requestConfig = {}) => {
     // Let's set the headers
     const headers = new Headers();
     headers.append('Accept', 'application/json');
-    headers.append('Content-TYpe', 'application/json');
+    headers.append('Content-Type', 'application/json');
 
     if (requestConfig.bearer) {
         headers.append('Authorization', `Bearer ${requestConfig.bearer}`);

@@ -18,8 +18,8 @@ export const SidebarThemeToggle = ({ className = '' }) => {
         <SidebarMenuButton
             tooltip={
                 theme === 'dark'
-                    ? t('Set Theme to Light')
-                    : t('Set Theme to Dark')
+                    ? t('theme-switch-to-light')
+                    : t('theme-switch-to-dark')
             }
             tooltipVisible={true}
             className={cn('w-10', className)}

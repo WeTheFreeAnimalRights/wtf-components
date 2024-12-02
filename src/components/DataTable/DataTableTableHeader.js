@@ -86,7 +86,7 @@ export const DataTableTableHeader = ({
                                   />
                               </Tooltip>
                           )
-                        : t('No.')}
+                        : t('table-no')}
                 </TableHead>
                 {columnsList.map((column) => (
                     <TableHead

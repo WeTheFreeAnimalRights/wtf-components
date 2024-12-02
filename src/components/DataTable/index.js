@@ -102,7 +102,7 @@ export const DataTable = ({
 
             <div className="flex flex-row items-center justify-end space-x-2 mt-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {t('Showing {0}-{1} of {2}', [
+                    {t('table-pagination', [
                         pagination.countFrom,
                         pagination.countTo,
                         pagination.countTotal,

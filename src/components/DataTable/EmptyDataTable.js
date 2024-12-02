@@ -4,9 +4,9 @@ import { Empty } from '../Empty';
 export const EmptyDataTable = () => {
     const { t } = useTranslations();
     return (
-        <Empty title={t('No Data')}>
-            <p>{t("We couldn't find any data")}</p>
-            <p>{t('Refine your search and/or filters')}</p>
+        <Empty title={t('empty-table-title')}>
+            <p>{t('empty-table-description-1')}</p>
+            <p>{t('empty-table-description-2')}</p>
         </Empty>
     );
 };

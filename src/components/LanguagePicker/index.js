@@ -24,7 +24,7 @@ export const LanguagePicker = ({
         <DropdownMenu
             icon={icon || <img className="h-5 me-2" src={globe} alt="" />}
             label={!children && (selectedLanguage.label || '-')}
-            menuLabel={t('Choose a language')}
+            menuLabel={t('language-picker-choose')}
             variant={variant}
             className={className}
             labelClassName={labelClassName}
