@@ -8,7 +8,7 @@ import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';
 import { GeneratedStandardForm } from '../StandardForm';
 import { FiltersBoxFooter } from './FiltersBoxFooter';
-import { getAppliedFiltersCount } from './helpers/getAppliedFiltersCount';
+import { getAppliedFiltersCount } from '../../helpers/getAppliedFiltersCount';
 import { getSchema } from '../StandardForm/helpers/getSchema';
 
 export const FiltersBox = ({ children, className, onApplied }) => {

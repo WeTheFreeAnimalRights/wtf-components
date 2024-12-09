@@ -21,7 +21,9 @@ export const Card = forwardRef(
             className = '',
             headerClassName = '',
             contentClassName = '',
+            descriptionClassName = '',
             imageClassName = '',
+            imageFit = 'cover',
             size = 'md',
             highlighted = false,
             children,
@@ -45,7 +47,7 @@ export const Card = forwardRef(
                             : 'sm:flex sm:flex-row sm:items-stretch'
                         : '',
                     clickable
-                        ? 'hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'
+                        ? 'hover:bg-gray-100 dark:hover:bg-gray-700 hover:shadow-xl transition-all cursor-pointer'
                         : '',
                     className
                 )}
@@ -58,6 +60,7 @@ export const Card = forwardRef(
                         <ShadCardImage
                             src={image}
                             alt={title}
+                            fit={imageFit}
                             className={cn(
                                 imageClassName,
                                 layout === 'horizontal'
@@ -70,7 +73,7 @@ export const Card = forwardRef(
                         />
                     </>
                 )}
-                <div className="flex-grow basis-0">
+                <div className="flex flex-col flex-grow basis-0">
                     {(title || description) && (
                         <ShadCardHeader
                             className={headerClassName}
@@ -99,6 +102,7 @@ export const Card = forwardRef(
                                 <ShadCardDescription
                                     size={size}
                                     customizer={customizer}
+                                    className={descriptionClassName}
                                 >
                                     {description}
                                 </ShadCardDescription>

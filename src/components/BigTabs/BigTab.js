@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 export const BigTab = ({ visible, children }) => (
     <div
         className={`rounded-lg p-6
-        bg-gray-700 dark:bg-gray-100
-        text-white dark:text-gray-900
+        bg-gray-700 dark:bg-gray-600
+        text-white dark:text-white
         ${visible ? '' : 'hidden'}
     `}
     >

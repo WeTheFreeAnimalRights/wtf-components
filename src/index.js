@@ -189,6 +189,9 @@ export { traverseElements } from './helpers/traverseElements';
 export { objectToArray } from './helpers/objectToArray';
 export { arrayToObject } from './helpers/arrayToObject';
 export { serverPermissionsToTablePermissions } from './helpers/serverPermissionsToTablePermissions';
+export { getAppliedFiltersCount } from './helpers/getAppliedFiltersCount';
+export { getEmptyAuthToken } from './helpers/getEmptyAuthToken';
+export {globals} from './helpers/globals';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
@@ -206,3 +209,6 @@ export { setupApi } from './helpers/fetchRequest/api/setupApi';
 // Base CSS
 import baseCSS from './base.css';
 export { baseCSS };
+
+// Resources (icons)
+export * from './resources/animalIcons';

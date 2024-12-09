@@ -52,8 +52,7 @@ export default {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))',
                 },
-                'wtf-pink': '#FF47B9',
-                'dark-wtf-pink': '#E540A6',
+                'wtf-pink': 'hsl(var(--wtf-pink))',
                 sidebar: {
                     DEFAULT: 'hsl(var(--sidebar-background))',
                     foreground: 'hsl(var(--sidebar-foreground))',
@@ -63,6 +62,9 @@ export default {
                     accent: 'hsl(var(--sidebar-accent))',
                     'accent-foreground':
                         'hsl(var(--sidebar-accent-foreground))',
+                    'hover-accent': 'hsl(var(--sidebar-hover-accent))',
+                    'hover-accent-foreground':
+                        'hsl(var(--sidebar-hover-accent-foreground))',
                     border: 'hsl(var(--sidebar-border))',
                     ring: 'hsl(var(--sidebar-ring))',
                 },

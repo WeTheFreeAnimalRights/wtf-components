@@ -25,7 +25,7 @@ export const DatePicker = forwardRef(
 
         const trigger = (
             <Button
-                variant={'outline'}
+                variant="outline"
                 className={cn(
                     'w-full justify-start text-left font-normal',
                     !value && 'text-muted-foreground',

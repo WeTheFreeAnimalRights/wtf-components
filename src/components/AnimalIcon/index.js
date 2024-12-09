@@ -1,17 +1,9 @@
 import { sample } from 'lodash';
-import {
-    Cat,
-    Dog,
-    Bird,
-    Fish,
-    Rabbit,
-    Rat,
-    Squirrel,
-    Turtle,
-} from 'lucide-react';
+import { icons } from '../../resources/animalIcons';
+import { useTheme } from '../../hooks/useTheme';
 
 export const AnimalIcon = ({ className }) => {
-    const animalIcons = [Cat, Dog, Bird, Fish, Rabbit, Rat, Squirrel, Turtle];
-    const AnimalIconComponent = sample(animalIcons);
-    return <AnimalIconComponent className={className} />;
+    const {theme} = useTheme();
+    const icon = sample(icons[theme]);
+    return <img src={icon} alt="" className={className} />;
 };

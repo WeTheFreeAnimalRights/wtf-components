@@ -1,5 +1,26 @@
 import { useRecoilState } from 'recoil';
-import { get } from 'lodash';
+import { get, isString } from 'lodash';
+import moment from 'moment';
+
+// Import moment locales
+import 'moment/locale/fr';
+import 'moment/locale/es';
+import 'moment/locale/it';
+import 'moment/locale/de';
+import 'moment/locale/tr';
+// import 'moment/locale/no';
+import 'moment/locale/pt';
+import 'moment/locale/nl';
+import 'moment/locale/id';
+import 'moment/locale/ru';
+import 'moment/locale/bg';
+import 'moment/locale/hi';
+// import 'moment/locale/zh';
+import 'moment/locale/ka';
+import 'moment/locale/ar';
+import 'moment/locale/th';
+import 'moment/locale/he';
+
 import {
     translationsState,
     languagesState,
@@ -11,7 +32,10 @@ export const useTranslations = () => {
     // Handle translations
     const [translations, setTranslations] = useRecoilState(translationsState);
     const t = (key, ...params) => {
-        const translation = get(translations, key, key);
+        let translation = get(translations, key, key);
+        if (!isString(translation)) {
+            translation = key;
+        }
         return getInterpolatedString(translation, ...params);
     };
 
@@ -29,6 +53,12 @@ export const useTranslations = () => {
         languages,
         setLanguages,
         currentLanguage,
-        setCurrentLanguage,
+        setCurrentLanguage: (item) => {
+            // Set the language for moment
+            moment.locale(item.code);
+
+            // Save to recoil
+            setCurrentLanguage(item);
+        },
     };
 };

@@ -35,10 +35,14 @@
         --sidebar-foreground: 240 5.3% 26.1%;
         --sidebar-primary: 240 5.9% 10%;
         --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
+        --sidebar-accent: 333 100% 96%;
+        --sidebar-accent-foreground: 323 100% 64%;
+        --sidebar-hover-accent: 240 4.8% 95.9%;
+        --sidebar-hover-accent-foreground: 240 5.9% 10%;
         --sidebar-border: 220 13% 91%;
         --sidebar-ring: 217.2 91.2% 59.8%;
+
+        --wtf-pink: 323 100% 64%;
     }
 
     .dark {
@@ -70,10 +74,14 @@
         --sidebar-foreground: 240 4.8% 95.9%;
         --sidebar-primary: 323 76% 57%;
         --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 240 3.7% 15.9%;
-        --sidebar-accent-foreground: 240 4.8% 95.9%;
+        --sidebar-accent: 320 42% 19%;
+        --sidebar-accent-foreground: 323 69% 55%;
+        --sidebar-hover-accent: 240 3.7% 15.9%;
+        --sidebar-hover-accent-foreground: 240 4.8% 95.9%;
         --sidebar-border: 240 3.7% 15.9%;
         --sidebar-ring: 217.2 91.2% 59.8%;
+
+        --wtf-pink: 323 76% 57%;
     }
 }
 

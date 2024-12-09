@@ -11,7 +11,7 @@ export const TabButton = ({
     onClick,
 }) => (
     <button
-        className={`inline-block w-full h-full px-4 py-6
+        className={`inline-block w-full h-full px-2 sm:px-4 py-3 sm:py-6 text-xs sm:text-md transition-colors
             ${
                 selected
                     ? 'bg-gray-700 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-600 dark:hover:bg-gray-50'

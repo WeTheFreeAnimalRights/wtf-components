@@ -13,6 +13,7 @@ export const LanguagePicker = ({
     onChange,
     showArrow,
     children,
+    align,
 }) => {
     const { languages, currentLanguage, setCurrentLanguage, t } =
         useTranslations();
@@ -30,6 +31,7 @@ export const LanguagePicker = ({
             labelClassName={labelClassName}
             items={items}
             showArrow={showArrow}
+            align={align}
             onSelect={(item) => {
                 // Set the current language
                 setCurrentLanguage(item);

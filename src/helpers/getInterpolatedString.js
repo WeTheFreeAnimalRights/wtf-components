@@ -10,7 +10,7 @@ import { isNumber, isString } from 'lodash';
  * @return {String}
  */
 export const getInterpolatedString = (str = '', obj = []) => {
-    return str.replace(/{([^{}]*)}/g, (match, keyword) => {
+    return (str || '').replace(/{([^{}]*)}/g, (match, keyword) => {
         const replace = obj[keyword];
         return isString(replace) || isNumber(replace) ? replace : match;
     });

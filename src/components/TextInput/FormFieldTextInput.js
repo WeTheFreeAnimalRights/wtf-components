@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction, isUndefined } from 'lodash';
 import { useContext } from 'react';
 import { TextInput } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -45,7 +45,7 @@ export const FormFieldTextInput = ({
                             placeholder={placeholder}
                             {...field}
                             {...props}
-                            value={field.value || props.value}
+                            value={isUndefined(field.value) ? props.value : field.value}
                             onChange={(event) => {
                                 if (isFunction(onChange)) {
                                     onChange(event.target.value);

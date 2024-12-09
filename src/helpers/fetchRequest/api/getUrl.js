@@ -1,4 +1,5 @@
 import { getApiConfig } from './getApiConfig';
+import {mergePaths} from './mergePaths';
 
 export const getUrl = (endpoint = '', key = 'public') => {
     const currentConfig = getApiConfig(key);
@@ -7,5 +8,5 @@ export const getUrl = (endpoint = '', key = 'public') => {
         throw new Error(`API endpoint "${endpoint}" not found`);
     }
 
-    return currentConfig.base + currentConfig.endpoints[endpoint];
+    return mergePaths(currentConfig.base, currentConfig.endpoints[endpoint]);
 };

@@ -8,7 +8,7 @@
  * @return {Array}
  */
 export const getInterpolatedArray = (str = '', obj = []) => {
-    return str.split(/{([^{}]*)}/g).map((value, index) => {
+    return (str || '').split(/{([^{}]*)}/g).map((value, index) => {
         if (index % 2 === 0) {
             return value;
         }

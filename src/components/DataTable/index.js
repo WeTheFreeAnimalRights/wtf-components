@@ -29,6 +29,9 @@ export const DataTable = ({
     multiple,
     permissions,
     render,
+
+    emptyTitle,
+    emptyDescription,
 }) => {
     const { t } = useTranslations();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -65,7 +68,7 @@ export const DataTable = ({
                         onItemClick,
                     })
                 ) : (
-                    <EmptyDataTable />
+                    <EmptyDataTable title={emptyTitle} description={emptyDescription} />
                 )
             ) : (
                 <div className="rounded-md border">
@@ -93,7 +96,7 @@ export const DataTable = ({
                             </>
                         ) : (
                             <TableCaption>
-                                <EmptyDataTable />
+                                <EmptyDataTable title={emptyTitle} description={emptyDescription} />
                             </TableCaption>
                         )}
                     </Table>

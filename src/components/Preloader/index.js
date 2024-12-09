@@ -27,15 +27,6 @@ export const Preloader = ({
     const usedRequests = requests.filter(Boolean);
 
     useEffect(() => {
-        // Let's make the abort function (to stop all other requests)
-        const abortAll = () => {
-            for (const requestConfig of usedRequests) {
-                if (requestConfig._abortController) {
-                    requestConfig._abortController.abort();
-                }
-            }
-        };
-
         const fetchData = async () => {
             // Set the loading as true
             setLoading(true);
@@ -55,7 +46,7 @@ export const Preloader = ({
                     }
 
                     // Callback
-                    requestConfig.callback({ data, abortAll });
+                    requestConfig.callback({ data });
                 }
             } catch (error) {
                 console.error(
@@ -142,13 +133,6 @@ Preloader.propTypes = {
                  * Optional callback to handle the response (if any)
                  */
                 callback: PropTypes.func,
-
-                /**
-                 * This will be filled in by the request and will contain the abort controller (to cancel the request)
-                 *
-                 * @var {[type]}
-                 */
-                _abortController: PropTypes.object,
             }),
         ])
     ),
