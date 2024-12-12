@@ -68,7 +68,10 @@ export const DataTable = ({
                         onItemClick,
                     })
                 ) : (
-                    <EmptyDataTable title={emptyTitle} description={emptyDescription} />
+                    <EmptyDataTable
+                        title={emptyTitle}
+                        description={emptyDescription}
+                    />
                 )
             ) : (
                 <div className="rounded-md border">
@@ -96,7 +99,10 @@ export const DataTable = ({
                             </>
                         ) : (
                             <TableCaption>
-                                <EmptyDataTable title={emptyTitle} description={emptyDescription} />
+                                <EmptyDataTable
+                                    title={emptyTitle}
+                                    description={emptyDescription}
+                                />
                             </TableCaption>
                         )}
                     </Table>

@@ -1,7 +1,7 @@
 import { isFunction } from 'lodash';
 import React, { forwardRef, useState } from 'react';
 import moment from 'moment';
-import { Calendar as CalendarIcon } from 'lucide-react';
+import { Calendar as CalendarIcon, X } from 'lucide-react';
 
 import { cn } from '_/lib/utils';
 import { Calendar } from '_/components/calendar';
@@ -17,6 +17,7 @@ export const DatePicker = forwardRef(
             onChange,
             className,
             formControl = false,
+            clearable = false,
             ...props
         },
         ref
@@ -29,16 +30,35 @@ export const DatePicker = forwardRef(
                 className={cn(
                     'w-full justify-start text-left font-normal',
                     !value && 'text-muted-foreground',
+                    clearable && 'pe-1',
                     className
                 )}
                 ref={ref}
             >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {value ? (
-                    moment(value).format('ll')
-                ) : (
-                    <span>{placeholder}</span>
-                )}
+                <div className="flex flex-row items-center gap-2 w-full">
+                    <CalendarIcon className="h-4 w-4" />
+                    <div className="flex-grow">
+                        {value ? (
+                            moment(value).format('ll')
+                        ) : (
+                            <span>{placeholder}</span>
+                        )}
+                    </div>
+                    {clearable && value && (
+                        <Button
+                            variant="ghost"
+                            size="small-icon"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setOpen(false);
+                                onChange('');
+                            }}
+                        >
+                            <X className="w-4 h-4" />
+                        </Button>
+                    )}
+                </div>
             </Button>
         );
 

@@ -2,7 +2,7 @@ import { isFunction, isString } from 'lodash';
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { PanelLeft } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 import { useIsMobile } from '_/hooks/use-mobile';
 import { cn } from '_/lib/utils';
@@ -262,7 +262,7 @@ const SidebarTrigger = React.forwardRef(
                 }}
                 {...props}
             >
-                <PanelLeft />
+                <Menu />
                 <span className="sr-only">Toggle Sidebar</span>
             </Button>
         );
@@ -331,7 +331,10 @@ const SidebarHeader = React.forwardRef(({ className, ...props }, ref) => {
         <div
             ref={ref}
             data-sidebar="header"
-            className={cn('flex flex-col gap-2 p-3 h-18 border-b border-sidebar-border  [[data-state=collapsed]_&]:p-2', className)}
+            className={cn(
+                'flex flex-col gap-2 p-3 h-18 border-b border-sidebar-border  [[data-state=collapsed]_&]:p-2',
+                className
+            )}
             {...props}
         />
     );
@@ -343,7 +346,10 @@ const SidebarFooter = React.forwardRef(({ className, ...props }, ref) => {
         <div
             ref={ref}
             data-sidebar="footer"
-            className={cn('flex flex-col gap-2 p-3 border-t border-sidebar-border', className)}
+            className={cn(
+                'flex flex-col gap-2 p-3 border-t border-sidebar-border',
+                className
+            )}
             {...props}
         />
     );

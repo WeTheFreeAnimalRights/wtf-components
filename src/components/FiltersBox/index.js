@@ -31,13 +31,11 @@ export const FiltersBox = ({ children, className, onApplied }) => {
                     <Filter className="w-4 h-4 me-2" />
                     {t('filters-box-title')}
                     {filtersCount > 0 && (
-                        <Badge variant="simple" className="ms-2">
-                            {filtersCount}
-                        </Badge>
+                        <Badge className="ms-2">{filtersCount}</Badge>
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="p-0">
                 <GeneratedStandardForm
                     options={{
                         sendToServer: false,
@@ -55,7 +53,7 @@ export const FiltersBox = ({ children, className, onApplied }) => {
                         <FiltersBoxFooter loading={loading} />
                     )}
                 >
-                    {children}
+                    <div className="p-4">{children}</div>
                 </GeneratedStandardForm>
             </PopoverContent>
         </Popover>

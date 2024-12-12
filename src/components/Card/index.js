@@ -34,6 +34,8 @@ export const Card = forwardRef(
             activeLabels,
             description = '',
             customizer = false,
+
+            pretitle,
         },
         ref
     ) => {
@@ -74,6 +76,8 @@ export const Card = forwardRef(
                     </>
                 )}
                 <div className="flex flex-col flex-grow basis-0">
+                    {pretitle}
+
                     {(title || description) && (
                         <ShadCardHeader
                             className={headerClassName}
@@ -129,8 +133,10 @@ export const Card = forwardRef(
         );
     }
 );
-Card.displayName = 'Card';
 
+export { CardFooter } from './CardFooter';
+
+Card.displayName = 'Card';
 Card.propTypes = {
     /**
      * Layout of the card component

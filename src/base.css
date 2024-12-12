@@ -43,6 +43,7 @@
         --sidebar-ring: 217.2 91.2% 59.8%;
 
         --wtf-pink: 323 100% 64%;
+        --wtf-pink-light: 333 100% 96%;
     }
 
     .dark {
@@ -82,6 +83,7 @@
         --sidebar-ring: 217.2 91.2% 59.8%;
 
         --wtf-pink: 323 76% 57%;
+        --wtf-pink-light: 320 42% 19%;
     }
 }
 

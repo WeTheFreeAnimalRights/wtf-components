@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
 
 // ShadCN
 import { Input } from '_/components/input';

@@ -11,7 +11,7 @@ export const UploadInput = forwardRef(
         const { t } = useTranslations();
         const [files, setFiles] = useState([]);
         const [displayImage, setDisplayImage] = useState([]);
-        const { getRootProps, getInputProps, open } = useDropzone({
+        const { getRootProps, getInputProps } = useDropzone({
             ...props,
             maxFiles: 1,
             accept: {
@@ -49,13 +49,13 @@ export const UploadInput = forwardRef(
         }, [currentImage, defaultImage]);
 
         return (
-            <div className="block">
+            <div className="flex flex-row items-center">
                 {displayImage && (
-                    <div className="bg-gray-50 rounded-lg dark:bg-gray-600 border border-gray-300 dark:border-gray-500 text-center mb-3 w-32 h-32 overflow-hidden">
+                    <div className="bg-gray-50 rounded-full dark:bg-gray-600 border border-gray-300 dark:border-gray-500 text-center me-3 w-32 h-32 overflow-hidden">
                         <Image
                             src={displayImage}
                             alt=""
-                            className="w-full h-full object-cover rounded-lg"
+                            className="w-full h-full object-cover rounded-full"
                             onLoad={() => {
                                 // If It's a blob
                                 if (/^blob:http/i.test(displayImage)) {
@@ -65,15 +65,10 @@ export const UploadInput = forwardRef(
                         />
                     </div>
                 )}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                     <div {...getRootProps({ className: '' })}>
                         <input ref={ref} {...getInputProps()} />
-                        <Button
-                            onClick={() => open()}
-                            className="w-32"
-                            variant="outline"
-                            type="button"
-                        >
+                        <Button variant="outline" type="button">
                             {displayImage !== defaultImage
                                 ? t('upload-change')
                                 : t('upload-upload')}
@@ -84,7 +79,6 @@ export const UploadInput = forwardRef(
                         <Button
                             type="button"
                             variant="destructive"
-                            className="w-32"
                             onClick={() => {
                                 setDisplayImage(defaultImage);
 

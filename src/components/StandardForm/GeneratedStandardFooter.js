@@ -46,19 +46,8 @@ export const GeneratedStandardFooter = ({
             )}
             <div className="flex flex-row items-center gap-4 mt-8">
                 <Button
-                    type="submit"
-                    variant={submitted ? 'simple' : 'default'}
-                    className="w-full flex-grow basis-0"
-                    disabled={disabledSubmit || loading}
-                >
-                    {submitted
-                        ? footerLabels.done || t('footer-done')
-                        : footerLabels.submit || t('footer-submit')}
-                </Button>
-
-                <Button
                     type="button"
-                    className="w-full flex-grow basis-0"
+                    className="w-full flex-grow basis-0 sm:w-auto sm:grow-0"
                     disabled={loading}
                     variant="secondary"
                     onClick={() => {
@@ -70,6 +59,17 @@ export const GeneratedStandardFooter = ({
                     }}
                 >
                     {footerLabels.cancel || t('footer-cancel')}
+                </Button>
+
+                <Button
+                    type="submit"
+                    variant={submitted ? 'simple' : 'default'}
+                    className="w-full flex-grow basis-0 sm:w-auto sm:grow-0"
+                    disabled={disabledSubmit || loading}
+                >
+                    {submitted
+                        ? footerLabels.done || t('footer-done')
+                        : footerLabels.submit || t('footer-submit')}
                 </Button>
             </div>
         </>

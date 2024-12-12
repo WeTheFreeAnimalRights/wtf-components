@@ -23,8 +23,12 @@ export const fetchRequest = async (requestConfig = {}) => {
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
 
-    if (requestConfig.bearer && requestConfig.bearer !== getEmptyAuthToken()) {
-        headers.append('Authorization', `Bearer ${requestConfig.bearer}`);
+    if (requestConfig.bearer) {
+        options.credentials = 'include';
+
+        if (requestConfig.bearer !== getEmptyAuthToken()) {
+            headers.append('Authorization', `Bearer ${requestConfig.bearer}`);
+        }
     }
 
     if (requestConfig.auth) {

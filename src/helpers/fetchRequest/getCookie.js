@@ -8,4 +8,4 @@ export const getCookie = (name) => {
     }
     // Return null if the cookie is not found
     return null;
-}
+};

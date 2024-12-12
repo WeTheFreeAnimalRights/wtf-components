@@ -40,7 +40,8 @@ export const Combobox = ({
     const { t } = useTranslations();
     const usedEmptyMessage = emptyMessage || t('combo-empty');
     const usedPlaceholder = placeholder || t('combo-placeholder');
-    const usedSearchPlaceholder = searchPlaceholder || t('combo-search-placeholder');
+    const usedSearchPlaceholder =
+        searchPlaceholder || t('combo-search-placeholder');
 
     const [searchText, setSearchText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);

@@ -26,4 +26,4 @@ export const mergePaths = (basePath, relativePath) => {
 
     // Return the full URL as a string
     return url.toString();
-}
+};

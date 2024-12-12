@@ -1,5 +1,5 @@
 import { getApiConfig } from './getApiConfig';
-import {mergePaths} from './mergePaths';
+import { mergePaths } from './mergePaths';
 
 export const getUrl = (endpoint = '', key = 'public') => {
     const currentConfig = getApiConfig(key);

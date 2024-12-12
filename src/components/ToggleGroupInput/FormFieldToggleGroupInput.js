@@ -1,6 +1,6 @@
 import { isFunction, isUndefined } from 'lodash';
 import { useContext } from 'react';
-import { TextInput } from './index';
+import { ToggleGroupInput } from './index';
 import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
@@ -14,13 +14,11 @@ import {
 } from '_/components/form';
 import { cn } from '_/lib/utils';
 
-export const FormFieldTextInput = ({
+export const FormFieldToggleGroupInput = ({
     form: formParam,
     name,
     label,
-    type = 'text',
     className,
-    placeholder,
     description,
     onChange,
     visible,
@@ -40,9 +38,7 @@ export const FormFieldTextInput = ({
                 >
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <TextInput
-                            type={type}
-                            placeholder={placeholder}
+                        <ToggleGroupInput
                             {...field}
                             {...props}
                             value={
@@ -50,11 +46,11 @@ export const FormFieldTextInput = ({
                                     ? props.value
                                     : field.value
                             }
-                            onChange={(event) => {
+                            onChange={(values) => {
                                 if (isFunction(onChange)) {
-                                    onChange(event.target.value);
+                                    onChange(values);
                                 }
-                                field.onChange(event);
+                                field.onChange(values);
                             }}
                         />
                     </FormControl>

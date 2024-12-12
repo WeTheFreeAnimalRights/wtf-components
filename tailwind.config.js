@@ -53,6 +53,7 @@ export default {
                     foreground: 'hsl(var(--card-foreground))',
                 },
                 'wtf-pink': 'hsl(var(--wtf-pink))',
+                'wtf-pink-light': 'hsl(var(--wtf-pink-light))',
                 sidebar: {
                     DEFAULT: 'hsl(var(--sidebar-background))',
                     foreground: 'hsl(var(--sidebar-foreground))',

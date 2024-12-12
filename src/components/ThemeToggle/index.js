@@ -6,6 +6,7 @@ import { currentThemeState } from '../../recoilState';
 import store from 'store2';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../Button';
+import { Tooltip } from '../Tooltip';
 
 export const ThemeToggle = ({ variant, size, className }) => {
     const theme = useRecoilValue(currentThemeState);
@@ -13,23 +14,31 @@ export const ThemeToggle = ({ variant, size, className }) => {
     const { t } = useTranslations();
 
     return (
-        <Button
-            variant={variant || 'ghost'}
-            size={size}
-            className={className}
-            onClick={() => {
-                if (theme === 'dark') {
-                    store.set('theme', 'light');
-                    return setCurrentTheme('light');
-                }
-
-                store.set('theme', 'dark');
-                return setCurrentTheme('dark');
-            }}
+        <Tooltip
+            message={
+                theme === 'dark'
+                    ? t('theme-switch-to-light')
+                    : t('theme-switch-to-dark')
+            }
         >
-            {theme === 'dark' && <Sun className="w-4 h-4" />}
-            {theme === 'light' && <Moon className="w-4 h-4" />}
-        </Button>
+            <Button
+                variant={variant || 'ghost'}
+                size={size}
+                className={className}
+                onClick={() => {
+                    if (theme === 'dark') {
+                        store.set('theme', 'light');
+                        return setCurrentTheme('light');
+                    }
+
+                    store.set('theme', 'dark');
+                    return setCurrentTheme('dark');
+                }}
+            >
+                {theme === 'dark' && <Sun className="w-4 h-4" />}
+                {theme === 'light' && <Moon className="w-4 h-4" />}
+            </Button>
+        </Tooltip>
     );
 };
 

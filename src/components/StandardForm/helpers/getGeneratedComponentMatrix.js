@@ -9,6 +9,7 @@ import { StandardPasswordInput } from '../definitions/StandardPasswordInput';
 import { StandardSelect } from '../definitions/StandardSelect';
 import { StandardSwitch } from '../definitions/StandardSwitch';
 import { StandardTextarea } from '../definitions/StandardTextarea';
+import { StandardToggleGroup } from '../definitions/StandardToggleGroup';
 import { StandardUploadInput } from '../definitions/StandardUploadInput';
 
 // Replacements
@@ -22,6 +23,7 @@ import { FormFieldPasswordInput } from '../../PasswordInput';
 import { FormFieldSelect } from '../../Select';
 import { FormFieldSwitch } from '../../Switch';
 import { FormFieldTextarea } from '../../Textarea';
+import { FormFieldToggleGroupInput } from '../../ToggleGroupInput';
 import { FormFieldUploadInput } from '../../UploadInput';
 
 export const getGeneratedComponentMatrix = () => {
@@ -65,6 +67,10 @@ export const getGeneratedComponentMatrix = () => {
         [StandardTextarea.displayName]: {
             Component: FormFieldTextarea,
             type: 'textarea',
+        },
+        [StandardToggleGroup.displayName]: {
+            Component: FormFieldToggleGroupInput,
+            type: 'togglegroup',
         },
         [StandardUploadInput.displayName]: {
             Component: FormFieldUploadInput,

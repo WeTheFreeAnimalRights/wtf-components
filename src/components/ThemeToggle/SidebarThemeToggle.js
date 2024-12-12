@@ -7,7 +7,6 @@ import store from 'store2';
 import { useTranslations } from '../../hooks/useTranslations';
 import { cn } from '_/lib/utils';
 import { SidebarMenuButton } from '_/components/sidebar';
-import { Tooltip } from '../Tooltip';
 
 export const SidebarThemeToggle = ({ className = '' }) => {
     const theme = useRecoilValue(currentThemeState);

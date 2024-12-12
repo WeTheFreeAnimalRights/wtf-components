@@ -7,7 +7,7 @@ export const parseResourceItem = (item = {}) => {
         description: item.description,
         image: item.imageUrl,
         type,
-        links: item.links.map(link => ({
+        links: item.links.map((link) => ({
             type: link.type.toLowerCase(),
             url: link.url,
         })),

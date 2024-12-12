@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '../Button';
@@ -63,10 +63,24 @@ export const DropdownMenu = ({
                         <ShadDropdownMenuSeparator />
                     </>
                 )}
-                {items.map((item, index) =>
-                    item.separator ? (
-                        <ShadDropdownMenuSeparator key={`separator-${index}`} />
-                    ) : (
+                {items.map((item, index) => {
+                    if (item.separator) {
+                        return (
+                            <ShadDropdownMenuSeparator
+                                key={`separator-${index}`}
+                            />
+                        );
+                    }
+
+                    if (item.custom) {
+                        return (
+                            <Fragment key={`custom-${index}`}>
+                                {item.custom}
+                            </Fragment>
+                        );
+                    }
+
+                    return (
                         <ShadDropdownMenuItem
                             className="cursor-pointer"
                             key={`item-${index}`}
@@ -105,8 +119,8 @@ export const DropdownMenu = ({
                                 )}
                             </div>
                         </ShadDropdownMenuItem>
-                    )
-                )}
+                    );
+                })}
             </ShadDropdownMenuContent>
         </ShadDropdownMenu>
     );

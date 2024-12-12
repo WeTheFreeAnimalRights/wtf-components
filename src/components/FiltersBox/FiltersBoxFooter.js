@@ -7,14 +7,7 @@ export const FiltersBoxFooter = ({ loading }) => {
     const { t } = useTranslations();
     const standardForm = useContext(StandardFormContext);
     return (
-        <div className="flex flex-row items-center gap-4">
-            <Button
-                type="submit"
-                className="w-full flex-grow basis-0"
-                disabled={loading}
-            >
-                {t('submit')}
-            </Button>
+        <div className="flex flex-row items-center gap-4 p-4 border-t">
             <Button
                 type="submit"
                 className="w-full flex-grow basis-0"
@@ -24,7 +17,14 @@ export const FiltersBoxFooter = ({ loading }) => {
                     standardForm.reset();
                 }}
             >
-                {t('clear')}
+                {t('clear-all')}
+            </Button>
+            <Button
+                type="submit"
+                className="w-full flex-grow basis-0"
+                disabled={loading}
+            >
+                {t('submit')}
             </Button>
         </div>
     );

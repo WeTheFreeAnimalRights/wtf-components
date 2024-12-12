@@ -11,7 +11,7 @@ export const DataTableCell = ({ field, item, onClick }) => {
     return (
         <TableCell className={field.className} onClick={onClick}>
             {(field.type === 'badge' && (
-                <Badge variant="secondary" className="inline-block">
+                <Badge variant="simple" className="inline-block">
                     {value}
                 </Badge>
             )) ||

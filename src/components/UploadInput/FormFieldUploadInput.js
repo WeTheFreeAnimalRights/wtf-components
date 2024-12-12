@@ -37,6 +37,9 @@ export const FormFieldUploadInput = ({
                     hidden={visible === false ? true : undefined}
                 >
                     <FormLabel>{label}</FormLabel>
+                    {description && (
+                        <FormDescription>{description}</FormDescription>
+                    )}
                     <FormControl>
                         <UploadInput
                             {...props}
@@ -55,9 +58,6 @@ export const FormFieldUploadInput = ({
                             }}
                         />
                     </FormControl>
-                    {description && (
-                        <FormDescription>{description}</FormDescription>
-                    )}
                     <FormMessage />
                 </FormItem>
             )}
