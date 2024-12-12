@@ -2,7 +2,12 @@ import { cn } from '_/lib/utils';
 
 export const CardFooter = ({ items, className }) => {
     return (
-        <div className={cn('flex flex-row items-center text-muted-foreground gap-6', className)}>
+        <div
+            className={cn(
+                'flex flex-row items-center text-muted-foreground gap-6',
+                className
+            )}
+        >
             {items.map((item, index) => {
                 if (!item) {
                     return;

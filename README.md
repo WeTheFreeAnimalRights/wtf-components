@@ -1,4 +1,4 @@
-<p align="center"><a href="https://mystats.wtf" target="_blank"><img src="https://github.com/WeTheFreeAnimalRights/MyStats.wtf-new/blob/main/public/images/wtf-logo-badge.png?raw=true" width="400" alt="We The Free Logo"></a></p>
+![we the free](https://github.com/WeTheFreeAnimalRights/MyStats.wtf-new/blob/main/public/images/wtf-logo-badge.png?raw=true)
 
 ## WTF Components
 

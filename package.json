@@ -1,5 +1,5 @@
 {
-    "name": "wtf-components",
+    "name": "@wethefree/components",
     "version": "1.0.0",
     "author": "Ciprian Mocanu",
     "license": "ISC",
@@ -53,7 +53,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/WeTheFreeAnimalRights/wtf-components.git"
+        "url": "https://github.com/WeTheFreeAnimalRights/wtf-components.git"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "peerDependencies": {
         "lodash": "^4.17.21",
