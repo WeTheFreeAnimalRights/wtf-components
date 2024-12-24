@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 // ShadCN
-import { Badge as ShadBadge } from '_/components/badge';
+import { Badge as ShadBadge, badgeVariants } from '_/components/badge';
 
 export const Badge = forwardRef(({ className, variant, ...props }, ref) => {
     return (
@@ -14,8 +14,10 @@ export const Badge = forwardRef(({ className, variant, ...props }, ref) => {
         />
     );
 });
-Badge.displayName = 'Badge';
 
+export { badgeVariants };
+
+Badge.displayName = 'Badge';
 Badge.propTypes = {
     /**
      * The variant of the button - this controls the overall look of the button
@@ -25,7 +27,13 @@ Badge.propTypes = {
         'simple',
         'secondary',
         'destructive',
+        'constructive',
         'outline',
+        'green',
+        'teal',
+        'amber',
+        'cyan',
+        'pink',
     ]),
 
     /**

@@ -24,8 +24,9 @@ export const Card = forwardRef(
             descriptionClassName = '',
             imageClassName = '',
             imageFit = 'cover',
+            imageAspect = 'video',
             size = 'md',
-            highlighted = false,
+            // highlighted = false,
             children,
 
             image = '',
@@ -63,6 +64,7 @@ export const Card = forwardRef(
                             src={image}
                             alt={title}
                             fit={imageFit}
+                            aspect={imageAspect}
                             className={cn(
                                 imageClassName,
                                 layout === 'horizontal'
@@ -76,7 +78,21 @@ export const Card = forwardRef(
                     </>
                 )}
                 <div className="flex flex-col flex-grow basis-0">
-                    {pretitle}
+                    {pretitle && (
+                        <>
+                            {isUndefined(active) ? (
+                                <div className="px-6 py-4 pb-3">{pretitle}</div>
+                            ) : (
+                                <CardActiveTitle
+                                    className="px-6 py-4 pb-3 pe-4"
+                                    active={active}
+                                    labels={activeLabels}
+                                >
+                                    {pretitle}
+                                </CardActiveTitle>
+                            )}
+                        </>
+                    )}
 
                     {(title || description) && (
                         <ShadCardHeader
@@ -90,7 +106,8 @@ export const Card = forwardRef(
                                     size={size}
                                     customizer={customizer}
                                 >
-                                    {isUndefined(active) ? (
+                                    {isUndefined(active) ||
+                                    !isUndefined(pretitle) ? (
                                         title
                                     ) : (
                                         <CardActiveTitle
@@ -135,6 +152,7 @@ export const Card = forwardRef(
 );
 
 export { CardFooter } from './CardFooter';
+export { CardActiveTitle } from './CardActiveTitle';
 
 Card.displayName = 'Card';
 Card.propTypes = {

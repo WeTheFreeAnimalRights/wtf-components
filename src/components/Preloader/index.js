@@ -1,6 +1,6 @@
 import { isFunction } from 'lodash';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { fetchRequest } from '../../helpers/fetchRequest';
 import { PreloaderStates } from './PreloaderStates';
 

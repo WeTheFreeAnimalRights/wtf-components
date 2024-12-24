@@ -93,7 +93,7 @@ const CardFooter = React.forwardRef(
 CardFooter.displayName = 'CardFooter';
 
 const CardImage = React.forwardRef(
-    ({ className, customizer, alt, fit, ...props }, ref) => (
+    ({ className, customizer, alt, fit, aspect, ...props }, ref) => (
         <figure
             className={cn(
                 'flex flex-column bg-gray-200 dark:bg-gray-900 text-white dark:text-black',
@@ -106,7 +106,8 @@ const CardImage = React.forwardRef(
             <Image
                 className={cn(
                     fit === 'cover' ? 'object-cover' : 'object-contain',
-                    'w-full h-auto flex-grow aspect-video'
+                    aspect === 'auto' ? 'aspect-auto' : 'aspect-video',
+                    'w-full h-auto flex-grow'
                 )}
                 alt={alt}
                 {...props}

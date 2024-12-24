@@ -4,6 +4,9 @@ import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Alert } from '../Alert';
 
+// Shad CN
+import { cn } from '_/lib/utils';
+
 export const GeneratedStandardFooter = ({
     cancelUrl,
     onCancel,
@@ -11,6 +14,9 @@ export const GeneratedStandardFooter = ({
     // error,
     disabledSubmit = false,
     disabledMessage,
+
+    submitButtonClassName,
+    cancelButtonClassName,
 
     loading,
     submitted,
@@ -28,7 +34,10 @@ export const GeneratedStandardFooter = ({
                 <Button
                     type="submit"
                     variant={submitted ? 'simple' : 'default'}
-                    className="w-full mt-8"
+                    className={cn(
+                        'w-full sm:w-auto mt-8',
+                        submitButtonClassName
+                    )}
                     disabled={disabledSubmit || loading}
                 >
                     {submitted
@@ -47,7 +56,10 @@ export const GeneratedStandardFooter = ({
             <div className="flex flex-row items-center gap-4 mt-8">
                 <Button
                     type="button"
-                    className="w-full flex-grow basis-0 sm:w-auto sm:grow-0"
+                    className={cn(
+                        'w-full flex-grow basis-0 sm:w-auto sm:grow-0',
+                        cancelButtonClassName
+                    )}
                     disabled={loading}
                     variant="secondary"
                     onClick={() => {
@@ -64,7 +76,10 @@ export const GeneratedStandardFooter = ({
                 <Button
                     type="submit"
                     variant={submitted ? 'simple' : 'default'}
-                    className="w-full flex-grow basis-0 sm:w-auto sm:grow-0"
+                    className={cn(
+                        'w-full flex-grow basis-0 sm:w-auto sm:grow-0',
+                        submitButtonClassName
+                    )}
                     disabled={disabledSubmit || loading}
                 >
                     {submitted

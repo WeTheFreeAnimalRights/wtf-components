@@ -24,6 +24,9 @@ export const DropdownMenu = ({
     children,
     className,
     labelClassName,
+    contentClassName,
+    contentStyle = {},
+    contentPortal = true,
     variant,
     align = 'center',
 }) => {
@@ -52,8 +55,10 @@ export const DropdownMenu = ({
                 )}
             </ShadDropdownMenuTrigger>
             <ShadDropdownMenuContent
-                className="max-h-72 overflow-auto"
+                className={cn('max-h-72 overflow-auto', contentClassName)}
                 align={align}
+                portal={contentPortal}
+                style={contentStyle}
             >
                 {menuLabel && (
                     <>

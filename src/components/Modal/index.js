@@ -11,6 +11,7 @@ import {
     DialogDescription as ShadDialogDescription,
     DialogFooter as ShadDialogFooter,
 } from '_/components/dialog';
+import { cn } from '_/lib/utils';
 
 // Trigger and container
 export const ModalTrigger = React.forwardRef(({ ...props }, ref) => (
@@ -23,6 +24,7 @@ export const Modal = ({
     description,
     children,
     className = '',
+    contentClassName,
     footer,
     showCloseButton = true,
     setWidth = true,
@@ -42,7 +44,12 @@ export const Modal = ({
                     <ShadDialogDescription>{description}</ShadDialogDescription>
                 </ShadDialogHeader>
             )}
-            <div className={overflow ? 'overflow-y-auto flex-grow' : ''}>
+            <div
+                className={cn(
+                    overflow && 'overflow-y-auto flex-grow',
+                    contentClassName
+                )}
+            >
                 {children}
             </div>
             {footer && <ShadDialogFooter>{footer}</ShadDialogFooter>}

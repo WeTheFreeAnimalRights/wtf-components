@@ -26,3 +26,8 @@ export const confirmState = atom({
     key: 'confirm',
     default: {},
 });
+
+export const developmentModeState = atom({
+    key: 'developmentMode',
+    default: false,
+});

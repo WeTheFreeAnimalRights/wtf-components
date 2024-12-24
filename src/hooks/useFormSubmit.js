@@ -19,7 +19,13 @@ export const useFormSubmit = ({
                 onSuccess(values);
             }
         } else {
-            await request(requestObject(values), onError, onSuccess);
+            const _request = request.bind(
+                this,
+                requestObject(values),
+                onError,
+                onSuccess
+            );
+            await _request(_request);
         }
     };
 

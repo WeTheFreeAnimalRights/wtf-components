@@ -8,6 +8,8 @@ import { useTranslations } from '../../hooks/useTranslations';
 import { useStandardForm } from '../../hooks/useStandardForm';
 import { getSchema } from './helpers/getSchema';
 import { parseChildren } from './helpers/parseChildren';
+
+// Shad CN
 import { cn } from '_/lib/utils';
 import { useToast } from '_/hooks/use-toast';
 
@@ -25,6 +27,8 @@ export const GeneratedStandardForm = ({
     cancelUrl,
     onCancel,
     footerLabels = {},
+    footerSubmitButtonClassName,
+    footerCancelButtonClassName,
     toastMessage,
     onAllDone,
 }) => {
@@ -106,6 +110,8 @@ export const GeneratedStandardForm = ({
                     error={error}
                     loading={loading}
                     submitted={submitted}
+                    submitButtonClassName={footerSubmitButtonClassName}
+                    cancelButtonClassName={footerCancelButtonClassName}
                 />
             )}
         </StandardForm>

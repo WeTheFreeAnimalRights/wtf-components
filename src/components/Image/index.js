@@ -5,7 +5,14 @@ import { AnimalIcon } from '../AnimalIcon';
 import { useTranslations } from '../../hooks/useTranslations';
 import { isFunction } from 'lodash';
 
-export const Image = ({ src = '', alt = '', className = '', ...props }) => {
+export const Image = ({
+    src = '',
+    alt = '',
+    className = '',
+    textClassName,
+    iconVariant,
+    ...props
+}) => {
     const { t } = useTranslations();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -17,15 +24,18 @@ export const Image = ({ src = '', alt = '', className = '', ...props }) => {
             {error && (
                 <div
                     className={cn(
-                        'w-full h-full min-h-100px min-w-100px text-center items-center justify-center flex flex-row bg-destructive',
+                        'w-full h-full min-h-100px min-w-100px text-center items-center justify-center flex flex-row bg-destructive overflow-hidden',
                         className
                     )}
                 >
                     <div>
                         <AnimalIcon
                             className={cn('w-8 h-8 mx-auto text-white')}
+                            variant={iconVariant || 'light'}
                         />
-                        <div className="text-white">{t('no-image')}</div>
+                        <div className={cn('text-white', textClassName)}>
+                            {t('no-image')}
+                        </div>
                     </div>
                 </div>
             )}

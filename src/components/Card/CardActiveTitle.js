@@ -1,23 +1,12 @@
-import { Tooltip } from '../Tooltip';
-import { useTranslations } from '../../hooks/useTranslations';
-import { Check, Archive } from 'lucide-react';
+import { cn } from '_/lib/utils';
+import { ActiveBadge } from '../ActiveBadge';
 
-export const CardActiveTitle = ({ active, labels, children }) => {
-    const { t } = useTranslations();
-    const activeLabel = labels?.active || t('card-active');
-    const inactiveLabel = labels?.inactive || t('card-inactive');
-
+export const CardActiveTitle = ({ className, active, labels, children }) => {
     return (
-        <div className="flex flex-row items-center">
+        <div className={cn('flex flex-row items-top', className)}>
             <div className="text-start flex-grow">{children}</div>
-            <div className="text-end">
-                <Tooltip message={active ? activeLabel : inactiveLabel}>
-                    {active ? (
-                        <Check className="inline-block" />
-                    ) : (
-                        <Archive className="inline-block" />
-                    )}
-                </Tooltip>
+            <div className="text-end flex flex-col items-start">
+                <ActiveBadge active={active} labels={labels} />
             </div>
         </div>
     );

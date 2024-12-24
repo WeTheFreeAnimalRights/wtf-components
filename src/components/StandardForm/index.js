@@ -32,3 +32,4 @@ export { StandardSelect } from './definitions/StandardSelect';
 export { StandardSwitch } from './definitions/StandardSwitch';
 export { StandardTextarea } from './definitions/StandardTextarea';
 export { StandardToggleGroup } from './definitions/StandardToggleGroup';
+export { StandardUploadInput } from './definitions/StandardUploadInput';

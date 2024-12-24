@@ -4,14 +4,21 @@ import { Badge } from '../Badge';
 
 // ShadCN
 import { TableCell } from '_/components/table';
+import { isFunction, isUndefined } from 'lodash';
 
 export const DataTableCell = ({ field, item, onClick }) => {
     const value = renderCell(field, item);
 
+    const variant = isUndefined(field.variant)
+        ? 'simple'
+        : isFunction(field.variant)
+          ? field.variant(item[field.name])
+          : field.variant;
+
     return (
         <TableCell className={field.className} onClick={onClick}>
             {(field.type === 'badge' && (
-                <Badge variant="simple" className="inline-block">
+                <Badge variant={variant} className="inline-block">
                     {value}
                 </Badge>
             )) ||

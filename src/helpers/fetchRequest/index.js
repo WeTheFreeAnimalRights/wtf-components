@@ -28,6 +28,14 @@ export const fetchRequest = async (requestConfig = {}) => {
 
         if (requestConfig.bearer !== getEmptyAuthToken()) {
             headers.append('Authorization', `Bearer ${requestConfig.bearer}`);
+        } else {
+            headers.append('Referer', window.location.href);
+
+            // if token already exists
+            const token = getCookie('XSRF-TOKEN');
+            if (token) {
+                headers.append('X-XSRF-Token', token);
+            }
         }
     }
 

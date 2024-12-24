@@ -109,25 +109,27 @@ export const DataTable = ({
                 </div>
             )}
 
-            <div className="flex flex-row items-center justify-end space-x-2 mt-4">
-                <div className="flex-1 text-sm text-muted-foreground">
-                    {t('table-pagination', [
-                        pagination.countFrom,
-                        pagination.countTo,
-                        pagination.countTotal,
-                    ])}
+            {data.length > 0 && (
+                <div className="flex flex-row items-center justify-end space-x-2 mt-4">
+                    <div className="flex-1 text-sm text-muted-foreground">
+                        {t('table-pagination', [
+                            pagination.countFrom,
+                            pagination.countTo,
+                            pagination.countTotal,
+                        ])}
+                    </div>
+                    <div>
+                        {pagination.total > 1 && (
+                            <Pagination
+                                className="mt-2"
+                                currentPage={pagination.current}
+                                totalPages={pagination.total}
+                                onPageChange={onPageChange}
+                            />
+                        )}
+                    </div>
                 </div>
-                <div>
-                    {pagination.total > 1 && (
-                        <Pagination
-                            className="mt-2"
-                            currentPage={pagination.current}
-                            totalPages={pagination.total}
-                            onPageChange={onPageChange}
-                        />
-                    )}
-                </div>
-            </div>
+            )}
         </DataTableContext.Provider>
     );
 };

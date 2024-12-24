@@ -8,7 +8,7 @@ export const useRequest = ({ loadingInit = false } = {}) => {
     const [loading, setLoading] = useState(loadingInit);
 
     // Submit method
-    const request = async (requestObject, onError, onSuccess) => {
+    const request = async (requestObject, onError, onSuccess, _request) => {
         let data = null;
         try {
             // No error and is loading
@@ -26,7 +26,7 @@ export const useRequest = ({ loadingInit = false } = {}) => {
             console.error(`Error in request`, error);
 
             if (isFunction(onError)) {
-                onError(error);
+                onError(error, _request);
             }
 
             // Set the error
