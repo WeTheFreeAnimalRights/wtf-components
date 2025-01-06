@@ -34,6 +34,10 @@ export const DataTableHeader = ({
     // Multiple actions
     const actions = useMultipleActions();
 
+    if ((!multiple || !canRemove) && !meta.search.visible && isEmpty(filters)) {
+        return null;
+    }
+
     return (
         <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center mb-4">
             <div className="flex flex-row flex-grow basis-0 items-center">

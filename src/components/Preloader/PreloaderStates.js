@@ -1,7 +1,10 @@
-import { useDevelopmentMode } from '../../hooks/useDevelopmentMode';
+import { isFunction } from 'lodash';
 import { Alert } from '../Alert';
 import { Empty } from '../Empty';
 import { Spinner } from '../Spinner';
+import { PreloaderOutlet } from './PreloaderOutlet';
+import { useDevelopmentMode } from '../../hooks/useDevelopmentMode';
+import { traverseElements } from '../../helpers/traverseElements';
 
 import { cn } from '_/lib/utils';
 
@@ -11,10 +14,34 @@ export const PreloaderStates = ({
     error,
     className,
     children,
+    customPreloader,
+    hasOutlet,
 }) => {
     const { developmentMode } = useDevelopmentMode();
 
+    if (hasOutlet) {
+        return traverseElements(children, [PreloaderOutlet.displayName], (child, level, index) => {
+            if (loading) {
+                return <Spinner key={`outlet-${level}-${index}`} className="w-6 h-6" />;
+            }
+
+            if (error) {
+                return <Alert variant="destructive">{error.message}</Alert>;
+            }
+        });
+    }
+
     if (loading) {
+        if (isFunction(customPreloader)) {
+            return customPreloader({
+                loading,
+                loadingMessage,
+                error,
+                className,
+                children,
+            });
+        }
+
         return (
             <div
                 className={cn(

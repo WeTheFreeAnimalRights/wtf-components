@@ -23,10 +23,13 @@ export const fetchRequest = async (requestConfig = {}) => {
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
 
-    if (requestConfig.bearer) {
+    if (requestConfig.bearer || requestConfig.auth) {
         options.credentials = 'include';
 
-        if (requestConfig.bearer !== getEmptyAuthToken()) {
+        if (
+            requestConfig.bearer &&
+            requestConfig.bearer !== getEmptyAuthToken()
+        ) {
             headers.append('Authorization', `Bearer ${requestConfig.bearer}`);
         } else {
             headers.append('Referer', window.location.href);
@@ -36,17 +39,6 @@ export const fetchRequest = async (requestConfig = {}) => {
             if (token) {
                 headers.append('X-XSRF-Token', token);
             }
-        }
-    }
-
-    if (requestConfig.auth) {
-        options.credentials = 'include';
-        headers.append('Referer', window.location.href);
-
-        // if token already exists
-        const token = getCookie('XSRF-TOKEN');
-        if (token) {
-            headers.append('X-XSRF-Token', token);
         }
     }
 

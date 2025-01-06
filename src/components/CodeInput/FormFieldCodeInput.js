@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction, isUndefined } from 'lodash';
 import { useContext } from 'react';
 import { CodeInput } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -41,7 +41,7 @@ export const FormFieldCodeInput = ({
                         <CodeInput
                             {...field}
                             {...props}
-                            value={field.value || props.value}
+                            value={!isUndefined(field.value) ? field.value : props.value}
                             onChange={(newValue) => {
                                 if (isFunction(onChange)) {
                                     onChange(newValue);

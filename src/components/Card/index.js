@@ -1,5 +1,5 @@
 import { isFunction, isUndefined } from 'lodash';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -12,6 +12,7 @@ import {
 } from '_/components/card';
 import { cn } from '_/lib/utils';
 import { CardActiveTitle } from './CardActiveTitle';
+import { isValid } from 'date-fns';
 
 export const Card = forwardRef(
     (
@@ -34,6 +35,7 @@ export const Card = forwardRef(
             active,
             activeLabels,
             description = '',
+            headerAction,
             customizer = false,
 
             pretitle,
@@ -58,24 +60,24 @@ export const Card = forwardRef(
                 ref={ref}
                 customizer={customizer}
             >
-                {image && (
-                    <>
-                        <ShadCardImage
-                            src={image}
-                            alt={title}
-                            fit={imageFit}
-                            aspect={imageAspect}
-                            className={cn(
-                                imageClassName,
-                                layout === 'horizontal'
-                                    ? size === 'md'
-                                        ? 'sm:w-1/3'
-                                        : 'w-1/4'
-                                    : ''
-                            )}
-                            customizer={customizer}
-                        />
-                    </>
+                {isValidElement(image) && image}
+
+                {image && !isValidElement(image) && (
+                    <ShadCardImage
+                        src={image}
+                        alt={title}
+                        fit={imageFit}
+                        aspect={imageAspect}
+                        className={cn(
+                            imageClassName,
+                            layout === 'horizontal'
+                                ? size === 'md'
+                                    ? 'sm:w-1/3'
+                                    : 'w-1/4'
+                                : ''
+                        )}
+                        customizer={customizer}
+                    />
                 )}
                 <div className="flex flex-col flex-grow basis-0">
                     {pretitle && (
@@ -96,38 +98,44 @@ export const Card = forwardRef(
 
                     {(title || description) && (
                         <ShadCardHeader
-                            className={headerClassName}
+                            className={[
+                                headerClassName,
+                                'flex-row items-start',
+                            ]}
                             size={size}
                             layout={layout}
                             customizer={customizer}
                         >
-                            {title && (
-                                <ShadCardTitle
-                                    size={size}
-                                    customizer={customizer}
-                                >
-                                    {isUndefined(active) ||
-                                    !isUndefined(pretitle) ? (
-                                        title
-                                    ) : (
-                                        <CardActiveTitle
-                                            active={active}
-                                            labels={activeLabels}
-                                        >
-                                            {title}
-                                        </CardActiveTitle>
-                                    )}
-                                </ShadCardTitle>
-                            )}
-                            {description && (
-                                <ShadCardDescription
-                                    size={size}
-                                    customizer={customizer}
-                                    className={descriptionClassName}
-                                >
-                                    {description}
-                                </ShadCardDescription>
-                            )}
+                            <div className="flex flex-col grow">
+                                {title && (
+                                    <ShadCardTitle
+                                        size={size}
+                                        customizer={customizer}
+                                    >
+                                        {isUndefined(active) ||
+                                        !isUndefined(pretitle) ? (
+                                            title
+                                        ) : (
+                                            <CardActiveTitle
+                                                active={active}
+                                                labels={activeLabels}
+                                            >
+                                                {title}
+                                            </CardActiveTitle>
+                                        )}
+                                    </ShadCardTitle>
+                                )}
+                                {description && (
+                                    <ShadCardDescription
+                                        size={size}
+                                        customizer={customizer}
+                                        className={descriptionClassName}
+                                    >
+                                        {description}
+                                    </ShadCardDescription>
+                                )}
+                            </div>
+                            {headerAction}
                         </ShadCardHeader>
                     )}
                     {children && (
@@ -169,7 +177,7 @@ Card.propTypes = {
     /**
      * Image to be shown on the card component
      */
-    image: PropTypes.string,
+    image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
     /**
      * Title to be shown on the card component
@@ -179,7 +187,7 @@ Card.propTypes = {
     /**
      * Description to be shown on the card component
      */
-    description: PropTypes.string,
+    description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
     /**
      * Optional click handler (called when the user clicks the card)

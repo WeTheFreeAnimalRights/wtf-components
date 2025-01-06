@@ -51,7 +51,7 @@ CardTitle.displayName = 'CardTitle';
 
 const CardDescription = React.forwardRef(
     ({ className, size = 'md', customizer, ...props }, ref) => (
-        <p
+        <div
             ref={ref}
             className={cn(
                 'text-muted-foreground',

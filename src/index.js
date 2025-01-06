@@ -16,6 +16,7 @@ export {
     TopRight,
     RowActions,
 } from './components/DataTable';
+export { DisableInteraction } from './components/DisableInteraction';
 export { DatePicker, FormFieldDatePicker } from './components/DatePicker';
 export { DropdownMenu } from './components/DropdownMenu';
 export { ErrorBoundary } from './components/ErrorBoundary';
@@ -42,6 +43,8 @@ export { Resource } from './components/Resource';
 export { AnimalIcon } from './components/AnimalIcon';
 export { Image } from './components/Image';
 export { Empty } from './components/Empty';
+export { FeedbackIcon } from './components/FeedbackIcon';
+export { IconWrapper } from './components/IconWrapper';
 export { SearchBox } from './components/SearchBox';
 export { FiltersBox } from './components/FiltersBox';
 export { Select, FormFieldSelect } from './components/Select';

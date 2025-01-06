@@ -1,8 +1,8 @@
 import { isFunction } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchRequest } from '../../helpers/fetchRequest';
 import { PreloaderStates } from './PreloaderStates';
+import { handleRequestConfig } from './helpers/handleRequestConfig';
 
 /**
  * Fetches something and then runs a callback. While fetching, the preloader
@@ -10,7 +10,6 @@ import { PreloaderStates } from './PreloaderStates';
  *
  * A request object looks like this:
  *  - url: String
- *  - validateResponse({ data }): Function that validates the response
  *  - callback({ data }): Function that gets called back when success happens
  */
 export const Preloader = ({
@@ -20,6 +19,12 @@ export const Preloader = ({
     className,
     render,
     loadingMessage,
+    forcedLoading = false,
+
+    // Extra properties
+    onLoadingStateChanged,
+    customPreloader,
+    hasOutlet,
 }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -31,36 +36,24 @@ export const Preloader = ({
             // Set the loading as true
             setLoading(true);
 
-            let requestConfig;
+            // Loading state changed
+            if (isFunction(onLoadingStateChanged)) {
+                onLoadingStateChanged(true);
+            }
+
             try {
-                for (requestConfig of usedRequests) {
-                    // Get the data
-                    const data = await fetchRequest(requestConfig);
-
-                    // Validate the response
-                    if (
-                        requestConfig.validateResponse &&
-                        !requestConfig.validateResponse({ data })
-                    ) {
-                        throw new Error('invalid-data', data);
-                    }
-
-                    // Callback
-                    requestConfig.callback({ data });
+                for (let requestConfig of usedRequests) {
+                    await handleRequestConfig(requestConfig);
                 }
             } catch (error) {
-                console.error(
-                    `Error fetching data from url "${requestConfig.url}":`,
-                    error
-                );
                 setError(error);
-
-                // If there is a callback, let's call it
-                if (isFunction(requestConfig.errorCallback)) {
-                    requestConfig.errorCallback(error);
-                }
             } finally {
                 setLoading(false);
+
+                // Loading state changed
+                if (isFunction(onLoadingStateChanged)) {
+                    onLoadingStateChanged(false);
+                }
             }
         };
 
@@ -74,16 +67,19 @@ export const Preloader = ({
 
     return (
         <PreloaderStates
-            loading={loading}
+            loading={loading || forcedLoading}
             loadingMessage={loadingMessage}
             error={error}
             className={className}
+            customPreloader={customPreloader}
+            hasOutlet={hasOutlet}
         >
             {children}
         </PreloaderStates>
     );
 };
 
+Preloader.displayName = 'Preloader';
 Preloader.propTypes = {
     /**
      * An array of requests for the preloader to do at the same time. Once all of them get resolved, then the content is shown
@@ -125,14 +121,9 @@ Preloader.propTypes = {
                 body: PropTypes.string,
 
                 /**
-                 * Optional callback to validate the response coming from the API
+                 * Callback to handle the response (if any)
                  */
-                validateResponse: PropTypes.func,
-
-                /**
-                 * Optional callback to handle the response (if any)
-                 */
-                callback: PropTypes.func,
+                callback: PropTypes.func.isRequired,
             }),
         ])
     ),

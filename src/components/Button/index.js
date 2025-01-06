@@ -45,6 +45,7 @@ Button.propTypes = {
         'link',
         'wtf-pink',
         `simple-link`,
+        'gray',
     ]),
 
     /**

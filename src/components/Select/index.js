@@ -12,6 +12,7 @@ import {
     SelectItem as ShadSelectItem,
 } from '_/components/select';
 import { FormControl } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const Select = forwardRef(
     (
@@ -25,12 +26,13 @@ export const Select = forwardRef(
             required = false,
             disabled = false,
             className,
+            align,
             ...props
         },
         ref
     ) => {
         const trigger = (
-            <ShadSelectTrigger className={className || ''}>
+            <ShadSelectTrigger className={cn(className, 'gap-1')}>
                 {placeholder && <ShadSelectValue placeholder={placeholder} />}
             </ShadSelectTrigger>
         );
@@ -46,7 +48,7 @@ export const Select = forwardRef(
                 {...props}
             >
                 {formControl ? <FormControl>{trigger}</FormControl> : trigger}
-                <ShadSelectContent>
+                <ShadSelectContent align={align}>
                     <ShadSelectGroup>
                         {placeholder && (
                             <ShadSelectLabel>{placeholder}</ShadSelectLabel>

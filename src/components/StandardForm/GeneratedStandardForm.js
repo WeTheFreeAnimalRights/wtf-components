@@ -81,7 +81,7 @@ export const GeneratedStandardForm = ({
     return (
         <StandardForm form={form} className={cn('relative', className)}>
             {loading && (
-                <div className="absolute left-0 right-0 top-0 bottom-0 rounded-lg bg-white/75 z-10 flex flex-col items-center justify-center dark:bg-gray-800/75">
+                <div className="absolute left-0 right-0 top-0 bottom-0 rounded-lg bg-white/75 z-10 flex flex-col items-center justify-center dark:bg-background/75">
                     <Spinner />
                 </div>
             )}
