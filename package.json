@@ -1,6 +1,6 @@
 {
     "name": "@wethefree/components",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Ciprian Mocanu",
     "license": "ISC",
     "main": "dist/index.js",
