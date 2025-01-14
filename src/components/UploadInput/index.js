@@ -5,11 +5,23 @@ import { useDropzone } from 'react-dropzone';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../Button';
 import { Image } from '../Image';
+import { Alert } from '../Alert';
 
 export const UploadInput = forwardRef(
-    ({ currentImage, defaultImage, onSelect, onRemove, ...props }, ref) => {
+    (
+        {
+            currentImage,
+            defaultImage,
+            onSelect,
+            onRemove,
+            maxFileSize,
+            ...props
+        },
+        ref
+    ) => {
         const { t } = useTranslations();
         const [files, setFiles] = useState([]);
+        const [error, setError] = useState(false);
         const [displayImage, setDisplayImage] = useState([]);
         const { getRootProps, getInputProps } = useDropzone({
             ...props,
@@ -18,12 +30,20 @@ export const UploadInput = forwardRef(
                 'image/*': [],
             },
             onDrop: (acceptedFiles) => {
+                // Assume there is no error
+                setError(false);
+
                 // Get the first file and attach preview
                 const firstFile = acceptedFiles.find(Boolean);
                 const file = {
                     file: firstFile,
                     preview: URL.createObjectURL(firstFile),
                 };
+
+                if (firstFile.size > maxFileSize) {
+                    setError(t('file-too-large'));
+                    return;
+                }
 
                 // Set the files and call the change event
                 setFiles([file]);
@@ -66,6 +86,8 @@ export const UploadInput = forwardRef(
                     </div>
                 )}
                 <div className="flex flex-col gap-2 sm:flex-row">
+                    {error && <Alert variant="destructive">{error}</Alert>}
+
                     <div {...getRootProps({ className: '' })}>
                         <input ref={ref} {...getInputProps()} />
                         <Button variant="outline" type="button">

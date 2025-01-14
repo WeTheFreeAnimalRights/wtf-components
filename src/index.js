@@ -39,6 +39,7 @@ export {
     PreloaderStates,
     PreloaderOutlet,
 } from './components/Preloader';
+export { Confirm, useConfirm } from './components/Confirm';
 export { Resource } from './components/Resource';
 export { AnimalIcon } from './components/AnimalIcon';
 export { Image } from './components/Image';
@@ -49,8 +50,13 @@ export { SearchBox } from './components/SearchBox';
 export { FiltersBox } from './components/FiltersBox';
 export { Select, FormFieldSelect } from './components/Select';
 export { Combobox, FormFieldCombobox } from './components/Combobox';
+export { ScrollToTop } from './components/ScrollToTop';
 export { Separator } from './components/Separator';
-export { SortableContainer, SortableItem } from './components/Sortable';
+export {
+    SortableContainer,
+    SortableItem,
+    SortableHandle,
+} from './components/Sortable';
 export { Spinner } from './components/Spinner';
 export {
     StandardForm,
@@ -182,6 +188,8 @@ export { Toaster } from './_shadcn/components/toaster';
 export { cn } from './_shadcn/lib/utils';
 export { colors } from './_shadcn/lib/colors';
 export { useToast } from './_shadcn/hooks/use-toast';
+export { DirectionProvider } from '@radix-ui/react-direction';
+export { useIsMobile } from './_shadcn/hooks/use-mobile';
 
 // Recoil States
 export { currentThemeState, translationsState } from './recoilState';

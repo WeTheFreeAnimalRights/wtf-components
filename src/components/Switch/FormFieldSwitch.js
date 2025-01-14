@@ -33,7 +33,7 @@ export const FormFieldSwitch = ({
             render={({ field }) => (
                 <FormItem
                     className={[
-                        'space-y-0 space-x-2 items-center flex flex-row',
+                        'space-y-0 items-center flex flex-row',
                         visible === false && 'hidden',
                         className,
                     ]}
@@ -51,9 +51,11 @@ export const FormFieldSwitch = ({
                             {...props}
                         />
                     </FormControl>
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel className="ms-2">{label}</FormLabel>
                     {description && (
-                        <FormDescription>{description}</FormDescription>
+                        <FormDescription className="ms-2">
+                            {description}
+                        </FormDescription>
                     )}
                     <FormMessage />
                 </FormItem>

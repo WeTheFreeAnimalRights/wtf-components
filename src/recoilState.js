@@ -19,7 +19,7 @@ export const languagesState = atom({
 
 export const currentLanguageState = atom({
     key: 'currentLanguage',
-    default: '',
+    default: store.get('language') || '',
 });
 
 export const confirmState = atom({

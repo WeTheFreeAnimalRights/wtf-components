@@ -41,7 +41,11 @@ export const FormFieldCodeInput = ({
                         <CodeInput
                             {...field}
                             {...props}
-                            value={!isUndefined(field.value) ? field.value : props.value}
+                            value={
+                                !isUndefined(field.value)
+                                    ? field.value
+                                    : props.value
+                            }
                             onChange={(newValue) => {
                                 if (isFunction(onChange)) {
                                     onChange(newValue);

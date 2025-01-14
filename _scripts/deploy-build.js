@@ -13,7 +13,7 @@ Client({
     .then((client) => {
         client
             .uploadDir('./storybook-static', process.env.SCP_SERVER_LOCATION)
-            .then((response) => {
+            .then(() => {
                 client.close(); // remember to close connection after you finish
                 console.log('Successfully uploaded the build');
             })

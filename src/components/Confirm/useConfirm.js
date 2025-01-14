@@ -5,12 +5,13 @@ export const useConfirm = () => {
     const setConfirmObj = useSetRecoilState(confirmState);
 
     return {
-        confirm: ({ title, message, callback }) => {
+        confirm: ({ title, message, callback, hideCancel }) => {
             setConfirmObj({
                 visible: true,
                 title,
                 message,
                 callback,
+                hideCancel,
             });
         },
     };

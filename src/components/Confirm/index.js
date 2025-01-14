@@ -10,7 +10,10 @@ export const Confirm = () => {
     const [confirmObj, setConfirmObj] = useRecoilState(confirmState);
 
     return (
-        <ModalContainer open={Boolean(confirmObj.visible)}>
+        <ModalContainer open={Boolean(confirmObj.visible)} onOpenChange={(value) => setConfirmObj({
+                            ...confirmObj,
+                            visible: value,
+                        })}>
             <Modal title={confirmObj.title} description={confirmObj.message}>
                 <Button
                     onClick={() => {
@@ -23,8 +26,9 @@ export const Confirm = () => {
                         });
                     }}
                 >
-                    {t('confirm-yes')}
+                    {t('confirm-ok')}
                 </Button>
+                {confirmObj.hideCancel !== true &&
                 <Button
                     variant="secondary"
                     className="ms-2"
@@ -36,9 +40,11 @@ export const Confirm = () => {
                     }
                 >
                     {t('confirm-cancel')}
-                </Button>
+                </Button>}
             </Modal>
         </ModalContainer>
     );
 };
 Confirm.displayName = 'Confirm';
+
+export {useConfirm} from './useConfirm';

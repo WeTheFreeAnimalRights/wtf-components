@@ -2,14 +2,20 @@ import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
 
+// Import moment locales
+import * as locales from 'date-fns/locale';
+
 import { cn } from '_/lib/utils';
 import { buttonVariants } from './button';
+import { useTranslations } from '../../hooks/useTranslations';
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
+    const { currentLanguage } = useTranslations();
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}
             className={cn('p-3', className)}
+            locale={locales[currentLanguage.code] || locales['en']}
             classNames={{
                 months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
                 month: 'space-y-4',

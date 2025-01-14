@@ -18,6 +18,11 @@ export const useRequest = ({ loadingInit = false } = {}) => {
             // Fetch the request
             data = await fetchRequest(requestObject);
 
+            // If it wasn't succesfull and there is a message, throw an error
+            if (data?.success === false && data?.message) {
+                throw new Error(data.message);
+            }
+
             // If there is a success function
             if (isFunction(onSuccess)) {
                 onSuccess(data);

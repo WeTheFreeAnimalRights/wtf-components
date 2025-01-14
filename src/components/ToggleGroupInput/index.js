@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslations } from '../../hooks/useTranslations';
 
 // ShadCN
 import { ToggleGroup, ToggleGroupItem } from '_/components/toggle-group';
@@ -18,26 +19,34 @@ export const ToggleGroupInput = forwardRef(
         },
         ref
     ) => {
+        const { currentLanguage } = useTranslations();
         return (
             <ToggleGroup
                 variant="outline"
                 type="multiple"
                 value={value}
                 ref={ref}
+                dir={currentLanguage.direction}
                 onValueChange={onChange}
                 className={cn('text-start justify-start flex-wrap', className)}
             >
-                {options.map((item) => (
-                    <ToggleGroupItem
-                        value={item.value}
-                        aria-label={item.label}
-                        key={`item-${item.value}`}
-                        className="rounded-full whitespace-nowrap"
-                    >
-                        {item.icon}
-                        {showLabel && item.label}
-                    </ToggleGroupItem>
-                ))}
+                {options.map((item) => {
+                    const selected = value.includes(item.value);
+                    return (
+                        <ToggleGroupItem
+                            value={item.value}
+                            aria-label={item.label}
+                            key={`item-${item.value}`}
+                            className={cn(
+                                'rounded-full whitespace-nowrap',
+                                selected && 'border-2 border-wtf-pink'
+                            )}
+                        >
+                            {item.icon}
+                            {showLabel && item.label}
+                        </ToggleGroupItem>
+                    );
+                })}
             </ToggleGroup>
         );
     }

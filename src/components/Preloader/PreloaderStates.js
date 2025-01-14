@@ -20,15 +20,24 @@ export const PreloaderStates = ({
     const { developmentMode } = useDevelopmentMode();
 
     if (hasOutlet) {
-        return traverseElements(children, [PreloaderOutlet.displayName], (child, level, index) => {
-            if (loading) {
-                return <Spinner key={`outlet-${level}-${index}`} className="w-6 h-6" />;
-            }
+        return traverseElements(
+            children,
+            [PreloaderOutlet.displayName],
+            (child, level, index) => {
+                if (loading) {
+                    return (
+                        <Spinner
+                            key={`outlet-${level}-${index}`}
+                            className="w-6 h-6"
+                        />
+                    );
+                }
 
-            if (error) {
-                return <Alert variant="destructive">{error.message}</Alert>;
+                if (error) {
+                    return <Alert variant="destructive">{error.message}</Alert>;
+                }
             }
-        });
+        );
     }
 
     if (loading) {

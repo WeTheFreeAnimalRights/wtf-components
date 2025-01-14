@@ -8,6 +8,7 @@ import { Calendar } from '_/components/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { Button } from '../Button';
 import { FormControl } from '_/components/form';
+import { useTranslations } from '../../hooks/useTranslations';
 
 export const DatePicker = forwardRef(
     (
@@ -23,6 +24,7 @@ export const DatePicker = forwardRef(
         ref
     ) => {
         const [open, setOpen] = useState(false);
+        const { currentLanguage } = useTranslations();
 
         const trigger = (
             <Button
@@ -34,10 +36,11 @@ export const DatePicker = forwardRef(
                     className
                 )}
                 ref={ref}
+                dir={currentLanguage.direction}
             >
                 <div className="flex flex-row items-center gap-2 w-full">
                     <CalendarIcon className="h-4 w-4" />
-                    <div className="flex-grow">
+                    <div className="flex-grow text-start">
                         {value ? (
                             moment(value).format('ll')
                         ) : (

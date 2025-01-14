@@ -19,6 +19,7 @@ export const DataTable = ({
     pagination,
     onItemAction,
     onItemClick,
+    isItemClickable = true,
     onMultipleAction,
     onPageChange,
     onFiltersApplied,
@@ -32,6 +33,8 @@ export const DataTable = ({
 
     emptyTitle,
     emptyDescription,
+    emptyOnClick,
+    emptyButtonLabel,
 }) => {
     const { t } = useTranslations();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -66,11 +69,14 @@ export const DataTable = ({
                         onSortingChange,
                         onItemAction,
                         onItemClick,
+                        isItemClickable,
                     })
                 ) : (
                     <EmptyDataTable
                         title={emptyTitle}
                         description={emptyDescription}
+                        onClick={emptyOnClick}
+                        buttonLabel={emptyButtonLabel}
                     />
                 )
             ) : (
@@ -95,6 +101,7 @@ export const DataTable = ({
                                     onSelectedItemsChange={setSelectedItems}
                                     onItemAction={onItemAction}
                                     onItemClick={onItemClick}
+                                    isItemClickable={isItemClickable}
                                 />
                             </>
                         ) : (
@@ -102,6 +109,8 @@ export const DataTable = ({
                                 <EmptyDataTable
                                     title={emptyTitle}
                                     description={emptyDescription}
+                                    onClick={emptyOnClick}
+                                    buttonLabel={emptyButtonLabel}
                                 />
                             </TableCaption>
                         )}

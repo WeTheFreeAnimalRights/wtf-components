@@ -24,6 +24,7 @@ export const DataTableContent = ({
     onSelectedItemsChange,
     onItemAction,
     onItemClick,
+    isItemClickable = true,
 }) => {
     const { t } = useTranslations();
 
@@ -71,86 +72,109 @@ export const DataTableContent = ({
 
     return (
         <TableBody>
-            {data.map((row, index) => (
-                <TableRow
-                    key={`row-${row[idColumn]}`}
-                    className={
-                        hasItemClick ? 'cursor-pointer' : 'cursor-default'
-                    }
-                >
-                    <TableCell
-                        className="w-[50px]"
-                        onClick={() => handleItemClick(row)}
+            {data.map((row, index) => {
+                const itemClickable =
+                    hasItemClick &&
+                    (isFunction(isItemClickable)
+                        ? isItemClickable(row)
+                        : isItemClickable);
+                return (
+                    <TableRow
+                        key={`row-${row[idColumn]}`}
+                        className={
+                            itemClickable ? 'cursor-pointer' : 'cursor-default'
+                        }
                     >
-                        {multiple
-                            ? canRemove && (
-                                  <Checkbox
-                                      checked={selectedItems.indexOf(row) >= 0}
-                                      onCheckedChange={() => rowSelect(row)}
-                                  />
-                              )
-                            : pagination.countFrom + index}
-                    </TableCell>
-                    {columnsList.map((column) => (
-                        <DataTableCell
-                            key={`cell-${column.name}`}
-                            field={column}
-                            item={row}
-                            meta={meta}
-                            onClick={() => {
-                                if (column.handleClick !== false) {
-                                    return handleItemClick(row);
+                        <TableCell
+                            className="w-[50px]"
+                            onClick={
+                                itemClickable
+                                    ? () => handleItemClick(row)
+                                    : undefined
+                            }
+                        >
+                            {multiple
+                                ? canRemove && (
+                                      <Checkbox
+                                          checked={
+                                              selectedItems.indexOf(row) >= 0
+                                          }
+                                          onCheckedChange={() => rowSelect(row)}
+                                      />
+                                  )
+                                : pagination.countFrom + index}
+                        </TableCell>
+                        {columnsList.map((column) => (
+                            <DataTableCell
+                                key={`cell-${row[idColumn]}-${column.name}`}
+                                field={column}
+                                item={row}
+                                meta={meta}
+                                onClick={
+                                    itemClickable
+                                        ? () => {
+                                              if (
+                                                  column.handleClick !== false
+                                              ) {
+                                                  return handleItemClick(row);
+                                              }
+                                          }
+                                        : undefined
                                 }
-                            }}
-                        />
-                    ))}
-                    {isFunction(meta.rowActions) ? (
-                        <TableCell>{meta.rowActions(row)}</TableCell>
-                    ) : (
-                        (canView || canEdit || canRemove) && (
-                            <TableCell>
-                                <DropdownMenu
-                                    items={actions}
-                                    menuLabel={t('actions')}
-                                    onSelect={(action) => {
-                                        if (action.action === 'remove') {
-                                            confirm({
-                                                title: t('removing'),
-                                                message: t(
-                                                    'are-you-sure-you-want-to-remove-single'
-                                                ),
-                                                callback: () => {
-                                                    if (
-                                                        isFunction(onItemAction)
-                                                    ) {
-                                                        onItemAction(
-                                                            row,
-                                                            action
-                                                        );
-                                                    }
-                                                },
-                                            });
-                                        } else if (isFunction(onItemAction)) {
-                                            onItemAction(row, action);
-                                        }
-                                    }}
-                                >
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8 p-0"
+                            />
+                        ))}
+                        {isFunction(meta.rowActions) ? (
+                            <TableCell>{meta.rowActions(row)}</TableCell>
+                        ) : (
+                            (canView || canEdit || canRemove) && (
+                                <TableCell>
+                                    <DropdownMenu
+                                        items={actions}
+                                        menuLabel={t('actions')}
+                                        onSelect={(action) => {
+                                            if (action.action === 'remove') {
+                                                confirm({
+                                                    title: t('removing'),
+                                                    message: t(
+                                                        'are-you-sure-you-want-to-remove-single'
+                                                    ),
+                                                    callback: () => {
+                                                        if (
+                                                            isFunction(
+                                                                onItemAction
+                                                            )
+                                                        ) {
+                                                            onItemAction(
+                                                                row,
+                                                                action
+                                                            );
+                                                        }
+                                                    },
+                                                });
+                                            } else if (
+                                                isFunction(onItemAction)
+                                            ) {
+                                                onItemAction(row, action);
+                                            }
+                                        }}
                                     >
-                                        <span className="sr-only">
-                                            {t('open-menu')}
-                                        </span>
-                                        <MoreHorizontal className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenu>
-                            </TableCell>
-                        )
-                    )}
-                </TableRow>
-            ))}
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 p-0"
+                                        >
+                                            <span className="sr-only">
+                                                {t('open-menu')}
+                                            </span>
+                                            <MoreHorizontal className="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenu>
+                                </TableCell>
+                            )
+                        )}
+                    </TableRow>
+                );
+            })}
         </TableBody>
     );
 };

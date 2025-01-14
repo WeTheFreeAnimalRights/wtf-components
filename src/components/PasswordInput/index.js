@@ -45,7 +45,9 @@ export const PasswordInput = forwardRef(
                 type={visible ? 'text' : 'password'}
                 innerLeftContent={leftContent}
                 innerRightContent={rightContent}
-                placeholder={!isUndefined(placeholder) ? placeholder : '••••••••'}
+                placeholder={
+                    !isUndefined(placeholder) ? placeholder : '••••••••'
+                }
                 ref={ref}
                 {...props}
             />

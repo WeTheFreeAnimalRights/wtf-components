@@ -52,7 +52,7 @@ export const NumberInput = forwardRef(
                         variant="outline"
                         size="icon"
                         onClick={decrement}
-                        className="rounded-r-none"
+                        className="rounded-e-none"
                         aria-label="+"
                     >
                         <Minus className="h-4 w-4" />
@@ -81,7 +81,7 @@ export const NumberInput = forwardRef(
                         variant="outline"
                         size="icon"
                         onClick={increment}
-                        className="rounded-l-none"
+                        className="rounded-s-none"
                         aria-label="-"
                     >
                         <Plus className="h-4 w-4" />

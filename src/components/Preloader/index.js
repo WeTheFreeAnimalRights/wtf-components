@@ -1,8 +1,10 @@
 import { isFunction } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useRecoilValue } from 'recoil';
 import { PreloaderStates } from './PreloaderStates';
 import { handleRequestConfig } from './helpers/handleRequestConfig';
+import { currentLanguageState } from '../../recoilState';
 
 /**
  * Fetches something and then runs a callback. While fetching, the preloader
@@ -28,6 +30,7 @@ export const Preloader = ({
 }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const languageCode = useRecoilValue(currentLanguageState);
 
     const usedRequests = requests.filter(Boolean);
 
@@ -43,7 +46,10 @@ export const Preloader = ({
 
             try {
                 for (let requestConfig of usedRequests) {
-                    await handleRequestConfig(requestConfig);
+                    await handleRequestConfig({
+                        language: languageCode,
+                        ...requestConfig,
+                    });
                 }
             } catch (error) {
                 setError(error);
