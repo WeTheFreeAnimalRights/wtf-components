@@ -50,7 +50,11 @@ const extractTranslations = (filePath) => {
     const translations = new Set();
 
     const findTranslationCalls = (node) => {
-        if (node.type === 'CallExpression' && node.callee.name === 't' && node.arguments.length >= 1) {
+        if (
+            node.type === 'CallExpression' &&
+            node.callee.name === 't' &&
+            node.arguments.length >= 1
+        ) {
             const [firstArg] = node.arguments;
             if (firstArg.type === 'StringLiteral') {
                 const key = firstArg.value;

@@ -44,9 +44,10 @@ export const FormFieldNumberInput = ({
                             {...field}
                             {...props}
                             value={
-                                                                                    !isUndefined(field.value)
-                                                                                        ? field.value
-                                                                                        : props.value}
+                                !isUndefined(field.value)
+                                    ? field.value
+                                    : props.value
+                            }
                             onChange={(newValue) => {
                                 if (isFunction(onChange)) {
                                     onChange(newValue);

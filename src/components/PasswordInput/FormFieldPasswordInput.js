@@ -42,9 +42,10 @@ export const FormFieldPasswordInput = ({
                             {...field}
                             {...props}
                             value={
-                                                                                    !isUndefined(field.value)
-                                                                                        ? field.value
-                                                                                        : props.value}
+                                !isUndefined(field.value)
+                                    ? field.value
+                                    : props.value
+                            }
                             onChange={(event) => {
                                 if (isFunction(onChange)) {
                                     onChange(event.target.value);

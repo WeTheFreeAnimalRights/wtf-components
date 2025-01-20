@@ -6,7 +6,9 @@ module.exports = () => {
     // Load the base URL from the .env file
     const baseURL = process.env.WEBSITE;
     if (!baseURL) {
-        console.error('Error: WEBSITE environment variable is not set in .env file.');
+        console.error(
+            'Error: WEBSITE environment variable is not set in .env file.'
+        );
         process.exit(1);
     }
 
@@ -53,7 +55,10 @@ module.exports = () => {
             let htmlContent = fs.readFileSync(indexPath, 'utf8');
 
             metaTagsToUpdate.forEach((tagId) => {
-                const regex = new RegExp(`<meta ([^>]*id="${tagId}"[^>]*)content="([^"]*)"(.*?)/?>`, 'i');
+                const regex = new RegExp(
+                    `<meta ([^>]*id="${tagId}"[^>]*)content="([^"]*)"(.*?)/?>`,
+                    'i'
+                );
                 const match = htmlContent.match(regex);
 
                 if (match) {
@@ -66,14 +71,18 @@ module.exports = () => {
                             regex,
                             `<meta ${match[1]}content="${newValue}"${match[3] ? ` ${match[3]}` : ''}/>`
                         );
-                        console.log(`Updated meta tag '${tagId}': '${currentContent}' -> '${newValue}'`);
+                        console.log(
+                            `Updated meta tag '${tagId}': '${currentContent}' -> '${newValue}'`
+                        );
                     } else {
                         console.log(
                             `No matching key in API response for content value '${currentContent}' in meta tag '${tagId}'.`
                         );
                     }
                 } else {
-                    console.log(`Meta tag with ID '${tagId}' not found in index.html.`);
+                    console.log(
+                        `Meta tag with ID '${tagId}' not found in index.html.`
+                    );
                 }
             });
 
@@ -92,7 +101,8 @@ module.exports = () => {
             let htmlContent = fs.readFileSync(indexPath, 'utf8');
 
             // Update og-url
-            const ogUrlRegex = /<meta ([^>]*id="og-url"[^>]*)content="([^"]*)"(.*?)\/?>/i;
+            const ogUrlRegex =
+                /<meta ([^>]*id="og-url"[^>]*)content="([^"]*)"(.*?)\/?>/i;
             const ogUrlMatch = htmlContent.match(ogUrlRegex);
 
             if (ogUrlMatch) {
@@ -101,13 +111,18 @@ module.exports = () => {
                     ogUrlRegex,
                     `<meta ${ogUrlMatch[1]}content="${baseURL}"${ogUrlMatch[3] ? ` ${ogUrlMatch[3]}` : ''}/>`
                 );
-                console.log(`Updated og-url: '${currentOgUrl}' -> '${baseURL}'`);
+                console.log(
+                    `Updated og-url: '${currentOgUrl}' -> '${baseURL}'`
+                );
             } else {
-                console.log(`Meta tag with ID 'og-url' not found in index.html.`);
+                console.log(
+                    `Meta tag with ID 'og-url' not found in index.html.`
+                );
             }
 
             // Update og-image
-            const ogImageRegex = /<meta ([^>]*id="og-image"[^>]*)content="([^"]*)"(.*?)\/?>/i;
+            const ogImageRegex =
+                /<meta ([^>]*id="og-image"[^>]*)content="([^"]*)"(.*?)\/?>/i;
             const ogImageMatch = htmlContent.match(ogImageRegex);
 
             if (ogImageMatch) {
@@ -117,9 +132,13 @@ module.exports = () => {
                     ogImageRegex,
                     `<meta ${ogImageMatch[1]}content="${newOgImage}"${ogImageMatch[3] ? ` ${ogImageMatch[3]}` : ''}/>`
                 );
-                console.log(`Updated og-image: '${currentOgImage}' -> '${newOgImage}'`);
+                console.log(
+                    `Updated og-image: '${currentOgImage}' -> '${newOgImage}'`
+                );
             } else {
-                console.log(`Meta tag with ID 'og-image' not found in index.html.`);
+                console.log(
+                    `Meta tag with ID 'og-image' not found in index.html.`
+                );
             }
 
             // Write the updated content back to the index.html file

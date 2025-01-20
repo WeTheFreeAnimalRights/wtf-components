@@ -47,9 +47,10 @@ export const FormFieldSelect = ({
                         }}
                         {...props}
                         value={
-                                                                                !isUndefined(field.value)
-                                                                                    ? field.value
-                                                                                    : props.value}
+                            !isUndefined(field.value)
+                                ? field.value
+                                : props.value
+                        }
                         options={options}
                         placeholder={placeholder}
                         formControl

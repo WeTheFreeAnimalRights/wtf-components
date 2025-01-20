@@ -13,4 +13,4 @@ module.exports = () => {
 
     fs.copyFileSync(envSource, envDest);
     console.log(`Copied .env.${mode} to .env`);
-}
+};
