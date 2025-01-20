@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import React, { useEffect, useState } from 'react';
 import { Spinner } from '../Spinner';
 import { Alert } from '../Alert';

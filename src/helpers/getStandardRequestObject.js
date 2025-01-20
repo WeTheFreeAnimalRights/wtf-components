@@ -1,4 +1,4 @@
-import { isFunction, isPlainObject } from 'lodash';
+import { isFunction, isPlainObject } from 'lodash-es';
 import { getStandardRequestBody } from './getStandardRequestBody';
 
 export const getStandardRequestObject = (requestObject, standardSchema) => {

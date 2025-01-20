@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Filter } from 'lucide-react';

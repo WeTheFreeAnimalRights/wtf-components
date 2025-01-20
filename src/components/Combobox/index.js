@@ -1,5 +1,5 @@
-import { debounce, isEmpty, isFunction } from 'lodash';
-import React, { useCallback, useState } from 'react';
+import { debounce, isEmpty, isFunction } from 'lodash-es';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Check, ChevronsUpDown } from 'lucide-react';
 
@@ -36,6 +36,18 @@ export const Combobox = ({
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
     const [selected, setSelected] = useState(selectedParam);
+
+    useEffect(() => {
+        setSelected(selectedParam);
+        if (selectedParam && selectedParam.id) {
+            setValue(selectedParam.id.toString());
+
+            // If there is a callback, call it
+            if (isFunction(onSelect)) {
+                onSelect(selectedParam.id.toString());
+            }
+        }
+    }, [selectedParam]);
 
     const { t } = useTranslations();
     const usedEmptyMessage = emptyMessage || t('combo-empty');
@@ -94,7 +106,7 @@ export const Combobox = ({
                 role="combobox"
                 aria-expanded={open}
                 className={cn(
-                    'w-full justify-between flex-row items-center',
+                    'w-full justify-between flex-row items-center font-normal',
                     className
                 )}
                 disabled={disabled}

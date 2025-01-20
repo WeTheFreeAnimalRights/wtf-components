@@ -97,13 +97,6 @@ export {
     CardTitle,
     CardDescription,
 } from './_shadcn/components/card';
-export {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from './_shadcn/components/carousel';
 export { Label } from './_shadcn/components/label';
 export {
     useFormField,
@@ -214,6 +207,7 @@ export { getEmptyAuthToken } from './helpers/getEmptyAuthToken';
 export { getUrl } from './helpers/fetchRequest/api/getUrl';
 export { globals } from './helpers/globals';
 export { textContains } from './helpers/textContains';
+export { SecureStore } from './helpers/SecureStore';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
@@ -232,6 +226,3 @@ export { setupApi } from './helpers/fetchRequest/api/setupApi';
 // Base CSS
 import baseCSS from './base.css';
 export { baseCSS };
-
-// Resources (icons)
-export * from './resources/animalIcons';

@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Minus, Plus } from 'lucide-react';

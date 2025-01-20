@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { useContext } from 'react';
 import { Combobox } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -11,11 +11,13 @@ import {
     FormMessage,
     FormDescription,
 } from '_/components/form';
+import { cn } from '_/lib/utils';
 
 export const FormFieldCombobox = ({
     form: formParam,
     name,
     label,
+    className,
     placeholder,
     options,
     description,
@@ -32,7 +34,7 @@ export const FormFieldCombobox = ({
             name={name}
             render={({ field }) => (
                 <FormItem
-                    className={visible === false && 'hidden'}
+                    className={cn(visible === false && 'hidden', className)}
                     hidden={visible === false ? true : undefined}
                 >
                     <FormLabel>{label}</FormLabel>

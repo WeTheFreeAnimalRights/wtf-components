@@ -24,7 +24,7 @@ const buttonVariants = cva(
                     'underline underline-offset-2 hover:no-underline',
                 'wtf-pink':
                     'bg-wtf-pink text-white hover:bg-wtf-pink/90 rounded-full',
-                gray: colors['gray'],
+                gray: `${colors['gray']} hover:bg-gray-100/80 dark:hover:bg-gray-700/80`,
             },
             size: {
                 default: 'h-10 px-4 py-2',

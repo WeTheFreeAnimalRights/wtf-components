@@ -1,4 +1,4 @@
-import { snakeCase, isPlainObject } from 'lodash';
+import { snakeCase, isPlainObject } from 'lodash-es';
 
 export const snakeObject = (obj) => {
     if (Array.isArray(obj)) {

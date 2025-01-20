@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';

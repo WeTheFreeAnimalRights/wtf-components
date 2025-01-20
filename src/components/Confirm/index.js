@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 import { confirmState } from '../../recoilState';
 import { useTranslations } from '../../hooks/useTranslations';
@@ -10,10 +10,15 @@ export const Confirm = () => {
     const [confirmObj, setConfirmObj] = useRecoilState(confirmState);
 
     return (
-        <ModalContainer open={Boolean(confirmObj.visible)} onOpenChange={(value) => setConfirmObj({
-                            ...confirmObj,
-                            visible: value,
-                        })}>
+        <ModalContainer
+            open={Boolean(confirmObj.visible)}
+            onOpenChange={(value) =>
+                setConfirmObj({
+                    ...confirmObj,
+                    visible: value,
+                })
+            }
+        >
             <Modal title={confirmObj.title} description={confirmObj.message}>
                 <Button
                     onClick={() => {
@@ -28,23 +33,24 @@ export const Confirm = () => {
                 >
                     {t('confirm-ok')}
                 </Button>
-                {confirmObj.hideCancel !== true &&
-                <Button
-                    variant="secondary"
-                    className="ms-2"
-                    onClick={() =>
-                        setConfirmObj({
-                            ...confirmObj,
-                            visible: false,
-                        })
-                    }
-                >
-                    {t('confirm-cancel')}
-                </Button>}
+                {confirmObj.hideCancel !== true && (
+                    <Button
+                        variant="secondary"
+                        className="ms-2"
+                        onClick={() =>
+                            setConfirmObj({
+                                ...confirmObj,
+                                visible: false,
+                            })
+                        }
+                    >
+                        {t('confirm-cancel')}
+                    </Button>
+                )}
             </Modal>
         </ModalContainer>
     );
 };
 Confirm.displayName = 'Confirm';
 
-export {useConfirm} from './useConfirm';
+export { useConfirm } from './useConfirm';

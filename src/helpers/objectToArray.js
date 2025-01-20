@@ -1,4 +1,4 @@
-import { isUndefined, reduce } from 'lodash';
+import { isUndefined, reduce } from 'lodash-es';
 export const objectToArray = (obj = {}, count = 2, keyToUse) => {
     // Create an empty array with a certain length
     const final = Array(count).fill(undefined);

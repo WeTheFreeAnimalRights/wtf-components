@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Sun, Moon } from 'lucide-react';
 import { currentThemeState } from '../../recoilState';
-import store from 'store2';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../Button';
 import { Tooltip } from '../Tooltip';
+import { SecureStore } from '../../helpers/SecureStore';
 
 export const ThemeToggle = ({ variant, size, className }) => {
     const theme = useRecoilValue(currentThemeState);
@@ -27,11 +27,11 @@ export const ThemeToggle = ({ variant, size, className }) => {
                 className={className}
                 onClick={() => {
                     if (theme === 'dark') {
-                        store.set('theme', 'light');
+                        SecureStore.set('theme', 'light');
                         return setCurrentTheme('light');
                     }
 
-                    store.set('theme', 'dark');
+                    SecureStore.set('theme', 'dark');
                     return setCurrentTheme('dark');
                 }}
             >

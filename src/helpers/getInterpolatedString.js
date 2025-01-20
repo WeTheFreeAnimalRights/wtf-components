@@ -1,4 +1,4 @@
-import { isNumber, isString } from 'lodash';
+import { isNumber, isString } from 'lodash-es';
 
 /**
  * Interpolates variables wrapped with `{}` in `str` with variables in `obj`

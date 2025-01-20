@@ -1,4 +1,4 @@
-import { isEmpty, isFunction } from 'lodash';
+import { isEmpty, isFunction } from 'lodash-es';
 import React, { useContext } from 'react';
 import { CornerLeftDown } from 'lucide-react';
 import { DropdownMenu } from '../DropdownMenu';

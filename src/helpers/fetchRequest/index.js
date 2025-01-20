@@ -1,4 +1,4 @@
-import { isFunction, isNull } from 'lodash';
+import { isFunction, isNull } from 'lodash-es';
 import { camelizeObject } from '../camelizeObject';
 import { getEmptyAuthToken } from '../getEmptyAuthToken';
 import { globals } from '../globals';

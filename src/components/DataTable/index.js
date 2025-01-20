@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import React, { useState, createContext } from 'react';
 import { DataTableTableHeader } from './DataTableTableHeader';
 import { DataTableContent } from './DataTableContent';
@@ -9,7 +9,8 @@ import { parseTableChildren } from './helpers/parseTableChildren';
 import { EmptyDataTable } from './EmptyDataTable';
 
 // ShadCN
-import { Table, TableCaption } from '_/components/table';
+import { Table } from '_/components/table';
+import { cn } from '_/lib/utils';
 
 // Create a context to pass the form object
 export const DataTableContext = createContext(null);
@@ -80,41 +81,37 @@ export const DataTable = ({
                     />
                 )
             ) : (
-                <div className="rounded-md border">
-                    <Table>
-                        {data.length > 0 ? (
-                            <>
-                                <DataTableTableHeader
-                                    columns={columns}
-                                    meta={meta}
-                                    data={data}
-                                    selectedItems={selectedItems}
-                                    onSelectedItemsChange={setSelectedItems}
-                                    onSortingChange={onSortingChange}
-                                />
-                                <DataTableContent
-                                    columns={columns}
-                                    meta={meta}
-                                    data={data}
-                                    pagination={pagination}
-                                    selectedItems={selectedItems}
-                                    onSelectedItemsChange={setSelectedItems}
-                                    onItemAction={onItemAction}
-                                    onItemClick={onItemClick}
-                                    isItemClickable={isItemClickable}
-                                />
-                            </>
-                        ) : (
-                            <TableCaption>
-                                <EmptyDataTable
-                                    title={emptyTitle}
-                                    description={emptyDescription}
-                                    onClick={emptyOnClick}
-                                    buttonLabel={emptyButtonLabel}
-                                />
-                            </TableCaption>
-                        )}
-                    </Table>
+                <div className={cn('rounded-md', data.length > 0 && 'border')}>
+                    {data.length > 0 ? (
+                        <Table>
+                            <DataTableTableHeader
+                                columns={columns}
+                                meta={meta}
+                                data={data}
+                                selectedItems={selectedItems}
+                                onSelectedItemsChange={setSelectedItems}
+                                onSortingChange={onSortingChange}
+                            />
+                            <DataTableContent
+                                columns={columns}
+                                meta={meta}
+                                data={data}
+                                pagination={pagination}
+                                selectedItems={selectedItems}
+                                onSelectedItemsChange={setSelectedItems}
+                                onItemAction={onItemAction}
+                                onItemClick={onItemClick}
+                                isItemClickable={isItemClickable}
+                            />
+                        </Table>
+                    ) : (
+                        <EmptyDataTable
+                            title={emptyTitle}
+                            description={emptyDescription}
+                            onClick={emptyOnClick}
+                            buttonLabel={emptyButtonLabel}
+                        />
+                    )}
                 </div>
             )}
 

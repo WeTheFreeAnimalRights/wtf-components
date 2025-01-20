@@ -1,4 +1,4 @@
-import { debounce, isFunction, isUndefined } from 'lodash';
+import { debounce, isFunction, isUndefined } from 'lodash-es';
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Search, CircleX } from 'lucide-react';

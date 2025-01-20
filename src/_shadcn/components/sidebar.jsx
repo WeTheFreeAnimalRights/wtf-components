@@ -1,4 +1,4 @@
-import { isFunction, isString } from 'lodash';
+import { isFunction, isString } from 'lodash-es';
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
@@ -479,6 +479,8 @@ const sidebarMenuButtonVariants = cva(
                     'hover:bg-sidebar-hover-accent hover:text-sidebar-hover-accent-foreground',
                 outline:
                     'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-hover-accent hover:text-sidebar-hover-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]',
+                secondary:
+                    'bg-secondary text-secondary-foreground hover:bg-secondary/60',
             },
             size: {
                 default: 'h-8 text-sm',

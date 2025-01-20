@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import React, { useContext } from 'react';
 import { MoreHorizontal } from 'lucide-react';
 import { Checkbox } from '../Checkbox';

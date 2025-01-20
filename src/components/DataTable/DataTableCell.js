@@ -4,7 +4,7 @@ import { Badge } from '../Badge';
 
 // ShadCN
 import { TableCell } from '_/components/table';
-import { isFunction, isUndefined } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 
 export const DataTableCell = ({ field, item, onClick }) => {
     const value = renderCell(field, item);

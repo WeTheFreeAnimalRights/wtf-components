@@ -1,4 +1,4 @@
-import { isFunction, range } from 'lodash';
+import { isFunction, range } from 'lodash-es';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslations } from '../../hooks/useTranslations';

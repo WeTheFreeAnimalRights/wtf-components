@@ -1,4 +1,4 @@
-import { each, mapValues } from 'lodash';
+import { each, mapValues } from 'lodash-es';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
 export const useListingParams = (defaultParams = {}) => {

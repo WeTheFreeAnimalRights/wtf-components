@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import { traverseElements } from '../../../helpers/traverseElements';
 import { getGeneratedComponentMatrix } from './getGeneratedComponentMatrix';
 

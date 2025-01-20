@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { PasswordInput } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -41,7 +41,10 @@ export const FormFieldPasswordInput = ({
                         <PasswordInput
                             {...field}
                             {...props}
-                            value={field.value || props.value}
+                            value={
+                                                                                    !isUndefined(field.value)
+                                                                                        ? field.value
+                                                                                        : props.value}
                             onChange={(event) => {
                                 if (isFunction(onChange)) {
                                     onChange(event.target.value);

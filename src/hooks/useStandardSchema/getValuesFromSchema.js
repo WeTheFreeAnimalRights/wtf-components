@@ -1,4 +1,4 @@
-import { isUndefined, reduce } from 'lodash';
+import { isUndefined, reduce } from 'lodash-es';
 
 export const getValuesFromSchema = (schema) => {
     return reduce(

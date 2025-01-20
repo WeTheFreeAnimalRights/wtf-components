@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useId, forwardRef } from 'react';
-import { range } from 'lodash';
+import { range } from 'lodash-es';
 
 // ShadCN
 import {

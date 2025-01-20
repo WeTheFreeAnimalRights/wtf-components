@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import { orderBy } from 'lodash-es';
 
 export const parseResourceFeedbackOptions = (options) => {
     // Sorted for the feedback stats

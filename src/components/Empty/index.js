@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { AnimalIcon } from '../AnimalIcon';
 import { Button } from '../Button';
 import { cn } from '_/lib/utils';

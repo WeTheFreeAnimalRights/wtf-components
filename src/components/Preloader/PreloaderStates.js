@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { Alert } from '../Alert';
 import { Empty } from '../Empty';
 import { Spinner } from '../Spinner';

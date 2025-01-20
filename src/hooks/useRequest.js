@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { useState } from 'react';
 import { fetchRequest } from '../helpers/fetchRequest';
 

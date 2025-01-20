@@ -9,12 +9,18 @@ import {
     TooltipContent as ShadTooltipContent,
 } from '_/components/tooltip';
 
-export const Tooltip = ({ message, children, offset, delay = 200 }) => {
+export const Tooltip = ({
+    message,
+    children,
+    offset,
+    delay = 200,
+    className,
+}) => {
     return (
         <ShadTooltipProvider delayDuration={delay}>
             <ShadTooltip>
                 <ShadTooltipTrigger asChild>{children}</ShadTooltipTrigger>
-                <ShadTooltipContent sideOffset={offset}>
+                <ShadTooltipContent sideOffset={offset} className={className}>
                     {message}
                 </ShadTooltipContent>
             </ShadTooltip>

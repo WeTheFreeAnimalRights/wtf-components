@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import React, { forwardRef, useState } from 'react';
 import moment from 'moment';
 import { Calendar as CalendarIcon, X } from 'lucide-react';
@@ -55,7 +55,10 @@ export const DatePicker = forwardRef(
                                 e.preventDefault();
                                 e.stopPropagation();
                                 setOpen(false);
-                                onChange('');
+
+                                if (isFunction(onChange)) {
+                                    onChange('');
+                                }
                             }}
                         >
                             <X className="w-4 h-4" />

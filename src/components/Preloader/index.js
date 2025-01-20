@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';

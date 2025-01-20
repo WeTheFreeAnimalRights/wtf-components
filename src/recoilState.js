@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
-import store from 'store2';
 import { isDarkMode } from './helpers/isDarkMode';
+import { SecureStore } from './helpers/SecureStore';
 
 export const translationsState = atom({
     key: 'translations',
@@ -9,7 +9,7 @@ export const translationsState = atom({
 
 export const currentThemeState = atom({
     key: 'theme',
-    default: store.get('theme') || (isDarkMode() ? 'dark' : 'light'),
+    default: SecureStore.get('theme') || (isDarkMode() ? 'dark' : 'light'),
 });
 
 export const languagesState = atom({
@@ -19,7 +19,7 @@ export const languagesState = atom({
 
 export const currentLanguageState = atom({
     key: 'currentLanguage',
-    default: store.get('language') || '',
+    default: SecureStore.get('language') || '',
 });
 
 export const confirmState = atom({

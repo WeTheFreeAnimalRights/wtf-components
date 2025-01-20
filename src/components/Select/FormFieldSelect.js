@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { Select } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -43,11 +43,13 @@ export const FormFieldSelect = ({
                             if (isFunction(onChange)) {
                                 onChange(newValue);
                             }
-
                             field.onChange(newValue);
                         }}
                         {...props}
-                        value={field.value || props.value}
+                        value={
+                                                                                !isUndefined(field.value)
+                                                                                    ? field.value
+                                                                                    : props.value}
                         options={options}
                         placeholder={placeholder}
                         formControl

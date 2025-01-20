@@ -1,4 +1,4 @@
-import { isPlainObject, isString } from 'lodash';
+import { isPlainObject, isString } from 'lodash-es';
 
 export const filtersDecode = (str = '', defaultValues = {}) => {
     // If an empty thing is passed, then ignore it

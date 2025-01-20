@@ -1,4 +1,4 @@
-import { isUndefined, snakeCase, startCase } from 'lodash';
+import { isUndefined, snakeCase, startCase } from 'lodash-es';
 import { getDefaultColumnProps } from './getDefaultColumnProps';
 
 // Definitions

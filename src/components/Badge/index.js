@@ -34,6 +34,7 @@ Badge.propTypes = {
         'amber',
         'cyan',
         'pink',
+        'gray',
     ]),
 
     /**

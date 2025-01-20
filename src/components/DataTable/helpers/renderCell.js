@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 
 export const renderCell = (field, item) => {
     const value = item[field.name];

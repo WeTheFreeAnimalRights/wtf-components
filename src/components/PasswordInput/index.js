@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Eye, EyeOff, LockKeyhole } from 'lucide-react';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
-import { isUndefined } from 'lodash';
+import { isUndefined } from 'lodash-es';
 
 export const PasswordInput = forwardRef(
     (

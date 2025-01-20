@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import { isUndefined } from 'lodash-es';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Empty } from '../Empty';
 

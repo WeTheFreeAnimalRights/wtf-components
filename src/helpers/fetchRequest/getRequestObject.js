@@ -1,4 +1,4 @@
-import { each, isArray, isPlainObject } from 'lodash';
+import { each, isArray, isPlainObject } from 'lodash-es';
 import { getUrl } from './api/getUrl';
 import { getParamName } from './getParamName';
 /**

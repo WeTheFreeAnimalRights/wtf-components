@@ -1,4 +1,4 @@
-import { reduce } from 'lodash';
+import { reduce } from 'lodash-es';
 export const arrayToObject = (arr = []) => {
     return reduce(
         arr,

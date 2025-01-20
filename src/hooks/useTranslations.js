@@ -1,6 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { get, isString } from 'lodash';
-import store from 'store2';
+import { get, isString } from 'lodash-es';
 import moment from 'moment';
 
 // Import moment locales
@@ -28,6 +27,7 @@ import {
     currentLanguageState,
 } from '../recoilState';
 import { getInterpolatedString } from '../helpers/getInterpolatedString';
+import { SecureStore } from '../helpers/SecureStore';
 
 export const useTranslations = () => {
     // Handle translations
@@ -59,7 +59,7 @@ export const useTranslations = () => {
             moment.locale(item.code);
 
             // Set the current language
-            store.set('language', item.code);
+            SecureStore.set('language', item.code);
 
             // Save to recoil
             setCurrentLanguage(item);

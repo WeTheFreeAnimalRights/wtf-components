@@ -1,4 +1,4 @@
-import { map, snakeCase } from 'lodash';
+import { map, snakeCase } from 'lodash-es';
 import { getStandardFieldSchema } from './getStandardFieldSchema';
 import { getStandardFieldDefaultValue } from './getStandardFieldDefaultValue';
 

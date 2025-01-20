@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { Globe } from 'lucide-react';
 import React from 'react';
 import PropTypes from 'prop-types';

@@ -1,4 +1,4 @@
-import { capitalize } from 'lodash';
+import { capitalize } from 'lodash-es';
 import * as validations from './validations';
 
 export const getFieldValidation = (standardField, { t, z }) => {

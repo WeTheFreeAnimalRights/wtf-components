@@ -10,6 +10,7 @@ export const parseResourceItem = (item = {}) => {
         links: item.links.map((link) => ({
             type: link.type.toLowerCase(),
             url: link.url,
+            forceOpenInNewTab: link.forceOpenInNewTab,
         })),
         highlighted: Boolean(item.isHighlighted),
         highlightedType:

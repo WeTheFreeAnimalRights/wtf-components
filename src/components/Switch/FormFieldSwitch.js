@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { useContext } from 'react';
 import { Switch } from './index';
 import { StandardFormContext } from '../StandardForm';

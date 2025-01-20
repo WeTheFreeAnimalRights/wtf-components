@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { fetchRequest } from '../../../helpers/fetchRequest';
 
 export const handleRequestConfig = async (config = {}) => {

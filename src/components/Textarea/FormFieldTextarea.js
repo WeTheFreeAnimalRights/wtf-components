@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { Textarea } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -43,7 +43,10 @@ export const FormFieldTextarea = ({
                             placeholder={placeholder}
                             {...field}
                             {...props}
-                            value={field.value || props.value}
+                            value={
+                                                                                    !isUndefined(field.value)
+                                                                                        ? field.value
+                                                                                        : props.value}
                             onChange={(event) => {
                                 if (isFunction(onChange)) {
                                     onChange(event.target.value);

@@ -10,7 +10,7 @@ const badgeVariants = cva(
         variants: {
             variant: {
                 default:
-                    'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+                    'border-transparent bg-primary text-white hover:bg-primary/80',
                 simple: `border-transparent ${colors.pink}`,
                 secondary:
                     'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -22,6 +22,7 @@ const badgeVariants = cva(
                 amber: `border-transparent ${colors.amber}`,
                 cyan: `border-transparent ${colors.cyan}`,
                 pink: `border-transparent ${colors.pink}`,
+                gray: `border-transparent ${colors.gray}`,
                 outline: 'text-foreground',
             },
         },

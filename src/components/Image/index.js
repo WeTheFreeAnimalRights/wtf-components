@@ -3,7 +3,7 @@ import { Skeleton } from '_/components/skeleton';
 import { cn } from '_/lib/utils';
 import { AnimalIcon } from '../AnimalIcon';
 import { useTranslations } from '../../hooks/useTranslations';
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 
 export const Image = ({
     src = '',

@@ -1,4 +1,4 @@
-import { reduce, isEmpty } from 'lodash';
+import { reduce, isEmpty } from 'lodash-es';
 
 export const filtersEncode = (obj = {}) => {
     const noEmptyValues = reduce(

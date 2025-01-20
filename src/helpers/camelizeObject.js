@@ -1,4 +1,4 @@
-import { camelCase, isPlainObject } from 'lodash';
+import { camelCase, isPlainObject } from 'lodash-es';
 
 export const camelizeObject = (obj) => {
     if (Array.isArray(obj)) {

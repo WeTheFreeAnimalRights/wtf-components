@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { ToggleGroupInput } from './index';
 import { StandardFormContext } from '../StandardForm';

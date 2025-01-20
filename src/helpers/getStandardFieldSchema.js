@@ -1,4 +1,4 @@
-import { isPlainObject, isString } from 'lodash';
+import { isPlainObject, isString } from 'lodash-es';
 import { getStandardFieldDefaultSchema } from './getStandardFieldDefaultSchema';
 
 export const getStandardFieldSchema = (field, options) => {

@@ -14,7 +14,7 @@ export const ActiveBadge = ({ className, active, labels }) => {
                     {activeLabel}
                 </Badge>
             ) : (
-                <Badge className={className} variant="destructive">
+                <Badge className={className} variant="gray">
                     {inactiveLabel}
                 </Badge>
             )}

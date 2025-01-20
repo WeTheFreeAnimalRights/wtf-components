@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash';
+import { isFunction, isUndefined } from 'lodash-es';
 import React, { forwardRef, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,6 @@ import {
 } from '_/components/card';
 import { cn } from '_/lib/utils';
 import { CardActiveTitle } from './CardActiveTitle';
-import { isValid } from 'date-fns';
 
 export const Card = forwardRef(
     (
