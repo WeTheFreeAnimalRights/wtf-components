@@ -19,7 +19,7 @@ export const Alert = ({
 }) => {
     return (
         <ShadAlert
-            className={cn('flex flex-row items-top', className)}
+            className={cn('flex flex-col sm:flex-row items-top', className)}
             variant={variant}
         >
             {variant === 'default' && <Info className="w-6 h-6" />}
@@ -40,7 +40,7 @@ Alert.propTypes = {
     /**
      * The variant of the alert
      */
-    variant: PropTypes.oneOf(['default', 'destructive']),
+    variant: PropTypes.oneOf(['default', 'destructive', 'none']),
 
     /**
      * The title to be shown on the alert

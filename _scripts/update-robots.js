@@ -13,12 +13,12 @@ module.exports = () => {
             if (shouldIndex) {
                 // Allow indexing
                 content = `User-agent: *
-    Allow: /`;
+Allow: /`;
                 console.log('Updating robots.txt to allow indexing.');
             } else {
                 // Disallow indexing
                 content = `User-agent: *
-    Disallow: /`;
+Disallow: /`;
                 console.log('Updating robots.txt to disallow indexing.');
             }
 

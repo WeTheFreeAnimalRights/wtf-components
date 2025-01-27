@@ -74,5 +74,5 @@ Button.propTypes = {
     /**
      * Optional extra classname to the button
      */
-    className: PropTypes.oneOfType(PropTypes.string, PropTypes.array),
+    className: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
