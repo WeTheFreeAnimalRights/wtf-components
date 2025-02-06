@@ -46,6 +46,7 @@ export const useRequest = ({ loadingInit = false } = {}) => {
     return {
         loading,
         error,
+        setError,
         request,
     };
 };

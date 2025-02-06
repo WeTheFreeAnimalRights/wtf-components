@@ -16,6 +16,7 @@ export const PreloaderStates = ({
     children,
     customPreloader,
     hasOutlet,
+    _id,
 }) => {
     const { developmentMode } = useDevelopmentMode();
 
@@ -88,7 +89,10 @@ export const PreloaderStates = ({
             <div className="flex flex-col items-center justify-center h-full">
                 <Empty title="Oops..." className="space-y-2">
                     <p>Something happened. If you can retry, do that!</p>
-                    <p>Otherwise, contact us at info@activism.wtf.</p>
+                    <p>
+                        Otherwise, contact us at info@activism.wtf.
+                        {_id && `(${_id})`}
+                    </p>
                 </Empty>
             </div>
         );

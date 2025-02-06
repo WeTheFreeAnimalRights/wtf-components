@@ -54,6 +54,7 @@ export default {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))',
                 },
+                'wtf-blue': 'hsl(var(--wtf-blue))',
                 'wtf-pink': 'hsl(var(--wtf-pink))',
                 'wtf-pink-light': 'hsl(var(--wtf-pink-light))',
                 sidebar: {

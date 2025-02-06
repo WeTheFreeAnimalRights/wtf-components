@@ -69,6 +69,10 @@ export const DropdownMenu = ({
                     </>
                 )}
                 {items.map((item, index) => {
+                    if (!item) {
+                        return null;
+                    }
+
                     if (item.separator) {
                         return (
                             <ShadDropdownMenuSeparator
@@ -146,42 +150,45 @@ DropdownMenu.propTypes = {
      * Items in the dropdown
      */
     items: PropTypes.arrayOf(
-        PropTypes.shape({
-            /**
-             * Label of the item
-             */
-            label: PropTypes.string,
+        PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.shape({
+                /**
+                 * Label of the item
+                 */
+                label: PropTypes.string,
 
-            /**
-             * Sublabel of the item
-             */
-            sublabel: PropTypes.string,
+                /**
+                 * Sublabel of the item
+                 */
+                sublabel: PropTypes.string,
 
-            /**
-             * If the item is a separator
-             */
-            separator: PropTypes.bool,
+                /**
+                 * If the item is a separator
+                 */
+                separator: PropTypes.bool,
 
-            /**
-             * Optional icon for the item
-             */
-            icon: PropTypes.element,
+                /**
+                 * Optional icon for the item
+                 */
+                icon: PropTypes.element,
 
-            /**
-             * Optional classname for the label of the item
-             */
-            labelClassName: PropTypes.string,
+                /**
+                 * Optional classname for the label of the item
+                 */
+                labelClassName: PropTypes.string,
 
-            /**
-             * Optional classname for the sublabel of the item
-             */
-            sublabelClassName: PropTypes.string,
+                /**
+                 * Optional classname for the sublabel of the item
+                 */
+                sublabelClassName: PropTypes.string,
 
-            /**
-             * Optional description of the item
-             */
-            description: PropTypes.string,
-        })
+                /**
+                 * Optional description of the item
+                 */
+                description: PropTypes.string,
+            }),
+        ])
     ).isRequired,
 
     /**

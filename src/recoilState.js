@@ -22,6 +22,11 @@ export const currentLanguageState = atom({
     default: SecureStore.get('language') || '',
 });
 
+export const currentCodeState = atom({
+    key: 'currentCode',
+    default: null,
+});
+
 export const confirmState = atom({
     key: 'confirm',
     default: {},
@@ -30,4 +35,11 @@ export const confirmState = atom({
 export const developmentModeState = atom({
     key: 'developmentMode',
     default: false,
+});
+
+export const analyticsState = atom({
+    key: 'analytics',
+    default: {
+        visitId: SecureStore.get('visitId' || 0),
+    },
 });

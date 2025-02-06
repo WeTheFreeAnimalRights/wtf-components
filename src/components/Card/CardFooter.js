@@ -11,7 +11,7 @@ export const CardFooter = ({ items, className }) => {
         >
             {items.map((item, index) => {
                 if (!item) {
-                    return;
+                    return null;
                 }
 
                 if (isValidElement(item)) {

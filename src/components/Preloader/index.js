@@ -27,6 +27,7 @@ export const Preloader = ({
     onLoadingStateChanged,
     customPreloader,
     hasOutlet,
+    _id,
 }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -79,6 +80,7 @@ export const Preloader = ({
             className={className}
             customPreloader={customPreloader}
             hasOutlet={hasOutlet}
+            _id={_id}
         >
             {children}
         </PreloaderStates>

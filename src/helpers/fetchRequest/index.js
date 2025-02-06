@@ -42,6 +42,11 @@ export const fetchRequest = async (requestConfig = {}) => {
         }
     }
 
+    // Authorization
+    if (requestConfig.authorization) {
+        headers.append('Authorization', requestConfig.authorization);
+    }
+
     // If there is a language being requested
     if (requestConfig.language) {
         headers.append('Accept-Language', requestConfig.language);
