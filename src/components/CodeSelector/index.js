@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { isArray, isFunction } from 'lodash-es';
 import { validateCode } from '../../helpers/validateCode';
+import { getCDNUrl } from '../../helpers/getCDNUrl';
 import { useCode } from '../../hooks/useCode';
 import { useTranslations } from '../../hooks/useTranslations';
 import { useRequest } from '../../hooks/useRequest';
@@ -10,7 +11,7 @@ import { Alert } from '../Alert';
 import { CodeInput } from '../CodeInput';
 import { Button } from '../Button';
 
-export const CodeSelector = ({ className = '', onCodeSelect }) => {
+export const CodeSelector = ({ className = '', onCodeSelect, platform = '3movies' }) => {
     // Code related things
     const { code, selected, setCode, defaultCode } = useCode();
 
@@ -88,6 +89,9 @@ export const CodeSelector = ({ className = '', onCodeSelect }) => {
         // Send to the API
         sendDataToApi(newCode);
     };
+
+    // Get the card image url
+    const cardImageUrl = getCDNUrl(`${platform}/bg-code.jpg`);
 
     return (
         <ModalContainer
@@ -205,7 +209,7 @@ export const CodeSelector = ({ className = '', onCodeSelect }) => {
                         </div>
                     </div>
                 </form>
-                <img src="/images/bg-code.jpg" alt="" draggable="false" />
+                <img src={cardImageUrl} alt="" draggable="false" />
             </Modal>
         </ModalContainer>
     );

@@ -25,6 +25,7 @@ export const Card = forwardRef(
             imageClassName = '',
             imageFit = 'cover',
             imageAspect = 'video',
+            imageLoading = 'eager',
             size = 'md',
             // highlighted = false,
             children,
@@ -67,6 +68,7 @@ export const Card = forwardRef(
                         alt={title}
                         fit={imageFit}
                         aspect={imageAspect}
+                        loading={imageLoading}
                         className={cn(
                             imageClassName,
                             layout === 'horizontal'

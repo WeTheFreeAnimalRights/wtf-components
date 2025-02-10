@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Skeleton } from '_/components/skeleton';
+import { isFunction } from 'lodash-es';
 import { cn } from '_/lib/utils';
 import { AnimalIcon } from '../AnimalIcon';
 import { useTranslations } from '../../hooks/useTranslations';
-import { isFunction } from 'lodash-es';
+import { getCDNUrl } from '../../helpers/getCDNUrl';
 
 export const Image = ({
     src = '',
@@ -11,16 +11,17 @@ export const Image = ({
     className = '',
     textClassName,
     iconVariant,
+    cdn = false,
     ...props
 }) => {
     const { t } = useTranslations();
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+
+    // Get the source of the image
+    const usedSrc = cdn ? getCDNUrl(src) : src;
 
     return (
         <>
-            {loading && <Skeleton className={['w-full h-full', className]} />}
-
             {error && (
                 <div
                     className={cn(
@@ -41,16 +42,14 @@ export const Image = ({
             )}
 
             <img
-                src={src}
+                src={usedSrc}
                 alt={alt}
                 className={cn(
-                    loading && 'hidden',
                     error && 'hidden',
                     className
                 )}
                 {...props}
                 onLoad={(...loadProps) => {
-                    setLoading(false);
                     setError(false);
 
                     // If there is a function passed, use that
@@ -59,7 +58,6 @@ export const Image = ({
                     }
                 }}
                 onError={(...errorProps) => {
-                    setLoading(false);
                     setError(true);
 
                     // If there is a function passed, use that

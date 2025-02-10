@@ -214,6 +214,7 @@ export { setElementsProperty } from './helpers/setElementsProperty';
 export { validateCode } from './helpers/validateCode';
 export { getDefaultLanguage } from './helpers/getDefaultLanguage';
 export { getLanguage } from './helpers/getLanguage';
+export { getCDNUrl } from './helpers/getCDNUrl';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
