@@ -41,8 +41,11 @@ export const Modal = ({
             {title && (
                 <ShadDialogHeader>
                     <ShadDialogTitle>{title}</ShadDialogTitle>
-                    {description &&
-                    <ShadDialogDescription>{description}</ShadDialogDescription>}
+                    {description && (
+                        <ShadDialogDescription>
+                            {description}
+                        </ShadDialogDescription>
+                    )}
                 </ShadDialogHeader>
             )}
             <div

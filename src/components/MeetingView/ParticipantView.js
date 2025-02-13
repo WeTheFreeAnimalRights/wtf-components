@@ -1,11 +1,22 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useParticipant } from '@videosdk.live/react-sdk';
 import ReactPlayer from 'react-player';
+import { cn } from '_/lib/utils';
+import { Badge } from '../Badge';
+import { useTranslations } from '../../hooks/useTranslations';
 
-export const ParticipantView = ({ id }) => {
+export const ParticipantView = ({ id, className }) => {
     const micRef = useRef(null);
-    const { webcamStream, micStream, webcamOn, micOn, isLocal } =
-        useParticipant(id);
+    const { t } = useTranslations();
+    const {
+        webcamStream,
+        micStream,
+        webcamOn,
+        micOn,
+        isLocal,
+        participant,
+        isActiveSpeaker,
+    } = useParticipant(id);
 
     const videoStream = useMemo(() => {
         if (webcamOn && webcamStream) {
@@ -33,26 +44,35 @@ export const ParticipantView = ({ id }) => {
         }
     }, [micStream, micOn]);
 
-    console.log('>>videoStream', videoStream);
-
     return (
-        <div>
+        <div className={cn('relative rounded-md overflow-hidden', className)}>
             <audio ref={micRef} autoPlay playsInline muted={isLocal} />
             {webcamOn && (
-                <ReactPlayer
-                    playsinline // very very imp prop
-                    pip={false}
-                    light={false}
-                    controls={false}
-                    muted={true}
-                    playing={true}
-                    url={videoStream}
-                    height={'300px'}
-                    width={'300px'}
-                    onError={(err) => {
-                        console.log(err, 'participant video error');
-                    }}
-                />
+                <>
+                    <ReactPlayer
+                        playsinline // very very imp prop
+                        pip={false}
+                        light={false}
+                        controls={false}
+                        muted={true}
+                        playing={true}
+                        url={videoStream}
+                        onError={(err) => {
+                            console.log(err, 'participant video error');
+                        }}
+                        width="100%"
+                        height="100%"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-3 flex flex-row items-center">
+                        <div className="flex-grow">
+                            <div className="bg-background/80 py-1 px-2 rounded-md inline-block text-sm">
+                                {participant.displayName}
+                            </div>
+                        </div>
+
+                        {isActiveSpeaker && <Badge>{t('speaking')}</Badge>}
+                    </div>
+                </>
             )}
         </div>
     );

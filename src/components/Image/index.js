@@ -44,10 +44,7 @@ export const Image = ({
             <img
                 src={usedSrc}
                 alt={alt}
-                className={cn(
-                    error && 'hidden',
-                    className
-                )}
+                className={cn(error && 'hidden', className)}
                 {...props}
                 onLoad={(...loadProps) => {
                     setError(false);

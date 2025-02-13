@@ -40,5 +40,10 @@ export const getPublicApiEndpoints = () => {
          */
         analyticsVisit: '/analytics/visits',
         analyticsResource: '/analytics/resource-accessed',
+
+        /**
+         * Chats (to create a new one)
+         */
+        chats: '/chats',
     };
 };

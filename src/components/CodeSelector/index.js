@@ -11,7 +11,11 @@ import { Alert } from '../Alert';
 import { CodeInput } from '../CodeInput';
 import { Button } from '../Button';
 
-export const CodeSelector = ({ className = '', onCodeSelect, platform = '3movies' }) => {
+export const CodeSelector = ({
+    className = '',
+    onCodeSelect,
+    platform = '3movies',
+}) => {
     // Code related things
     const { code, selected, setCode, defaultCode } = useCode();
 

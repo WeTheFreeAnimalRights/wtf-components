@@ -13,4 +13,4 @@ export const PirschScript = ({ code }) => {
             data-code={code}
         />
     );
-}
+};
