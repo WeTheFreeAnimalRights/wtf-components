@@ -48,6 +48,8 @@ export { MeetingView } from './components/MeetingView';
 export { PirschScript } from './components/PirschScript';
 export { Empty } from './components/Empty';
 export { FeedbackIcon } from './components/FeedbackIcon';
+export { FeedbackForm, getFeedbackKey } from './components/FeedbackForm';
+export { FeedbackModalSimple } from './components/FeedbackModalSimple';
 export { IconWrapper } from './components/IconWrapper';
 export { SearchBox } from './components/SearchBox';
 export { FiltersBox } from './components/FiltersBox';

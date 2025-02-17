@@ -61,26 +61,25 @@ export const MeetingView = ({
                         />
                         {status === statuses.joined && (
                             <div className="p-4 bg-gray-50 dark:bg-gray-900 border-sidebar-border border-t space-x-4 flex flex-row justify-between items-center">
-                                <div className='space-x-4'>
-
-                                <ToggleButton
-                                    components={{
-                                        on: Mic,
-                                        off: MicOff,
-                                    }}
-                                    value={micOn}
-                                    onChange={setMicOn}
-                                    />
-                                <ToggleButton
-                                    components={{
-                                        on: Video,
-                                        off: VideoOff,
-                                    }}
-                                    value={cameraOn}
-                                    onChange={setCameraOn}
-                                    />
-                                    </div>
+                                <div className="space-x-4">
                                     <ToggleButton
+                                        components={{
+                                            on: Mic,
+                                            off: MicOff,
+                                        }}
+                                        value={micOn}
+                                        onChange={setMicOn}
+                                    />
+                                    <ToggleButton
+                                        components={{
+                                            on: Video,
+                                            off: VideoOff,
+                                        }}
+                                        value={cameraOn}
+                                        onChange={setCameraOn}
+                                    />
+                                </div>
+                                <ToggleButton
                                     components={{
                                         on: MessageCircle,
                                         off: MessageCircleOff,

@@ -24,9 +24,12 @@ export const Modal = ({
     description,
     children,
     className = '',
+    headerClassName,
     contentClassName,
     footer,
     showCloseButton = true,
+    closeButtonClassName,
+    closeIconClassName,
     setWidth = true,
     overflow = false,
     onClick,
@@ -35,11 +38,13 @@ export const Modal = ({
         <ShadDialogContent
             className={className}
             showCloseButton={showCloseButton}
+            closeButtonClassName={closeButtonClassName}
+            closeIconClassName={closeIconClassName}
             setWidth={setWidth}
             onClick={onClick}
         >
             {title && (
-                <ShadDialogHeader>
+                <ShadDialogHeader className={headerClassName}>
                     <ShadDialogTitle>{title}</ShadDialogTitle>
                     {description && (
                         <ShadDialogDescription>

@@ -7,13 +7,27 @@ import { Button } from '../Button';
 import { cn } from '_/lib/utils';
 import { isFunction } from 'lodash-es';
 
-export const RoomView = ({ id, autoJoin, status, onStatusChange, micOn, cameraOn }) => {
+export const RoomView = ({
+    id,
+    autoJoin,
+    status,
+    onStatusChange,
+    micOn,
+    cameraOn,
+}) => {
     const { t } = useTranslations();
     const statuses = getRoomStatuses();
 
     //Get the method which will be used to join the meeting.
     //We will also get the participants list to display all participants
-    const { join, participants, muteMic, unmuteMic, enableWebcam, disableWebcam } = useMeeting({
+    const {
+        join,
+        participants,
+        muteMic,
+        unmuteMic,
+        enableWebcam,
+        disableWebcam,
+    } = useMeeting({
         //callback for when meeting is joined successfully
         onMeetingJoined: () => {
             if (isFunction(onStatusChange)) {
