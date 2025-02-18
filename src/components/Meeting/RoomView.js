@@ -1,70 +1,41 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useMeeting } from '@videosdk.live/react-sdk';
-import { ParticipantView } from './ParticipantView';
+import { ParticipantView } from './components/ParticipantView';
 import { useTranslations } from '../../hooks/useTranslations';
 import { getRoomStatuses } from './helpers/getRoomStatuses';
 import { Button } from '../Button';
 import { cn } from '_/lib/utils';
-import { isFunction } from 'lodash-es';
+import { MeetingContext } from './components/MeetingContext';
 
-export const RoomView = ({
-    id,
-    autoJoin,
-    status,
-    onStatusChange,
-    micOn,
-    cameraOn,
-}) => {
+export const RoomView = () => {
     const { t } = useTranslations();
+    const { meeting, setMeeting } = useContext(MeetingContext);
     const statuses = getRoomStatuses();
 
-    //Get the method which will be used to join the meeting.
-    //We will also get the participants list to display all participants
+    // Get the method which will be used to join the meeting.
+    // We will also get the participants list to display all participants
     const {
         join,
         participants,
-        muteMic,
-        unmuteMic,
-        enableWebcam,
-        disableWebcam,
+        // muteMic,
+        // unmuteMic,
+        // enableWebcam,
+        // disableWebcam,
     } = useMeeting({
-        //callback for when meeting is joined successfully
         onMeetingJoined: () => {
-            if (isFunction(onStatusChange)) {
-                onStatusChange(statuses.joined);
-            }
+            setMeeting('status', statuses.joined);
         },
     });
     const joinMeeting = () => {
-        if (isFunction(onStatusChange)) {
-            onStatusChange(statuses.joining);
-        }
+        setMeeting('status', statuses.joining);
         join();
     };
-
-    // Microphone
-    useEffect(() => {
-        if (micOn) {
-            unmuteMic();
-        } else {
-            muteMic();
-        }
-    }, [micOn]);
-
-    // Camera
-    useEffect(() => {
-        if (cameraOn) {
-            enableWebcam();
-        } else {
-            disableWebcam();
-        }
-    }, [cameraOn]);
 
     const participantKeys = [...participants.keys()];
 
     return (
         <div className="col-span-3 flex-grow basis-0 overflow-hidden">
-            {status === statuses.joined && (
+            {meeting.status === statuses.joined && (
                 <>
                     <div
                         className={cn(
@@ -80,18 +51,18 @@ export const RoomView = ({
                     >
                         {participantKeys.map((participantId) => (
                             <ParticipantView
+                            key={`participant-${participantId}`}
                                 id={participantId}
-                                key={participantId}
                             />
                         ))}
                     </div>
                 </>
             )}
-            {(status === statuses.joining ||
-                (status !== statuses.joined && autoJoin)) && (
+            {(meeting.status === statuses.joining ||
+                (meeting.status !== statuses.joined && meeting.autoJoin)) && (
                 <p>{t('meeting-joining')}</p>
             )}
-            {status === statuses.disconnected && !autoJoin && (
+            {meeting.status === statuses.disconnected && !meeting.autoJoin && (
                 <Button onClick={joinMeeting}>{t('meeting-join')}</Button>
             )}
         </div>

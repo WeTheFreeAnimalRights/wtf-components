@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useParticipant } from '@videosdk.live/react-sdk';
 import ReactPlayer from 'react-player';
+import { Badge } from '../../Badge';
+import { useTranslations } from '../../../hooks/useTranslations';
 import { cn } from '_/lib/utils';
-import { Badge } from '../Badge';
-import { useTranslations } from '../../hooks/useTranslations';
 
 export const ParticipantView = ({ id, className }) => {
     const micRef = useRef(null);

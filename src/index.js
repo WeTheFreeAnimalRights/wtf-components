@@ -45,7 +45,7 @@ export { Resource } from './components/Resource';
 export { AnimalIcon } from './components/AnimalIcon';
 export { Image } from './components/Image';
 export { CodeSelector } from './components/CodeSelector';
-export { MeetingView } from './components/MeetingView';
+export { MeetingContainer, RoomView, ChatView } from './components/Meeting';
 export { PirschScript } from './components/PirschScript';
 export { Empty } from './components/Empty';
 export { FeedbackIcon } from './components/FeedbackIcon';

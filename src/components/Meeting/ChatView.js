@@ -1,19 +1,18 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { usePubSub } from '@videosdk.live/react-sdk';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { groupMessages } from './helpers/groupMessages';
 import { SpeechBubble } from './components/SpeechBubble';
 import { CornerDownLeft } from 'lucide-react';
+import { MeetingContext } from './components/MeetingContext';
 
 export const ChatView = ({
-    id,
-    userId,
     // onMessageReceived,
     // onOldMessagesReceived,
 }) => {
-    const convId = `conversation-${id}`;
-    const { publish, messages } = usePubSub(convId, {
+    const {meeting} = useContext(MeetingContext);
+    const { publish, messages } = usePubSub(`conversation-${meeting.id}`, {
         onMessageReceived: (...args) => {
             console.log('>>mr args', args);
         },
@@ -21,12 +20,10 @@ export const ChatView = ({
             console.log('>>omr args', args);
         },
     });
-    const groupedMessages = groupMessages(messages, userId);
-
+    const groupedMessages = groupMessages(messages, meeting.visitor.id);
     const [currentMessage, setCurrentMessage] = useState('');
 
     const sendMessage = (message) => {
-        console.log('sending', message);
         publish(message, { persist: true }, null, null);
         setCurrentMessage('');
     };
