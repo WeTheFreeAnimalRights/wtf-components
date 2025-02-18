@@ -63,7 +63,7 @@ export const RoomView = ({
     const participantKeys = [...participants.keys()];
 
     return (
-        <div className="col-span-3 flex-grow">
+        <div className="col-span-3 flex-grow basis-0 overflow-hidden">
             {status === statuses.joined && (
                 <>
                     <div

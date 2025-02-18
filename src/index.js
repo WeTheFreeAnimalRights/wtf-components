@@ -19,6 +19,7 @@ export {
 export { DisableInteraction } from './components/DisableInteraction';
 export { DatePicker, FormFieldDatePicker } from './components/DatePicker';
 export { DropdownMenu } from './components/DropdownMenu';
+export { DiscordModal } from './components/DiscordModal';
 export { ErrorBoundary } from './components/ErrorBoundary';
 export {
     LanguagePicker,
@@ -202,6 +203,7 @@ export { filtersDecode } from './helpers/filtersDecode';
 export { getServerFilters } from './helpers/getServerFilters';
 export { parseLanguages } from './helpers/parseLanguages';
 export { parseResources } from './helpers/parseResources';
+export { parseResourceItem } from './helpers/parseResourceItem';
 export { parseResourceFeedbackOptions } from './helpers/parseResourceFeedbackOptions';
 export { traverseElements } from './helpers/traverseElements';
 export { objectToArray } from './helpers/objectToArray';
@@ -218,6 +220,9 @@ export { validateCode } from './helpers/validateCode';
 export { getDefaultLanguage } from './helpers/getDefaultLanguage';
 export { getLanguage } from './helpers/getLanguage';
 export { getCDNUrl } from './helpers/getCDNUrl';
+export { getHighlightedChallenges } from './helpers/getHighlightedChallenges';
+export { getResourceUrl } from './helpers/getResourceUrl';
+export { isDiscordResource } from './helpers/isDiscordResource';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';

@@ -45,7 +45,7 @@ export const ParticipantView = ({ id, className }) => {
     }, [micStream, micOn]);
 
     return (
-        <div className={cn('relative rounded-md overflow-hidden', className)}>
+        <div className={cn('relative w-full max-w-full max-h-full aspect-video flex items-center justify-center overflow-hidden rounded-md', className)}>
             <audio ref={micRef} autoPlay playsInline muted={isLocal} />
             {webcamOn && (
                 <>
@@ -62,6 +62,7 @@ export const ParticipantView = ({ id, className }) => {
                         }}
                         width="100%"
                         height="100%"
+                        className="[&>video]:object-cover"
                     />
                     <div className="absolute bottom-0 left-0 right-0 p-3 flex flex-row items-center">
                         <div className="flex-grow">

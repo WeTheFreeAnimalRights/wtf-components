@@ -50,7 +50,7 @@ export const MeetingView = ({
             joinWithoutUserInteraction={autoJoin}
         >
             <div className="h-[768px]">
-                <ResizablePanelGroup direction="horizontal">
+                <ResizablePanelGroup direction="horizontal" className="h-full relative">
                     <ResizablePanel className="flex flex-col">
                         <RoomView
                             id={id}
