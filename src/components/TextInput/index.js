@@ -12,6 +12,7 @@ export const TextInput = forwardRef(
             className,
             inputClassName,
             innerLeftContent,
+            innerLeftContentClassName,
             innerRightContent,
             ...props
         },
@@ -21,7 +22,12 @@ export const TextInput = forwardRef(
             <div className={className || ''}>
                 <div className="relative">
                     {innerLeftContent && (
-                        <div className="absolute start-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5">
+                        <div
+                            className={cn(
+                                'absolute start-0 top-0 bottom-0 flex flex-row justify-center items-center px-2.5',
+                                innerLeftContentClassName
+                            )}
+                        >
                             {innerLeftContent}
                         </div>
                     )}
@@ -64,15 +70,15 @@ TextInput.propTypes = {
     /**
      * Optional extra classname to the input
      */
-    inputClassName: PropTypes.string,
+    inputClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 
     /**
      * Optional content to be shown left side of the input
      */
-    innerLeftContent: PropTypes.element,
+    innerLeftContent: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
 
     /**
      * Optional content to be shown right side of the input
      */
-    innerRightContent: PropTypes.element,
+    innerRightContent: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
 };

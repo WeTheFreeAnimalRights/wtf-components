@@ -83,7 +83,7 @@ export const fetchRequest = async (requestConfig = {}) => {
         data = await response.blob();
     } else {
         // 204 means success, but no content
-        if (response.status !== 204) {
+        if (response.status !== 204 && response.status > 0) {
             // Parse the JSON
             data = isNull(response.body) ? null : await response.json();
 

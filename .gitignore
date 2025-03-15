@@ -27,3 +27,5 @@ yarn-error.log*
 *storybook.log
 storybook-static
 public/meta.json
+
+_translations.json

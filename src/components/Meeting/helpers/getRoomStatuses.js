@@ -3,5 +3,6 @@ export const getRoomStatuses = () => {
         disconnected: 'disconnected',
         joining: 'joining',
         joined: 'joined',
+        left: 'left',
     };
 };

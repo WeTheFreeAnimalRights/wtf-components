@@ -45,7 +45,23 @@ export { Resource } from './components/Resource';
 export { AnimalIcon } from './components/AnimalIcon';
 export { Image } from './components/Image';
 export { CodeSelector } from './components/CodeSelector';
-export { MeetingContainer, RoomView, ChatView } from './components/Meeting';
+export {
+    MeetingContainer,
+    RoomView,
+    ConnectedRoomView,
+    ChatView,
+    MeetingDuration,
+    MeetingContext,
+    MeetingLoader,
+    MediaAccessModal,
+    getRoomStatuses,
+    EndButton,
+    ChatButton,
+    MicToggleButton,
+    CamToggleButton,
+    MeetingToggleButton,
+    useChatVisitor,
+} from './components/Meeting';
 export { PirschScript } from './components/PirschScript';
 export { Empty } from './components/Empty';
 export { FeedbackIcon } from './components/FeedbackIcon';
@@ -57,6 +73,10 @@ export { FiltersBox } from './components/FiltersBox';
 export { Select, FormFieldSelect } from './components/Select';
 export { Combobox, FormFieldCombobox } from './components/Combobox';
 export { ScrollToTop } from './components/ScrollToTop';
+export {
+    SectionHeading,
+    SectionHeadingText,
+} from './components/SectionHeading';
 export { Separator } from './components/Separator';
 export {
     SortableContainer,
@@ -103,6 +123,18 @@ export {
     CardTitle,
     CardDescription,
 } from './_shadcn/components/card';
+export {
+    Drawer,
+    DrawerPortal,
+    DrawerOverlay,
+    DrawerTrigger,
+    DrawerClose,
+    DrawerContent,
+    DrawerHeader,
+    DrawerFooter,
+    DrawerTitle,
+    DrawerDescription,
+} from './_shadcn/components/drawer';
 export { Label } from './_shadcn/components/label';
 export {
     useFormField,
@@ -221,6 +253,7 @@ export { getDefaultLanguage } from './helpers/getDefaultLanguage';
 export { getLanguage } from './helpers/getLanguage';
 export { getCDNUrl } from './helpers/getCDNUrl';
 export { getHighlightedChallenges } from './helpers/getHighlightedChallenges';
+export { getHighlightedMovies } from './helpers/getHighlightedMovies';
 export { getResourceUrl } from './helpers/getResourceUrl';
 export { isDiscordResource } from './helpers/isDiscordResource';
 
@@ -230,6 +263,7 @@ export { useTranslations } from './hooks/useTranslations';
 export { useTheme } from './hooks/useTheme';
 export { useFormSubmit } from './hooks/useFormSubmit';
 export { useRequest } from './hooks/useRequest';
+export { useLongRequest } from './hooks/useLongRequest';
 export { useStandardSchema } from './hooks/useStandardSchema';
 export { useStandardForm } from './hooks/useStandardForm';
 export { useDevelopmentMode } from './hooks/useDevelopmentMode';

@@ -4,12 +4,25 @@ import { FeedbackForm, getFeedbackKey } from '../FeedbackForm';
 import { Modal, ModalContainer } from '../Modal';
 import { cn } from '_/lib/utils';
 
-export const FeedbackModalSimple = ({ open, onOpenChange, footer, resourceId, title, showFeedback = true, children, className }) => {
+export const FeedbackModalSimple = ({
+    open,
+    onOpenChange,
+    footer,
+    resourceId,
+    title,
+    showFeedback = true,
+    children,
+    className,
+    showCloseButton,
+}) => {
     // Has the user already given feedback
     const { code } = useCode();
     const alreadyGaveFeedback = SecureStore.get(
         getFeedbackKey(resourceId, code)
     );
+
+    const actuallyShowFeedback =
+        showFeedback && resourceId > 0 && !alreadyGaveFeedback;
 
     return (
         <ModalContainer open={open} onOpenChange={onOpenChange}>
@@ -19,18 +32,23 @@ export const FeedbackModalSimple = ({ open, onOpenChange, footer, resourceId, ti
                         {title}
                     </div>
                 }
+                showCloseButton={showCloseButton}
                 closeButtonClassName="top-5 end-5"
                 closeIconClassName="w-6 h-6 text-white"
-                className={cn('w-10/12 sm:w-2/3 lg:w-[900px] h-2/3 p-0 gap-0 border-0', className)}
-                contentClassName={cn('bg-gray-100 dark:bg-gray-900 rounded-b-md max-h-[75vh]', [
-                    (!showFeedback || alreadyGaveFeedback) && 'pt-6'
-                ])}
+                className={cn(
+                    'w-10/12 sm:w-2/3 lg:w-[900px] h-2/3 p-0 gap-0 border-0',
+                    className
+                )}
+                contentClassName={cn(
+                    'bg-gray-100 dark:bg-gray-900 rounded-b-md max-h-[75vh]',
+                    [!actuallyShowFeedback && 'pt-6']
+                )}
                 headerClassName="space-y-0 border-b border-gray-300 dark:border-gray-500"
                 footer={footer}
                 setWidth={false}
                 overflow
             >
-                {showFeedback && !alreadyGaveFeedback && (
+                {actuallyShowFeedback && (
                     <FeedbackForm resourceId={resourceId} className="p-6" />
                 )}
                 {children}

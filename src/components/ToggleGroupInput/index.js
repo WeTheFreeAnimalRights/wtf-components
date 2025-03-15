@@ -13,6 +13,7 @@ export const ToggleGroupInput = forwardRef(
             value = [],
             options = [],
             className,
+            itemClassName,
             onChange,
             showLabel = false,
             ...props
@@ -39,7 +40,8 @@ export const ToggleGroupInput = forwardRef(
                             key={`item-${item.value}`}
                             className={cn(
                                 'rounded-full whitespace-nowrap',
-                                selected && 'border-2 border-wtf-pink'
+                                selected && 'border-2 border-wtf-pink',
+                                itemClassName
                             )}
                         >
                             {item.icon}

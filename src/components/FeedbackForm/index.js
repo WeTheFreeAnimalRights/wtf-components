@@ -51,11 +51,7 @@ export const FeedbackForm = ({ resourceId, className }) => {
                 SecureStore.remove(getFeedbackKey(resourceId, code));
             },
             () => {
-                SecureStore.set(
-                    getFeedbackKey(resourceId, code),
-                    true,
-                    7
-                ); // 7 days expiration
+                SecureStore.set(getFeedbackKey(resourceId, code), true, 7); // 7 days expiration
                 setSubmitted(true);
             }
         );
@@ -117,4 +113,4 @@ export const FeedbackForm = ({ resourceId, className }) => {
     );
 };
 
-export {getFeedbackKey} from './getFeedbackKey';
+export { getFeedbackKey } from './getFeedbackKey';

@@ -1,5 +1,5 @@
-import { isFunction } from "lodash-es";
-import { useEffect } from "react";
+import { isFunction } from 'lodash-es';
+import { useEffect } from 'react';
 
 export const PirschScript = ({ code }) => {
     const { REACT_APP_ENV } = process.env;
@@ -9,7 +9,10 @@ export const PirschScript = ({ code }) => {
     }
 
     const handleReadyStateChange = () => {
-        if (document.readyState === "complete" && isFunction(window.pirschInit)) {
+        if (
+            document.readyState === 'complete' &&
+            isFunction(window.pirschInit)
+        ) {
             console.log('Pirsch Initialized', code);
             window.pirschInit();
         }
@@ -18,17 +21,23 @@ export const PirschScript = ({ code }) => {
     useEffect(() => {
         if (!document.getElementById('pianjs')) {
             const snippet = document.createElement('script');
-            snippet.src = "https://api.pirsch.io/pa.js";
-            snippet.id = "pianjs";
-            snippet.setAttribute("data-code", code);
+            snippet.src = 'https://api.pirsch.io/pa.js';
+            snippet.id = 'pianjs';
+            snippet.setAttribute('data-code', code);
 
             // Add the snippet to the site and init Pirsch.
             document.body.appendChild(snippet);
-            document.addEventListener("readystatechange", handleReadyStateChange);
+            document.addEventListener(
+                'readystatechange',
+                handleReadyStateChange
+            );
 
             return () => {
-      document.removeEventListener('readystatechange', handleReadyStateChange);
-    };
+                document.removeEventListener(
+                    'readystatechange',
+                    handleReadyStateChange
+                );
+            };
         }
     }, [code]);
 

@@ -45,5 +45,10 @@ export const getPublicApiEndpoints = () => {
          * Chats (to create a new one)
          */
         chats: '/chats',
+
+        /**
+         * Subscribtions (by email)
+         */
+        subscriptions: '/subscriptions',
     };
 };

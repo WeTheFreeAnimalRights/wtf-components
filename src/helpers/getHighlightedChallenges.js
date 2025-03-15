@@ -1,4 +1,4 @@
-import { objectToArray } from "./objectToArray";
+import { objectToArray } from './objectToArray';
 
 export const getHighlightedChallenges = (resources = {}, highlighted = {}) => {
     // First check the highlighted from the code

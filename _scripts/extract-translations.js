@@ -2,108 +2,104 @@ const fs = require('fs');
 const path = require('path');
 const babelParser = require('@babel/parser');
 
-const fullTranslations = require('./full-translations.json');
-const mockTranslations = require('./mock-translations.json');
-const editedTranslations = require('./edited-translations.json');
-const existingTranslations = require('./existing-translations.json');
+module.exports = async (
+    platform,
+    searchDir = path.resolve(process.cwd(), './src')
+) => {
+    const outputFile = path.resolve(process.cwd(), './_translations.json');
 
-// Get directories from command-line arguments
-const args = process.argv.slice(2);
-const dirs = [];
-for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--dir' || args[i] === '-d') {
-        if (args[i + 1]) {
-            dirs.push(path.resolve(process.cwd(), args[i + 1]));
-            i++; // Skip the next argument since it was the directory path
+    console.log(`Downloading translations for platform ${platform}...`);
+    const response = await fetch(
+        `https://api.mystats.wtf/api/public/v1/contents?filter[platform]=${platform}`,
+        {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
         }
-    }
-}
+    );
+    const apiData = await response.json();
 
-const outputFile = path.resolve(__dirname, '../build/_translations.json');
+    // Transform API response into a key-value object
+    const backendTranslations = apiData.data.reduce((acc, item) => {
+        acc[item.key] = item.value;
+        return acc;
+    }, {});
 
-// Helper function to recursively get all JavaScript files
-const getJsFiles = (dir) => {
-    let jsFiles = [];
-    const files = fs.readdirSync(dir);
+    console.log('>>>backendTranslations', apiData);
 
-    files.forEach((file) => {
-        const filePath = path.join(dir, file);
-        const stats = fs.statSync(filePath);
+    const getJsFiles = (dir) => {
+        let jsFiles = [];
+        const files = fs.readdirSync(dir);
 
-        if (stats.isDirectory()) {
-            jsFiles = jsFiles.concat(getJsFiles(filePath));
-        } else if (file.endsWith('.js') || file.endsWith('.jsx')) {
-            jsFiles.push(filePath);
-        }
-    });
+        files.forEach((file) => {
+            const filePath = path.join(dir, file);
+            const stats = fs.statSync(filePath);
 
-    return jsFiles;
-};
-
-// Parse each file and extract translation strings
-const extractTranslations = (filePath) => {
-    const code = fs.readFileSync(filePath, 'utf-8');
-    const ast = babelParser.parse(code, {
-        sourceType: 'module',
-        plugins: ['jsx'],
-    });
-    const translations = new Set();
-
-    const findTranslationCalls = (node) => {
-        if (
-            node.type === 'CallExpression' &&
-            node.callee.name === 't' &&
-            node.arguments.length >= 1
-        ) {
-            const [firstArg] = node.arguments;
-            if (firstArg.type === 'StringLiteral') {
-                const key = firstArg.value;
-                const value =
-                    editedTranslations[firstArg.value] ||
-                    fullTranslations[firstArg.value] ||
-                    mockTranslations[firstArg.value] ||
-                    '';
-
-                // Only add edited or new translations
-                if (
-                    typeof editedTranslations[firstArg.value] !== 'undefined' ||
-                    typeof existingTranslations[firstArg.value] === 'undefined'
-                ) {
-                    translations.add({ key, value });
-                }
+            if (stats.isDirectory()) {
+                jsFiles = jsFiles.concat(getJsFiles(filePath));
+            } else if (file.endsWith('.js') || file.endsWith('.jsx')) {
+                jsFiles.push(filePath);
             }
-        }
+        });
 
-        // Traverse child nodes
-        for (const key in node) {
-            if (node[key] && typeof node[key] === 'object') {
-                findTranslationCalls(node[key]);
-            }
-        }
+        return jsFiles;
     };
 
-    findTranslationCalls(ast);
-    return Array.from(translations);
-};
+    const parseFile = (filePath) => {
+        const code = fs.readFileSync(filePath, 'utf-8');
+        const ast = babelParser.parse(code, {
+            sourceType: 'module',
+            plugins: ['jsx'],
+        });
+        const translations = new Set();
 
-// Main script
-const allTranslations = {};
+        const findTranslationCalls = (node) => {
+            if (
+                node.type === 'CallExpression' &&
+                node.callee.name === 't' &&
+                node.arguments.length >= 1
+            ) {
+                const [firstArg] = node.arguments;
+                if (firstArg.type === 'StringLiteral') {
+                    const key = firstArg.value;
+                    const value = backendTranslations[firstArg.value] || '';
 
-dirs.forEach((dir) => {
-    const files = getJsFiles(dir);
-    const basePath = path.resolve(dir);
+                    // Only add new translations not in backendTranslations
+                    if (!backendTranslations.hasOwnProperty(firstArg.value)) {
+                        translations.add({ key, value });
+                    }
+                }
+            }
+
+            for (const key in node) {
+                if (node[key] && typeof node[key] === 'object') {
+                    findTranslationCalls(node[key]);
+                }
+            }
+        };
+
+        findTranslationCalls(ast);
+        return Array.from(translations);
+    };
+
+    const allTranslations = {};
+    const files = getJsFiles(searchDir);
+
     files.forEach((file) => {
-        const displayedFile = file.replace(basePath, '');
-        console.log(`Inspecting "${displayedFile}"...`);
-        const translations = extractTranslations(file);
+        console.log(`Inspecting "${file}"...`);
+        const translations = parseFile(file);
         translations.forEach((obj) => {
             if (!allTranslations[obj.key]) {
                 allTranslations[obj.key] = obj.value;
             }
         });
     });
-});
 
-// Write to JSON file
-fs.writeFileSync(outputFile, JSON.stringify(allTranslations, null, 2), 'utf-8');
-console.log(`Translation strings extracted to ${outputFile}`);
+    fs.writeFileSync(
+        outputFile,
+        JSON.stringify(allTranslations, null, 2),
+        'utf-8'
+    );
+    console.log(`Translation strings extracted to ${outputFile}`);
+};

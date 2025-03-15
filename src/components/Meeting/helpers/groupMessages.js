@@ -5,10 +5,17 @@ export const groupMessages = (list = [], userId) => {
         // Get the last element
         const lastElement = last(result);
 
+        // The item to be sent
+        const finalItem = {
+            ...item,
+            type: item.payload?.type || 'message',
+            resource: item.payload?.resource,
+        };
+
         // If the last element has the same sender
         if (lastElement && lastElement.sender.id === String(item.senderId)) {
             // Push the new text
-            lastElement.texts.push(item);
+            lastElement.texts.push(finalItem);
             return result;
         }
 
@@ -21,9 +28,8 @@ export const groupMessages = (list = [], userId) => {
                     id: String(item.senderId),
                     name: item.senderName,
                 },
-                received: !item.senderId !== String(userId),
-                firstText: item,
-                texts: [],
+                received: String(item.senderId) !== String(userId),
+                texts: [finalItem],
             },
         ];
     }, []);

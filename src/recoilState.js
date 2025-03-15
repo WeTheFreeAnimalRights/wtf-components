@@ -27,6 +27,11 @@ export const currentCodeState = atom({
     default: null,
 });
 
+export const currentChatVisitorState = atom({
+    key: 'currentChatVisitor',
+    default: null,
+});
+
 export const confirmState = atom({
     key: 'confirm',
     default: {},

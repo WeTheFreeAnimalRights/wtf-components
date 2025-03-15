@@ -1,8 +1,8 @@
-
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { MeetingContext } from './components/MeetingContext';
 import { MeetingProvider } from './components/MeetingProvider';
-import { useState } from 'react';
+import { getRoomStatuses } from './helpers/getRoomStatuses';
 
 export const MeetingContainer = ({
     id,
@@ -15,6 +15,7 @@ export const MeetingContainer = ({
     initialMicOn = true,
     initialCamOn = true,
 }) => {
+    const statuses = getRoomStatuses();
     const [meeting, setFullMeeting] = useState({
         id,
         token,
@@ -23,6 +24,7 @@ export const MeetingContainer = ({
         autoJoin,
         micOn: initialMicOn,
         camOn: initialCamOn,
+        status: statuses.joining,
     });
 
     const setMeeting = (...args) => {
@@ -34,13 +36,19 @@ export const MeetingContainer = ({
         } else if (args.length === 2) {
             setFullMeeting({
                 ...meeting,
-                [args[0]]: [args[1]],
+                [args[0]]: args[1],
             });
         }
     };
 
+    // Memoize context value to prevent unnecessary re-renders
+    const meetingContextValue = useMemo(
+        () => ({ meeting, setMeeting }),
+        [meeting]
+    );
+
     return (
-        <MeetingContext.Provider value={{ meeting, setMeeting }}>
+        <MeetingContext.Provider value={meetingContextValue}>
             <MeetingProvider>{children}</MeetingProvider>
         </MeetingContext.Provider>
     );

@@ -5,8 +5,12 @@ export const handleRequestConfig = async (config = {}) => {
     try {
         const data = await fetchRequest(config);
 
-        // Callback
-        return config.callback({ data });
+        // Callback (if any)
+        if (isFunction(config.callback)) {
+            return config.callback({ data });
+        } else {
+            return data;
+        }
     } catch (error) {
         console.error(`Error fetching data from url "${config.url}":`, error);
 

@@ -38,7 +38,7 @@ export const FormFieldTextInput = ({
                     className={cn(visible === false && 'hidden', className)}
                     hidden={visible === false ? true : undefined}
                 >
-                    <FormLabel>{label}</FormLabel>
+                    {label && <FormLabel>{label}</FormLabel>}
                     <FormControl>
                         <TextInput
                             type={type}

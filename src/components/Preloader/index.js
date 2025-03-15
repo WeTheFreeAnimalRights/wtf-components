@@ -1,5 +1,5 @@
 import { isFunction } from 'lodash-es';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';
 import { PreloaderStates } from './PreloaderStates';
@@ -22,11 +22,14 @@ export const Preloader = ({
     render,
     loadingMessage,
     forcedLoading = false,
+    ignoreError = false,
 
     // Extra properties
     onLoadingStateChanged,
     customPreloader,
     hasOutlet,
+    repeatUntil,
+    repeatInterval = 1000,
     _id,
 }) => {
     const [loading, setLoading] = useState(true);
@@ -35,8 +38,22 @@ export const Preloader = ({
 
     const usedRequests = requests.filter(Boolean);
 
+    // For the `repeatUntil`
+    const timeoutRef = useRef(null);
+    const isMountedRef = useRef(true); // Tracks if the component is still mounted
+
     useEffect(() => {
+        isMountedRef.current = true;
+
         const fetchData = async () => {
+            // Stop early if unmounted
+            if (!isMountedRef.current) {
+                return;
+            }
+
+            // Saving the data for the repetition
+            const data = [];
+
             // Set the loading as true
             setLoading(true);
 
@@ -47,24 +64,45 @@ export const Preloader = ({
 
             try {
                 for (let requestConfig of usedRequests) {
-                    await handleRequestConfig({
-                        language: languageCode,
-                        ...requestConfig,
-                    });
+                    data.push(
+                        await handleRequestConfig({
+                            language: languageCode,
+                            ...requestConfig,
+                        })
+                    );
                 }
             } catch (error) {
                 setError(error);
             } finally {
-                setLoading(false);
+                if (isFunction(repeatUntil) && !repeatUntil(data)) {
+                    timeoutRef.current = setTimeout(fetchData, repeatInterval);
+                } else {
+                    // Set loading as false
+                    setLoading(false);
 
-                // Loading state changed
-                if (isFunction(onLoadingStateChanged)) {
-                    onLoadingStateChanged(false);
+                    // Loading state changed
+                    if (isFunction(onLoadingStateChanged)) {
+                        onLoadingStateChanged(false);
+                    }
                 }
             }
         };
 
         fetchData();
+
+        return () => {
+            // Set the loading to false
+            setLoading(false);
+
+            // Mark component as unmounted
+            isMountedRef.current = false;
+
+            // Clear the timeout
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+        };
     }, refetch);
 
     // Perhaps there is a method on how to render
@@ -77,6 +115,7 @@ export const Preloader = ({
             loading={loading || forcedLoading}
             loadingMessage={loadingMessage}
             error={error}
+            ignoreError={ignoreError}
             className={className}
             customPreloader={customPreloader}
             hasOutlet={hasOutlet}

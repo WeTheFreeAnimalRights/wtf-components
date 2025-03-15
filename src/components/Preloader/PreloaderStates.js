@@ -12,6 +12,7 @@ export const PreloaderStates = ({
     loading,
     loadingMessage,
     error,
+    ignoreError,
     className,
     children,
     customPreloader,
@@ -71,7 +72,7 @@ export const PreloaderStates = ({
         );
     }
 
-    if (error) {
+    if (error && !ignoreError) {
         if (developmentMode) {
             return (
                 <div
