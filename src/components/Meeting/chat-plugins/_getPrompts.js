@@ -87,17 +87,66 @@ export const _getPrompts = () => {
             name: 'common-objections',
             type: 'objections',
             items: [
-                {
-                    title: 'I like the taste',
-                    description:
-                        'Does taste really justify the exploitation, abuse and slaughter that these innocent sentient beings go through?',
-                },
-                {
-                    title: "It's too restrictive",
-                    description:
-                        "I understand your concern about missing out on some of your favorite foods. Many people initially feel this way when considering veganism. However, there are numerous delicious and satisfying vegan alternatives available today. You can find plant-based cheese, meat substitutes, and dairy-free ice cream that are surprisingly tasty. Plus, transitioning to a vegan diet can open up a world of new and exciting foods and flavors that you might not have explored before. It's an opportunity to discover a variety of fruits, vegetables, grains, and legumes that can be incredibly satisfying and nutritious.",
-                },
-            ],
+    {
+        title: 'Health Objections',
+        items: [
+            'How did you learn to meet your health needs in the past? What did you research?',
+            'How do you currently prioritize your health? What steps do you take?',
+            'If you decided to go vegan, how would you ensure that you get all the right nutrients? What research would you do? Who would you ask?',
+            'What steps would you take to learn how to meet your specific health needs on a vegan diet? What research would you do? Who would you ask?'
+        ]
+    },
+    {
+        title: 'Taste Objections',
+        items: [
+            'What are your favorite meals? Do you usually cook, or eat out?',
+            'How did you learn to cook? How did you find recipes?',
+            'How did you learn which restaurants are your favorite - trial & error, or research?',
+            'How would you go about making your favorite meal but as a vegan? What research would you do? How would you decide on a recipe?',
+            'How would you find vegan options for takeouts or restaurants? How would you decide which ones to try?',
+            'How would you find out if your favorite restaurant or takeout can provide vegan options for you to try? What would you say to them?'
+        ]
+    },
+    {
+        title: 'Cost Objections',
+        items: [
+            'How do you currently manage your budget?',
+            'When you shop for groceries, what tend to be the more expensive food types?',
+            'How did you learn how to manage a budget?',
+            'How would you learn to budget on a vegan diet?'
+        ]
+    },
+    {
+        title: 'Convenience Objections',
+        items: [
+            'Has there been a time in your life where you needed to plan ahead?',
+            'How do you currently deal with inconveniences?',
+            'How will you find out what vegan options are available?',
+            'As a vegan, how would you plan ahead to make sure that you have options available wherever you go?'
+        ]
+    },
+    {
+        title: 'Social Pressure Objections',
+        items: [
+            'Has there been a time in your life when you needed another person to support you with something, even when they didn’t understand it themselves?',
+            'How did you ask that person for support?',
+            'Has there ever been a time where you had to embrace being different because of something that’s important to you?',
+            'As a new vegan, how would you go about asking others to support you?'
+        ]
+    },
+    {
+        title: 'Religious Objections',
+        items: [
+            'How did you learn how to be a good Christian?',
+            'Who did you ask?',
+            'Did you ever make a mistake?',
+            'What are the guiding principles or values of your faith? Are those guiding principles compatible with veganism?',
+            'If you wanted to be a good Christian AND adopt a vegan lifestyle, where would you start?',
+            'Who could you ask for advice?',
+            'What kind of research would you do?'
+        ]
+    }
+],
         },
     ];
 };

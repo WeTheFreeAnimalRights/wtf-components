@@ -1,5 +1,5 @@
 import { isFunction, map } from 'lodash-es';
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { Resource } from '../../Resource';
 import { textContains } from '../../../helpers/textContains';
@@ -7,7 +7,6 @@ import { TextInput } from '../../TextInput';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { Empty } from '../../Empty';
 import { ToggleGroupInput } from '../../ToggleGroupInput';
-import { Button } from '../../Button';
 
 export const ResourcesChatPlugin = ({ resources, onSelect, onCancel }) => {
     const { t } = useTranslations();
@@ -57,7 +56,7 @@ export const ResourcesChatPlugin = ({ resources, onSelect, onCancel }) => {
 
     return (
         <div className="h-96 flex flex-col">
-            <div className="mb-2 flex flex-row items-center gap-2">
+            <div className="mb-1 flex flex-row items-center gap-2">
                 <TextInput
                     innerLeftContent={<Search className="w-4 h-4" />}
                     autoFocus
@@ -66,24 +65,15 @@ export const ResourcesChatPlugin = ({ resources, onSelect, onCancel }) => {
                     maxLength={100}
                     onChange={(event) => setSearchText(event.target.value)}
                 />
-
-                <Button
-                    variant="gray"
-                    size="small-icon"
-                    type="submit"
-                    onClick={onCancel}
-                >
-                    <X className="w-4 h-4" />
-                </Button>
             </div>
-            <div className="mb-2">
+            <div className="mb-1">
                 <ToggleGroupInput
                     options={types}
                     showLabel
                     value={selectedTypes}
                     onChange={setSelectedTypes}
-                    className="block items-center overflow-auto w-full flex-nowrap whitespace-nowrap"
-                    itemClassName="me-2"
+                    className="block items-center overflow-auto w-full flex-nowrap whitespace-nowrap pb-2 pt-2"
+                    itemClassName="me-2 bg-background hover:bg-background data-[state=on]:bg-background"
                 />
             </div>
             <div className="flex-grow overflow-auto">

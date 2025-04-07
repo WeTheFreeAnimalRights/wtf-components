@@ -1,7 +1,7 @@
 import { Fragment, useContext, useRef, useState } from 'react';
+import { trim } from 'lodash-es';
 import { CornerDownLeft, Plus, X } from 'lucide-react';
 import { usePubSub } from '@videosdk.live/react-sdk';
-import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { groupMessages } from './helpers/groupMessages';
 import { SpeechBubble } from './components/SpeechBubble';
@@ -11,6 +11,8 @@ import { ResourcesChatPlugin } from './chat-plugins/ResourcesChatPlugin';
 import { AutoScrollContainer } from '../AutoScrollContainer';
 import { ChatPluginsList } from './chat-plugins/ChatPluginsList';
 import { PromptsChatPlugin } from './chat-plugins/PromptsChatPlugin';
+import { AutosizeTextarea } from '_/components/autosize-textarea';
+import { useIsMobile } from '_/hooks/use-mobile';
 
 export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
     const { meeting } = useContext(MeetingContext);
@@ -20,14 +22,20 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
     const [pluginsVisible, setPluginsVisible] = useState(false);
     const [selectedPlugin, setSelectedPlugin] = useState('');
 
-    const sendMessage = (message, resource = null, type = 'message') => {
-        publish(message, { persist: true }, { type, resource }, null);
-        setCurrentMessage('');
+    const isMobile = useIsMobile();
+
+    const setInputMessage = (message = '') => {
+        setCurrentMessage(message);
 
         // Focus on the input
         if (inputRef.current) {
             inputRef.current.focus();
         }
+    }
+
+    const sendMessage = (message, resource = null, type = 'message') => {
+        publish(trim(message), { persist: true }, { type, resource }, null);
+        setInputMessage('');
     };
 
     const inputRef = useRef();
@@ -63,53 +71,72 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
                     e.preventDefault();
                     sendMessage(currentMessage);
                 }}
-                className="flex flex-row items-center gap-2 mt-4"
+                className={cn('flex flex-row items-center gap-2 mt-4 relative px-12')}
             >
-                <TextInput
+                {plugins.length > 0 && (
+                    <Button
+                        variant="gray"
+                        size="small-icon"
+                        type="button"
+                        className="absolute start-1 bottom-1"
+                        onClick={() => {
+                            setPluginsVisible(!pluginsVisible);
+                            setSelectedPlugin('');
+                            if (pluginsVisible && inputRef.current) {
+                                inputRef.current.focus();
+                            }
+                        }}
+                    >
+                        {pluginsVisible
+                            ? <X className="w-4 h-4" />
+                            : <Plus className="w-4 h-4" />
+                        }
+                    </Button>
+                )}
+
+                <AutosizeTextarea
                     ref={inputRef}
                     className="flex-grow"
                     value={currentMessage}
                     maxLength={255}
+                    minHeight={26}
+                    maxHeight={150}
                     onChange={(event) => setCurrentMessage(event.target.value)}
                     autoFocus
                     onFocus={() => {
                         setPluginsVisible(false);
                         setSelectedPlugin('');
                     }}
-                    inputClassName={plugins.length > 0 && 'ps-10'}
-                    innerLeftContentClassName="px-0 ps-1"
-                    innerLeftContent={
-                        plugins.length > 0 && (
-                            <Button
-                                variant="ghost"
-                                size="small-icon"
-                                type="button"
-                                onClick={() => {
-                                    setPluginsVisible(!pluginsVisible);
-                                    setSelectedPlugin('');
-                                    if (pluginsVisible && inputRef.current) {
-                                        inputRef.current.focus();
-                                    }
-                                }}
-                            >
-                                {pluginsVisible ? (
-                                    <X className="w-4 h-4" />
-                                ) : (
-                                    <Plus className="w-4 h-4" />
-                                )}
-                            </Button>
-                        )
-                    }
-                    innerRightContent={
-                        <Button
-                            variant="simple"
-                            size="small-icon"
-                            type="submit"
-                        >
-                            <CornerDownLeft className="w-4 h-4" />
-                        </Button>
-                    }
+    onKeyDown={(event) => {
+        if (isMobile) {
+            // On mobile: Shift+Enter sends message, Enter adds a new line
+            if (event.key === 'Enter' && event.shiftKey) {
+                event.preventDefault();
+                sendMessage(event.target.value);
+            } else if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                setCurrentMessage((prev) => prev + '\n');
+            }
+        } else {
+            // On desktop: Enter sends message, Shift+Enter adds a new line
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage(event.target.value);
+            } else if (event.key === 'Enter' && event.shiftKey) {
+                event.preventDefault();
+                setCurrentMessage((prev) => prev + '\n');
+            }
+        }
+    }}
                 />
+                         <Button
+                             variant="simple"
+                             size="small-icon"
+                             type="submit"
+                             className="absolute end-1 bottom-1"
+                         >
+                             <CornerDownLeft className="w-4 h-4" />
+                         </Button>
             </form>
 
             {pluginsVisible && plugins.length > 0 && (
@@ -135,7 +162,7 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
                     )}
                     {selectedPlugin === 'prompts' && (
                         <PromptsChatPlugin
-                            onSelect={(text) => sendMessage(text)}
+                            onSelect={setInputMessage}
                             onCancel={() => {
                                 setPluginsVisible(false);
                                 setSelectedPlugin('');

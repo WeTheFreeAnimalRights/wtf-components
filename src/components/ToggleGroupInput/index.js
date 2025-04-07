@@ -12,6 +12,7 @@ export const ToggleGroupInput = forwardRef(
             name,
             value = [],
             options = [],
+            variant = 'outline',
             className,
             itemClassName,
             onChange,
@@ -23,7 +24,7 @@ export const ToggleGroupInput = forwardRef(
         const { currentLanguage } = useTranslations();
         return (
             <ToggleGroup
-                variant="outline"
+                variant={variant}
                 type="multiple"
                 value={value}
                 ref={ref}

@@ -7,6 +7,7 @@ export const Empty = ({
     title,
     children,
     iconClassName,
+    iconVariant,
     className,
     buttonLabel,
     onClick,
@@ -17,6 +18,7 @@ export const Empty = ({
             {!hideIcon && (
                 <AnimalIcon
                     className={cn('w-36 h-36 mx-auto', iconClassName)}
+                    variant={iconVariant}
                 />
             )}
             {title && <h1 className="mt-3 text-2xl font-semibold">{title}</h1>}

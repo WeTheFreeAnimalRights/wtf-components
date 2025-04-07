@@ -1,7 +1,7 @@
 import { Preloader } from '../../Preloader';
 import { RoomView } from './RoomView';
 
-export const MeetingLoader = ({ id, children }) => {
+export const MeetingLoader = ({ id, children, className }) => {
     const requests = [
         {
             url: 'chats',
@@ -21,7 +21,7 @@ export const MeetingLoader = ({ id, children }) => {
     return (
         <Preloader
             requests={requests}
-            customPreloader={() => <RoomView />}
+            customPreloader={() => <RoomView className={className} />}
             repeatUntil={repeatUntil}
         >
             {children}

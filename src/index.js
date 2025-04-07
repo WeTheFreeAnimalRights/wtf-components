@@ -119,6 +119,14 @@ export {
     AvatarFallback,
 } from './_shadcn/components/avatar';
 export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+} from './_shadcn/components/chart';
+export {
     CardHeader,
     CardTitle,
     CardDescription,

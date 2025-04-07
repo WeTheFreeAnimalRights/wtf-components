@@ -19,6 +19,9 @@ export const FormFieldCheckbox = ({
     name,
     label,
     className,
+    inputClassName,
+    containerClassName,
+    messageClassName,
     description,
     onChange,
     visible,
@@ -32,6 +35,7 @@ export const FormFieldCheckbox = ({
             control={form.control}
             name={name}
             render={({ field }) => (
+                <div className={containerClassName}>
                 <FormItem
                     className={cn(
                         'space-y-0 items-center flex flex-row',
@@ -49,6 +53,7 @@ export const FormFieldCheckbox = ({
                                 }
                                 field.onChange(newValue);
                             }}
+                            className={inputClassName}
                             {...props}
                         />
                     </FormControl>
@@ -58,8 +63,9 @@ export const FormFieldCheckbox = ({
                             {description}
                         </FormDescription>
                     )}
-                    <FormMessage />
                 </FormItem>
+                <FormMessage className={messageClassName} />
+                </div>
             )}
         />
     );

@@ -7,11 +7,11 @@ export const ParticipantView = ({ id, className }) => {
     return (
         <div
             className={cn(
-                'relative w-full max-w-full max-h-full aspect-video flex items-center justify-center overflow-hidden rounded-md',
+                'relative w-full max-w-full max-h-full flex items-center justify-center overflow-hidden rounded-md',
                 className
             )}
         >
-            <ParticipantAudio id={id} />
+            {/* <ParticipantAudio id={id} /> */}
             <div className="bg-gray-900 w-full h-full flex items-center justify-center">
                 <ParticipantCamera id={id} />
                 <ParticipantFooter

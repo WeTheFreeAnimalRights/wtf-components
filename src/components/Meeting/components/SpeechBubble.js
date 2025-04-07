@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '_/lib/utils';
 import moment from 'moment';
 import { Image } from '../../Image';
+import { useTranslations } from '../../../hooks/useTranslations';
 
 export const SpeechBubble = ({
     children,
@@ -12,13 +13,15 @@ export const SpeechBubble = ({
     className,
     item,
 }) => {
+    const{t}=useTranslations();
     const [expanded, setExpanded] = useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const textRef = useRef(null);
 
     useEffect(() => {
         if (textRef.current) {
-            setIsOverflowing(textRef.current.scrollHeight > 80); // Adjusted threshold (80px = ~4-5 lines)
+            setIsOverflowing(textRef.current.scrollHeight > 500);
+            // Adjusted threshold (80px = ~4-5 lines)
         }
     }, [children]);
 
@@ -28,7 +31,7 @@ export const SpeechBubble = ({
                 'relative rounded-lg w-2/3 text-sm',
                 received
                     ? 'bg-muted text-foreground ms-3 me-auto'
-                    : 'bg-primary text-white ms-auto me-3',
+                    : 'bg-[#1e293b] text-white ms-auto me-3',
                 item.type === 'message' && 'p-2',
                 item.type === 'resource' && 'p-1',
                 className
@@ -51,7 +54,7 @@ export const SpeechBubble = ({
                     {children}
 
                     {(expanded || !isOverflowing) && timestamp && (
-                        <span className="inline-flex items-end float-end text-xs text-white opacity-75 ms-2 mt-1 whitespace-nowrap">
+                        <span className={cn('inline-flex items-end float-end text-xs opacity-75 ms-2 mt-1 whitespace-nowrap', received ? 'text-foreground/70' : 'text-white/70')}>
                             {moment(timestamp).format('hh:mm A')}
                         </span>
                     )}
@@ -79,6 +82,7 @@ export const SpeechBubble = ({
                             {item.resource.description}
                         </div>
                     </div>
+                    <div className='p-2 pt-0 text-sm italic'>{t('resource-not-clickable')}</div>
                 </div>
             )}
 
@@ -116,7 +120,7 @@ export const SpeechBubble = ({
                                 ? 'M14 12 Q7 -2, 0 12 Q7 9, 14 12 Z'
                                 : 'M0 12 Q7 -2, 14 12 Q7 9, 0 12 Z'
                         }
-                        fill="currentColor"
+                        fill="#1e293b"
                     />
                 </svg>
             )}

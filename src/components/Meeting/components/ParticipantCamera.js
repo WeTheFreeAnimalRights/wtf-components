@@ -35,7 +35,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
     }
 
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 py-4">
             <AnimalIcon variant="light" index={animalIndex} />
             <div className="bg-background/80 py-1 px-2 rounded-md inline-block text-sm">
                 {participant.displayName}

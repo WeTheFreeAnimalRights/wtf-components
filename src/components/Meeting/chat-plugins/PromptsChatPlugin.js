@@ -1,17 +1,10 @@
-import { isFunction, map } from 'lodash-es';
-import { Search, X } from 'lucide-react';
-import { useState } from 'react';
-import { Resource } from '../../Resource';
-import { textContains } from '../../../helpers/textContains';
-import { TextInput } from '../../TextInput';
-import { useTranslations } from '../../../hooks/useTranslations';
-import { Empty } from '../../Empty';
-import { ToggleGroupInput } from '../../ToggleGroupInput';
+import { isFunction } from 'lodash-es';
 import { Button } from '../../Button';
 import { _getPrompts } from './_getPrompts';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '_/components/tabs';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '_/components/accordion';
 
-export const PromptsChatPlugin = ({ onSelect, onCancel }) => {
+export const PromptsChatPlugin = ({ onSelect }) => {
     const prompts = _getPrompts();
 
     const handleSelect = (item) => {
@@ -78,23 +71,29 @@ export const PromptsChatPlugin = ({ onSelect, onCancel }) => {
                             </ol>
                         )}
                         {item.type === 'objections' && (
-                            <ul>
+                                <Accordion type="single" collapsible className="w-full">
                                 {item.items.map((objection, index) => (
-                                    <li key={`objection-${index}`}>
-                                        <h2>{objection.title}</h2>
-                                        <Button
-                                            key={`objection-${index}`}
-                                            onClick={() =>
-                                                handleSelect(
-                                                    objection.description
-                                                )
-                                            }
-                                        >
-                                            {objection.description}
-                                        </Button>
-                                    </li>
+      <AccordionItem key={`objection-${index}`} value={`objection-${index}`}>
+        <AccordionTrigger>{objection.title}</AccordionTrigger>
+        <AccordionContent>
+          {objection.items.map(
+                                            (subitem, subindex) => (
+                                                <Button
+                                                    key={`objection-${index}-${subindex}`}
+                                                    variant="gray"
+                                                    className="h-auto w-full text-start whitespace-normal items-start justify-start mb-2 bg-gray-200 hover:bg-gray-200/80"
+                                                    onClick={() =>
+                                                        handleSelect(subitem)
+                                                    }
+                                                >
+                                                    {subitem}
+                                                </Button>
+                                            )
+                                        )}
+        </AccordionContent>
+      </AccordionItem>
                                 ))}
-                            </ul>
+                                </Accordion>
                         )}
                     </TabsContent>
                 ))}
