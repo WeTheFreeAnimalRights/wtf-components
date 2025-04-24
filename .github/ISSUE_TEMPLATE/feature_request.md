@@ -1,30 +1,30 @@
----
-name: Bug Report
-about: Create a report to help us improve
-title: "[BUG] "
-labels: bug
----
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots or logs**
-If applicable, add screenshots or logs to help explain your problem.
-
-**Environment (please complete the following information):**
- - OS: [e.g. Windows 11, macOS 14]
- - Browser [e.g. Chrome 120, Firefox 113]
- - App Version [e.g. v1.0.2]
-
-**Additional context**
-Add any other context about the problem here.
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[FEATURE] <your title here>"
+labels: [enhancement]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Feature Summary
+      placeholder: "Add dark mode toggle in settings"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem this feature will solve?
+      description: Explain the pain point or need.
+      placeholder: "Sometimes I work late and the white screen hurts my eyes."
+  - type: textarea
+    id: solution
+    attributes:
+      label: Suggested solution or idea
+      placeholder: "Introduce a dark mode toggle in the settings menu."
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context or alternatives considered
+      placeholder: "Could also auto-detect based on system theme."
