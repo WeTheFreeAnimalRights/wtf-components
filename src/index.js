@@ -65,7 +65,7 @@ export {
 export { PirschScript } from './components/PirschScript';
 export { Empty } from './components/Empty';
 export { FeedbackIcon } from './components/FeedbackIcon';
-export { FeedbackForm, getFeedbackKey } from './components/FeedbackForm';
+export { FeedbackForm, getFeedbackKey, getFeedbackValue } from './components/FeedbackForm';
 export { FeedbackModalSimple } from './components/FeedbackModalSimple';
 export { IconWrapper } from './components/IconWrapper';
 export { SearchBox } from './components/SearchBox';
@@ -251,6 +251,7 @@ export { arrayToObject } from './helpers/arrayToObject';
 export { serverPermissionsToTablePermissions } from './helpers/serverPermissionsToTablePermissions';
 export { getAppliedFiltersCount } from './helpers/getAppliedFiltersCount';
 export { getEmptyAuthToken } from './helpers/getEmptyAuthToken';
+export { getDefaultCode } from './helpers/getDefaultCode';
 export { getUrl } from './helpers/fetchRequest/api/getUrl';
 export { globals } from './helpers/globals';
 export { textContains } from './helpers/textContains';

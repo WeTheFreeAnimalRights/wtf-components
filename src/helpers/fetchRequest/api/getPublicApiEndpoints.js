@@ -1,6 +1,11 @@
 export const getPublicApiEndpoints = () => {
     return {
         /**
+         * Endpoint to get all initial data
+         */
+        init: '/init',
+
+        /**
          * Endpoint to validate code
          */
         validateCode: '/codes',

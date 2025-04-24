@@ -44,7 +44,7 @@ export const useCode = () => {
     };
 
     return {
-        code: currentCode,
+        code: currentCode || defaultCode,
         setCode,
         selected: SecureStore.get('userSelectedCode') || false,
         defaultCode,

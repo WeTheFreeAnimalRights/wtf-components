@@ -1,12 +1,15 @@
+import { useState } from 'react';
+import { isFunction } from 'lodash-es';
 import { useCode } from '../../hooks/useCode';
-import { SecureStore } from '../../helpers/SecureStore';
-import { FeedbackForm, getFeedbackKey } from '../FeedbackForm';
+import { FeedbackForm } from '../FeedbackForm';
 import { Modal, ModalContainer } from '../Modal';
 import { cn } from '_/lib/utils';
+import { getFeedbackValue } from '../FeedbackForm/getFeedbackValue';
 
 export const FeedbackModalSimple = ({
     open,
     onOpenChange,
+    onVote,
     footer,
     resourceId,
     title,
@@ -17,15 +20,22 @@ export const FeedbackModalSimple = ({
 }) => {
     // Has the user already given feedback
     const { code } = useCode();
-    const alreadyGaveFeedback = SecureStore.get(
-        getFeedbackKey(resourceId, code)
-    );
+    const alreadyGaveFeedback = getFeedbackValue(resourceId, code);
 
-    const actuallyShowFeedback =
-        showFeedback && resourceId > 0 && !alreadyGaveFeedback;
+    const [justVoted, setJustVoted] = useState(false);
+
+    const actuallyShowFeedback = justVoted || (showFeedback && resourceId > 0 && !alreadyGaveFeedback);
 
     return (
-        <ModalContainer open={open} onOpenChange={onOpenChange}>
+        <ModalContainer open={open} onOpenChange={(value) => {
+            if (!value) {
+                setJustVoted(false);
+            }
+
+            if (isFunction(onOpenChange)) {
+                onOpenChange(value);
+            }
+        }}>
             <Modal
                 title={
                     <div className="px-6 py-5 space-y-0 bg-gray-800 rounded-t-md pe-12 sm:pe-6">
@@ -49,7 +59,13 @@ export const FeedbackModalSimple = ({
                 overflow
             >
                 {actuallyShowFeedback && (
-                    <FeedbackForm resourceId={resourceId} className="p-6" />
+                    <FeedbackForm resourceId={resourceId} onVote={(...params) => {
+                        setJustVoted(true);
+
+                        if (isFunction(onVote)) {
+                            onVote(...params);
+                        }
+                    }} className="p-6" />
                 )}
                 {children}
             </Modal>

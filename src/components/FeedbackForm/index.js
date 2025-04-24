@@ -10,8 +10,9 @@ import { Alert } from '../Alert';
 import { Button } from '../Button';
 import { FeedbackIcon } from '../FeedbackIcon';
 import { Spinner } from '../Spinner';
+import { isFunction } from 'lodash-es';
 
-export const FeedbackForm = ({ resourceId, className }) => {
+export const FeedbackForm = ({ resourceId, className, onVote }) => {
     const { t } = useTranslations();
 
     // Fetch the options
@@ -51,8 +52,11 @@ export const FeedbackForm = ({ resourceId, className }) => {
                 SecureStore.remove(getFeedbackKey(resourceId, code));
             },
             () => {
-                SecureStore.set(getFeedbackKey(resourceId, code), true, 7); // 7 days expiration
+                SecureStore.set(getFeedbackKey(resourceId, code), id, 7); // 7 days expiration
                 setSubmitted(true);
+                if (isFunction(onVote)) {
+                    onVote(id);
+                }
             }
         );
     };
@@ -114,3 +118,4 @@ export const FeedbackForm = ({ resourceId, className }) => {
 };
 
 export { getFeedbackKey } from './getFeedbackKey';
+export { getFeedbackValue } from './getFeedbackValue';
