@@ -33,8 +33,12 @@ export const RoomView = ({ users, currentUser, className }) => {
             )}
             {(users?.length === 0 || !users?.length) && (
                 <div className="bg-black dark:bg-black p-4 w-full h-screen items-center justify-center flex dark">
-                    <div className='flex flex-col items-center justify-center'><Spinner />
-                    <div className='text-gray-500 mt-2'>{t('user-joining-call')}</div></div>
+                    <div className="flex flex-col items-center justify-center">
+                        <Spinner />
+                        <div className="text-gray-500 mt-2">
+                            {t('user-joining-call')}
+                        </div>
+                    </div>
                 </div>
             )}
 

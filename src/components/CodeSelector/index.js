@@ -143,6 +143,8 @@ export const CodeSelector = ({
                         ? t('entercode-heading')
                         : t('entercode-change-"{0}"', [code.code])
                 }
+                description={t('entercode-dialog-description')}
+                showDescription={false}
             >
                 <div className="text-center mt-6 px-6  text-gray-600 dark:text-gray-300">
                     {t('entercode-text')}
@@ -213,7 +215,7 @@ export const CodeSelector = ({
                         </div>
                     </div>
                 </form>
-                <img src={cardImageUrl} alt="" draggable="false" />
+                <img src={cardImageUrl} alt="img" draggable="false" />
             </Modal>
         </ModalContainer>
     );

@@ -60,6 +60,7 @@ export const Combobox = ({
 
     const { loading, error, request } = useRequest();
 
+
     // Whether to send the data to the server or not
     const shouldPerformServerSearch =
         !isEmpty(requestObject) || isFunction(requestObject);

@@ -31,7 +31,7 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }
+    };
 
     const sendMessage = (message, resource = null, type = 'message') => {
         publish(trim(message), { persist: true }, { type, resource }, null);
@@ -71,7 +71,9 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
                     e.preventDefault();
                     sendMessage(currentMessage);
                 }}
-                className={cn('flex flex-row items-center gap-2 mt-4 relative px-12')}
+                className={cn(
+                    'flex flex-row items-center gap-2 mt-4 relative px-12'
+                )}
             >
                 {plugins.length > 0 && (
                     <Button
@@ -87,10 +89,11 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
                             }
                         }}
                     >
-                        {pluginsVisible
-                            ? <X className="w-4 h-4" />
-                            : <Plus className="w-4 h-4" />
-                        }
+                        {pluginsVisible ? (
+                            <X className="w-4 h-4" />
+                        ) : (
+                            <Plus className="w-4 h-4" />
+                        )}
                     </Button>
                 )}
 
@@ -107,36 +110,42 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
                         setPluginsVisible(false);
                         setSelectedPlugin('');
                     }}
-    onKeyDown={(event) => {
-        if (isMobile) {
-            // On mobile: Shift+Enter sends message, Enter adds a new line
-            if (event.key === 'Enter' && event.shiftKey) {
-                event.preventDefault();
-                sendMessage(event.target.value);
-            } else if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                setCurrentMessage((prev) => prev + '\n');
-            }
-        } else {
-            // On desktop: Enter sends message, Shift+Enter adds a new line
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage(event.target.value);
-            } else if (event.key === 'Enter' && event.shiftKey) {
-                event.preventDefault();
-                setCurrentMessage((prev) => prev + '\n');
-            }
-        }
-    }}
+                    onKeyDown={(event) => {
+                        if (isMobile) {
+                            // On mobile: Shift+Enter sends message, Enter adds a new line
+                            if (event.key === 'Enter' && event.shiftKey) {
+                                event.preventDefault();
+                                sendMessage(event.target.value);
+                            } else if (
+                                event.key === 'Enter' &&
+                                !event.shiftKey
+                            ) {
+                                event.preventDefault();
+                                setCurrentMessage((prev) => prev + '\n');
+                            }
+                        } else {
+                            // On desktop: Enter sends message, Shift+Enter adds a new line
+                            if (event.key === 'Enter' && !event.shiftKey) {
+                                event.preventDefault();
+                                sendMessage(event.target.value);
+                            } else if (
+                                event.key === 'Enter' &&
+                                event.shiftKey
+                            ) {
+                                event.preventDefault();
+                                setCurrentMessage((prev) => prev + '\n');
+                            }
+                        }
+                    }}
                 />
-                         <Button
-                             variant="simple"
-                             size="small-icon"
-                             type="submit"
-                             className="absolute end-1 bottom-1"
-                         >
-                             <CornerDownLeft className="w-4 h-4" />
-                         </Button>
+                <Button
+                    variant="simple"
+                    size="small-icon"
+                    type="submit"
+                    className="absolute end-1 bottom-1"
+                >
+                    <CornerDownLeft className="w-4 h-4" />
+                </Button>
             </form>
 
             {pluginsVisible && plugins.length > 0 && (

@@ -9,7 +9,7 @@ import {
     DialogHeader as ShadDialogHeader,
     DialogTitle as ShadDialogTitle,
     DialogDescription as ShadDialogDescription,
-    DialogFooter as ShadDialogFooter,
+    DialogFooter as ShadDialogFooter,d
 } from '_/components/dialog';
 import { cn } from '_/lib/utils';
 
@@ -28,6 +28,7 @@ export const Modal = ({
     contentClassName,
     footer,
     showCloseButton = true,
+    showDescription = true,
     closeButtonClassName,
     closeIconClassName,
     setWidth = true,
@@ -47,7 +48,7 @@ export const Modal = ({
                 <ShadDialogHeader className={headerClassName}>
                     <ShadDialogTitle>{title}</ShadDialogTitle>
                     {description && (
-                        <ShadDialogDescription>
+                        <ShadDialogDescription className={!showDescription && 'sr-only'}>
                             {description}
                         </ShadDialogDescription>
                     )}

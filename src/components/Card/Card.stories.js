@@ -1,3 +1,4 @@
+import { RecoilRoot } from 'recoil';
 import { Card } from './index';
 import '../../base.css';
 
@@ -5,6 +6,13 @@ export default {
     title: 'Components/Card',
     component: Card,
     tags: ['autodocs'],
+    decorators: [
+        (Story) => (
+            <RecoilRoot>
+                <Story />
+            </RecoilRoot>
+        ),
+    ],
     argTypes: {
         onClick: {
             action: 'clicked',

@@ -7,6 +7,8 @@ import { cn } from '_/lib/utils';
 export const BigTabs = ({ children, className }) => {
     const [selected, setSelected] = useState(0);
 
+    const tabs = React.Children.toArray(children);
+
     return (
         <>
             <div
@@ -16,7 +18,7 @@ export const BigTabs = ({ children, className }) => {
                 )}
             >
                 <ul className="grid grid-cols-6 justify-items-stretch justify-stretch items-stretch text-sm font-medium text-center text-gray-500 rounded-lg shadow flex items-stretch dark:divide-gray-700 dark:text-gray-400 min-w-[800px]">
-                    {children.map((child, index) => {
+                    {tabs.map((child, index) => {
                         return (
                             <li
                                 className="focus-within:z-10"
@@ -38,7 +40,7 @@ export const BigTabs = ({ children, className }) => {
             </div>
 
             <div>
-                {(children || []).map((child, index) => (
+                {(tabs || []).map((child, index) => (
                     <BigTab
                         visible={index === selected}
                         key={`tab-content-${index}`}

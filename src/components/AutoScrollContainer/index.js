@@ -19,7 +19,11 @@ export const AutoScrollContainer = ({ children, className }) => {
     }, [children]);
 
     return (
-        <div ref={containerRef} className={cn('overflow-auto', className)}>
+        <div
+            ref={containerRef}
+            className={cn('overflow-auto', className)}
+            data-testid="container"
+        >
             {children}
         </div>
     );

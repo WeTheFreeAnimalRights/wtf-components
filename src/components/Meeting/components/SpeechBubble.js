@@ -13,7 +13,7 @@ export const SpeechBubble = ({
     className,
     item,
 }) => {
-    const{t}=useTranslations();
+    const { t } = useTranslations();
     const [expanded, setExpanded] = useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const textRef = useRef(null);
@@ -54,7 +54,14 @@ export const SpeechBubble = ({
                     {children}
 
                     {(expanded || !isOverflowing) && timestamp && (
-                        <span className={cn('inline-flex items-end float-end text-xs opacity-75 ms-2 mt-1 whitespace-nowrap', received ? 'text-foreground/70' : 'text-white/70')}>
+                        <span
+                            className={cn(
+                                'inline-flex items-end float-end text-xs opacity-75 ms-2 mt-1 whitespace-nowrap',
+                                received
+                                    ? 'text-foreground/70'
+                                    : 'text-white/70'
+                            )}
+                        >
                             {moment(timestamp).format('hh:mm A')}
                         </span>
                     )}
@@ -82,7 +89,9 @@ export const SpeechBubble = ({
                             {item.resource.description}
                         </div>
                     </div>
-                    <div className='p-2 pt-0 text-sm italic'>{t('resource-not-clickable')}</div>
+                    <div className="p-2 pt-0 text-sm italic">
+                        {t('resource-not-clickable')}
+                    </div>
                 </div>
             )}
 

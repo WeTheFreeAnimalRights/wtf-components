@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
 import { Preloader } from './index';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
 import '../../base.css';
@@ -7,6 +8,13 @@ export default {
     title: 'Components/Preloader',
     component: Preloader,
     tags: ['autodocs'],
+    decorators: [
+        (Story) => (
+            <RecoilRoot>
+                <Story />
+            </RecoilRoot>
+        ),
+    ],
 };
 
 export const Primary = () => {

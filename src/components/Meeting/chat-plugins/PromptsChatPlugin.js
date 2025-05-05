@@ -1,12 +1,14 @@
 import { isFunction } from 'lodash-es';
 import { Button } from '../../Button';
-import { _getPrompts } from './_getPrompts';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '_/components/tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '_/components/accordion';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '_/components/accordion';
 
-export const PromptsChatPlugin = ({ onSelect }) => {
-    const prompts = _getPrompts();
-
+export const PromptsChatPlugin = ({ onSelect, items }) => {
     const handleSelect = (item) => {
         if (isFunction(onSelect)) {
             onSelect(item);
@@ -61,39 +63,57 @@ export const PromptsChatPlugin = ({ onSelect }) => {
                             </div>
                         )}
                         {item.type === 'indications' && (
-                            <ol className='list-decimal ps-5 text-sm'>
+                            <ol className="list-decimal ps-5 text-sm">
                                 {item.items.map((indication, index) => (
-                                    <li key={`indication-${index}`} className='mb-4'>
-                                        <h2 className='font-semibold'>{indication.title}</h2>
-                                        <p className='text-muted-foreground'>{indication.description}</p>
+                                    <li
+                                        key={`indication-${index}`}
+                                        className="mb-4"
+                                    >
+                                        <h2 className="font-semibold">
+                                            {indication.title}
+                                        </h2>
+                                        <p className="text-muted-foreground">
+                                            {indication.description}
+                                        </p>
                                     </li>
                                 ))}
                             </ol>
                         )}
                         {item.type === 'objections' && (
-                                <Accordion type="single" collapsible className="w-full">
+                            <Accordion
+                                type="single"
+                                collapsible
+                                className="w-full"
+                            >
                                 {item.items.map((objection, index) => (
-      <AccordionItem key={`objection-${index}`} value={`objection-${index}`}>
-        <AccordionTrigger>{objection.title}</AccordionTrigger>
-        <AccordionContent>
-          {objection.items.map(
-                                            (subitem, subindex) => (
-                                                <Button
-                                                    key={`objection-${index}-${subindex}`}
-                                                    variant="gray"
-                                                    className="h-auto w-full text-start whitespace-normal items-start justify-start mb-2 bg-gray-200 hover:bg-gray-200/80"
-                                                    onClick={() =>
-                                                        handleSelect(subitem)
-                                                    }
-                                                >
-                                                    {subitem}
-                                                </Button>
-                                            )
-                                        )}
-        </AccordionContent>
-      </AccordionItem>
+                                    <AccordionItem
+                                        key={`objection-${index}`}
+                                        value={`objection-${index}`}
+                                    >
+                                        <AccordionTrigger>
+                                            {objection.title}
+                                        </AccordionTrigger>
+                                        <AccordionContent>
+                                            {objection.items.map(
+                                                (subitem, subindex) => (
+                                                    <Button
+                                                        key={`objection-${index}-${subindex}`}
+                                                        variant="gray"
+                                                        className="h-auto w-full text-start whitespace-normal items-start justify-start mb-2 bg-gray-200 hover:bg-gray-200/80"
+                                                        onClick={() =>
+                                                            handleSelect(
+                                                                subitem
+                                                            )
+                                                        }
+                                                    >
+                                                        {subitem}
+                                                    </Button>
+                                                )
+                                            )}
+                                        </AccordionContent>
+                                    </AccordionItem>
                                 ))}
-                                </Accordion>
+                            </Accordion>
                         )}
                     </TabsContent>
                 ))}

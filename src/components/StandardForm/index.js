@@ -30,6 +30,7 @@ export { StandardNumberInput } from './definitions/StandardNumberInput';
 export { StandardPasswordInput } from './definitions/StandardPasswordInput';
 export { StandardSelect } from './definitions/StandardSelect';
 export { StandardSwitch } from './definitions/StandardSwitch';
+export { StandardRadioGroup } from './definitions/StandardRadioGroup';
 export { StandardTextarea } from './definitions/StandardTextarea';
 export { StandardToggleGroup } from './definitions/StandardToggleGroup';
 export { StandardUploadInput } from './definitions/StandardUploadInput';

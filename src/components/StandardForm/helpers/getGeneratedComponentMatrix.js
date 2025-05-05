@@ -6,6 +6,7 @@ import { StandardDatePicker } from '../definitions/StandardDatePicker';
 import { StandardTextInput } from '../definitions/StandardTextInput';
 import { StandardNumberInput } from '../definitions/StandardNumberInput';
 import { StandardPasswordInput } from '../definitions/StandardPasswordInput';
+import { StandardRadioGroup } from '../definitions/StandardRadioGroup';
 import { StandardSelect } from '../definitions/StandardSelect';
 import { StandardSwitch } from '../definitions/StandardSwitch';
 import { StandardTextarea } from '../definitions/StandardTextarea';
@@ -20,6 +21,7 @@ import { FormFieldDatePicker } from '../../DatePicker';
 import { FormFieldTextInput } from '../../TextInput';
 import { FormFieldNumberInput } from '../../NumberInput';
 import { FormFieldPasswordInput } from '../../PasswordInput';
+import { FormFieldRadioGroup } from '../../RadioGroup';
 import { FormFieldSelect } from '../../Select';
 import { FormFieldSwitch } from '../../Switch';
 import { FormFieldTextarea } from '../../Textarea';
@@ -63,6 +65,10 @@ export const getGeneratedComponentMatrix = () => {
         [StandardSwitch.displayName]: {
             Component: FormFieldSwitch,
             type: 'boolean',
+        },
+        [StandardRadioGroup.displayName]: {
+            Component: FormFieldRadioGroup,
+            type: 'select',
         },
         [StandardTextarea.displayName]: {
             Component: FormFieldTextarea,

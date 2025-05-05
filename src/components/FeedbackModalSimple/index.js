@@ -24,18 +24,22 @@ export const FeedbackModalSimple = ({
 
     const [justVoted, setJustVoted] = useState(false);
 
-    const actuallyShowFeedback = justVoted || (showFeedback && resourceId > 0 && !alreadyGaveFeedback);
+    const actuallyShowFeedback =
+        justVoted || (showFeedback && resourceId > 0 && !alreadyGaveFeedback);
 
     return (
-        <ModalContainer open={open} onOpenChange={(value) => {
-            if (!value) {
-                setJustVoted(false);
-            }
+        <ModalContainer
+            open={open}
+            onOpenChange={(value) => {
+                if (!value) {
+                    setJustVoted(false);
+                }
 
-            if (isFunction(onOpenChange)) {
-                onOpenChange(value);
-            }
-        }}>
+                if (isFunction(onOpenChange)) {
+                    onOpenChange(value);
+                }
+            }}
+        >
             <Modal
                 title={
                     <div className="px-6 py-5 space-y-0 bg-gray-800 rounded-t-md pe-12 sm:pe-6">
@@ -59,13 +63,17 @@ export const FeedbackModalSimple = ({
                 overflow
             >
                 {actuallyShowFeedback && (
-                    <FeedbackForm resourceId={resourceId} onVote={(...params) => {
-                        setJustVoted(true);
+                    <FeedbackForm
+                        resourceId={resourceId}
+                        onVote={(...params) => {
+                            setJustVoted(true);
 
-                        if (isFunction(onVote)) {
-                            onVote(...params);
-                        }
-                    }} className="p-6" />
+                            if (isFunction(onVote)) {
+                                onVote(...params);
+                            }
+                        }}
+                        className="p-6"
+                    />
                 )}
                 {children}
             </Modal>

@@ -5,5 +5,6 @@
 ## Screenshots or relevant logs:
 
 ## Checklist
+
 - [ ] Code is linted
 - [ ] Tests added/updated
