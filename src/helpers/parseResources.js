@@ -16,6 +16,12 @@ export const parseResources = (resources) => {
                 [item.id]: item,
             };
 
+            // Save by slug
+            const bySlug = {
+                ...obj.bySlug,
+                [item.slug]: item,
+            };
+
             // Save by type
             const byType = {
                 ...obj.byType,
@@ -38,6 +44,7 @@ export const parseResources = (resources) => {
 
             return {
                 byId,
+                bySlug,
                 byType,
                 highlighted,
                 all,
@@ -45,6 +52,7 @@ export const parseResources = (resources) => {
         },
         {
             byId: {},
+            bySlug: {},
             byType: {},
             highlighted: {},
             all: [],

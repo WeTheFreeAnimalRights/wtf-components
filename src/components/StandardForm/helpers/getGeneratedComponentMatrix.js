@@ -1,5 +1,6 @@
 // Definitions
 import { StandardCheckbox } from '../definitions/StandardCheckbox';
+import { StandardMultipleCheckbox } from '../definitions/StandardMultipleCheckbox';
 import { StandardCodeInput } from '../definitions/StandardCodeInput';
 import { StandardCombobox } from '../definitions/StandardCombobox';
 import { StandardDatePicker } from '../definitions/StandardDatePicker';
@@ -14,7 +15,7 @@ import { StandardToggleGroup } from '../definitions/StandardToggleGroup';
 import { StandardUploadInput } from '../definitions/StandardUploadInput';
 
 // Replacements
-import { FormFieldCheckbox } from '../../Checkbox';
+import { FormFieldCheckbox, FormFieldMultipleCheckbox } from '../../Checkbox';
 import { FormFieldCodeInput } from '../../CodeInput';
 import { FormFieldCombobox } from '../../Combobox';
 import { FormFieldDatePicker } from '../../DatePicker';
@@ -33,6 +34,10 @@ export const getGeneratedComponentMatrix = () => {
         [StandardCheckbox.displayName]: {
             Component: FormFieldCheckbox,
             type: 'boolean',
+        },
+        [StandardMultipleCheckbox.displayName]: {
+            Component: FormFieldMultipleCheckbox,
+            type: 'multiple',
         },
         [StandardCodeInput.displayName]: {
             Component: FormFieldCodeInput,

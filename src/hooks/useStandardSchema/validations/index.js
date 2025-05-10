@@ -5,6 +5,7 @@ export { validateCountry } from './validateCountry';
 export { validateDatepicker } from './validateDatepicker';
 export { validateEmail } from './validateEmail';
 export { validateNot } from './validateNot';
+export { validateMultiple } from './validateMultiple';
 export { validateNumber } from './validateNumber';
 export { validatePassword } from './validatePassword';
 export { validateSelect } from './validateSelect';

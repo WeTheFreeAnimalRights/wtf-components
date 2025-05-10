@@ -55,5 +55,10 @@ export const getPublicApiEndpoints = () => {
          * Subscribtions (by email)
          */
         subscriptions: '/subscriptions',
+
+        /**
+         * Newsletter options
+         */
+        newsletterOptions: '/newsletter-lists',
     };
 };

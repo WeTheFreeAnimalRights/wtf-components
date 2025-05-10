@@ -22,6 +22,7 @@ export const StandardForm = ({ form, children, className }) => {
 
 export { GeneratedStandardForm } from './GeneratedStandardForm';
 export { StandardCheckbox } from './definitions/StandardCheckbox';
+export { StandardMultipleCheckbox } from './definitions/StandardMultipleCheckbox';
 export { StandardCodeInput } from './definitions/StandardCodeInput';
 export { StandardCombobox } from './definitions/StandardCombobox';
 export { StandardDatePicker } from './definitions/StandardDatePicker';

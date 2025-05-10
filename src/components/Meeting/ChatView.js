@@ -14,7 +14,7 @@ import { PromptsChatPlugin } from './chat-plugins/PromptsChatPlugin';
 import { AutosizeTextarea } from '_/components/autosize-textarea';
 import { useIsMobile } from '_/hooks/use-mobile';
 
-export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
+export const ChatView = ({ className, resources, plugins = ['resources'], prompts = [] }) => {
     const { meeting } = useContext(MeetingContext);
     const { publish, messages } = usePubSub(`conversation-${meeting.id}`);
     const groupedMessages = groupMessages(messages, meeting.visitor.id);
@@ -176,6 +176,7 @@ export const ChatView = ({ className, resources, plugins = ['resources'] }) => {
                                 setPluginsVisible(false);
                                 setSelectedPlugin('');
                             }}
+                            items={prompts}
                         />
                     )}
                 </div>

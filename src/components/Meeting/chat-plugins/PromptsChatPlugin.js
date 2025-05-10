@@ -1,3 +1,4 @@
+import Markdown from 'react-markdown';
 import { isFunction } from 'lodash-es';
 import { Button } from '../../Button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '_/components/tabs';
@@ -15,26 +16,28 @@ export const PromptsChatPlugin = ({ onSelect, items }) => {
         }
     };
 
+    console.log('>>items', items);
+
     return (
         <div className="h-96">
             <Tabs
-                defaultValue={prompts[0].name}
+                defaultValue={items[0].name}
                 className="flex flex-col h-full"
             >
                 <TabsList className="block mb-3  items-center overflow-x-auto w-full flex-nowrap whitespace-nowrap p-0">
-                    {prompts.map((item) => (
+                    {items.map((item) => (
                         <TabsTrigger value={item.name} key={`tab-${item.name}`}>
                             {item.label}
                         </TabsTrigger>
                     ))}
                 </TabsList>
-                {prompts.map((item) => (
+                {items.map((item) => (
                     <TabsContent
                         value={item.name}
                         className="mt-0 overflow-auto flex-grow basis-0"
                         key={`content-${item.name}`}
                     >
-                        {item.type === 'prompts' && (
+                        {item.type === 'questions' && (
                             <div>
                                 {item.items.map((category, index) => (
                                     <div
@@ -62,22 +65,29 @@ export const PromptsChatPlugin = ({ onSelect, items }) => {
                                 ))}
                             </div>
                         )}
-                        {item.type === 'indications' && (
-                            <ol className="list-decimal ps-5 text-sm">
-                                {item.items.map((indication, index) => (
-                                    <li
-                                        key={`indication-${index}`}
-                                        className="mb-4"
-                                    >
-                                        <h2 className="font-semibold">
-                                            {indication.title}
-                                        </h2>
-                                        <p className="text-muted-foreground">
-                                            {indication.description}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ol>
+                        {item.type === 'objectionHandling' && (
+                            <div className="text-sm">
+                            <Markdown components={{
+                                h3: ({ node, ...rest }) => {
+                                    return (
+                                        <h3
+                                            className={`font-semibold mt-4 mb-2 first:mt-0`}
+                                            {...rest}
+                                        />
+                                    );
+                                },
+                                p: ({ node, ...rest }) => {
+                                    return (
+                                        <p
+                                            className={`text-muted-foreground`}
+                                            {...rest}
+                                        />
+                                    );
+                                },
+                            }}>
+                            {item.value}
+                        </Markdown>
+                        </div>
                         )}
                         {item.type === 'objections' && (
                             <Accordion
@@ -91,7 +101,7 @@ export const PromptsChatPlugin = ({ onSelect, items }) => {
                                         value={`objection-${index}`}
                                     >
                                         <AccordionTrigger>
-                                            {objection.title}
+                                            {objection.name}
                                         </AccordionTrigger>
                                         <AccordionContent>
                                             {objection.items.map(

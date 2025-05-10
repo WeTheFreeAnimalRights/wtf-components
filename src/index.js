@@ -5,7 +5,7 @@ export { BigTabs, BigTab } from './components/BigTabs';
 export { Badge, badgeVariants } from './components/Badge';
 export { Button } from './components/Button';
 export { Card, CardFooter, CardActiveTitle } from './components/Card';
-export { Checkbox, FormFieldCheckbox } from './components/Checkbox';
+export { Checkbox, FormFieldCheckbox, FormFieldMultipleCheckbox } from './components/Checkbox';
 export { CodeInput, FormFieldCodeInput } from './components/CodeInput';
 export {
     DataTable,
@@ -70,7 +70,7 @@ export {
     getFeedbackKey,
     getFeedbackValue,
 } from './components/FeedbackForm';
-export { FeedbackModalSimple } from './components/FeedbackModalSimple';
+export { FeedbackModal } from './components/FeedbackModal';
 export { IconWrapper } from './components/IconWrapper';
 export { SearchBox } from './components/SearchBox';
 export { FiltersBox } from './components/FiltersBox';
@@ -93,6 +93,7 @@ export {
     StandardFormContext,
     GeneratedStandardForm,
     StandardCheckbox,
+    StandardMultipleCheckbox,
     StandardCodeInput,
     StandardCombobox,
     StandardDatePicker,

@@ -10,6 +10,7 @@ export const Checkbox = forwardRef(({ className, ...props }, ref) => {
 Checkbox.displayName = 'Checkbox';
 
 export { FormFieldCheckbox } from './FormFieldCheckbox';
+export { FormFieldMultipleCheckbox } from './FormFieldMultipleCheckbox';
 
 Checkbox.propTypes = {
     /**

@@ -11,8 +11,9 @@ import { Button } from '../Button';
 import { FeedbackIcon } from '../FeedbackIcon';
 import { Spinner } from '../Spinner';
 import { isFunction } from 'lodash-es';
+import { cn } from '_/lib/utils';
 
-export const FeedbackForm = ({ resourceId, className, onVote }) => {
+export const FeedbackForm = ({ resourceId, className, gridClassName, onVote }) => {
     const { t } = useTranslations();
 
     // Fetch the options
@@ -29,6 +30,9 @@ export const FeedbackForm = ({ resourceId, className, onVote }) => {
         },
     ];
 
+    // Saved options
+    const [selectedId, setSelectedId] = useState(null);
+
     // Success
     const [submitted, setSubmitted] = useState(false);
 
@@ -36,6 +40,7 @@ export const FeedbackForm = ({ resourceId, className, onVote }) => {
     const { code } = useCode();
     const { loading, error, request } = useRequest();
     const sendRepsonse = async (id) => {
+        setSelectedId(id);
         await request(
             {
                 url: 'resources',
@@ -89,12 +94,17 @@ export const FeedbackForm = ({ resourceId, className, onVote }) => {
                         {t('form-success-text')}
                     </Alert>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
+                    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4', gridClassName)}>
                         {(options?.all || []).map(
                             ({ type, description, id }) => (
                                 <Button
                                     variant="outline"
-                                    className="p-3 md:p-4 whitespace-normal flex flex-row md:flex-col items-center justify-center"
+                                    className={cn(
+        'p-3 md:p-4 whitespace-normal flex flex-row md:flex-col items-center justify-center hover:shadow-md hover:bg-background dark:hover:bg-accent transition-all transform duration-100',
+        {
+            'border-2 border-primary scale-105': selectedId === id,
+        }
+    )}
                                     size="auto"
                                     key={`option-${id}`}
                                     onClick={() => sendRepsonse(id)}

@@ -3,6 +3,7 @@ export const parseResourceItem = (item = {}) => {
 
     return {
         id: item.id,
+        slug: item.slug,
         title: item.title,
         description: item.description,
         image: item.imageUrl,
