@@ -1,14 +1,13 @@
 import { isString, isUndefined } from 'lodash-es';
-import { useMatches, useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, useLocation } from 'wouter';
 import { validateCode } from '../helpers/validateCode';
 import { getUrl } from '../helpers/getUrl';
-import { SecureStore } from '../helpers/SecureStore';
+import { SecureStore } from '../store/SecureStore';
 import { getDefaultLanguage } from '../helpers/getDefaultLanguage';
 import { getDefaultCode } from '../helpers/getDefaultCode';
 
 export const useUrl = () => {
-    const [urlMatches] = useMatches();
-    const params = urlMatches.params || {};
+    const params = useParams();
 
     // Language and code
     let language = SecureStore.get('language') || getDefaultLanguage();
@@ -39,7 +38,7 @@ export const useUrl = () => {
     }
 
     // Navigate to new url
-    const navigate = useNavigate();
+    const [location, navigate] = useLocation();
     const setUrl = (data, ...params) => {
         const newUrl = getUrl(
             isUndefined(data.language) ? language : data.language,

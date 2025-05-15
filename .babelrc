@@ -1,24 +1,32 @@
 {
     "presets": [
-        [
-            "@babel/preset-env",
-            {
-                "modules": false
-            }
-        ],
-        "@babel/preset-react"
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ]
     ],
-    "ignore": ["node_modules"],
+    "ignore": [
+      "node_modules",
+      "**/node_modules/@videosdk.live/react-sdk/**"
+    ],
     "plugins": [
-        ["@babel/plugin-transform-react-jsx", { "runtime": "automatic" }],
-        [
-            "module-resolver",
-            {
-                "root": ["./src"],
-                "alias": {
-                    "_": "./src/_shadcn"
-                }
-            }
-        ]
+      [
+        "@babel/plugin-transform-react-jsx",
+        {
+          "runtime": "automatic",
+          "importSource": "preact"
+        }
+      ],
+      [
+        "module-resolver",
+        {
+          "root": ["./src"],
+          "alias": {
+            "_": "./src/_shadcn"
+          }
+        }
+      ]
     ]
-}
+  }

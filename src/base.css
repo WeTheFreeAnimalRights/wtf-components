@@ -49,6 +49,8 @@
 
         --facebook: 221 92% 58%;
         --whatsapp: 173 77% 31%;
+
+--plyr-color-main: 323 59% 51%;
     }
 
     .dark {
@@ -94,6 +96,33 @@
 
         --facebook: 221 92% 58%;
         --whatsapp: 173 77% 31%;
+
+--plyr-color-main: 323 76% 57%;
+    }
+}
+
+@layer utilities {
+    .clip-paper {
+        background-position: center top;
+        background-repeat: repeat;
+        margin-top: -28px;
+        margin-bottom: -28px;
+    }
+
+    .clip-paper-rip-1 {
+        clip-path: url('#paper-rip-1');
+    }
+
+    .clip-paper-rip-1-mobile {
+        clip-path: url('#paper-rip-1-mobile');
+    }
+
+    .clip-paper-rip-2 {
+        clip-path: url('#paper-rip-2');
+    }
+
+    .clip-paper-rip-2-mobile {
+        clip-path: url('#paper-rip-2-mobile');
     }
 }
 

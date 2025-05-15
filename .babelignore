@@ -1,0 +1,3 @@
+# .babelignore
+node_modules
+**/node_modules/@videosdk.live/react-sdk

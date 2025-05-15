@@ -54,7 +54,7 @@ export const useRealParticipant = (id) => {
         // Video properties
         webcamStream: hasParticipant ? participant?.webcamStream : webcamStream,
         webcamOn: hasParticipant ? participant?.webcamOn : webcamOn,
-        participant: hasParticipant ? participant?.participant : chatVisitor, // Fallback to Recoil store
+        participant: hasParticipant ? participant?.participant : chatVisitor, // Fallback to app store
 
         // Name properties
         isActiveSpeaker: hasParticipant ? participant?.isActiveSpeaker : false,

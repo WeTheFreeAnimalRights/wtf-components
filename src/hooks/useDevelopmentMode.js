@@ -1,9 +1,8 @@
-import { useRecoilState } from 'recoil';
-import { developmentModeState } from '../recoilState';
+import { useGlobalState } from '../store/AppState';
+import { developmentModeState } from '../appState';
 
 export const useDevelopmentMode = () => {
-    const [developmentMode, setDevelopmentMode] =
-        useRecoilState(developmentModeState);
+    const [developmentMode, setDevelopmentMode] = useGlobalState(developmentModeState);
     return {
         developmentMode,
         setDevelopmentMode,

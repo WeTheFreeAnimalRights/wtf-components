@@ -1,27 +1,25 @@
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { getZodSchema } from './getZodSchema';
+import { valibotResolver } from '@hookform/resolvers/valibot';
+import { object } from 'valibot';
+import { getValidationSchema } from './getValidationSchema';
 import { useTranslations } from '../useTranslations';
-import { parseSuperRefinements } from './parseSuperRefinements';
+import { getCustomValidations } from './getCustomValidations';
 import { getValuesFromSchema } from './getValuesFromSchema';
 
 export const useStandardSchema = (standardSchema = []) => {
     const { t } = useTranslations();
 
-    // Get the zod schema
-    const { zodSchema, defaultValues } = getZodSchema(standardSchema, { t, z });
+    // Get the validation schema
+    const { schema, defaultValues } = getValidationSchema(standardSchema, { t });
 
     // Get the values
     const values = getValuesFromSchema(standardSchema);
 
-    // Make the zod object
-    const zodObject = z.object(zodSchema).superRefine((values, ctx) => {
-        parseSuperRefinements(standardSchema, { values, ctx, t });
-    });
+    // Make the validation object
+    const validationObject = object(schema, getCustomValidations(standardSchema, { t }));
 
     return useForm({
-        resolver: zodResolver(zodObject),
+        resolver: valibotResolver(validationObject),
         defaultValues,
         values,
     });

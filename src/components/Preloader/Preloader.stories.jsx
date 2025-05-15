@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { RecoilRoot } from 'recoil';
 import { Preloader } from './index';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
+import { AppStateProvider } from '../../store';
 import '../../base.css';
 
 export default {
@@ -10,9 +10,9 @@ export default {
     tags: ['autodocs'],
     decorators: [
         (Story) => (
-            <RecoilRoot>
+            <AppStateProvider>
                 <Story />
-            </RecoilRoot>
+            </AppStateProvider>
         ),
     ],
 };

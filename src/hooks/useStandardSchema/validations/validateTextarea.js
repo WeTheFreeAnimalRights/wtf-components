@@ -1,5 +1,5 @@
 import { validateText } from './validateText';
 
-export const validateTextarea = (field, { t, z }) => {
-    return validateText(field, { t, z });
+export const validateTextarea = (field, tools) => {
+    return validateText(field, tools);
 };

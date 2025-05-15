@@ -1,7 +1,9 @@
 import { validateText } from './validateText';
+import { minLength, pipe } from 'valibot';
 
-export const validatePassword = (field, { t, z }) => {
-    return validateText(field, { t, z }).min(8, {
-        message: t('minimum-password'),
-    });
+export const validatePassword = (field, { t }) => {
+  return pipe(
+    validateText(field, { t }),
+    minLength(8, t('minimum-password'))
+  );
 };

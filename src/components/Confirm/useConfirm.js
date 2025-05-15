@@ -1,8 +1,8 @@
-import { confirmState } from '../../recoilState';
-import { useSetRecoilState } from 'recoil';
+import { confirmState } from '../../appState';
+import { useSetGlobalState } from '../../store/AppState';
 
 export const useConfirm = () => {
-    const setConfirmObj = useSetRecoilState(confirmState);
+    const setConfirmObj = useSetGlobalState(confirmState);
 
     return {
         confirm: ({ title, message, callback, hideCancel }) => {

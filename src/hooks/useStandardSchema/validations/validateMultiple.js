@@ -1,11 +1,12 @@
-export const validateMultiple = (field, { t, z }) => {
-    let rules = z.array(z.any());
+import { array, any, minLength, optional, pipe } from 'valibot';
 
-    if (field.optional) {
-        rules = rules.optional();
-    } else {
-        rules = rules.min(1, { message: t('required-field') });
-    }
+export const validateMultiple = (field, { t }) => {
+  if (field.optional) {
+    return optional(array(any()));
+  }
 
-    return rules;
+  return pipe(
+    array(any()),
+    minLength(1, t('required-field'))
+  );
 };

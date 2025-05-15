@@ -1,8 +1,8 @@
-import { useRecoilState } from 'recoil';
-import { currentThemeState } from '../recoilState';
+import { useGlobalState } from '../store/AppState';
+import { currentThemeState } from '../appState';
 
 export const useTheme = () => {
-    const [theme, setTheme] = useRecoilState(currentThemeState);
+    const [theme, setTheme] = useGlobalState(currentThemeState);
     return {
         theme,
         setTheme,

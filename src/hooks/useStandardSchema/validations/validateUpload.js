@@ -1,3 +1,5 @@
-export const validateUpload = (field, { t, z }) => {
-    return z.string();
+import { string } from 'valibot';
+
+export const validateUpload = () => {
+  return string();
 };

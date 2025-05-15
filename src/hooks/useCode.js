@@ -1,16 +1,15 @@
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { SecureStore } from '../helpers/SecureStore';
+import { SecureStore } from '../store/SecureStore';
+import { useGlobalState } from '../store/AppState';
 import { getDefaultCode } from '../helpers/getDefaultCode';
-import { currentCodeState } from '../recoilState';
+import { currentCodeState } from '../appState';
 import { useUrl } from './useUrl';
 
 export const useCode = () => {
     // Get the code from the url
     const { url, setUrl } = useUrl();
 
-    // Recoil states for the code
-    const currentCode = useRecoilValue(currentCodeState);
-    const setCurrentCode = useSetRecoilState(currentCodeState);
+    // Application states for the code
+    const [currentCode, setCurrentCode] = useGlobalState(currentCodeState);
 
     // Default code
     const defaultCode = getDefaultCode();
@@ -24,7 +23,7 @@ export const useCode = () => {
     const setCode = (newCode, setLocalStorage = true, ...params) => {
         const _newCode = newCode || defaultCode;
 
-        // Store in recoil
+        // Store in app store
         setCurrentCode(_newCode);
 
         // Save in localstorage

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'wouter';
 
 export const ScrollToTop = ({ el }) => {
-    const { pathname } = useLocation();
+    const location = useLocation();
 
     useEffect(() => {
         if (el) {
@@ -10,7 +10,7 @@ export const ScrollToTop = ({ el }) => {
         } else {
             window.scrollTo(0, 0);
         }
-    }, [pathname]);
+    }, [location]);
 
     return null;
 };

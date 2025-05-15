@@ -16,7 +16,7 @@ module.exports = () => {
     const API_URL = `${process.env.REACT_APP_PUBLIC_API_BASE}/contents?filter[platform]=${process.env.REACT_APP_API_PLATFORM}`;
 
     // Path to the built index.html file
-    const indexPath = path.join(process.cwd(), 'build', 'index.html');
+    const indexPath = path.join(process.cwd(), 'dist', 'index.html');
 
     // List of meta tag IDs to check for updates
     const metaTagsToUpdate = ['meta-description', 'og-title', 'og-description'];

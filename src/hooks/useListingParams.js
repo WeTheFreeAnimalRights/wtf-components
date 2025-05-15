@@ -1,10 +1,9 @@
 import { each, mapValues } from 'lodash-es';
-import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'wouter';
 
 export const useListingParams = (defaultParams = {}) => {
     const [searchParams] = useSearchParams();
-    const location = useLocation();
-    const navigate = useNavigate();
+    const [location, navigate] = useLocation();
 
     const params = {
         page: parseInt(searchParams.get('page') || 1, 10),

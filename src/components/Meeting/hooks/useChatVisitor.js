@@ -1,9 +1,8 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentChatVisitorState } from '../../../recoilState';
+import { currentChatVisitorState } from '../../../appState';
+import { useGlobalState } from '../../../store/AppState';
 
 export const useChatVisitor = () => {
-    const chatVisitor = useRecoilValue(currentChatVisitorState);
-    const setChatVisitor = useSetRecoilState(currentChatVisitorState);
+    const [chatVisitor, setChatVisitor] = useGlobalState(currentChatVisitorState);
 
     return {
         chatVisitor,

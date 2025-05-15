@@ -1,3 +1,5 @@
-export const validateNot = (field, { t, z }) => {
-    return z.custom();
+import { custom } from 'valibot';
+
+export const validateNot = () => {
+  return custom(() => true);
 };

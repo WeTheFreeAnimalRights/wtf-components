@@ -124,75 +124,64 @@ const uploadFile = async (cdnData, filePath, remotePath) => {
 
 const uploadAndClean = async (cdnData) => {
     try {
-        console.log('Uploading files to CDN...');
-        const directories = ['css', 'js'];
-        const staticFolder = path.join(process.cwd(), 'build', 'static');
+        console.log('📦 Uploading Vite output to CDN...');
 
-        for (const dir of directories) {
-            const dirPath = path.join(staticFolder, dir);
+        const distFolder = path.join(process.cwd(), 'dist');
+        const assetsFolder = path.join(distFolder, 'assets');
 
-            if (fs.existsSync(dirPath)) {
-                const files = fs.readdirSync(dirPath);
-                for (const file of files) {
-                    await uploadFile(
-                        cdnData,
-                        path.join(dirPath, file),
-                        `${dir}/${file}`
-                    );
-                }
-
-                // Remove uploaded folder
-                fs.rmSync(dirPath, { recursive: true, force: true });
-                console.log(`Deleted local folder: ${dirPath}`);
-            }
+        if (!fs.existsSync(assetsFolder)) {
+            throw new Error('dist/assets folder does not exist. Did you run `vite build`?');
         }
 
-        // Check if `static/` is empty, then delete it
-        if (
-            fs.existsSync(staticFolder) &&
-            fs.readdirSync(staticFolder).length === 0
-        ) {
-            fs.rmSync(staticFolder, { recursive: true, force: true });
-            console.log(`Deleted empty folder: ${staticFolder}`);
+        const files = fs.readdirSync(assetsFolder);
+        for (const file of files) {
+            const localPath = path.join(assetsFolder, file);
+            const remotePath = `assets/${file}`;
+            await uploadFile(cdnData, localPath, remotePath);
+
+            // Optionally delete the local file after upload
+            fs.rmSync(localPath);
+            console.log(`🗑️ Deleted local file: ${remotePath}`);
         }
 
-        console.log('Files uploaded successfully.');
+        // Clean up the empty assets folder
+        if (fs.existsSync(assetsFolder) && fs.readdirSync(assetsFolder).length === 0) {
+            fs.rmSync(assetsFolder, { recursive: true, force: true });
+            console.log(`🗑️ Deleted empty folder: ${assetsFolder}`);
+        }
+
+        console.log('✅ All assets uploaded and cleaned.');
     } catch (error) {
-        console.error('Error during file upload:', error.message);
+        console.error('❌ Error during file upload:', error.message);
         throw new Error('Stopping execution due to upload failure.');
     }
 };
 
 const updateIndexHtml = (cdnData) => {
     try {
-        console.log('Updating index.html...');
-        const indexPath = path.join(process.cwd(), 'build', 'index.html');
+        console.log("Updating index.html...");
+        const indexPath = path.join(process.cwd(), "dist", "index.html");
 
         if (!fs.existsSync(indexPath)) {
-            throw new Error('index.html not found, skipping update.');
+            throw new Error("index.html not found in dist/. Skipping update.");
         }
 
-        let indexContent = fs.readFileSync(indexPath, 'utf8');
+        let indexContent = fs.readFileSync(indexPath, "utf8");
 
-        const buildStaticPath = '/static/';
-        const cdnStaticPath = `${cdnData.url}/`;
+        const cdnUrl = cdnData.url.replace(/\/+$/, ""); // remove trailing slash just in case
 
-        if (indexContent.includes(buildStaticPath)) {
-            indexContent = indexContent.replace(
-                new RegExp(`(src=|href=)"${buildStaticPath}`, 'g'),
-                `$1"${cdnStaticPath}`
-            );
-            console.log('✅ Updated index.html to reference CDN assets.');
-        } else {
-            console.warn(
-                '⚠️ No /static/ paths found in index.html – nothing to update.'
-            );
-        }
+        // Replace href="/style.css" or src="/main.js" or src="/assets/somefile.js"
+        indexContent = indexContent.replace(
+            /(["'(])\/((assets\/)?[^"'()]+?\.(js|css))/g,
+            `$1${cdnUrl}/$2`
+        );
 
-        fs.writeFileSync(indexPath, indexContent, 'utf8');
+        fs.writeFileSync(indexPath, indexContent, "utf8");
+
+        console.log("✅ Updated index.html to reference CDN assets.");
     } catch (error) {
-        console.error('❌ Error updating index.html:', error.message);
-        throw new Error('Stopping execution due to index.html update failure.');
+        console.error("❌ Error updating index.html:", error.message);
+        throw new Error("Stopping execution due to index.html update failure.");
     }
 };
 

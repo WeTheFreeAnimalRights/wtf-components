@@ -1,13 +1,12 @@
-export const validateBoolean = (field, { t, z }) => {
-    let rules = z.boolean();
+import { boolean, custom, optional, pipe } from 'valibot';
 
-    if (!field.optional) {
-        rules = rules.refine((val) => val === true, {
-            message: t('required-field'),
-        });
-    } else {
-        rules = rules.optional();
-    }
+export const validateBoolean = (field, { t }) => {
+  if (!field.optional) {
+    return pipe(
+      boolean(),
+      custom(val => val === true || t('required-field'))
+    );
+  }
 
-    return rules;
+  return optional(boolean());
 };

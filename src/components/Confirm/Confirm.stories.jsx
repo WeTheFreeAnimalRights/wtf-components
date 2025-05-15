@@ -1,8 +1,8 @@
-import { RecoilRoot } from 'recoil';
 import { Confirm } from './index';
 import { useConfirm } from './useConfirm';
 import '../../base.css';
 import { Button } from '../Button';
+import { AppStateProvider } from '../../store';
 
 export default {
     title: 'Components/Confirm',
@@ -15,9 +15,9 @@ export default {
     },
     decorators: [
         (Story) => (
-            <RecoilRoot>
+            <AppStateProvider>
                 <Story />
-            </RecoilRoot>
+            </AppStateProvider>
         ),
     ],
 };

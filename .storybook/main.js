@@ -1,27 +1,34 @@
-import path from 'path';
+import { mergeConfig } from 'vite';
 
-/** @type { import('@storybook/react-webpack5').StorybookConfig } */
+/** @type { import('@storybook/preact-vite').StorybookConfig } */
 const config = {
-    stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-    addons: [
-        '@storybook/preset-create-react-app',
-        '@storybook/addon-links',
-        '@storybook/addon-essentials',
-        '@storybook/addon-interactions',
-        '@storybook/addon-backgrounds',
-        '@chromatic-com/storybook',
-    ],
-    framework: {
-        name: '@storybook/react-webpack5',
-        options: {},
-    },
-    webpackFinal: async (config) => {
-        config.resolve.alias = {
-            ...config.resolve.alias,
-            _: path.resolve(__dirname, '../src/_shadcn'),
-        };
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [
+    '@storybook/addon-essentials',
+    '@storybook/addon-links',
+    '@storybook/addon-interactions',
+    '@storybook/addon-backgrounds',
+  ],
+  framework: {
+    name: '@storybook/preact-vite',
+    options: {},
+  },
+  viteFinal: async (config) => {
+    const base = (await import('../vite.config.mjs')).default;
 
-        return config;
-    },
+    return mergeConfig(config, {
+      ...base,
+      resolve: {
+        ...base.resolve,
+        alias: {
+          ...(base.resolve?.alias ?? {}),
+          // only if needed:
+          // 'react': 'preact/compat',
+          // 'react-dom': 'preact/compat',
+        },
+      },
+    });
+  },
 };
+
 export default config;

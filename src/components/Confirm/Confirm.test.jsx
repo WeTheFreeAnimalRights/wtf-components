@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { RecoilRoot, atom } from 'recoil';
 import { Confirm } from './index';
-import { confirmState } from '../../recoilState';
+import { confirmState } from '../../appState';
+import { AppStateProvider, createGlobalState } from '../../store';
 
 jest.mock('../../hooks/useTranslations', () => ({
   useTranslations: () => ({
@@ -10,7 +10,7 @@ jest.mock('../../hooks/useTranslations', () => ({
   }),
 }));
 
-const mockConfirmState = atom({
+const mockConfirmState = createGlobalState({
   key: 'confirmStateTest',
   default: {
     visible: false,
@@ -23,11 +23,11 @@ const mockConfirmState = atom({
 
 const renderWithConfirmState = (initialState) => {
   return render(
-    <RecoilRoot
+    <AppStateProvider
       initializeState={({ set }) => set(confirmState, initialState)}
     >
       <Confirm />
-    </RecoilRoot>
+    </AppStateProvider>
   );
 };
 

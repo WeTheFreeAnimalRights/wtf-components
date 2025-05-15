@@ -1,13 +1,12 @@
-export const validateText = (field, { t, z }) => {
-    let rules = z.string();
+import { string, minLength, optional, pipe } from 'valibot';
 
-    if (!field.optional) {
-        rules = rules.min(1, {
-            message: t('required-field'),
-        });
-    } else {
-        rules = rules.optional();
-    }
+export const validateText = (field, { t }) => {
+  if (!field.optional) {
+    return pipe(
+      string(),
+      minLength(1, t('required-field'))
+    );
+  }
 
-    return rules;
+  return optional(string());
 };

@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = () => {
     // Path to the robots.txt file
-    const robotsPath = path.join(process.cwd(), 'build', 'robots.txt');
+    const robotsPath = path.join(process.cwd(), 'dist', 'robots.txt');
 
     // Function to update robots.txt
     function updateRobotsTxt(shouldIndex) {

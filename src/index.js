@@ -241,8 +241,8 @@ export { useToast } from './_shadcn/hooks/use-toast';
 export { DirectionProvider } from '@radix-ui/react-direction';
 export { useIsMobile } from './_shadcn/hooks/use-mobile';
 
-// Recoil States
-export { currentThemeState, translationsState } from './recoilState';
+// App States
+export { currentThemeState, translationsState } from './appState';
 
 // Helpers
 export { isDarkMode } from './helpers/isDarkMode';
@@ -266,7 +266,7 @@ export { getDefaultCode } from './helpers/getDefaultCode';
 export { getUrl } from './helpers/fetchRequest/api/getUrl';
 export { globals } from './helpers/globals';
 export { textContains } from './helpers/textContains';
-export { SecureStore } from './helpers/SecureStore';
+export { SecureStore } from './store/SecureStore';
 export { setElementsProperty } from './helpers/setElementsProperty';
 export { validateCode } from './helpers/validateCode';
 export { getDefaultLanguage } from './helpers/getDefaultLanguage';
@@ -283,6 +283,7 @@ export { useListingParams } from './hooks/useListingParams';
 export { useTranslations } from './hooks/useTranslations';
 export { useTheme } from './hooks/useTheme';
 export { useFormSubmit } from './hooks/useFormSubmit';
+export { useHash } from './hooks/useHash';
 export { useRequest } from './hooks/useRequest';
 export { useLongRequest } from './hooks/useLongRequest';
 export { useStandardSchema } from './hooks/useStandardSchema';
@@ -292,11 +293,14 @@ export { useCode } from './hooks/useCode';
 export { useUrl } from './hooks/useUrl';
 export { useAnalytics } from './hooks/useAnalytics';
 
+// Store
+export * from './store';
+
 // Request
 export { fetchRequest } from './helpers/fetchRequest';
 export { setupApi } from './helpers/fetchRequest/api/setupApi';
 export { getPublicApiEndpoints } from './helpers/fetchRequest/api/getPublicApiEndpoints';
 
 // Base CSS
-import baseCSS from './base.css';
-export { baseCSS };
+console.log('Using correct index.js build');
+import './base.css';

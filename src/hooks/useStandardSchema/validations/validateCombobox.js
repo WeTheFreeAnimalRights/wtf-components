@@ -1,5 +1,5 @@
 import { validateText } from './validateText';
 
-export const validateCombobox = (field, { t, z }) => {
-    return validateText(field, { t, z });
+export const validateCombobox = (field, tools) => {
+    return validateText(field, tools);
 };

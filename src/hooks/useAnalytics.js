@@ -1,13 +1,13 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { analyticsState } from '../recoilState';
+import { analyticsState } from '../appState';
 import { useRequest } from './useRequest';
 import { useTranslations } from './useTranslations';
 import { useUrl } from './useUrl';
-import { SecureStore } from '../helpers/SecureStore';
+import { SecureStore } from '../store/SecureStore';
+import { useGlobalState } from '../store/AppState';
+
 
 export const useAnalytics = () => {
-    const analytics = useRecoilValue(analyticsState);
-    const setAnalytics = useSetRecoilState(analyticsState);
+    const [analytics, setAnalytics] = useGlobalState(analyticsState);
     const { request } = useRequest();
     const { currentLanguage } = useTranslations();
     const { url } = useUrl();
