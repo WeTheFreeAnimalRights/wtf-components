@@ -5,7 +5,7 @@ import { currentThemeState } from '../../appState';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../Button';
 import { Tooltip } from '../Tooltip';
-import { SecureStore } from '../../helpers/SecureStore';
+import { SecureStore } from '../../store/SecureStore';
 import { useGlobalState } from '../../store/AppState';
 
 export const ThemeToggle = ({ variant, size, className }) => {

@@ -1,5 +1,5 @@
 // Button.stories.js
 export default {
-    title: 'Test/Stry',
+    title: 'Test',
     render: () => <div>Hello world</div>,
   };

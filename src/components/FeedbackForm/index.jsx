@@ -4,7 +4,7 @@ import { useTranslations } from '../../hooks/useTranslations';
 import { useRequest } from '../../hooks/useRequest';
 import { useCode } from '../../hooks/useCode';
 import { parseResourceFeedbackOptions } from '../../helpers/parseResourceFeedbackOptions';
-import { SecureStore } from '../../helpers/SecureStore';
+import { SecureStore } from '../../store/SecureStore';
 import { Preloader } from '../Preloader';
 import { Alert } from '../Alert';
 import { Button } from '../Button';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Sun, Moon } from 'lucide-react';
 import { currentThemeState } from '../../appState';
 import { useTranslations } from '../../hooks/useTranslations';
-import { SecureStore } from '../../helpers/SecureStore';
+import { SecureStore } from '../../store/SecureStore';
 import { useGlobalState } from '../../store/AppState';
 import { cn } from '_/lib/utils';
 import { SidebarMenuButton } from '_/components/sidebar';
