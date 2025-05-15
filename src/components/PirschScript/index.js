@@ -2,9 +2,9 @@ import { isFunction } from 'lodash-es';
 import { useEffect } from 'react';
 
 export const PirschScript = ({ code }) => {
-    const { REACT_APP_ENV } = process.env;
+    const { VITE_ENV } = process.env;
 
-    if (REACT_APP_ENV !== 'production') {
+    if (VITE_ENV !== 'production') {
         return null;
     }
 
