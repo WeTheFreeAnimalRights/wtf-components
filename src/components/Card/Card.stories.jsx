@@ -1,17 +1,9 @@
 import { Card } from './index';
-import { AppStateProvider } from '../../store';
 
 export default {
     title: 'Components/Card',
     component: Card,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
     argTypes: {
         onClick: {
             action: 'clicked',

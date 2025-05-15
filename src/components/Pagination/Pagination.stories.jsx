@@ -1,17 +1,9 @@
 import { Pagination } from './index';
-import { AppStateProvider } from '../../store';
 
 export default {
     title: 'Components/Pagination',
     component: Pagination,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
     argTypes: {
         onPageChange: {
             action: 'pageChange',

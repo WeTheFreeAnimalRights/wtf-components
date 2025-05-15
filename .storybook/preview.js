@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../src/base.css';
+import { AppStateProvider } from '../src/store/AppState';
 
 export default {
     tags: [],
@@ -42,9 +43,11 @@ export const decorators = [
         }, [background]);
 
         return (
+                <AppStateProvider>
             <div style={{ backgroundColor: background, minHeight: '100%' }}>
                 <Story />
             </div>
+                </AppStateProvider>
         );
     },
 ];

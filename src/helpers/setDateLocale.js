@@ -1,24 +1,6 @@
-import { enUS, fr, es, it, de, tr, pt, nl, id, ru, bg, hi, ka, ar, th, he } from 'date-fns/locale';
-
-const localeMap = {
-  en: enUS,
-  fr,
-  es,
-  it,
-  de,
-  tr,
-  pt,
-  nl,
-  id,
-  ru,
-  bg,
-  hi,
-  ka,
-  ar,
-  th,
-  he,
-};
+import { setDefaultOptions } from 'date-fns/setDefaultOptions'
+import { getLocale } from './getLocale'
 
 export const setDateLocale = (locale = 'en') => {
-  return localeMap[locale] || enUS;
+    setDefaultOptions({ locale: getLocale(locale) });
 };

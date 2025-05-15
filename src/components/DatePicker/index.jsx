@@ -9,6 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 import { Button } from '../Button';
 import { FormControl } from '_/components/form';
 import { useTranslations } from '../../hooks/useTranslations';
+import { getLocale } from '../../helpers/getLocale';
 
 export const DatePicker = forwardRef(
     (
@@ -25,6 +26,8 @@ export const DatePicker = forwardRef(
     ) => {
         const [open, setOpen] = useState(false);
         const { currentLanguage } = useTranslations();
+
+        const locale = getLocale(currentLanguage.code);
 
         const trigger = (
             <Button
@@ -84,9 +87,10 @@ export const DatePicker = forwardRef(
                         onSelect={(newValue) => {
                             setOpen(false);
                             if (isFunction(onChange)) {
-                                onChange(format(new Date(value), 'PP'));
+                                onChange(format(new Date(newValue), 'PP'));
                             }
                         }}
+                        locale={locale}
                         initialFocus
                         {...props}
                     />

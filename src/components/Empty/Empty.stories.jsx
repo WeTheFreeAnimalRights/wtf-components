@@ -1,5 +1,4 @@
 import { Empty } from './index';
-import { AppStateProvider } from '../../store';
 
 export default {
     title: 'Components/Empty',
@@ -10,13 +9,6 @@ export default {
             action: 'clicked',
         },
     },
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
 };
 
 export const Primary = {

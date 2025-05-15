@@ -1,6 +1,5 @@
 import { LanguagePicker } from './index';
 import { useTranslations } from '../../hooks/useTranslations';
-import { AppStateProvider } from '../../store';
 import { useEffect } from 'react';
 
 const LanguagesSet = ({ Story }) => {
@@ -34,11 +33,9 @@ export default {
     },
     decorators: [
         (Story) => (
-            <AppStateProvider56>
-                <div className="flex">
-                    <LanguagesSet Story={Story} />
-                </div>
-            </AppStateProvider56>
+            <div className="flex">
+                <LanguagesSet Story={Story} />
+            </div>
         ),
     ],
 };

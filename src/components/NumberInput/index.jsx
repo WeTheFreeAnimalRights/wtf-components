@@ -21,7 +21,7 @@ export const NumberInput = forwardRef(
         ref
     ) => {
         const [internalValue, setInternalValue] = useState(value || min);
-        const isControlled = isUndefined(value);
+        const isControlled = !isUndefined(value);
 
         useEffect(() => {
             if (isControlled) {

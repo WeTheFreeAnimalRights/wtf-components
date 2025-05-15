@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { action } from '@storybook/addon-actions';
-import { AppStateProvider } from '../../store';
 import { Combobox } from './index';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
 
@@ -8,13 +7,6 @@ export default {
     title: 'Components/Combobox',
     component: Combobox,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
 };
 
 export const Primary = () => {

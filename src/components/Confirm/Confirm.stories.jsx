@@ -1,7 +1,6 @@
 import { Confirm } from './index';
 import { useConfirm } from './useConfirm';
 import { Button } from '../Button';
-import { AppStateProvider } from '../../store';
 
 export default {
     title: 'Components/Confirm',
@@ -12,13 +11,6 @@ export default {
             action: 'closed',
         },
     },
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
 };
 
 export const Primary = () => {

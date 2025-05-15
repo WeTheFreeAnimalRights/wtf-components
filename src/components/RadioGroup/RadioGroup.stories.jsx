@@ -1,18 +1,10 @@
 import { RadioGroup, RadioGroupItem } from './index';
-import { AppStateProvider } from '../../store';
 import { Label } from '_/components/label';
 
 export default {
     title: 'Components/RadioGroup',
     component: RadioGroup,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
 };
 
 export const Primary = () => (

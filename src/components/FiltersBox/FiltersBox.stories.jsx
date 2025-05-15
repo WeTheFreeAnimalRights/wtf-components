@@ -1,19 +1,11 @@
 import { action } from '@storybook/addon-actions';
 import { FiltersBox } from './index';
-import { AppStateProvider } from '../../store';
 import { StandardSelect, StandardSwitch } from '../StandardForm';
 
 export default {
     title: 'Components/FiltersBox',
     component: FiltersBox,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
 };
 
 export const Primary = () => {

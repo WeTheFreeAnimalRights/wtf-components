@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Preloader } from './index';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
-import { AppStateProvider } from '../../store';
 
 export default {
     title: 'Components/Preloader',
     component: Preloader,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <AppStateProvider>
-                <Story />
-            </AppStateProvider>
-        ),
-    ],
 };
 
 export const Primary = () => {

@@ -2,7 +2,6 @@ import { action } from '@storybook/addon-actions';
 import { DataTable, Column, Filters, Order, Search } from './index';
 import { Confirm } from '../Confirm';
 import { transformServerData } from '../../helpers/transformServerData';
-import { AppStateProvider } from '../../store';
 
 // Mocked data
 import _data from './_data.json';
@@ -18,10 +17,10 @@ export default {
     tags: ['autodocs'],
     decorators: [
         (Story) => (
-            <AppStateProvider>
+            <>
                 <Story />
                 <Confirm />
-            </AppStateProvider>
+            </>
         ),
     ],
 };
