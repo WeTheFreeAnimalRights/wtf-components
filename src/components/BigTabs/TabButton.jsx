@@ -24,7 +24,7 @@ export const TabButton = ({
             focus:ring-4 focus:ring-blue-300 active focus:outline-none`}
         onClick={onClick}
     >
-        {icon && <div className="icon-container text-center mb-2">{icon}</div>}
+        {icon && <div className="text-center mb-2 [&>svg]:inline-block [&>svg]:align-top">{icon}</div>}
         <div className="uppercase font-semibold">{children}</div>
     </button>
 );

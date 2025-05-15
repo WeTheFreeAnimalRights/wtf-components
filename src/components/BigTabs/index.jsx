@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BigTab } from './BigTab';
-import './style.css';
 import { TabButton } from './TabButton';
 import { cn } from '_/lib/utils';
 

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 export function useHash() {
   const [hash, setHashState] = useState(() => window.location.hash);
 
-  const setHash = useCallback((newHash) => {
+  const setHash = useCallback((newHash = '') => {
     const formatted = newHash.startsWith('#') ? newHash : `#${newHash}`;
     if (window.location.hash !== formatted) {
       window.location.hash = formatted;
