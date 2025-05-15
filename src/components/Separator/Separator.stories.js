@@ -1,5 +1,4 @@
 import { Separator } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/Separator',

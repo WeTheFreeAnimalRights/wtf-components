@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tooltip } from './index';
-import '../../base.css';
 import { Button } from '../Button';
 
 export default {

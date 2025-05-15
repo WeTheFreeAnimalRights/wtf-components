@@ -3,7 +3,6 @@ import {
     StandardCodeInput,
     StandardTextarea,
 } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/GeneratedStandardForm',

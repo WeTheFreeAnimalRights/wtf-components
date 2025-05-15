@@ -1,5 +1,4 @@
 import { Switch } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/Switch',

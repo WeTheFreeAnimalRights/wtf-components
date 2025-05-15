@@ -1,6 +1,5 @@
 import { Empty } from './index';
 import { AppStateProvider } from '../../store';
-import '../../base.css';
 
 export default {
     title: 'Components/Empty',

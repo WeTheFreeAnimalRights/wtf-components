@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Preloader } from './index';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
 import { AppStateProvider } from '../../store';
-import '../../base.css';
 
 export default {
     title: 'Components/Preloader',

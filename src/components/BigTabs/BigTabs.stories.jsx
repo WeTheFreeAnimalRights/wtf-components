@@ -1,6 +1,5 @@
 import React from 'react';
 import { BigTabs, BigTab } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/BigTabs',

@@ -1,5 +1,4 @@
 import { Card } from './index';
-import '../../base.css';
 import { AppStateProvider } from '../../store';
 
 export default {

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { action } from '@storybook/addon-actions';
 import { AppStateProvider } from '../../store';
 import { Combobox } from './index';
-import '../../base.css';
 import { setupApi } from '../../helpers/fetchRequest/api/setupApi';
 
 export default {

@@ -302,5 +302,4 @@ export { setupApi } from './helpers/fetchRequest/api/setupApi';
 export { getPublicApiEndpoints } from './helpers/fetchRequest/api/getPublicApiEndpoints';
 
 // Base CSS
-console.log('Using correct index.js build');
 import './base.css';

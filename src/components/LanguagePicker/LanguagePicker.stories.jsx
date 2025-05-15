@@ -1,6 +1,5 @@
 import { LanguagePicker } from './index';
 import { useTranslations } from '../../hooks/useTranslations';
-import '../../base.css';
 import { AppStateProvider } from '../../store';
 import { useEffect } from 'react';
 

@@ -1,5 +1,4 @@
 import { ToggleGroupInput } from './index';
-import '../../base.css';
 
 import { Frown, Laugh, Smile } from 'lucide-react';
 

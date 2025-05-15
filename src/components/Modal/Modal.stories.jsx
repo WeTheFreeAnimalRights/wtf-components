@@ -1,5 +1,4 @@
 import { Modal, ModalTrigger, ModalContainer } from './index';
-import '../../base.css';
 import { Button } from '../Button';
 
 export default {

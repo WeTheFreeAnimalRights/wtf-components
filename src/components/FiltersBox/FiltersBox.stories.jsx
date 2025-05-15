@@ -1,6 +1,5 @@
 import { action } from '@storybook/addon-actions';
 import { FiltersBox } from './index';
-import '../../base.css';
 import { AppStateProvider } from '../../store';
 import { StandardSelect, StandardSwitch } from '../StandardForm';
 

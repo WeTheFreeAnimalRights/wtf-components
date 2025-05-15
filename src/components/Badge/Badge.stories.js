@@ -1,5 +1,4 @@
 import { Badge } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/Badge',

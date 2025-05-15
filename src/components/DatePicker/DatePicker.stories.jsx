@@ -1,6 +1,5 @@
 import { DatePicker } from './index';
 import { AppStateProvider } from '../../store';
-import '../../base.css';
 
 export default {
     title: 'Components/DatePicker',

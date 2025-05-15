@@ -1,5 +1,4 @@
 import { DropdownMenu } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/DropdownMenu',

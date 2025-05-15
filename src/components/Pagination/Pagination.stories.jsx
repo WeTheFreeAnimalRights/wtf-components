@@ -1,5 +1,4 @@
 import { Pagination } from './index';
-import '../../base.css';
 import { AppStateProvider } from '../../store';
 
 export default {

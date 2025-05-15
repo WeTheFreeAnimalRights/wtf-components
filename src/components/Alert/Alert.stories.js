@@ -1,5 +1,4 @@
 import { Alert } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/Alert',

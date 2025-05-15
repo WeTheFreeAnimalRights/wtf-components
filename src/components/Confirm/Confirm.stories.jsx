@@ -1,6 +1,5 @@
 import { Confirm } from './index';
 import { useConfirm } from './useConfirm';
-import '../../base.css';
 import { Button } from '../Button';
 import { AppStateProvider } from '../../store';
 

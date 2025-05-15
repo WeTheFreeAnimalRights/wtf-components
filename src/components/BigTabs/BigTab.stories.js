@@ -1,5 +1,4 @@
 import { BigTab } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/BigTabs/BigTab',

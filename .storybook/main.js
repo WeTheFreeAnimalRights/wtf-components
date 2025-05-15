@@ -1,4 +1,6 @@
 import { mergeConfig } from 'vite';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 /** @type { import('@storybook/preact-vite').StorybookConfig } */
 const config = {
@@ -21,6 +23,14 @@ const config = {
         ...base.resolve,
         alias: {
           ...(base.resolve?.alias ?? {}),
+        },
+      },
+      css: {
+        postcss: {
+          plugins: [
+            tailwindcss(),
+            autoprefixer(),
+          ],
         },
       },
     });

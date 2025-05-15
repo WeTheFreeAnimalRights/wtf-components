@@ -1,5 +1,4 @@
 import { Popover, PopoverTrigger, PopoverContent } from './index';
-import '../../base.css';
 import { Button } from '../Button';
 
 export default {

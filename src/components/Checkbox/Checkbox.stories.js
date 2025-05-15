@@ -1,5 +1,4 @@
 import { Checkbox } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/Checkbox',

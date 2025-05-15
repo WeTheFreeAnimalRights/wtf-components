@@ -1,5 +1,4 @@
 import { Spinner } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/Spinner',

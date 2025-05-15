@@ -1,6 +1,5 @@
 import { RadioGroup, RadioGroupItem } from './index';
 import { AppStateProvider } from '../../store';
-import '../../base.css';
 import { Label } from '_/components/label';
 
 export default {

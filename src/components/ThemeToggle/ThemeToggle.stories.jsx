@@ -1,5 +1,4 @@
 import { ThemeToggle } from './index';
-import '../../base.css';
 
 export default {
     title: 'Components/ThemeToggle',

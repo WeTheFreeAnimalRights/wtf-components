@@ -3,7 +3,6 @@ import { DataTable, Column, Filters, Order, Search } from './index';
 import { Confirm } from '../Confirm';
 import { transformServerData } from '../../helpers/transformServerData';
 import { AppStateProvider } from '../../store';
-import '../../base.css';
 
 // Mocked data
 import _data from './_data.json';
