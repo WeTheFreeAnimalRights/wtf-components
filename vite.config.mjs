@@ -23,7 +23,7 @@ export default defineConfig({
     alias: {
       react: 'preact/compat',
       'react-dom': 'preact/compat',
-      'react-dom/test-utils': 'preact/test-utils', // Note: might be stubbed elsewhere
+      'react-dom/test-utils': 'preact/test-utils',
       'react/jsx-runtime': 'preact/jsx-runtime',
       'react/jsx-dev-runtime': 'preact/jsx-dev-runtime',
       _: path.resolve(__dirname, 'src/_shadcn'),

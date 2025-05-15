@@ -17,14 +17,10 @@ const config = {
     const base = (await import('../vite.config.mjs')).default;
 
     return mergeConfig(config, {
-      ...base,
       resolve: {
         ...base.resolve,
         alias: {
           ...(base.resolve?.alias ?? {}),
-          // only if needed:
-          // 'react': 'preact/compat',
-          // 'react-dom': 'preact/compat',
         },
       },
     });

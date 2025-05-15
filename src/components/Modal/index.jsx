@@ -9,7 +9,7 @@ import {
     DialogHeader as ShadDialogHeader,
     DialogTitle as ShadDialogTitle,
     DialogDescription as ShadDialogDescription,
-    DialogFooter as ShadDialogFooter,d
+    DialogFooter as ShadDialogFooter,
 } from '_/components/dialog';
 import { cn } from '_/lib/utils';
 
