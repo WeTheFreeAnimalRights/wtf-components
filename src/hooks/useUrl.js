@@ -4,13 +4,14 @@ import { validateCode } from '../helpers/validateCode';
 import { getUrl } from '../helpers/getUrl';
 import { SecureStore } from '../store/SecureStore';
 import { getDefaultLanguage } from '../helpers/getDefaultLanguage';
+import { getBrowserLanguage } from '../helpers/getBrowserLanguage';
 import { getDefaultCode } from '../helpers/getDefaultCode';
 
 export const useUrl = () => {
     const params = useParams();
 
     // Language and code
-    let language = SecureStore.get('language') || getDefaultLanguage();
+    let language = SecureStore.get('language') || getBrowserLanguage() || getDefaultLanguage();
     let code = SecureStore.get('code') || getDefaultCode().code;
 
     // Is preview

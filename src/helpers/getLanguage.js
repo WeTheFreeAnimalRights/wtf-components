@@ -1,3 +1,4 @@
+import { getBrowserLanguage } from './getBrowserLanguage';
 import { getDefaultLanguage } from './getDefaultLanguage';
 
 /**
@@ -20,8 +21,7 @@ export const getLanguage = (code = '', languages = {}) => {
     const defaultLanguage = getDefaultLanguage();
 
     // Check if the browser's code is good
-    const browserLanguage =
-        navigator.userLanguage || navigator.language || defaultLanguage;
+    const browserLanguage = getBrowserLanguage() || defaultLanguage;
     const longLanguage = browserLanguage.split('-').join('_');
     if (languages[longLanguage]) {
         return languages[longLanguage];

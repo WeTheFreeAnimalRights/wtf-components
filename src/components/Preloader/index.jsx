@@ -1,5 +1,5 @@
 import { isFunction } from 'lodash-es';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { PreloaderStates } from './PreloaderStates';
 import { handleRequestConfig } from './helpers/handleRequestConfig';
@@ -27,8 +27,8 @@ export const Preloader = ({
     // Extra properties
     onLoadingStateChanged,
     customPreloader,
-    hasOutlet,
     repeatUntil,
+    renderChildren,
     repeatInterval = 1000,
     _id,
 }) => {
@@ -118,7 +118,7 @@ export const Preloader = ({
             ignoreError={ignoreError}
             className={className}
             customPreloader={customPreloader}
-            hasOutlet={hasOutlet}
+            renderChildren={renderChildren}
             _id={_id}
         >
             {children}
@@ -187,4 +187,3 @@ Preloader.propTypes = {
 };
 
 export { PreloaderStates } from './PreloaderStates';
-export { PreloaderOutlet } from './PreloaderOutlet';

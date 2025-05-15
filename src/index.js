@@ -38,7 +38,6 @@ export { Popover, PopoverContent, PopoverTrigger } from './components/Popover';
 export {
     Preloader,
     PreloaderStates,
-    PreloaderOutlet,
 } from './components/Preloader';
 export { Confirm, useConfirm } from './components/Confirm';
 export { Resource } from './components/Resource';

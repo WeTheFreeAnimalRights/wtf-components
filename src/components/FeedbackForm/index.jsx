@@ -95,7 +95,7 @@ export const FeedbackForm = ({ resourceId, className, gridClassName, onVote }) =
                     </Alert>
                 ) : (
                     <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4', gridClassName)}>
-                        {(options?.all || []).map(
+                        {(options?.ordered || []).map(
                             ({ type, description, id }) => (
                                 <Button
                                     variant="outline"

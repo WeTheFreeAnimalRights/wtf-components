@@ -23,7 +23,7 @@ export const useListingParams = (defaultParams = {}) => {
         each(newParams, (value, key) => {
             url.set(key, value);
         });
-        navigate(location.pathname + '?' + url.toString());
+        navigate(location + '?' + url.toString());
     };
 
     return {
