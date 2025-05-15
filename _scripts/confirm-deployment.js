@@ -17,8 +17,10 @@ const askConfirmation = (question) => {
 
 // Main function with confirmation
 module.exports = async () => {
+    const where = process.argv[2] || 'production';
+
     const confirmation = await askConfirmation(
-        'Are you sure you want to deploy to production?'
+        'Are you sure you want to deploy to ' + where + '?'
     );
 
     if (confirmation === 'yes' || confirmation === 'y') {
