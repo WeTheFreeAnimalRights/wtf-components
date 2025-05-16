@@ -16,8 +16,6 @@ export const PromptsChatPlugin = ({ onSelect, items }) => {
         }
     };
 
-    console.log('>>items', items);
-
     return (
         <div className="h-96">
             <Tabs

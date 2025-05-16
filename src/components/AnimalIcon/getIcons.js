@@ -1,4 +1,4 @@
-import { range } from 'lodash';
+import { range } from 'lodash-es';
 import { getCDNUrl } from '../../helpers/getCDNUrl';
 
 export const getIcons = () => {

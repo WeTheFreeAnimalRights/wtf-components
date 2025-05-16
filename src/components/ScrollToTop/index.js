@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation } from 'wouter-preact';
 
 export const ScrollToTop = ({ el }) => {
     const location = useLocation();

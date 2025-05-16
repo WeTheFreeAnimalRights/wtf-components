@@ -26,8 +26,6 @@ module.exports = async (
         return acc;
     }, {});
 
-    console.log('>>>backendTranslations', apiData);
-
     const getJsFiles = (dir) => {
         let jsFiles = [];
         const files = fs.readdirSync(dir);

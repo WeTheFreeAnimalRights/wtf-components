@@ -1,5 +1,5 @@
 import { each, mapValues } from 'lodash-es';
-import { useSearchParams, useLocation } from 'wouter';
+import { useSearchParams, useLocation } from 'wouter-preact';
 
 export const useListingParams = (defaultParams = {}) => {
     const [searchParams] = useSearchParams();

@@ -1,5 +1,5 @@
 import { isFunction, isUndefined } from 'lodash-es';
-import { useLocation } from 'wouter';
+import { useLocation } from 'wouter-preact';
 import { Button } from '../Button';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Alert } from '../Alert';

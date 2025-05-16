@@ -1,5 +1,5 @@
 import { isString, isUndefined } from 'lodash-es';
-import { useParams, useSearchParams, useLocation } from 'wouter';
+import { useSearchParams, useLocation, useParams } from 'wouter-preact';
 import { validateCode } from '../helpers/validateCode';
 import { getUrl } from '../helpers/getUrl';
 import { SecureStore } from '../store/SecureStore';
@@ -11,7 +11,8 @@ export const useUrl = () => {
     const params = useParams();
 
     // Language and code
-    let language = SecureStore.get('language') || getBrowserLanguage() || getDefaultLanguage();
+    const browserLanguage = (getBrowserLanguage() || '').split('-')[0];
+    let language = SecureStore.get('language') || browserLanguage || getDefaultLanguage();
     let code = SecureStore.get('code') || getDefaultCode().code;
 
     // Is preview
