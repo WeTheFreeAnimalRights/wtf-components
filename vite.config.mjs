@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
+import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   plugins: [
     externalizeDeps(),
-    preact(),
+    react(),
     visualizer({
       filename: './dist/stats.html',
       open: false,
@@ -21,11 +21,6 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      react: 'preact/compat',
-      'react-dom': 'preact/compat',
-      'react-dom/test-utils': 'preact/test-utils',
-      'react/jsx-runtime': 'preact/jsx-runtime',
-      'react/jsx-dev-runtime': 'preact/jsx-dev-runtime',
       _: path.resolve(__dirname, 'src/_shadcn'),
     },
   },

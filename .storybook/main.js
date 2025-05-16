@@ -2,7 +2,7 @@ import { mergeConfig } from 'vite';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
-/** @type { import('@storybook/preact-vite').StorybookConfig } */
+/** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -12,7 +12,7 @@ const config = {
     '@storybook/addon-backgrounds',
   ],
   framework: {
-    name: '@storybook/preact-vite',
+    name: '@storybook/react-vite',
     options: {},
   },
   viteFinal: async (config) => {

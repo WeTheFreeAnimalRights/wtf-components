@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import '../src/base.css';
 import { AppStateProvider } from '../src/store/AppState';
 

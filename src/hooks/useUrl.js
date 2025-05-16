@@ -1,5 +1,5 @@
 import { isString, isUndefined } from 'lodash-es';
-import { useSearchParams, useLocation, useParams } from 'wouter-preact';
+import { useSearchParams, useLocation, useParams } from 'wouter';
 import { validateCode } from '../helpers/validateCode';
 import { getUrl } from '../helpers/getUrl';
 import { SecureStore } from '../store/SecureStore';
