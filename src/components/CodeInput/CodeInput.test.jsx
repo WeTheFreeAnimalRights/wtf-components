@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { CodeInput } from './index';
 
-jest.mock('_/components/input-otp', () => {
+vi.mock('_/components/input-otp', () => {
   const React = require('react');
   return {
     InputOTP: React.forwardRef(({ children, onComplete, pushPasswordManagerStrategy, ...props }, ref) => (

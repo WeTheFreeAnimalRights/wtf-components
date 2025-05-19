@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { CardActiveTitle } from './CardActiveTitle';
 
-jest.mock('../ActiveBadge', () => ({
+vi.mock('../ActiveBadge', () => ({
     ActiveBadge: ({ active, labels }) => (
         <div data-testid="active-badge" data-active={active ? 'yes' : 'no'}>
             {labels?.active || 'Active'}
@@ -10,7 +11,7 @@ jest.mock('../ActiveBadge', () => ({
     ),
 }));
 
-jest.mock('_/lib/utils', () => ({
+vi.mock('_/lib/utils', () => ({
     cn: (...args) => args.filter(Boolean).join(' '),
 }));
 

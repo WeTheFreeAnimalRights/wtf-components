@@ -1,35 +1,36 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 
-jest.mock('../../hooks/useCode', () => ({
+vi.mock('../../hooks/useCode', () => ({
   useCode: () => ({
     code: { empty: true, code: 'ABC123' },
     selected: false,
-    setCode: jest.fn(),
+    setCode: vi.fn(),
     defaultCode: { code: 'default' },
   }),
 }));
 
-jest.mock('../../hooks/useTranslations', () => ({
+vi.mock('../../hooks/useTranslations', () => ({
   useTranslations: () => ({
     t: (key) => key,
   }),
 }));
 
-jest.mock('../../helpers/validateCode', () => ({
+vi.mock('../../helpers/validateCode', () => ({
   validateCode: () => true,
 }));
 
-jest.mock('../../helpers/getCDNUrl', () => ({
+vi.mock('../../helpers/getCDNUrl', () => ({
   getCDNUrl: (path) => `https://cdn.fake/${path}`,
 }));
 
-jest.mock('../../hooks/useRequest', () => ({
+vi.mock('../../hooks/useRequest', () => ({
   useRequest: () => ({
-    request: jest.fn().mockResolvedValue(null),
+    request: vi.fn().mockResolvedValue(null),
     loading: false,
     error: 'Something went wrong!',
-    setError: jest.fn(),
+    setError: vi.fn(),
   }),
 }));
 

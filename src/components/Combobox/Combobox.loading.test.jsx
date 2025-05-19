@@ -1,25 +1,26 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 
-jest.mock('../../hooks/useTranslations', () => ({
-  useTranslations: () => ({ t: (key) => key }),
-}));
+vi.mock('../../hooks/useTranslations', () => ({
+    useTranslations: () => ({ t: (key) => key }),
+  }));
 
-jest.mock('../../hooks/useRequest', () => ({
-  useRequest: () => ({
-    request: jest.fn(),
-    loading: true, // ✅ NOW IT WORKS
-    error: null,
-  }),
-}));
+  vi.mock('../../hooks/useRequest', () => ({
+    useRequest: () => ({
+      request: vi.fn(),
+      loading: true,
+      error: null,
+    }),
+  }));
 
-jest.mock('lodash-es', () => {
-  const actual = jest.requireActual('lodash-es');
-  return {
-    ...actual,
-    debounce: (fn) => fn,
-  };
-});
+  vi.mock('lodash-es', async () => {
+    const actual = await vi.importActual('lodash-es');
+    return {
+      ...actual,
+      debounce: (fn) => fn,
+    };
+  });
 
 import { Combobox } from './index';
 

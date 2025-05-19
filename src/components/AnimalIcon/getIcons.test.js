@@ -1,6 +1,7 @@
+import { vi, describe, it, expect } from 'vitest';
 import { getIcons } from './getIcons';
 
-jest.mock('../../helpers/getCDNUrl', () => ({
+vi.mock('../../helpers/getCDNUrl', () => ({
     getCDNUrl: (path) => `CDN/${path}`,
 }));
 

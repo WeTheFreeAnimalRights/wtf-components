@@ -1,8 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { vi, describe, it, beforeEach, afterEach, expect } from 'vitest';
 import { AutoScrollContainer } from './index';
 
-jest.mock('_/lib/utils', () => ({
+// Mock `cn` utility function
+vi.mock('_/lib/utils', () => ({
     cn: (...args) => args.filter(Boolean).join(' '),
 }));
 
@@ -16,13 +18,13 @@ describe('AutoScrollContainer', () => {
         };
 
         // Spy on React's useRef to return our mock container
-        jest.spyOn(React, 'useRef').mockReturnValueOnce({
+        vi.spyOn(React, 'useRef').mockReturnValueOnce({
             current: containerMock,
         });
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it('renders children correctly', () => {
@@ -35,7 +37,7 @@ describe('AutoScrollContainer', () => {
     });
 
     it('applies className correctly', () => {
-        const { container } = render(
+        render(
             <AutoScrollContainer className="custom-style">
                 Styled
             </AutoScrollContainer>
@@ -45,24 +47,22 @@ describe('AutoScrollContainer', () => {
     });
 
     it('scrolls to bottom on mount', () => {
-        const { container } = render(
-            <AutoScrollContainer>Mount scroll</AutoScrollContainer>
-        );
+        render(<AutoScrollContainer>Mount scroll</AutoScrollContainer>);
         const div = screen.getByTestId('container');
         expect(div.scrollTop).toBe(div.scrollHeight);
     });
 
     it('scrolls to bottom on children update', () => {
-        const { rerender, container } = render(
+        const { rerender } = render(
             <AutoScrollContainer>Initial</AutoScrollContainer>
         );
         const div = screen.getByTestId('container');
-        expect(div.scrollTop).toBe(div.scrollHeight); // mount scroll
+        expect(div.scrollTop).toBe(div.scrollHeight); // on mount
 
         // Reset scrollTop before re-render
         containerMock.scrollTop = 0;
 
         rerender(<AutoScrollContainer>Updated content</AutoScrollContainer>);
-        expect(div.scrollTop).toBe(div.scrollHeight); // update scroll
+        expect(div.scrollTop).toBe(div.scrollHeight); // after update
     });
 });

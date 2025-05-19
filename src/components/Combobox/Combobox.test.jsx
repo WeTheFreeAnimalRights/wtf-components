@@ -1,29 +1,30 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { Combobox } from './index';
 
-jest.mock('../../hooks/useTranslations', () => ({
+vi.mock('../../hooks/useTranslations', () => ({
   useTranslations: () => ({
     t: (key) => key,
   }),
 }));
 
-jest.mock('../../hooks/useRequest', () => ({
+vi.mock('../../hooks/useRequest', () => ({
   useRequest: () => ({
-    request: jest.fn().mockResolvedValue({ data: [] }),
+    request: vi.fn().mockResolvedValue({ data: [] }),
     loading: false,
     error: null,
   }),
 }));
 
 // 🧠 Make debounce call instantly
-jest.mock('lodash-es', () => {
-  const actual = jest.requireActual('lodash-es');
-  return {
-    ...actual,
-    debounce: (fn) => fn,
-  };
-});
+vi.mock('lodash-es', async () => {
+    const actual = await vi.importActual('lodash-es');
+    return {
+      ...actual,
+      debounce: (fn) => fn,
+    };
+  });
 
 describe('Combobox', () => {
   const options = [
@@ -44,7 +45,7 @@ describe('Combobox', () => {
   });
 
   it('calls onSelect when an option is clicked', async () => {
-    const onSelect = jest.fn();
+    const onSelect = vi.fn();
     render(<Combobox options={options} onSelect={onSelect} />);
     fireEvent.click(screen.getByRole('combobox'));
     fireEvent.click(await screen.findByText('Second Option'));

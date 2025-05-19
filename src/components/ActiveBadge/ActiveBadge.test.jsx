@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { vi, describe, it, expect } from 'vitest';
 import { ActiveBadge } from './index';
 
 // Mock Tooltip
-jest.mock('../Tooltip', () => ({
+vi.mock('../Tooltip', () => ({
     Tooltip: ({ message, children }) => (
         <div data-testid="tooltip" data-message={message}>
             {children}
@@ -12,7 +13,7 @@ jest.mock('../Tooltip', () => ({
 }));
 
 // Mock Badge
-jest.mock('../Badge', () => ({
+vi.mock('../Badge', () => ({
     Badge: ({ children, className, variant }) => (
         <div data-testid="badge" className={className} data-variant={variant}>
             {children}
@@ -21,7 +22,7 @@ jest.mock('../Badge', () => ({
 }));
 
 // Mock useTranslations
-jest.mock('../../hooks/useTranslations', () => ({
+vi.mock('../../hooks/useTranslations', () => ({
     useTranslations: () => ({
         t: (key) =>
             ({

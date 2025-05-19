@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { BigTabs } from './index';
 
 // Mocks
-jest.mock('./TabButton', () => ({
+vi.mock('./TabButton', () => ({
     TabButton: ({ children, onClick, selected }) => (
         <button
             data-testid="tab-button"
@@ -15,12 +16,12 @@ jest.mock('./TabButton', () => ({
     ),
 }));
 
-jest.mock('./BigTab', () => ({
+vi.mock('./BigTab', () => ({
     BigTab: ({ children, visible }) =>
         visible ? <div data-testid="tab-content">{children}</div> : null,
 }));
 
-jest.mock('_/lib/utils', () => ({
+vi.mock('_/lib/utils', () => ({
     cn: (...args) => args.filter(Boolean).join(' '),
 }));
 
@@ -65,7 +66,6 @@ describe('BigTabs', () => {
             </BigTabs>
         );
 
-        // Click second tab
         const buttons = screen.getAllByTestId('tab-button');
         fireEvent.click(buttons[1]);
 

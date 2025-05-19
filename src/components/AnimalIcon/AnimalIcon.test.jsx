@@ -1,25 +1,28 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { vi, describe, it, expect } from 'vitest';
 import { AnimalIcon } from './index';
 
-jest.mock('./getIcons', () => ({
+vi.mock('./getIcons', () => ({
     getIcons: () => ({
         light: ['light-icon-0', 'light-icon-1'],
         dark: ['dark-icon-0', 'dark-icon-1'],
     }),
 }));
 
-jest.mock('../../hooks/useTheme', () => ({
+vi.mock('../../hooks/useTheme', () => ({
     useTheme: () => ({ theme: 'light' }),
 }));
 
-jest.mock('lodash-es', () => {
-    const actual = jest.requireActual('lodash-es');
+vi.mock('lodash-es', async (importOriginal) => {
+    const actual = await importOriginal();
+
     return {
-        ...actual,
-        sample: () => 'light-icon-1',
+      ...actual,
+      sample: () => 'light-icon-1',  // ✅ override
+      // isUndefined is untouched and forwarded from actual
     };
-});
+  });
 
 describe('AnimalIcon', () => {
     it('renders image with icon from theme if no variant is provided', () => {

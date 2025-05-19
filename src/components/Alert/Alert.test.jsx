@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { vi, describe, it, expect } from 'vitest';
 import { Alert } from './index';
 
 // Mock ShadCN alert components
-jest.mock('_/components/alert', () => ({
+vi.mock('_/components/alert', () => ({
     Alert: ({ children, className, variant }) => (
         <div data-testid="alert" data-variant={variant} className={className}>
             {children}
@@ -16,12 +17,12 @@ jest.mock('_/components/alert', () => ({
 }));
 
 // Mock utils
-jest.mock('_/lib/utils', () => ({
+vi.mock('_/lib/utils', () => ({
     cn: (...args) => args.filter(Boolean).join(' '), // simple join for classnames
 }));
 
 // Mock icons
-jest.mock('lucide-react', () => ({
+vi.mock('lucide-react', () => ({
     Info: () => <svg data-testid="icon-info" />,
     TriangleAlert: () => <svg data-testid="icon-warning" />,
 }));

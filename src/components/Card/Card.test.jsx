@@ -1,14 +1,15 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { Card } from './index';
 
-jest.mock('./CardActiveTitle', () => ({
+vi.mock('./CardActiveTitle', () => ({
     CardActiveTitle: ({ children }) => (
         <div data-testid="card-active-title">{children}</div>
     ),
 }));
 
-jest.mock('_/components/card', () => ({
+vi.mock('_/components/card', () => ({
     Card: ({ children, customizer, ...props }) => (
         <div data-testid="card" {...props}>
             {children}
@@ -40,7 +41,7 @@ jest.mock('_/components/card', () => ({
     ),
 }));
 
-jest.mock('_/lib/utils', () => ({
+vi.mock('_/lib/utils', () => ({
     cn: (...args) => args.filter(Boolean).join(' '),
 }));
 
@@ -90,7 +91,7 @@ describe('Card', () => {
     });
 
     it('applies onClick and className', () => {
-        const handleClick = jest.fn();
+        const handleClick = vi.fn();
         const { getByTestId } = render(
             <Card onClick={handleClick} className="custom-class">
                 Click Test

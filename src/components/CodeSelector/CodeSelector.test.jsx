@@ -1,18 +1,19 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { CodeSelector } from './index';
 
 // ✅ Mock helpers/hooks
-jest.mock('../../hooks/useCode', () => ({
+vi.mock('../../hooks/useCode', () => ({
   useCode: () => ({
     code: { empty: true, code: 'ABC123' },
     selected: false,
-    setCode: jest.fn(),
+    setCode: vi.fn(),
     defaultCode: { code: 'default' },
   }),
 }));
 
-jest.mock('../../hooks/useTranslations', () => ({
+vi.mock('../../hooks/useTranslations', () => ({
   useTranslations: () => ({
     t: (key, args) => {
       if (args) return key.replace('{0}', args[0]);
@@ -21,22 +22,22 @@ jest.mock('../../hooks/useTranslations', () => ({
   }),
 }));
 
-jest.mock('../../hooks/useRequest', () => ({
+vi.mock('../../hooks/useRequest', () => ({
   useRequest: () => ({
-    request: jest.fn().mockResolvedValue({
+    request: vi.fn().mockResolvedValue({
       data: [{ code: 'VALID123', team: {}, organization: {} }],
     }),
     loading: false,
     error: null,
-    setError: jest.fn(),
+    setError: vi.fn(),
   }),
 }));
 
-jest.mock('../../helpers/validateCode', () => ({
-  validateCode: jest.fn(() => true),
+vi.mock('../../helpers/validateCode', () => ({
+  validateCode: vi.fn(() => true),
 }));
 
-jest.mock('../../helpers/getCDNUrl', () => ({
+vi.mock('../../helpers/getCDNUrl', () => ({
   getCDNUrl: (path) => `https://cdn.fake/${path}`,
 }));
 

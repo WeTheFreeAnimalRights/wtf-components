@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { TabButton } from './TabButton';
 
 describe('TabButton', () => {
@@ -18,7 +19,7 @@ describe('TabButton', () => {
     it('applies selected styles when selected is true', () => {
         render(<TabButton selected>Selected Tab</TabButton>);
         const button = screen.getByRole('button');
-        expect(button.className).toMatch(/bg-gray-700/); // or use `.toHaveClass(...)` for exact matches
+        expect(button.className).toMatch(/bg-gray-700/); // or use .toHaveClass()
     });
 
     it('applies unselected styles when selected is false', () => {
@@ -40,7 +41,7 @@ describe('TabButton', () => {
     });
 
     it('calls onClick when clicked', () => {
-        const handleClick = jest.fn();
+        const handleClick = vi.fn();
         render(<TabButton onClick={handleClick}>Click Me</TabButton>);
         fireEvent.click(screen.getByRole('button'));
         expect(handleClick).toHaveBeenCalled();

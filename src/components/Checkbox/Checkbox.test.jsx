@@ -1,8 +1,9 @@
 import React, { createRef } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { Checkbox } from './index';
 
-jest.mock('_/components/checkbox', () => {
+vi.mock('_/components/checkbox', () => {
     const React = require('react'); // ✅ in-scope
     return {
         Checkbox: React.forwardRef(({ className, ...props }, ref) => (
@@ -33,7 +34,7 @@ describe('Checkbox', () => {
     });
 
     it('passes props like checked and onChange', () => {
-        const handleChange = jest.fn();
+        const handleChange = vi.fn();
         render(<Checkbox checked={true} onChange={handleChange} />);
         const checkbox = screen.getByTestId('shad-checkbox');
 
