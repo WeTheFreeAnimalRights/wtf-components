@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import { isFunction } from 'lodash-es';
 import { Alert } from '../Alert';
 import { Empty } from '../Empty';
 import { Spinner } from '../Spinner';
 import { useDevelopmentMode } from '../../hooks/useDevelopmentMode';
-import { traverseElements } from '../../helpers/traverseElements';
 
+// Shad CN
 import { cn } from '_/lib/utils';
+import { useToast } from '_/hooks/use-toast';
 
 export const PreloaderStates = ({
     loading,
@@ -19,6 +21,19 @@ export const PreloaderStates = ({
     _id,
 }) => {
     const { developmentMode } = useDevelopmentMode();
+
+    // Toast for optional errros
+    const { toast } = useToast();
+
+    useEffect(() => {
+    if (error && error?.config?.optional) {
+        toast({
+            variant: 'destructive',
+            title: 'Error',
+            description: error.message,
+        });
+    }
+}, [error]);
 
     if (renderChildren) {
         return children;
@@ -54,7 +69,7 @@ export const PreloaderStates = ({
         );
     }
 
-    if (error && !ignoreError) {
+    if (error && !ignoreError && error?.config?.optional !== true) {
         if (developmentMode) {
             return (
                 <div

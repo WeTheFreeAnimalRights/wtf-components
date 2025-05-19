@@ -169,7 +169,7 @@ export const ChatView = ({ className, resources, plugins = ['resources'], prompt
                             }}
                         />
                     )}
-                    {selectedPlugin === 'prompts' && (
+                    {selectedPlugin === 'prompts' && prompts?.length > 0 && (
                         <PromptsChatPlugin
                             onSelect={setInputMessage}
                             onCancel={() => {

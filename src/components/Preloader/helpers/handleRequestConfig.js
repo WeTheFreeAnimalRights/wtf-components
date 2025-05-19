@@ -19,6 +19,9 @@ export const handleRequestConfig = async (config = {}) => {
             config.errorCallback(error);
         }
 
+        // Attach the config to the error
+        error.config = config;
+
         throw error;
     }
 };

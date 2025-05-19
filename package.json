@@ -69,12 +69,19 @@
     "prop-types": "^15.8.1",
     "valibot": "^1.1.0",
     "wouter": "^3.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "zustand": "^5.0.4"
   },
   "scripts": {
-    "start": "vite",
+    "link:3movies": "npm link ../3Movies.wtf-new/node_modules/react ../3Movies.wtf-new/node_modules/react-dom ../3Movies.wtf-new/node_modules/zustand ../3Movies.wtf-new/node_modules/wouter",
+    "link:mystats": "npm link ../MyStats-web.wtf-new/node_modules/react ../MyStats-web.wtf-new/node_modules/react-dom ../MyStats-web.wtf-new/node_modules/zustand ../MyStats-web.wtf-new/node_modules/wouter",
+    "link:3minutes": "npm link ../3minutes.wtf-new/node_modules/react ../3minutes.wtf-new/node_modules/react-dom ../3minutes.wtf-new/node_modules/zustand ../3minutes.wtf-new/node_modules/wouter",
+    "watch:3movies": "npm run link:3movies && npm run build -- -w",
+    "watch:mystats": "npm run link:mystats && npm run build -- -w",
+    "watch:3minutes": "npm run link:3minutes && npm run build -- -w",
+    "start": "npm run storybook",
     "build": "vite build",
-    "watch": "vite build -w",
     "clear": "node ./update-build.js",
     "extract-translations": "node ./_scripts/_extract-translations.js",
     "storybook": "storybook dev -p 6006 --no-open",
@@ -154,7 +161,8 @@
     "./_scripts/update-build": "./_scripts/update-build.js",
     "./_scripts/update-meta": "./_scripts/update-meta.js",
     "./_scripts/update-robots": "./_scripts/update-robots.js",
-    "./_scripts/upload-to-bunny-cdn": "./_scripts/upload-to-bunny-cdn.js"
+    "./_scripts/upload-to-bunny-cdn": "./_scripts/upload-to-bunny-cdn.js",
+    "./_scripts/upload-all-to-bunny-cdn": "./_scripts/upload-all-to-bunny-cdn.js"
   },
   "buildDate": 1722346149990
 }

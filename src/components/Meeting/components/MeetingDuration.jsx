@@ -13,11 +13,13 @@ export const MeetingDuration = ({ startedAt }) => {
         const updateDuration = () => {
             const now = new Date();
             const diffInSeconds = differenceInSeconds(now, startTime);
-            const minutes = Math.floor(diffInSeconds / 60);
-            const seconds = diffInSeconds % 60;
+            const hours = Math.floor(diffInSeconds / 3600);
+            const secondsLeft = diffInSeconds - hours * 3600;
+            const minutes = Math.floor(secondsLeft / 60);
+            const seconds = secondsLeft % 60;
 
             setDuration(
-                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+                `${hours?String(hours).padStart(2, '0')+':':''}${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
             );
         };
 
