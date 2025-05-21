@@ -1,11 +1,17 @@
-import { atom as jotaiAtom, Provider as JotaiProvider, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import {
+    atom as jotaiAtom,
+    Provider as JotaiProvider,
+    useAtom,
+    useAtomValue,
+    useSetAtom,
+} from 'jotai';
 
 /**
  * Create a new global state atom
  */
 export const createGlobalState = ({ default: defaultValue }) => {
     return jotaiAtom(defaultValue);
-  };
+};
 
 /**
  * Hook to use global state (like useRecoilState)
@@ -26,5 +32,5 @@ export const useGlobalValue = (atom) => useAtomValue(atom);
  * Provider component to wrap your app (like RecoilRoot)
  */
 export const AppStateProvider = ({ children }) => {
-  return <JotaiProvider>{children}</JotaiProvider>;
+    return <JotaiProvider>{children}</JotaiProvider>;
 };

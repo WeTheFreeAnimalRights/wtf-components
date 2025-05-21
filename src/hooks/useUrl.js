@@ -12,7 +12,8 @@ export const useUrl = () => {
 
     // Language and code
     const browserLanguage = (getBrowserLanguage() || '').split('-')[0];
-    let language = SecureStore.get('language') || browserLanguage || getDefaultLanguage();
+    let language =
+        SecureStore.get('language') || browserLanguage || getDefaultLanguage();
     let code = SecureStore.get('code') || getDefaultCode().code;
 
     // Is preview

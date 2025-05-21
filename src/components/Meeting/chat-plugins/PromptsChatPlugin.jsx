@@ -18,10 +18,7 @@ export const PromptsChatPlugin = ({ onSelect, items }) => {
 
     return (
         <div className="h-96">
-            <Tabs
-                defaultValue={items[0].name}
-                className="flex flex-col h-full"
-            >
+            <Tabs defaultValue={items[0].name} className="flex flex-col h-full">
                 <TabsList className="block mb-3  items-center overflow-x-auto w-full flex-nowrap whitespace-nowrap p-0">
                     {items.map((item) => (
                         <TabsTrigger value={item.name} key={`tab-${item.name}`}>
@@ -65,27 +62,29 @@ export const PromptsChatPlugin = ({ onSelect, items }) => {
                         )}
                         {item.type === 'objectionHandling' && (
                             <div className="text-sm">
-                            <Markdown components={{
-                                h3: ({ node, ...rest }) => {
-                                    return (
-                                        <h3
-                                            className={`font-semibold mt-4 mb-2 first:mt-0`}
-                                            {...rest}
-                                        />
-                                    );
-                                },
-                                p: ({ node, ...rest }) => {
-                                    return (
-                                        <p
-                                            className={`text-muted-foreground`}
-                                            {...rest}
-                                        />
-                                    );
-                                },
-                            }}>
-                            {item.value}
-                        </Markdown>
-                        </div>
+                                <Markdown
+                                    components={{
+                                        h3: ({ node, ...rest }) => {
+                                            return (
+                                                <h3
+                                                    className={`font-semibold mt-4 mb-2 first:mt-0`}
+                                                    {...rest}
+                                                />
+                                            );
+                                        },
+                                        p: ({ node, ...rest }) => {
+                                            return (
+                                                <p
+                                                    className={`text-muted-foreground`}
+                                                    {...rest}
+                                                />
+                                            );
+                                        },
+                                    }}
+                                >
+                                    {item.value}
+                                </Markdown>
+                            </div>
                         )}
                         {item.type === 'objections' && (
                             <Accordion

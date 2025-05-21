@@ -47,12 +47,18 @@ export const Modal = ({
             onClick={onClick}
         >
             {title && (
-                <ShadDialogHeader className={cn(
-                    headerClassName,
-                !showTitle && 'sr-only')}>
-                    <ShadDialogTitle className={cn(!showTitle && 'sr-only', titleClassName)}>{title}</ShadDialogTitle>
+                <ShadDialogHeader
+                    className={cn(headerClassName, !showTitle && 'sr-only')}
+                >
+                    <ShadDialogTitle
+                        className={cn(!showTitle && 'sr-only', titleClassName)}
+                    >
+                        {title}
+                    </ShadDialogTitle>
                     {description && (
-                        <ShadDialogDescription className={!showDescription && 'sr-only'}>
+                        <ShadDialogDescription
+                            className={!showDescription && 'sr-only'}
+                        >
                             {description}
                         </ShadDialogDescription>
                     )}

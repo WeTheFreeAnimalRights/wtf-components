@@ -1,5 +1,5 @@
 import { custom } from 'valibot';
 
 export const validateNot = () => {
-  return custom(() => true);
+    return custom(() => true);
 };

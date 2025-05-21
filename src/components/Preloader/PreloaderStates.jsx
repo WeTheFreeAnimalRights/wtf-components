@@ -26,14 +26,14 @@ export const PreloaderStates = ({
     const { toast } = useToast();
 
     useEffect(() => {
-    if (error && error?.config?.optional) {
-        toast({
-            variant: 'destructive',
-            title: 'Error',
-            description: error.message,
-        });
-    }
-}, [error]);
+        if (error && error?.config?.optional) {
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: error.message,
+            });
+        }
+    }, [error]);
 
     if (renderChildren) {
         return children;

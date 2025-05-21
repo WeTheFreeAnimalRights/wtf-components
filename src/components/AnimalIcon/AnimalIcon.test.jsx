@@ -18,11 +18,11 @@ vi.mock('lodash-es', async (importOriginal) => {
     const actual = await importOriginal();
 
     return {
-      ...actual,
-      sample: () => 'light-icon-1',  // ✅ override
-      // isUndefined is untouched and forwarded from actual
+        ...actual,
+        sample: () => 'light-icon-1', // ✅ override
+        // isUndefined is untouched and forwarded from actual
     };
-  });
+});
 
 describe('AnimalIcon', () => {
     it('renders image with icon from theme if no variant is provided', () => {

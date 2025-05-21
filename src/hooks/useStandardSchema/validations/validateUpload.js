@@ -1,5 +1,5 @@
 import { string } from 'valibot';
 
 export const validateUpload = () => {
-  return string();
+    return string();
 };

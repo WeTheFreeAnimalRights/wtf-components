@@ -5,7 +5,11 @@ export { BigTabs, BigTab } from './components/BigTabs';
 export { Badge, badgeVariants } from './components/Badge';
 export { Button } from './components/Button';
 export { Card, CardFooter, CardActiveTitle } from './components/Card';
-export { Checkbox, FormFieldCheckbox, FormFieldMultipleCheckbox } from './components/Checkbox';
+export {
+    Checkbox,
+    FormFieldCheckbox,
+    FormFieldMultipleCheckbox,
+} from './components/Checkbox';
 export { CodeInput, FormFieldCodeInput } from './components/CodeInput';
 export {
     DataTable,
@@ -35,10 +39,7 @@ export {
     FormFieldPasswordInput,
 } from './components/PasswordInput';
 export { Popover, PopoverContent, PopoverTrigger } from './components/Popover';
-export {
-    Preloader,
-    PreloaderStates,
-} from './components/Preloader';
+export { Preloader, PreloaderStates } from './components/Preloader';
 export { Confirm, useConfirm } from './components/Confirm';
 export { Resource } from './components/Resource';
 export { AnimalIcon } from './components/AnimalIcon';

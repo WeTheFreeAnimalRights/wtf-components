@@ -37,7 +37,9 @@ const clearBunnyCDN = async (cdnData) => {
     );
 
     if (!listResponse.ok) {
-        throw new Error(`Failed to fetch CDN files: ${listResponse.statusText}`);
+        throw new Error(
+            `Failed to fetch CDN files: ${listResponse.statusText}`
+        );
     }
 
     const files = await listResponse.json();
@@ -57,7 +59,9 @@ const clearBunnyCDN = async (cdnData) => {
             );
 
             if (!subResponse.ok) {
-                throw new Error(`Failed to fetch subfolder: ${subResponse.statusText}`);
+                throw new Error(
+                    `Failed to fetch subfolder: ${subResponse.statusText}`
+                );
             }
 
             const subFiles = await subResponse.json();
@@ -107,7 +111,9 @@ const uploadFile = async (cdnData, localPath, remotePath) => {
     if (response.ok) {
         console.log(`📤 Uploaded: ${remotePath}`);
     } else {
-        throw new Error(`Failed to upload ${remotePath}: ${response.statusText}`);
+        throw new Error(
+            `Failed to upload ${remotePath}: ${response.statusText}`
+        );
     }
 };
 

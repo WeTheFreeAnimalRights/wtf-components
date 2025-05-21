@@ -5,7 +5,6 @@ import { useUrl } from './useUrl';
 import { SecureStore } from '../store/SecureStore';
 import { useGlobalState } from '../store/AppState';
 
-
 export const useAnalytics = () => {
     const [analytics, setAnalytics] = useGlobalState(analyticsState);
     const { request } = useRequest();

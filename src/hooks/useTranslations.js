@@ -23,7 +23,8 @@ export const useTranslations = () => {
 
     // Handle languages
     const [languages, setLanguages] = useGlobalState(languagesState);
-    const [currentLanguage, setCurrentLanguage] = useGlobalState(currentLanguageState);
+    const [currentLanguage, setCurrentLanguage] =
+        useGlobalState(currentLanguageState);
 
     return {
         // Pass the translations helpers

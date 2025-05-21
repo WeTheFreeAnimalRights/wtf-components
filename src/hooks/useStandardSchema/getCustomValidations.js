@@ -1,10 +1,7 @@
 import { isArray } from 'lodash-es';
 import { custom } from 'valibot';
 
-export const getCustomValidations = (
-    standardSchema = [],
-    { t }
-) => {
+export const getCustomValidations = (standardSchema = [], { t }) => {
     return standardSchema.reduce((rules, field) => {
         // Confirmation property
         if (field.confirmation) {
@@ -15,7 +12,9 @@ export const getCustomValidations = (
                         return {
                             issue: {
                                 path: [field.name],
-                                message: t(`${field.confirmation}-does-not-match`),
+                                message: t(
+                                    `${field.confirmation}-does-not-match`
+                                ),
                             },
                         };
                     }
@@ -38,8 +37,9 @@ export const getCustomValidations = (
                         return {
                             issue: {
                                 path: [field.name],
-                                message: field.notAllowedMessage ||
-                                t(`${field.name}-not-allowed-value`),
+                                message:
+                                    field.notAllowedMessage ||
+                                    t(`${field.name}-not-allowed-value`),
                             },
                         };
                     }

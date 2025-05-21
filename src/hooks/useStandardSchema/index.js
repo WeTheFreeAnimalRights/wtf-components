@@ -10,13 +10,18 @@ export const useStandardSchema = (standardSchema = []) => {
     const { t } = useTranslations();
 
     // Get the validation schema
-    const { schema, defaultValues } = getValidationSchema(standardSchema, { t });
+    const { schema, defaultValues } = getValidationSchema(standardSchema, {
+        t,
+    });
 
     // Get the values
     const values = getValuesFromSchema(standardSchema);
 
     // Make the validation object
-    const validationObject = object(schema, getCustomValidations(standardSchema, { t }));
+    const validationObject = object(
+        schema,
+        getCustomValidations(standardSchema, { t })
+    );
 
     return useForm({
         resolver: valibotResolver(validationObject),

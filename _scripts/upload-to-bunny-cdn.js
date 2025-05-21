@@ -130,7 +130,9 @@ const uploadAndClean = async (cdnData) => {
         const assetsFolder = path.join(distFolder, 'assets');
 
         if (!fs.existsSync(assetsFolder)) {
-            throw new Error('dist/assets folder does not exist. Did you run `vite build`?');
+            throw new Error(
+                'dist/assets folder does not exist. Did you run `vite build`?'
+            );
         }
 
         const files = fs.readdirSync(assetsFolder);
@@ -145,7 +147,10 @@ const uploadAndClean = async (cdnData) => {
         }
 
         // Clean up the empty assets folder
-        if (fs.existsSync(assetsFolder) && fs.readdirSync(assetsFolder).length === 0) {
+        if (
+            fs.existsSync(assetsFolder) &&
+            fs.readdirSync(assetsFolder).length === 0
+        ) {
             fs.rmSync(assetsFolder, { recursive: true, force: true });
             console.log(`🗑️ Deleted empty folder: ${assetsFolder}`);
         }
@@ -159,16 +164,16 @@ const uploadAndClean = async (cdnData) => {
 
 const updateIndexHtml = (cdnData) => {
     try {
-        console.log("Updating index.html...");
-        const indexPath = path.join(process.cwd(), "dist", "index.html");
+        console.log('Updating index.html...');
+        const indexPath = path.join(process.cwd(), 'dist', 'index.html');
 
         if (!fs.existsSync(indexPath)) {
-            throw new Error("index.html not found in dist/. Skipping update.");
+            throw new Error('index.html not found in dist/. Skipping update.');
         }
 
-        let indexContent = fs.readFileSync(indexPath, "utf8");
+        let indexContent = fs.readFileSync(indexPath, 'utf8');
 
-        const cdnUrl = cdnData.url.replace(/\/+$/, ""); // remove trailing slash just in case
+        const cdnUrl = cdnData.url.replace(/\/+$/, ''); // remove trailing slash just in case
 
         // Replace href="/style.css" or src="/main.js" or src="/assets/somefile.js"
         indexContent = indexContent.replace(
@@ -176,12 +181,12 @@ const updateIndexHtml = (cdnData) => {
             `$1${cdnUrl}/$2`
         );
 
-        fs.writeFileSync(indexPath, indexContent, "utf8");
+        fs.writeFileSync(indexPath, indexContent, 'utf8');
 
-        console.log("✅ Updated index.html to reference CDN assets.");
+        console.log('✅ Updated index.html to reference CDN assets.');
     } catch (error) {
-        console.error("❌ Error updating index.html:", error.message);
-        throw new Error("Stopping execution due to index.html update failure.");
+        console.error('❌ Error updating index.html:', error.message);
+        throw new Error('Stopping execution due to index.html update failure.');
     }
 };
 

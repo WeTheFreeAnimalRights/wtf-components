@@ -4,4 +4,4 @@ export {
     useSetGlobalState,
     useGlobalValue,
     AppStateProvider,
-  } from './zustandAdapter';
+} from './zustandAdapter';

@@ -13,7 +13,12 @@ import { Spinner } from '../Spinner';
 import { isFunction } from 'lodash-es';
 import { cn } from '_/lib/utils';
 
-export const FeedbackForm = ({ resourceId, className, gridClassName, onVote }) => {
+export const FeedbackForm = ({
+    resourceId,
+    className,
+    gridClassName,
+    onVote,
+}) => {
     const { t } = useTranslations();
 
     // Fetch the options
@@ -94,17 +99,23 @@ export const FeedbackForm = ({ resourceId, className, gridClassName, onVote }) =
                         {t('form-success-text')}
                     </Alert>
                 ) : (
-                    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4', gridClassName)}>
+                    <div
+                        className={cn(
+                            'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4',
+                            gridClassName
+                        )}
+                    >
                         {(options?.ordered || []).map(
                             ({ type, description, id }) => (
                                 <Button
                                     variant="outline"
                                     className={cn(
-        'p-3 md:p-4 whitespace-normal flex flex-row md:flex-col items-center justify-center hover:shadow-md hover:bg-background dark:hover:bg-accent transition-all transform duration-100',
-        {
-            'border-2 border-primary scale-105': selectedId === id,
-        }
-    )}
+                                        'p-3 md:p-4 whitespace-normal flex flex-row md:flex-col items-center justify-center hover:shadow-md hover:bg-background dark:hover:bg-accent transition-all transform duration-100',
+                                        {
+                                            'border-2 border-primary scale-105':
+                                                selectedId === id,
+                                        }
+                                    )}
                                     size="auto"
                                     key={`option-${id}`}
                                     onClick={() => sendRepsonse(id)}

@@ -4,7 +4,7 @@ import { AppStateProvider } from '../src/store/AppState';
 
 export default {
     tags: [],
-  };
+};
 
 const getBackgroundClass = (background) => {
     return background === '#000000' ? 'dark' : 'light';
@@ -43,11 +43,11 @@ export const decorators = [
         }, [background]);
 
         return (
-                <AppStateProvider>
-            <div style={{ backgroundColor: background, minHeight: '100%' }}>
-                <Story />
-            </div>
-                </AppStateProvider>
+            <AppStateProvider>
+                <div style={{ backgroundColor: background, minHeight: '100%' }}>
+                    <Story />
+                </div>
+            </AppStateProvider>
         );
     },
 ];

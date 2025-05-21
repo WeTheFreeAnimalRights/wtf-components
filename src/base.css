@@ -50,7 +50,7 @@
         --facebook: 221 92% 58%;
         --whatsapp: 173 77% 31%;
 
---plyr-color-main: 323 59% 51%;
+        --plyr-color-main: 323 59% 51%;
     }
 
     .dark {
@@ -97,7 +97,7 @@
         --facebook: 221 92% 58%;
         --whatsapp: 173 77% 31%;
 
---plyr-color-main: 323 76% 57%;
+        --plyr-color-main: 323 76% 57%;
     }
 }
 
