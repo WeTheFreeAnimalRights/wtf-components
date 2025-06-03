@@ -68,12 +68,12 @@ export const FeedbackForm = ({
                     onVote(id);
                 }
 
-                const selectedOption = options?.ordered?.find(option => option.id === id);
-                if (selectedOption && typeof plausible === 'function') {
+                if (typeof plausible === 'function') {
                     plausible('Feedback', {
                         props: {
                             code: code.code,
-                            feedback: selectedOption.type
+                            feedback_option_id: id,
+                            resource_id: resourceId,
                         }
                     });
                 }
