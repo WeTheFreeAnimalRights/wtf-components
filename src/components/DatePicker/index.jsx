@@ -45,7 +45,7 @@ export const DatePicker = forwardRef(
                     <CalendarIcon className="h-4 w-4" />
                     <div className="flex-grow text-start">
                         {value ? (
-                            format(new Date(value), 'PP')
+                            format(new Date(value), 'PP', { locale })
                         ) : (
                             <span>{placeholder}</span>
                         )}
@@ -87,7 +87,7 @@ export const DatePicker = forwardRef(
                         onSelect={(newValue) => {
                             setOpen(false);
                             if (isFunction(onChange)) {
-                                onChange(format(new Date(newValue), 'PP'));
+                                onChange(format(new Date(newValue), 'yyyy-MM-dd'));
                             }
                         }}
                         locale={locale}
