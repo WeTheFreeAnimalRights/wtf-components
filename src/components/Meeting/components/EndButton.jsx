@@ -1,24 +1,18 @@
-import { useContext } from 'react';
-import { useMeeting } from '@videosdk.live/react-sdk';
 import { LogOut } from 'lucide-react';
-import { MeetingContext } from './MeetingContext';
 import { Button } from '../../Button';
-import { getRoomStatuses } from '../helpers/getRoomStatuses';
+import { Tooltip } from '../../Tooltip';
+import { useTranslations } from '../../../hooks/useTranslations';
+import { useEndMeeting } from '../hooks/useEndMeeting';
 
 export const EndButton = () => {
-    const { setMeeting } = useContext(MeetingContext);
-    const { leave } = useMeeting();
-    const statuses = getRoomStatuses();
+    const { t } = useTranslations();
+    const endMeeting = useEndMeeting();
 
     return (
-        <Button
-            variant="gray"
-            onClick={() => {
-                setMeeting('status', statuses.left);
-                leave();
-            }}
-        >
-            <LogOut className="w-4 h-4" />
-        </Button>
+        <Tooltip message={t('chat-end-tooltip')}>
+            <Button variant="gray" onClick={() => endMeeting()}>
+                <LogOut className="w-4 h-4" />
+            </Button>
+        </Tooltip>
     );
 };

@@ -8,7 +8,7 @@ import { Button } from '../Button';
 export const DiscordModal = ({ open, onOpenChange }) => {
     const { t } = useTranslations();
     const discordLink = 'https://discord.com/invite/yQuHz43HPv';
-    const discordSplashUrl = getCDNUrl('3movies/discord-splash.jpg');
+    const discordSplashUrl = getCDNUrl('_static/discord-splash.jpg');
 
     return (
         <ModalContainer open={open} onOpenChange={onOpenChange}>

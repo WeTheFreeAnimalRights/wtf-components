@@ -95,7 +95,7 @@ export const CodeSelector = ({
     };
 
     // Get the card image url
-    const cardImageUrl = getCDNUrl(`${platform}/bg-code.jpg`);
+    const cardImageUrl = getCDNUrl(`_static/bg-code-${platform}.jpg`);
 
     return (
         <ModalContainer

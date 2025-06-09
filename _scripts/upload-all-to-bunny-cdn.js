@@ -25,11 +25,19 @@ const getRelativeRemotePath = (filePath, baseFolder) => {
     return path.relative(baseFolder, filePath).replace(/\\/g, '/');
 };
 
+const getFolder = (cdnData) => {
+    if (cdnData.folder) {
+        return cdnData.folder + '/';
+    }
+
+    return '';
+};
+
 const clearBunnyCDN = async (cdnData) => {
     console.log('🚀 Clearing old CDN files...');
 
     const listResponse = await fetch(
-        `https://storage.bunnycdn.com/${cdnData.zone}/${cdnData.folder}/`,
+        `https://storage.bunnycdn.com/${cdnData.zone}/${getFolder(cdnData)}`,
         {
             method: 'GET',
             headers: { AccessKey: cdnData.accessKey },
@@ -45,7 +53,12 @@ const clearBunnyCDN = async (cdnData) => {
     const files = await listResponse.json();
 
     for (const file of files) {
-        const filePath = `${cdnData.folder}/${file.ObjectName}`;
+        if (file.ObjectName.startsWith('_')) {
+            console.log(`⏭️ Skipped (starts with _): ${file.ObjectName}`);
+            continue;
+        }
+
+        const filePath = getFolder(cdnData) + file.ObjectName;
 
         if (file.IsDirectory) {
             console.log(`📂 Entering folder: ${file.ObjectName}`);
@@ -67,6 +80,12 @@ const clearBunnyCDN = async (cdnData) => {
             const subFiles = await subResponse.json();
             for (const subFile of subFiles) {
                 const subFilePath = `${filePath}/${subFile.ObjectName}`;
+
+                if (subFile.ObjectName.startsWith('_')) {
+                    console.log(`⏭️ Skipped (starts with _): ${subFile.ObjectName}`);
+                    continue;
+                }
+
                 await deleteCDNFile(cdnData, subFilePath);
             }
         } else {
@@ -74,7 +93,7 @@ const clearBunnyCDN = async (cdnData) => {
         }
     }
 
-    console.log('✅ All old files cleared.');
+    console.log('✅ All old files cleared (except _-prefixed).');
 };
 
 const deleteCDNFile = async (cdnData, filePath) => {
@@ -97,7 +116,7 @@ const uploadFile = async (cdnData, localPath, remotePath) => {
     const fileBuffer = fs.readFileSync(localPath);
 
     const response = await fetch(
-        `https://storage.bunnycdn.com/${cdnData.zone}/${cdnData.folder}/${remotePath}`,
+        `https://storage.bunnycdn.com/${cdnData.zone}/${getFolder(cdnData) + remotePath}`,
         {
             method: 'PUT',
             headers: {

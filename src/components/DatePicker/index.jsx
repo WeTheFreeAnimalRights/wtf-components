@@ -87,7 +87,7 @@ export const DatePicker = forwardRef(
                         onSelect={(newValue) => {
                             setOpen(false);
                             if (isFunction(onChange)) {
-                                onChange(format(new Date(newValue), 'PP'));
+                                onChange(newValue);
                             }
                         }}
                         locale={locale}

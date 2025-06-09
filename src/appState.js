@@ -14,6 +14,10 @@ export const languagesState = createGlobalState({
     default: [],
 });
 
+export const notificationsState = createGlobalState({
+    default: [],
+});
+
 export const currentLanguageState = createGlobalState({
     default: SecureStore.get('language') || '',
 });

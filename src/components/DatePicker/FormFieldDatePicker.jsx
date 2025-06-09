@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash-es';
+import { isFunction, isString, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { DatePicker } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -12,6 +12,7 @@ import {
     FormDescription,
 } from '_/components/form';
 import { cn } from '_/lib/utils';
+import { parseDate } from './parseDate';
 
 export const FormFieldDatePicker = ({
     form: formParam,
@@ -43,8 +44,8 @@ export const FormFieldDatePicker = ({
                         {...props}
                         value={
                             !isUndefined(field.value)
-                                ? field.value
-                                : props.value
+                                ? parseDate(field.value)
+                                : parseDate(props.value)
                         }
                         onChange={(newValue) => {
                             if (isFunction(onChange)) {

@@ -97,6 +97,8 @@ export const MediaAccessModal = ({
                         {t('media-access-modal-title')}{' '}
                     </div>
                 }
+                description={t('media-access-modal-description')}
+                showDescription={false}
                 showCloseButton={false}
                 closeButtonClassName="top-5 end-5"
                 closeIconClassName="w-6 h-6 text-white"

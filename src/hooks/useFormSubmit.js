@@ -1,5 +1,6 @@
 import { isFunction } from 'lodash-es';
 import { useRequest } from './useRequest';
+import { parseValues } from '../helpers/parseValues';
 
 export const useFormSubmit = ({
     requestObject,
@@ -16,7 +17,7 @@ export const useFormSubmit = ({
     const formSubmit = async (values) => {
         if (sendToServer === false) {
             if (isFunction(onSuccess)) {
-                onSuccess(values);
+                onSuccess(parseValues(values));
             }
         } else {
             const _request = request.bind(

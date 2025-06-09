@@ -12,4 +12,6 @@ export { MeetingLoader } from './components/MeetingLoader';
 export { MediaAccessModal } from './components/MediaAccessModal';
 export { getRoomStatuses } from './helpers/getRoomStatuses';
 export { useChatVisitor } from './hooks/useChatVisitor';
+export { useChatReportReasons } from './hooks/useChatReportReasons';
+export { useEndMeeting } from './hooks/useEndMeeting';
 export { ToggleButton as MeetingToggleButton } from './components/ToggleButton';

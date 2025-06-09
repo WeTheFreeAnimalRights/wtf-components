@@ -11,14 +11,14 @@ export const Image = ({
     className = '',
     textClassName,
     iconVariant,
-    cdn = false,
+    cdn,
     ...props
 }) => {
     const { t } = useTranslations();
     const [error, setError] = useState(false);
 
     // Get the source of the image
-    const usedSrc = cdn ? getCDNUrl(src) : src;
+    const usedSrc = cdn ? getCDNUrl(src, cdn) : src;
 
     return (
         <>

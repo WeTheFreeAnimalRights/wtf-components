@@ -134,6 +134,7 @@ Preloader.propTypes = {
     requests: PropTypes.arrayOf(
         PropTypes.oneOfType([
             PropTypes.bool,
+            PropTypes.object,
             PropTypes.shape({
                 /**
                  * Optional, which API to send the request to (depending on the setup apis)

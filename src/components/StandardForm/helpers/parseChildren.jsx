@@ -1,4 +1,4 @@
-import { omit } from 'lodash-es';
+import { isFunction, omit } from 'lodash-es';
 import { traverseElements } from '../../../helpers/traverseElements';
 import { getGeneratedComponentMatrix } from './getGeneratedComponentMatrix';
 
@@ -20,7 +20,7 @@ export const parseChildren = (children, { loading, form }) => {
             }
 
             // Get the type and the component
-            const { Component } = matrix[child.type.displayName];
+            const { Component, parseValue } = matrix[child.type.displayName];
 
             // Generate the key of the component
             const key = `${child.type.displayName}-${index}-${level}`;
@@ -28,6 +28,11 @@ export const parseChildren = (children, { loading, form }) => {
             // Get the generated props
             const keysToOmit = ['optional', 'includeInRequest'];
             const generatedProps = omit(props, keysToOmit);
+
+            // Parse the value
+            if (isFunction(parseValue)) {
+                generatedProps.value = parseValue(generatedProps.value);
+            }
 
             // Return (to replace) the component
             return (

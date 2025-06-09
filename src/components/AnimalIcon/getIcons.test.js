@@ -12,7 +12,7 @@ describe('getIcons', () => {
         expect(icons.light).toHaveLength(24);
         expect(icons.dark).toHaveLength(24);
 
-        expect(icons.light[0]).toBe('CDN/animal-icons/light/empty-icon-0.svg');
-        expect(icons.dark[23]).toBe('CDN/animal-icons/dark/empty-icon-23.svg');
+        expect(icons.light[0]).toBe('CDN/_static/animal-icons/light/empty-icon-0.svg');
+        expect(icons.dark[23]).toBe('CDN/_static/animal-icons/dark/empty-icon-23.svg');
     });
 });

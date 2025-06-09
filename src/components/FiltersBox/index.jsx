@@ -44,6 +44,7 @@ export const FiltersBox = ({ children, className, onApplied }) => {
                         },
                     }}
                     onSuccess={(values) => {
+                        console.log('>>values', values);
                         setFiltersOpen(false);
                         if (isFunction(onApplied)) {
                             onApplied(values);

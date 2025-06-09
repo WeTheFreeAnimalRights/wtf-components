@@ -12,6 +12,7 @@ import {
 } from '_/components/card';
 import { cn } from '_/lib/utils';
 import { CardActiveTitle } from './CardActiveTitle';
+import { StandardMarkdown } from '../StandardMarkdown';
 
 export const Card = forwardRef(
     (
@@ -37,6 +38,7 @@ export const Card = forwardRef(
             description = '',
             headerAction,
             customizer = false,
+            descriptionMd = false,
 
             pretitle,
         },
@@ -132,7 +134,11 @@ export const Card = forwardRef(
                                         customizer={customizer}
                                         className={descriptionClassName}
                                     >
-                                        {description}
+                                        {!descriptionMd ?description
+                                        : <StandardMarkdown>
+                                            {description}
+                                        </StandardMarkdown>
+    }
                                     </ShadCardDescription>
                                 )}
                             </div>

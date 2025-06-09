@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { object } from 'valibot';
+import { pipe, object } from 'valibot';
 import { getValidationSchema } from './getValidationSchema';
 import { useTranslations } from '../useTranslations';
 import { getCustomValidations } from './getCustomValidations';
@@ -18,14 +18,15 @@ export const useStandardSchema = (standardSchema = []) => {
     const values = getValuesFromSchema(standardSchema);
 
     // Make the validation object
-    const validationObject = object(
-        schema,
-        getCustomValidations(standardSchema, { t })
+    const validationObject = pipe(
+        object(schema),
+        ...getCustomValidations(standardSchema, { t })
     );
 
     return useForm({
         resolver: valibotResolver(validationObject),
         defaultValues,
         values,
+        criteriaMode: 'all',
     });
 };

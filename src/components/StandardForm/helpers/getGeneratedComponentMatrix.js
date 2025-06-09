@@ -28,6 +28,7 @@ import { FormFieldSwitch } from '../../Switch';
 import { FormFieldTextarea } from '../../Textarea';
 import { FormFieldToggleGroupInput } from '../../ToggleGroupInput';
 import { FormFieldUploadInput } from '../../UploadInput';
+import { parseDate } from '../../DatePicker/parseDate';
 
 export const getGeneratedComponentMatrix = () => {
     return {
@@ -50,6 +51,7 @@ export const getGeneratedComponentMatrix = () => {
         [StandardDatePicker.displayName]: {
             Component: FormFieldDatePicker,
             type: 'datepicker',
+            parseValue: (value) => parseDate(value),
         },
         [StandardTextInput.displayName]: {
             Component: FormFieldTextInput,
