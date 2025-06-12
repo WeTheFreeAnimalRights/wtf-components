@@ -10,7 +10,9 @@ export const getUrl = (endpoint = '', key = 'public') => {
     const currentConfig = getApiConfig(key);
 
     if (!currentConfig.endpoints[endpoint]) {
-        throw new Error(`API endpoint "${endpoint}" not found`);
+        const error = new Error(`API endpoint "${endpoint}" not found`);
+        error.status = 700;
+        throw error;
     }
 
     return mergePaths(currentConfig.base, currentConfig.endpoints[endpoint]);

@@ -19,7 +19,11 @@ export const Confirm = () => {
                 })
             }
         >
-            <Modal title={confirmObj.title} description={confirmObj.message} showCloseButton={confirmObj.hideCancel !== true}>
+            <Modal
+                title={confirmObj.title}
+                description={confirmObj.message}
+                showCloseButton={confirmObj.hideCancel !== true}
+            >
                 <Button
                     onClick={() => {
                         if (isFunction(confirmObj.callback)) {

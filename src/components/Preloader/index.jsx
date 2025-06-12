@@ -27,6 +27,8 @@ export const Preloader = ({
     // Extra properties
     onLoadingStateChanged,
     customPreloader,
+    customError,
+    errorVideo,
     repeatUntil,
     renderChildren,
     repeatInterval = 1000,
@@ -118,6 +120,8 @@ export const Preloader = ({
             ignoreError={ignoreError}
             className={className}
             customPreloader={customPreloader}
+            customError={customError}
+            errorVideo={errorVideo}
             renderChildren={renderChildren}
             _id={_id}
         >

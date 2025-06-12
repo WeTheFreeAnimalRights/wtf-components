@@ -82,7 +82,9 @@ const clearBunnyCDN = async (cdnData) => {
                 const subFilePath = `${filePath}/${subFile.ObjectName}`;
 
                 if (subFile.ObjectName.startsWith('_')) {
-                    console.log(`⏭️ Skipped (starts with _): ${subFile.ObjectName}`);
+                    console.log(
+                        `⏭️ Skipped (starts with _): ${subFile.ObjectName}`
+                    );
                     continue;
                 }
 

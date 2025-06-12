@@ -134,11 +134,13 @@ export const Card = forwardRef(
                                         customizer={customizer}
                                         className={descriptionClassName}
                                     >
-                                        {!descriptionMd ?description
-                                        : <StandardMarkdown>
-                                            {description}
-                                        </StandardMarkdown>
-    }
+                                        {!descriptionMd ? (
+                                            description
+                                        ) : (
+                                            <StandardMarkdown>
+                                                {description}
+                                            </StandardMarkdown>
+                                        )}
                                     </ShadCardDescription>
                                 )}
                             </div>

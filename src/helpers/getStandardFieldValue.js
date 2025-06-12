@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 export const getStandardFieldValue = (field, { values }) => {
     const value = values[field.name];
@@ -8,4 +8,4 @@ export const getStandardFieldValue = (field, { values }) => {
     }
 
     return value;
-}
+};

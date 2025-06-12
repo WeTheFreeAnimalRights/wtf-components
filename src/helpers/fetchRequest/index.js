@@ -93,7 +93,7 @@ export const fetchRequest = async (requestConfig = {}) => {
     }
 
     // If the status code is bigger than 400, then probably an error
-    if (response.status >= 400) {
+    if (response.status >= 400 || !response.ok) {
         const error = new Error(
             data.message || `Request returned with code ${response.status}`
         );

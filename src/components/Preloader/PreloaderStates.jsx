@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { isFunction } from 'lodash-es';
+import { isFunction, isPlainObject } from 'lodash-es';
 import { Alert } from '../Alert';
 import { Empty } from '../Empty';
 import { Spinner } from '../Spinner';
@@ -17,6 +17,8 @@ export const PreloaderStates = ({
     className,
     children,
     customPreloader,
+    customError,
+    errorVideo,
     renderChildren,
     _id,
 }) => {
@@ -83,8 +85,35 @@ export const PreloaderStates = ({
             );
         }
 
+        // If there is a custom error defined as a function
+        if (isPlainObject(customError)) {
+            // If there's an error status
+            if (error.status && isFunction(customError[error.status])) {
+                return customError[error.status]({
+                    error,
+                    ignoreError,
+                });
+            }
+
+            // If there's no error status (a network error)
+            if (!error.status && isFunction(customError.network)) {
+                return customError.network({
+                    error,
+                    ignoreError,
+                });
+            }
+
+            // If there's an error defined in all cases
+            if (isFunction(customError.all)) {
+                return customError.all({
+                    error,
+                    ignoreError,
+                });
+            }
+        }
+
         return (
-            <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center h-screen">
                 <Empty title="Oops..." className="space-y-2">
                     <p>Something happened. If you can retry, do that!</p>
                     <p>
@@ -92,6 +121,7 @@ export const PreloaderStates = ({
                         {_id && `(${_id})`}
                     </p>
                 </Empty>
+                {errorVideo}
             </div>
         );
     }

@@ -1,4 +1,4 @@
-import { getStandardFieldValue } from "./getStandardFieldValue";
+import { getStandardFieldValue } from './getStandardFieldValue';
 
 export const getStandardRequestBody = (standardSchema, values) => {
     return standardSchema.reduce((result, field) => {
@@ -16,7 +16,7 @@ export const getStandardRequestBody = (standardSchema, values) => {
 
         return {
             ...result,
-            [field.serverName]: getStandardFieldValue(field, {values}),
+            [field.serverName]: getStandardFieldValue(field, { values }),
         };
     }, {});
 };

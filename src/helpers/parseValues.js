@@ -1,5 +1,5 @@
-import { format } from "date-fns";
-import { mapValues } from "lodash-es";
+import { format } from 'date-fns';
+import { mapValues } from 'lodash-es';
 
 export const parseValues = (values) => {
     return mapValues(values, (value) => {
@@ -9,4 +9,4 @@ export const parseValues = (values) => {
 
         return value;
     });
-}
+};
