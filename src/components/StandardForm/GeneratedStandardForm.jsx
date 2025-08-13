@@ -17,20 +17,25 @@ export const GeneratedStandardForm = ({
     requestObject,
     onSuccess,
     onError,
+    onLoading,
     options,
     footer,
     children: componentChildren,
     className,
 
+    formRef,
     disabledSubmit = false,
     disabledMessage,
     cancelUrl,
     onCancel,
+    beforeRequest,
+    beforeRequestErrorMessage,
     footerLabels = {},
     footerSubmitButtonClassName,
     footerCancelButtonClassName,
     toastMessage,
     onAllDone,
+    showError = true,
 }) => {
     const { t } = useTranslations();
 
@@ -73,13 +78,20 @@ export const GeneratedStandardForm = ({
             }
         },
         onError,
+        onLoading,
+        beforeRequest,
+        beforeRequestErrorMessage,
         options,
     });
 
     const children = parseChildren(componentChildren, { error, loading, form });
 
     return (
-        <StandardForm form={form} className={cn('relative', className)}>
+        <StandardForm
+            form={form}
+            className={cn('relative', className)}
+            formRef={formRef}
+        >
             {loading && (
                 <div className="absolute left-0 right-0 top-0 bottom-0 rounded-lg bg-white/75 z-10 flex flex-col items-center justify-center dark:bg-background/75">
                     <Spinner />
@@ -88,7 +100,7 @@ export const GeneratedStandardForm = ({
 
             {children}
 
-            {error && (
+            {error && showError && (
                 <Alert
                     className="mt-6"
                     variant="destructive"

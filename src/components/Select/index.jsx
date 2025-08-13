@@ -80,7 +80,7 @@ Select.propTypes = {
     /**
      * The selected value
      */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /**
      * Options of the select
@@ -90,7 +90,8 @@ Select.propTypes = {
             /**
              * Value of the option
              */
-            value: PropTypes.string.isRequired,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+                .isRequired,
 
             /**
              * Label to be visible for the option

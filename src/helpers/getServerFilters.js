@@ -1,10 +1,4 @@
-import {
-    reduce,
-    snakeCase,
-    isFunction,
-    isEmpty,
-    isPlainObject,
-} from 'lodash-es';
+import { reduce, snakeCase, isFunction } from 'lodash-es';
 
 export const getServerFilters = ({
     filters = {},
@@ -13,7 +7,6 @@ export const getServerFilters = ({
     search,
     page,
     parseFilter,
-    other,
 }) => {
     // Add the filters
     const params = reduce(

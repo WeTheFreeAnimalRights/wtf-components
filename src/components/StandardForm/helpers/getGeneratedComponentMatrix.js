@@ -11,6 +11,7 @@ import { StandardRadioGroup } from '../definitions/StandardRadioGroup';
 import { StandardSelect } from '../definitions/StandardSelect';
 import { StandardSwitch } from '../definitions/StandardSwitch';
 import { StandardTextarea } from '../definitions/StandardTextarea';
+import { StandardTimePicker } from '../definitions/StandardTimePicker';
 import { StandardToggleGroup } from '../definitions/StandardToggleGroup';
 import { StandardUploadInput } from '../definitions/StandardUploadInput';
 
@@ -26,6 +27,7 @@ import { FormFieldRadioGroup } from '../../RadioGroup';
 import { FormFieldSelect } from '../../Select';
 import { FormFieldSwitch } from '../../Switch';
 import { FormFieldTextarea } from '../../Textarea';
+import { FormFieldTimePicker } from '../../TimePicker';
 import { FormFieldToggleGroupInput } from '../../ToggleGroupInput';
 import { FormFieldUploadInput } from '../../UploadInput';
 import { parseDate } from '../../DatePicker/parseDate';
@@ -51,7 +53,13 @@ export const getGeneratedComponentMatrix = () => {
         [StandardDatePicker.displayName]: {
             Component: FormFieldDatePicker,
             type: 'datepicker',
-            parseValue: (value) => parseDate(value),
+            parseValue: (value, props) =>
+                parseDate(value, props.showTime || false),
+        },
+        [StandardTimePicker.displayName]: {
+            Component: FormFieldTimePicker,
+            type: 'timepicker',
+            parseValue: (value) => parseDate(value, true),
         },
         [StandardTextInput.displayName]: {
             Component: FormFieldTextInput,

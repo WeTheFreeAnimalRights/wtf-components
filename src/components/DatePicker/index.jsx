@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import { isFunction } from 'lodash-es';
 import React, { forwardRef, useState } from 'react';
 import { Calendar as CalendarIcon, X } from 'lucide-react';
-import { format } from 'date-fns';
 
 import { cn } from '_/lib/utils';
 import { Calendar } from '_/components/calendar';
@@ -10,6 +10,8 @@ import { Button } from '../Button';
 import { FormControl } from '_/components/form';
 import { useTranslations } from '../../hooks/useTranslations';
 import { getLocale } from '../../helpers/getLocale';
+import { TimePicker } from '../TimePicker';
+import { useFormatDate } from '../../hooks/useFormatDate';
 
 export const DatePicker = forwardRef(
     (
@@ -20,6 +22,7 @@ export const DatePicker = forwardRef(
             className,
             formControl = false,
             clearable = false,
+            showTime = false,
             ...props
         },
         ref
@@ -28,6 +31,8 @@ export const DatePicker = forwardRef(
         const { currentLanguage } = useTranslations();
 
         const locale = getLocale(currentLanguage.code);
+
+        const formatDate = useFormatDate();
 
         const trigger = (
             <Button
@@ -45,7 +50,10 @@ export const DatePicker = forwardRef(
                     <CalendarIcon className="h-4 w-4" />
                     <div className="flex-grow text-start">
                         {value ? (
-                            format(new Date(value), 'PP', { locale })
+                            formatDate(
+                                new Date(value),
+                                showTime ? 'PP p' : 'PP'
+                            )
                         ) : (
                             <span>{placeholder}</span>
                         )}
@@ -85,7 +93,9 @@ export const DatePicker = forwardRef(
                         mode="single"
                         selected={new Date(value)}
                         onSelect={(newValue) => {
-                            setOpen(false);
+                            if (!showTime) {
+                                setOpen(false);
+                            }
                             if (isFunction(onChange)) {
                                 onChange(newValue);
                             }
@@ -94,6 +104,14 @@ export const DatePicker = forwardRef(
                         initialFocus
                         {...props}
                     />
+                    {showTime && (
+                        <div className="p-3 border-t border-border">
+                            <TimePicker
+                                onChange={onChange}
+                                value={value || undefined}
+                            />
+                        </div>
+                    )}
                 </PopoverContent>
             </Popover>
         );
@@ -101,3 +119,32 @@ export const DatePicker = forwardRef(
 );
 
 export { FormFieldDatePicker } from './FormFieldDatePicker';
+
+DatePicker.displayName = 'DatePicker';
+
+DatePicker.propTypes = {
+    /**
+     * Value of the time picker (date object)
+     */
+    value: PropTypes.oneOfType(PropTypes.object, PropTypes.string),
+
+    /**
+     * Called when the value is changed
+     */
+    onChange: PropTypes.func,
+
+    /**
+     * Placeholder of the input
+     */
+    placeholder: PropTypes.string,
+
+    /**
+     * Whether to show the time selector or not
+     */
+    showTime: PropTypes.bool,
+
+    /**
+     * Whether to have the clear on the input
+     */
+    clearable: PropTypes.bool,
+};

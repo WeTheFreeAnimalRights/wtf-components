@@ -103,7 +103,7 @@ NumberInput.propTypes = {
     /**
      * The value of the input
      */
-    value: PropTypes.number,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
     /**
      * The minimum value of the input

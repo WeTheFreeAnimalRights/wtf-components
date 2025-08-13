@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import * as icons from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useTranslations } from '../../hooks/useTranslations';
 
@@ -34,6 +35,7 @@ export const ToggleGroupInput = forwardRef(
             >
                 {options.map((item) => {
                     const selected = value.includes(item.value);
+                    const Icon = icons[item.icon] || null;
                     return (
                         <ToggleGroupItem
                             value={item.value}
@@ -45,7 +47,7 @@ export const ToggleGroupInput = forwardRef(
                                 itemClassName
                             )}
                         >
-                            {item.icon}
+                            {Icon ? <Icon className="w-4 h-4" /> : null}
                             {showLabel && item.label}
                         </ToggleGroupItem>
                     );

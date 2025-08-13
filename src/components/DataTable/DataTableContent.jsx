@@ -25,6 +25,7 @@ export const DataTableContent = ({
     onItemAction,
     onItemClick,
     isItemClickable = true,
+    idKey,
 }) => {
     const { t } = useTranslations();
 
@@ -43,7 +44,7 @@ export const DataTableContent = ({
 
     // Get the list of columns
     const columnsList = Object.values(columns);
-    const idColumn = getIdColumn(columns);
+    const idColumn = idKey || getIdColumn(columns);
 
     // Get the actions
     const actions = useActions();

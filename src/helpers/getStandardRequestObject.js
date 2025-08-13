@@ -18,11 +18,11 @@ export const getStandardRequestObject = (requestObject, standardSchema) => {
         return () => requestObject;
     }
 
-    return (values) => {
+    return async (values) => {
         // Make the body
         let body = getStandardRequestBody(standardSchema, values);
         if (isFunction(requestObject.parseStandardBody)) {
-            body = requestObject.parseStandardBody(body);
+            body = await requestObject.parseStandardBody(body);
         }
 
         return {

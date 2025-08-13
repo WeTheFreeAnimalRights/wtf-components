@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '_/lib/utils';
 import { Image } from '../../Image';
 import { useTranslations } from '../../../hooks/useTranslations';
-import { format } from 'date-fns';
+import { useFormatDate } from '../../../hooks/useFormatDate';
 
 export const SpeechBubble = ({
     children,
@@ -25,7 +25,8 @@ export const SpeechBubble = ({
         }
     }, [children]);
 
-    const formattedDate = format(new Date(timestamp), 'hh:mm a');
+    const formatDate = useFormatDate();
+    const formattedDate = formatDate(new Date(timestamp), 'hh:mm a');
 
     return (
         <div

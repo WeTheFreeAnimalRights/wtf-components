@@ -1,4 +1,5 @@
-import { formatDistanceToNow, format, differenceInDays } from 'date-fns';
+import { formatDistanceToNow, differenceInDays } from 'date-fns';
+import { formatDate } from './formatDate';
 
 export const formatTimeAgo = (date) => {
     const daysAgo = differenceInDays(new Date(), date);
@@ -6,6 +7,6 @@ export const formatTimeAgo = (date) => {
     if (daysAgo < 2) {
         return formatDistanceToNow(date, { addSuffix: true }); // e.g., "3 minutes ago"
     } else {
-        return format(date, 'MMM d yyyy');
+        return formatDate(date, 'MMM d yyyy');
     }
 };

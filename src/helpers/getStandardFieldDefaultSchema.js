@@ -23,5 +23,8 @@ export const getStandardFieldDefaultSchema = () => {
 
         // Whether to even validate this field or not
         validate: true,
+
+        // This is a custom rule to validate numbers
+        minimum: false,
     };
 };

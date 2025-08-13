@@ -11,5 +11,6 @@ export { validatePassword } from './validatePassword';
 export { validateSelect } from './validateSelect';
 export { validateText } from './validateText';
 export { validateTextarea } from './validateTextarea';
+export { validateTimepicker } from './validateTimepicker';
 export { validateTogglegroup } from './validateTogglegroup';
 export { validateUpload } from './validateUpload';

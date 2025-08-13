@@ -52,6 +52,11 @@ export const fetchRequest = async (requestConfig = {}) => {
         headers.append('Accept-Language', requestConfig.language);
     }
 
+    // User Agent
+    if (requestConfig.userAgent) {
+        headers.append('User-Agent', requestConfig.userAgent);
+    }
+
     // If there's a file to be uploaded, then remove the content type
     if (requestConfig.upload) {
         headers.delete('Content-Type');
@@ -95,7 +100,7 @@ export const fetchRequest = async (requestConfig = {}) => {
     // If the status code is bigger than 400, then probably an error
     if (response.status >= 400 || !response.ok) {
         const error = new Error(
-            data.message || `Request returned with code ${response.status}`
+            data?.message || `Request returned with code ${response.status}`
         );
         error.status = response.status;
         throw error;

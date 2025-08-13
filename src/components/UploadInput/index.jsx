@@ -6,6 +6,7 @@ import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../Button';
 import { Image } from '../Image';
 import { Alert } from '../Alert';
+import { cn } from '_/lib/utils';
 
 export const UploadInput = forwardRef(
     (
@@ -15,6 +16,9 @@ export const UploadInput = forwardRef(
             onSelect,
             onRemove,
             maxFileSize,
+            showPreview = true,
+            buttonLabel = null,
+            className,
             ...props
         },
         ref
@@ -69,8 +73,8 @@ export const UploadInput = forwardRef(
         }, [currentImage, defaultImage]);
 
         return (
-            <div className="flex flex-row items-center">
-                {displayImage && (
+            <div className={cn('flex flex-row items-center', className)}>
+                {showPreview && displayImage && (
                     <div className="bg-gray-50 rounded-full dark:bg-gray-600 border border-gray-300 dark:border-gray-500 text-center me-3 w-32 h-32 overflow-hidden">
                         <Image
                             src={displayImage}
@@ -93,7 +97,7 @@ export const UploadInput = forwardRef(
                         <Button variant="outline" type="button">
                             {displayImage !== defaultImage
                                 ? t('upload-change')
-                                : t('upload-upload')}
+                                : buttonLabel || t('upload-upload')}
                         </Button>
                     </div>
 

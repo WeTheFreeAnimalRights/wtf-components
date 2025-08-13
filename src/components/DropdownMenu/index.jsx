@@ -94,9 +94,13 @@ export const DropdownMenu = ({
                             className="cursor-pointer"
                             key={`item-${index}`}
                             onSelect={(e) => {
+                                e.stopPropagation();
                                 onSelect(item, e);
                             }}
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onSelect(item, e);
+                            }}
                         >
                             {item.icon}
 

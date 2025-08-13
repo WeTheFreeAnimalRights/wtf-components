@@ -16,3 +16,11 @@ export const Primary = {
         placeholder: 'Select a date',
     },
 };
+
+export const WithTime = {
+    args: {
+        placeholder: 'Select a date & time',
+        showTime: true,
+        clearable: true,
+    },
+};

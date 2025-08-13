@@ -6,6 +6,9 @@ export const useFormSubmit = ({
     requestObject,
     onSuccess,
     onError,
+    onLoading,
+    beforeRequest,
+    beforeRequestErrorMessage,
     options,
 }) => {
     const { loading, error, request } = useRequest();
@@ -22,9 +25,12 @@ export const useFormSubmit = ({
         } else {
             const _request = request.bind(
                 this,
-                requestObject(values),
+                await requestObject(values),
                 onError,
-                onSuccess
+                onSuccess,
+                onLoading,
+                beforeRequest,
+                beforeRequestErrorMessage
             );
             await _request(_request);
         }

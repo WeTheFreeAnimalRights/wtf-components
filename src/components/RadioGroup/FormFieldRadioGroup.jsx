@@ -1,3 +1,4 @@
+import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { RadioGroup, RadioGroupItem } from './index';
 import { StandardFormContext } from '../StandardForm';
@@ -23,6 +24,8 @@ export const FormFieldRadioGroup = ({
     description,
     onChange,
     visible,
+    renderItem,
+    itemClassName,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -40,23 +43,45 @@ export const FormFieldRadioGroup = ({
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
                         <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
+                            onValueChange={(newValue) => {
+                                if (isFunction(onChange)) {
+                                    onChange(newValue);
+                                }
+                                field.onChange(newValue);
+                            }}
+                            value={
+                                !isUndefined(field.value)
+                                    ? field.value
+                                    : props.value
+                            }
                             className="flex flex-col space-y-1"
                         >
-                            {options.map((item) => (
-                                <FormItem
-                                    key={`option-${item.value}`}
-                                    className="flex items-center space-x-3 space-y-0"
-                                >
-                                    <FormControl>
-                                        <RadioGroupItem value={item.value} />
-                                    </FormControl>
-                                    <FormLabel className="font-normal">
-                                        {item.label || item.name || item.value}
-                                    </FormLabel>
-                                </FormItem>
-                            ))}
+                            {options?.length > 0 && (
+                                <>
+                                    {options.map((item) => (
+                                        <FormItem
+                                            key={`option-${item.value}`}
+                                            className={cn(
+                                                'flex items-center space-x-3 space-y-0',
+                                                itemClassName
+                                            )}
+                                        >
+                                            <FormControl>
+                                                <RadioGroupItem
+                                                    value={item.value}
+                                                />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">
+                                                {isFunction(renderItem)
+                                                    ? renderItem(item)
+                                                    : item.label ||
+                                                      item.name ||
+                                                      item.value}
+                                            </FormLabel>
+                                        </FormItem>
+                                    ))}
+                                </>
+                            )}
                         </RadioGroup>
                     </FormControl>
                     {description && (

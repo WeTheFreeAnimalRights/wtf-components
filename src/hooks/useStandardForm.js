@@ -9,6 +9,9 @@ export const useStandardForm = ({
     requestObject,
     onSuccess,
     onError,
+    onLoading,
+    beforeRequest,
+    beforeRequestErrorMessage,
     options = {},
 }) => {
     const standardSchema = getStandardSchema(schema, options);
@@ -17,6 +20,9 @@ export const useStandardForm = ({
         requestObject: getStandardRequestObject(requestObject, standardSchema),
         onSuccess,
         onError,
+        onLoading,
+        beforeRequest,
+        beforeRequestErrorMessage,
         options,
     });
 

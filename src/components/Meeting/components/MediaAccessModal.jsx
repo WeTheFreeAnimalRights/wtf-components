@@ -59,10 +59,6 @@ export const MediaAccessModal = ({
                 video: cam,
                 audio: mic,
             });
-            setPermissionsGranted(true);
-            if (isFunction(onClose)) {
-                onClose();
-            }
         } catch (error) {
             console.error('Error accessing media devices:', error);
             if (error.name === 'NotAllowedError') {
@@ -71,7 +67,8 @@ export const MediaAccessModal = ({
                 );
             } else {
                 setErrorMessage(
-                    'An error occurred while trying to access your camera and microphone.'
+                    'An error occurred while trying to access your camera and microphone. ' +
+                        error.message
                 );
             }
         }

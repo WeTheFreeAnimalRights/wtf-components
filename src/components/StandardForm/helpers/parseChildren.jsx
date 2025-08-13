@@ -26,12 +26,15 @@ export const parseChildren = (children, { loading, form }) => {
             const key = `${child.type.displayName}-${index}-${level}`;
 
             // Get the generated props
-            const keysToOmit = ['optional', 'includeInRequest'];
+            const keysToOmit = ['optional', 'includeInRequest', 'minimum'];
             const generatedProps = omit(props, keysToOmit);
 
             // Parse the value
             if (isFunction(parseValue)) {
-                generatedProps.value = parseValue(generatedProps.value);
+                generatedProps.value = parseValue(
+                    generatedProps.value,
+                    generatedProps
+                );
             }
 
             // Return (to replace) the component

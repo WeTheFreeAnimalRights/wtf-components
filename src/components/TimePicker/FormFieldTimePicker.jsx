@@ -1,6 +1,6 @@
-import { isFunction, isString, isUndefined } from 'lodash-es';
+import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
-import { DatePicker } from './index';
+import { TimePicker } from './index';
 import { StandardFormContext } from '../StandardForm';
 
 // ShadCN
@@ -10,11 +10,12 @@ import {
     FormLabel,
     FormMessage,
     FormDescription,
+    FormControl,
 } from '_/components/form';
 import { cn } from '_/lib/utils';
-import { parseDate } from './parseDate';
+import { parseDate } from '../DatePicker/parseDate';
 
-export const FormFieldDatePicker = ({
+export const FormFieldTimePicker = ({
     form: formParam,
     name,
     label,
@@ -38,23 +39,24 @@ export const FormFieldDatePicker = ({
                     hidden={visible === false ? true : undefined}
                 >
                     <FormLabel>{label}</FormLabel>
-                    <DatePicker
-                        placeholder={placeholder}
-                        {...field}
-                        {...props}
-                        value={
-                            !isUndefined(field.value)
-                                ? parseDate(field.value, props.withTime)
-                                : parseDate(props.value, props.withTime)
-                        }
-                        onChange={(newValue) => {
-                            if (isFunction(onChange)) {
-                                onChange(newValue);
+                    <FormControl>
+                        <TimePicker
+                            placeholder={placeholder}
+                            {...field}
+                            {...props}
+                            value={
+                                !isUndefined(field.value)
+                                    ? parseDate(field.value, true)
+                                    : parseDate(props.value, true)
                             }
-                            field.onChange(newValue);
-                        }}
-                        formControl
-                    />
+                            onChange={(newValue) => {
+                                if (isFunction(onChange)) {
+                                    onChange(newValue);
+                                }
+                                field.onChange(newValue);
+                            }}
+                        />
+                    </FormControl>
                     {description && (
                         <FormDescription>{description}</FormDescription>
                     )}

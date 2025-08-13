@@ -114,7 +114,7 @@ export const Combobox = ({
                 <div className="flex-grow text-ellipsis overflow-hidden text-start">
                     {selected ? selected.label : usedPlaceholder}
                 </div>
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <ChevronsUpDown className="ms-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
         </PopoverTrigger>
     );
@@ -123,7 +123,7 @@ export const Combobox = ({
         <Popover open={open} onOpenChange={setOpen}>
             {formControl ? <FormControl>{trigger}</FormControl> : trigger}
 
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent className="min-w-[200px] p-0">
                 <Command shouldFilter={!shouldPerformServerSearch}>
                     <CommandInput
                         placeholder={usedSearchPlaceholder}

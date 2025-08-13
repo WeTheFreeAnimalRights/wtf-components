@@ -15,11 +15,14 @@ export const Tooltip = ({
     offset,
     delay = 200,
     className,
+    asChild = true,
 }) => {
     return (
         <ShadTooltipProvider delayDuration={delay}>
             <ShadTooltip>
-                <ShadTooltipTrigger asChild>{children}</ShadTooltipTrigger>
+                <ShadTooltipTrigger asChild={asChild}>
+                    {children}
+                </ShadTooltipTrigger>
                 <ShadTooltipContent sideOffset={offset} className={className}>
                     {message}
                 </ShadTooltipContent>

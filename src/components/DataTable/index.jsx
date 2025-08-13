@@ -32,6 +32,7 @@ export const DataTable = ({
     permissions,
     render,
 
+    idKey,
     emptyTitle,
     emptyDescription,
     emptyOnClick,
@@ -102,6 +103,7 @@ export const DataTable = ({
                                 onItemAction={onItemAction}
                                 onItemClick={onItemClick}
                                 isItemClickable={isItemClickable}
+                                idKey={idKey}
                             />
                         </Table>
                     ) : (

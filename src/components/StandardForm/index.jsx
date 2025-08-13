@@ -5,13 +5,14 @@ import { cn } from '_/lib/utils';
 // Create a context to pass the form object
 export const StandardFormContext = createContext(null);
 
-export const StandardForm = ({ form, children, className }) => {
+export const StandardForm = ({ form, children, className, formRef }) => {
     return (
         <Form {...form.instance}>
             <StandardFormContext.Provider value={form}>
                 <form
                     className={cn('relative', className)}
                     onSubmit={form.instance.handleSubmit(form.submit)}
+                    ref={formRef}
                 >
                     {children}
                 </form>
@@ -33,5 +34,6 @@ export { StandardSelect } from './definitions/StandardSelect';
 export { StandardSwitch } from './definitions/StandardSwitch';
 export { StandardRadioGroup } from './definitions/StandardRadioGroup';
 export { StandardTextarea } from './definitions/StandardTextarea';
+export { StandardTimePicker } from './definitions/StandardTimePicker';
 export { StandardToggleGroup } from './definitions/StandardToggleGroup';
 export { StandardUploadInput } from './definitions/StandardUploadInput';

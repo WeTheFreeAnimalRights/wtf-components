@@ -8,5 +8,7 @@ export default {
 };
 
 export const Primary = {
-    args: {},
+    args: {
+        pre: 'Test \n test2',
+    },
 };

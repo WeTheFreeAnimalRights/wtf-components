@@ -35,7 +35,7 @@ export const FormFieldCheckbox = ({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <div className={containerClassName}>
+                <div className={cn('space-y-2', containerClassName)}>
                     <FormItem
                         className={cn(
                             'space-y-0 items-center flex flex-row',

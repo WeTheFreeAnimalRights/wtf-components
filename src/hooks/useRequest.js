@@ -8,12 +8,36 @@ export const useRequest = ({ loadingInit = false } = {}) => {
     const [loading, setLoading] = useState(loadingInit);
 
     // Submit method
-    const request = async (requestObject, onError, onSuccess, _request) => {
+    const request = async (
+        requestObject,
+        onError,
+        onSuccess,
+        onLoading,
+        beforeRequest,
+        beforeRequestErrorMessage,
+        _request
+    ) => {
         let data = null;
         try {
             // No error and is loading
             setError(false);
             setLoading(true);
+
+            // Callback for load change
+            if (isFunction(onLoading)) {
+                onLoading(true);
+            }
+
+            // Callback for load change
+            if (isFunction(beforeRequest)) {
+                const result = await beforeRequest(requestObject);
+                if (!result) {
+                    throw new Error(
+                        beforeRequestErrorMessage ||
+                            '`beforeRequest` function failed'
+                    );
+                }
+            }
 
             // Fetch the request
             data = await fetchRequest(requestObject);
@@ -35,9 +59,14 @@ export const useRequest = ({ loadingInit = false } = {}) => {
             }
 
             // Set the error
-            setError(error.message);
+            setError(error?.message || 'Error in request');
         } finally {
             setLoading(false);
+
+            // Callback for load change
+            if (isFunction(onLoading)) {
+                onLoading(false);
+            }
         }
 
         return data;

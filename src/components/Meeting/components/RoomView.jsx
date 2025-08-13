@@ -2,7 +2,6 @@ import { ParticipantView } from './ParticipantView';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { cn } from '_/lib/utils';
 import { Spinner } from '../../Spinner';
-import { EndButton } from './EndButton';
 
 export const RoomView = ({ users, currentUser, className }) => {
     const { t } = useTranslations();
@@ -12,7 +11,7 @@ export const RoomView = ({ users, currentUser, className }) => {
             {users?.length > 0 && (
                 <div
                     className={cn(
-                        'grid gap-4 h-full place-items-center bg-gray-100 dark:bg-black p-4',
+                        'grid gap-4 h-full place-items-center p-4',
                         [
                             users.length === 1 && 'grid-cols-1',
                             users.length === 2 && 'grid-cols-2',
@@ -32,7 +31,7 @@ export const RoomView = ({ users, currentUser, className }) => {
                 </div>
             )}
             {(users?.length === 0 || !users?.length) && (
-                <div className="bg-black dark:bg-black p-4 w-full h-screen items-center justify-center flex dark">
+                <div className="p-4 w-full h-screen items-center justify-center flex dark">
                     <div className="flex flex-col items-center justify-center">
                         <Spinner />
                         <div className="text-gray-500 mt-2">
