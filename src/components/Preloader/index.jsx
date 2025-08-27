@@ -36,7 +36,7 @@ export const Preloader = ({
 }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const languageCode = useGlobalValue(currentLanguageState);
+    const language = useGlobalValue(currentLanguageState);
 
     const usedRequests = requests.filter(Boolean);
 
@@ -68,7 +68,7 @@ export const Preloader = ({
                 for (let requestConfig of usedRequests) {
                     data.push(
                         await handleRequestConfig({
-                            language: languageCode,
+                            language: language.code,
                             ...requestConfig,
                         })
                     );

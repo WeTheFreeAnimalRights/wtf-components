@@ -17,10 +17,10 @@ export const useFormSubmit = ({
     const { sendToServer } = options || {};
 
     // Submit method
-    const formSubmit = async (values) => {
+    const formSubmit = async (values, ...params) => {
         if (sendToServer === false) {
             if (isFunction(onSuccess)) {
-                onSuccess(parseValues(values));
+                onSuccess(parseValues(values), ...params);
             }
         } else {
             const _request = request.bind(

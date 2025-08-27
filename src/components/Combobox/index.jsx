@@ -44,7 +44,7 @@ export const Combobox = ({
 
             // If there is a callback, call it
             if (isFunction(onSelect)) {
-                onSelect(selectedParam.id.toString());
+                onSelect(selectedParam.id.toString(), selectedParam);
             }
         }
     }, [selectedParam]);
@@ -99,6 +99,12 @@ export const Combobox = ({
         [requestObjectParams]
     );
 
+    // If the options change
+    useEffect(() => {
+        setFilteredOptions(options);
+        setSearchText('');
+    }, [options]);
+
     const trigger = (
         <PopoverTrigger asChild>
             <Button
@@ -112,7 +118,9 @@ export const Combobox = ({
                 disabled={disabled}
             >
                 <div className="flex-grow text-ellipsis overflow-hidden text-start">
-                    {selected ? selected.label : usedPlaceholder}
+                    {selected
+                        ? selected.label || selected.name
+                        : usedPlaceholder}
                 </div>
                 <ChevronsUpDown className="ms-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -165,19 +173,17 @@ export const Combobox = ({
                                     onSelect={(newValue) => {
                                         // Set the value and the selected item
                                         setValue(newValue);
-                                        setSelected(
-                                            filteredOptions.find(
-                                                (item) =>
-                                                    item.value === newValue
-                                            )
+                                        const option = filteredOptions.find(
+                                            (item) => item.value === newValue
                                         );
+                                        setSelected(option);
 
                                         // Close the popover
                                         setOpen(false);
 
                                         // If there is a callback, call it
                                         if (isFunction(onSelect)) {
-                                            onSelect(newValue);
+                                            onSelect(newValue, option);
                                         }
                                     }}
                                 >

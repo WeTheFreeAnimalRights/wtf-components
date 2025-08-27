@@ -1,5 +1,11 @@
 import { isFunction } from 'lodash-es';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { useTranslations } from '../../hooks/useTranslations';
@@ -19,6 +25,10 @@ export const UploadInput = forwardRef(
             showPreview = true,
             buttonLabel = null,
             className,
+            displayImageContainerClassName,
+            displayImageClassName,
+            name,
+            destroyPreviewOnUnmount = true,
             ...props
         },
         ref
@@ -44,6 +54,9 @@ export const UploadInput = forwardRef(
                     preview: URL.createObjectURL(firstFile),
                 };
 
+                // Attach the preview to the file also
+                firstFile.preview = file.preview;
+
                 if (firstFile.size > maxFileSize) {
                     setError(t('file-too-large'));
                     return;
@@ -64,28 +77,35 @@ export const UploadInput = forwardRef(
 
         useEffect(() => {
             // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-            return () =>
-                files.forEach((file) => URL.revokeObjectURL(file.preview));
+            return () => {
+                if (destroyPreviewOnUnmount) {
+                    files.forEach((file) => URL.revokeObjectURL(file.preview));
+                }
+            };
         }, []);
 
         useEffect(() => {
             setDisplayImage(currentImage || defaultImage);
         }, [currentImage, defaultImage]);
 
+        const inputProps = getInputProps();
+
         return (
             <div className={cn('flex flex-row items-center', className)}>
                 {showPreview && displayImage && (
-                    <div className="bg-gray-50 rounded-full dark:bg-gray-600 border border-gray-300 dark:border-gray-500 text-center me-3 w-32 h-32 overflow-hidden">
+                    <div
+                        className={cn(
+                            'bg-gray-50 rounded-full dark:bg-gray-600 border border-gray-300 dark:border-gray-500 text-center me-3 w-32 h-32 overflow-hidden',
+                            displayImageContainerClassName
+                        )}
+                    >
                         <Image
                             src={displayImage}
                             alt=""
-                            className="w-full h-full object-cover rounded-full"
-                            onLoad={() => {
-                                // If It's a blob
-                                if (/^blob:http/i.test(displayImage)) {
-                                    URL.revokeObjectURL(displayImage);
-                                }
-                            }}
+                            className={cn(
+                                'w-full h-full object-cover rounded-full',
+                                displayImageClassName
+                            )}
                         />
                     </div>
                 )}
@@ -93,7 +113,7 @@ export const UploadInput = forwardRef(
                     {error && <Alert variant="destructive">{error}</Alert>}
 
                     <div {...getRootProps({ className: '' })}>
-                        <input ref={ref} {...getInputProps()} />
+                        <input ref={ref} {...inputProps} />
                         <Button variant="outline" type="button">
                             {displayImage !== defaultImage
                                 ? t('upload-change')

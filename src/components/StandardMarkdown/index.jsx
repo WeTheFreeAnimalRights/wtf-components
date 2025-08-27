@@ -1,7 +1,7 @@
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-export const StandardMarkdown = ({ children }) => {
+export const StandardMarkdown = ({ children, aProps }) => {
     const blockMarginClasses = 'my-3 first:mt-0 last:mb-0';
     const blockClasses = `whitespace-pre-line ${blockMarginClasses}`;
 
@@ -60,7 +60,7 @@ export const StandardMarkdown = ({ children }) => {
                 ul: ({ node, ...rest }) => {
                     return (
                         <ul
-                            className={`list-inside list-disc space-y-1 ${blockMarginClasses}`}
+                            className={`list-inside list-disc ps-1 space-y-1 ${blockMarginClasses}`}
                             {...rest}
                         />
                     );
@@ -68,13 +68,15 @@ export const StandardMarkdown = ({ children }) => {
                 ol: ({ node, ...rest }) => {
                     return (
                         <ol
-                            className={`list-inside list-decimal space-y-1 ${blockMarginClasses}`}
+                            className={`list-inside list-decimal ps-1 space-y-1 ${blockMarginClasses}`}
                             {...rest}
                         />
                     );
                 },
                 li: ({ node, ...rest }) => {
-                    return <li className={`whitespace-pre-line`} {...rest} />;
+                    return (
+                        <li className={`whitespace-pre-line ps-2`} {...rest} />
+                    );
                 },
                 strong: ({ node, ...rest }) => {
                     return <strong className={`font-bold`} {...rest} />;
@@ -85,8 +87,9 @@ export const StandardMarkdown = ({ children }) => {
                 a: ({ node, ...rest }) => {
                     return (
                         <a
-                            className={`underline hover:no-underline`}
+                            className={`underline hover:no-underline cursor-pointer`}
                             {...rest}
+                            {...aProps}
                         />
                     );
                 },

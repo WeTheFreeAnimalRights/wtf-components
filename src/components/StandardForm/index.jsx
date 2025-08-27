@@ -11,7 +11,11 @@ export const StandardForm = ({ form, children, className, formRef }) => {
             <StandardFormContext.Provider value={form}>
                 <form
                     className={cn('relative', className)}
-                    onSubmit={form.instance.handleSubmit(form.submit)}
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return form.instance.handleSubmit(form.submit)(e);
+                    }}
                     ref={formRef}
                 >
                     {children}

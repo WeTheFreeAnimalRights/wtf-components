@@ -92,6 +92,7 @@ export {
     SortableHandle,
 } from './components/Sortable';
 export { Spinner } from './components/Spinner';
+export { StandardMarkdown } from './components/StandardMarkdown';
 export {
     StandardForm,
     StandardFormContext,

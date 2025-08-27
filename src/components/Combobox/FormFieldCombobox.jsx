@@ -39,9 +39,9 @@ export const FormFieldCombobox = ({
                 >
                     <FormLabel>{label}</FormLabel>
                     <Combobox
-                        onSelect={(newValue) => {
+                        onSelect={(newValue, item) => {
                             if (isFunction(onChange)) {
-                                onChange(newValue);
+                                onChange(newValue, item);
                             }
 
                             field.onChange(newValue);

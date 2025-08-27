@@ -2,6 +2,7 @@ import { isFunction, isUndefined } from 'lodash-es';
 import { useContext } from 'react';
 import { RadioGroup, RadioGroupItem } from './index';
 import { StandardFormContext } from '../StandardForm';
+import { TextInput } from '../TextInput';
 
 // ShadCN
 import {
@@ -26,6 +27,10 @@ export const FormFieldRadioGroup = ({
     visible,
     renderItem,
     itemClassName,
+    selectedItemClassName,
+    containerClassName,
+    radioClassName,
+    labelClassName,
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
@@ -54,7 +59,7 @@ export const FormFieldRadioGroup = ({
                                     ? field.value
                                     : props.value
                             }
-                            className="flex flex-col space-y-1"
+                            className={cn('flex flex-col space-y-1', containerClassName)}
                         >
                             {options?.length > 0 && (
                                 <>
@@ -63,15 +68,17 @@ export const FormFieldRadioGroup = ({
                                             key={`option-${item.value}`}
                                             className={cn(
                                                 'flex items-center space-x-3 space-y-0',
-                                                itemClassName
+                                                itemClassName,
+                                                item.value === field.value && selectedItemClassName,
                                             )}
                                         >
                                             <FormControl>
                                                 <RadioGroupItem
                                                     value={item.value}
+                                                    className={radioClassName}
                                                 />
                                             </FormControl>
-                                            <FormLabel className="font-normal">
+                                            <FormLabel className={cn('font-normal', labelClassName)}>
                                                 {isFunction(renderItem)
                                                     ? renderItem(item)
                                                     : item.label ||
@@ -80,6 +87,20 @@ export const FormFieldRadioGroup = ({
                                             </FormLabel>
                                         </FormItem>
                                     ))}
+                                </>
+                            )}
+                            {!options?.length && (
+                                <>
+                                    <FormItem hidden>
+                                        <FormControl>
+                                            <TextInput
+                                                type="hidden"
+                                                {...field}
+                                                {...props}
+                                                value=""
+                                            />
+                                        </FormControl>
+                                    </FormItem>
                                 </>
                             )}
                         </RadioGroup>

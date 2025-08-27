@@ -16,7 +16,7 @@ const Textarea = React.forwardRef(
                     )}
                 >
                     <div
-                        className="whitespace-pre-line text-muted-foreground mb-6 px-3 pt-3"
+                        className="whitespace-pre-line text-muted-foreground mb-6 px-3 pt-3  overflow-x-hidden"
                         onClick={() => internalRef.current?.focus()}
                     >
                         {pre}
