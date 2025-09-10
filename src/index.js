@@ -65,6 +65,7 @@ export {
     useChatVisitor,
     useChatReportReasons,
     useEndMeeting,
+    useMeeting,
 } from './components/Meeting';
 export { PirschScript } from './components/PirschScript';
 export { Empty } from './components/Empty';

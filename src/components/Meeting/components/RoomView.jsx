@@ -1,7 +1,7 @@
 import { ParticipantView } from './ParticipantView';
 import { useTranslations } from '../../../hooks/useTranslations';
-import { cn } from '_/lib/utils';
 import { Spinner } from '../../Spinner';
+import { cn } from '_/lib/utils';
 
 export const RoomView = ({ users, currentUser, className }) => {
     const { t } = useTranslations();
@@ -24,8 +24,8 @@ export const RoomView = ({ users, currentUser, className }) => {
                 >
                     {users.map((user) => (
                         <ParticipantView
-                            key={`participant-${user.id}`}
-                            id={user.id}
+                            key={`participant-${user.userId}`}
+                            id={user.userId}
                         />
                     ))}
                 </div>
@@ -43,7 +43,7 @@ export const RoomView = ({ users, currentUser, className }) => {
 
             <div className="absolute end-2 top-2 w-1/2 sm:w-1/3 aspect-square">
                 <ParticipantView
-                    id={currentUser?.id}
+                    id={currentUser.userId}
                     className="shadow-md border-2 border-gray-700"
                 />
             </div>

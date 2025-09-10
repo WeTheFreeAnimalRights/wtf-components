@@ -1,45 +1,48 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { AnimalIcon } from '../../AnimalIcon';
 import { useRealParticipant } from '../hooks/useRealParticipant';
+import { useMeeting } from '../hooks/useMeeting';
 
 export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
-    const { webcamStream, webcamOn, participant } = useRealParticipant(id);
+    const {meeting} = useMeeting();
+    const {client} = meeting;
 
-    const videoStream = useMemo(() => {
-        if (webcamOn && webcamStream) {
-            const mediaStream = new MediaStream();
-            mediaStream.addTrack(webcamStream.track);
-            return mediaStream;
+    const userInfo = client.getCurrentUserInfo();
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const stream = client.getMediaStream();
+        const attach = async () => {
+            if (userInfo.userId === id) {
+                await stream.startVideo();
+            }
+
+            const element = await stream.attachVideo(id, '1080P');
+            if (ref && ref.current) {
+                ref.current.appendChild(element);
+            }
         }
-    }, [id, webcamStream, webcamOn]);
+        attach();
+    }, []);
 
-    if (webcamOn) {
+    //
+    // const participant = client.getUser(id);
+
+    // if (webcamOn) {
         return (
-            <ReactPlayer
-                playsinline // very very imp prop
-                pip={false}
-                light={false}
-                controls={false}
-                muted={true}
-                playing={true}
-                url={videoStream}
-                onError={(err) => {
-                    console.log(err, 'participant video error');
-                }}
-                width="100%"
-                height="100%"
-                className="[&>video]:object-cover"
-            />
+            <video-player-container>
+                <div className="video-tile" ref={ref}></div>
+            </video-player-container>
         );
-    }
+    // }
 
-    return (
-        <div className="flex flex-col items-center gap-2 py-4">
-            <AnimalIcon variant="light" index={animalIndex} />
-            <div className="bg-background/80 py-1 px-2 rounded-md inline-block text-sm">
-                {participant.displayName}
-            </div>
-        </div>
-    );
+    // return (
+    //     <div className="flex flex-col items-center gap-2 py-4">
+    //         <AnimalIcon variant="light" index={animalIndex} />
+    //         <div className="bg-background/80 py-1 px-2 rounded-md inline-block text-sm">
+    //             {participant.displayName}
+    //         </div>
+    //     </div>
+    // );
 };

@@ -14,4 +14,5 @@ export { getRoomStatuses } from './helpers/getRoomStatuses';
 export { useChatVisitor } from './hooks/useChatVisitor';
 export { useChatReportReasons } from './hooks/useChatReportReasons';
 export { useEndMeeting } from './hooks/useEndMeeting';
+export { useMeeting } from './hooks/useMeeting';
 export { ToggleButton as MeetingToggleButton } from './components/ToggleButton';

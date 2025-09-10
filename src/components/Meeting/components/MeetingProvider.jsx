@@ -1,37 +1,29 @@
-import { useContext, useMemo } from 'react';
-import { MeetingProvider as SdkMeetingProvider } from '@videosdk.live/react-sdk';
-import { MeetingContext } from './MeetingContext';
+import { useEffect, useState } from 'react';
+import ZoomVideo from '@zoom/videosdk'
+import { useMeeting } from '../hooks/useMeeting';
 
 export const MeetingProvider = ({ children }) => {
-    const { meeting } = useContext(MeetingContext);
+    const {meeting, setMeeting} = useMeeting();
+    const [loading, setLoading] = useState(true);
 
-    const meetingConfig = useMemo(
-        () => ({
-            meetingId: meeting.id,
-            micEnabled: meeting.micOn,
-            webcamEnabled: meeting.camOn,
-            name: meeting.visitor.name,
-            participantId: String(meeting.visitor.id),
-            multiStream: false,
-            meta: {
-                email: meeting.visitor.email,
-            },
-            ...meeting.options,
-        }),
-        [meeting.id, meeting.visitor.id, meeting.camOn, meeting.micOn]
-    );
+    useEffect(() => {
+        const client = ZoomVideo.createClient();
+        const connect = async () => {
+            await client.init('en-US', 'CDN', { patchJsMedia: true });
+            await client.join(meeting.id, meeting.token, meeting.visitor.name);
 
-    console.log('🔄 Re-rendering MeetingProvider...');
-    console.log('📡 meeting.id:', meeting.id);
+            setMeeting('client', client);
+            setLoading(false);
+        };
+        connect();
+        return () => {
+            client.leave();
+        };
+    }, []);
 
-    return (
-        <SdkMeetingProvider
-            key={meeting.id}
-            config={meetingConfig}
-            token={meeting.token}
-            joinWithoutUserInteraction={meeting.autoJoin}
-        >
-            {children}
-        </SdkMeetingProvider>
-    );
+    if (loading) {
+        return 'LLLLOOAADING';
+    }
+
+    return children;
 };

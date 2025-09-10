@@ -1,54 +1,29 @@
-import { useContext, useState } from 'react';
-import { useMeeting } from '@videosdk.live/react-sdk';
+import { useState } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { getRoomStatuses } from './helpers/getRoomStatuses';
 import { Button } from '../Button';
-import { MeetingContext } from './components/MeetingContext';
 import { RoomView } from './components/RoomView';
 import { parseParticipants } from './helpers/parseParticipants';
 import { Spinner } from '../Spinner';
 import { Empty } from '../Empty';
 import { isFunction } from 'lodash-es';
+import { useMeeting } from './hooks/useMeeting';
 
-export const ConnectedRoomView = ({ emptyMessage, onMeetingLeft }) => {
+export const ConnectedRoomView = ({ emptyMessage }) => {
     const { t } = useTranslations();
-    const { meeting, setMeeting } = useContext(MeetingContext);
-    const [joined, setJoined] = useState(false);
-    const statuses = getRoomStatuses();
+    const { meeting } = useMeeting();
+    const {all, current} = parseParticipants(meeting);
 
-    const { join, participants } = useMeeting({
-        onMeetingJoined: () => {
-            setMeeting('status', statuses.joined);
-            setJoined(true);
-            console.log('✅ Successfully joined meeting');
-        },
-        onMeetingLeft: () => {
-            setMeeting('status', statuses.left);
-            setJoined(true);
-            if (isFunction(onMeetingLeft)) {
-                onMeetingLeft();
-            }
-        },
-        onConnectionOpen: () => console.log('🔗 WebRTC Connection Open'),
-        onConnectionClose: () => {
-            setMeeting('status', statuses.disconnected);
-            setJoined(true);
-            console.log('❌ Connection Closed');
-        },
-        onError: (error) => console.error('🚨 VideoSDK Error:', error),
-        onParticipantLeft: (participant) =>
-            console.log(`👤 ${participant.name} left the meeting`),
-    });
-    const joinMeeting = () => {
-        setMeeting('status', statuses.joining);
-        join();
-    };
-
-    const users = parseParticipants(participants, meeting);
+    console.log('>>', all, current);
 
     return (
         <div className="col-span-3 flex-grow basis-0 overflow-hidden relative flex items-center justify-center">
-            {meeting.status === statuses.joined && (
+            <RoomView
+                users={all}
+                currentUser={current}
+                emptyMessage={emptyMessage}
+            />
+            {/* {meeting.status === statuses.joined && (
                 <RoomView
                     users={users.all}
                     currentUser={users.current}
@@ -73,7 +48,7 @@ export const ConnectedRoomView = ({ emptyMessage, onMeetingLeft }) => {
             )}
             {meeting.status === statuses.left && (
                 <Empty>{t('meeting-ended')}</Empty>
-            )}
+            )} */}
         </div>
     );
 };

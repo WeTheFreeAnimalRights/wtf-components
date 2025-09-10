@@ -1,15 +1,15 @@
-export const parseParticipants = (participants, meeting) => {
-    const visitorId = String(meeting.visitor.id);
+export const parseParticipants = ({client}) => {
+    const participants = client.getAllUser();
+    const current = client.getCurrentUserInfo();
+
     const final = {
         all: [],
         current: null,
     };
 
     participants.forEach((item) => {
-        if (String(item.id) === visitorId) {
+        if (item.userId === current.userId) {
             final.current = item;
-            final.all.push(item);
-            // final.all.push(item);
         } else {
             final.all.push(item);
         }

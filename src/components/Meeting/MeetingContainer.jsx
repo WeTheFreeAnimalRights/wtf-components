@@ -2,29 +2,17 @@ import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { MeetingContext } from './components/MeetingContext';
 import { MeetingProvider } from './components/MeetingProvider';
-import { getRoomStatuses } from './helpers/getRoomStatuses';
 
 export const MeetingContainer = ({
     id,
     token,
     visitor,
-    options,
-    autoJoin = true,
     children,
-
-    initialMicOn = true,
-    initialCamOn = true,
 }) => {
-    const statuses = getRoomStatuses();
     const [meeting, setFullMeeting] = useState({
         id,
         token,
         visitor,
-        options,
-        autoJoin,
-        micOn: initialMicOn,
-        camOn: initialCamOn,
-        status: statuses.joining,
     });
 
     const setMeeting = (...args) => {
@@ -86,24 +74,4 @@ MeetingContainer.propTypes = {
          */
         email: PropTypes.string,
     }),
-
-    /***
-     * Optional object of options to be passed on to the MeetingProvider
-     */
-    options: PropTypes.object,
-
-    /**
-     * Optional whether to autoJoin the meeting or not
-     */
-    autoJoin: PropTypes.bool,
-
-    /**
-     * Optional whether to start with the microphone on or not
-     */
-    initialMicOn: PropTypes.bool,
-
-    /**
-     * Optional whether to start with the camera on or not
-     */
-    initialCamOn: PropTypes.bool,
 };
