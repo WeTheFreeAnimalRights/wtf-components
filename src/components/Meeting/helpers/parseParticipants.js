@@ -1,4 +1,4 @@
-export const parseParticipants = ({client}) => {
+export const parseParticipants = ({ client }) => {
     const participants = client.getAllUser();
     const current = client.getCurrentUserInfo();
 

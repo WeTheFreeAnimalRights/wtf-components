@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { getRoomStatuses } from './helpers/getRoomStatuses';
 import { Button } from '../Button';
@@ -12,9 +12,28 @@ import { useMeeting } from './hooks/useMeeting';
 export const ConnectedRoomView = ({ emptyMessage }) => {
     const { t } = useTranslations();
     const { meeting } = useMeeting();
-    const {all, current} = parseParticipants(meeting);
+    const { client} = meeting;
 
-    console.log('>>', all, current);
+    const [all, setAll] = useState([]);
+    const [current, setCurrent] = useState(null);
+
+    useEffect(() => {
+        const onUserChange = () => {
+            const { all, current } = parseParticipants(meeting);
+            setAll(all);
+            setCurrent(current);
+        };
+
+        onUserChange();
+
+        client.on('user-added', onUserChange);
+        client.on('user-removed', onUserChange);
+
+        return () => {
+            client.off('user-added', onUserChange);
+            client.off('user-removed', onUserChange);
+        };
+    }, [client]);
 
     return (
         <div className="col-span-3 flex-grow basis-0 overflow-hidden relative flex items-center justify-center">

@@ -1,0 +1,42 @@
+import { useEffect, useState } from 'react';
+import { useMeeting } from '../hooks/useMeeting';
+
+export const useCameraAspectRatio = (id) => {
+    const { meeting } = useMeeting();
+    const { client } = meeting;
+    const [ratio, setRatio] = useState(null);
+
+    useEffect(() => {
+        const stream = client.getMediaStream();
+        let el;
+
+        const attach = async () => {
+            try {
+                el = await stream.attachVideo(id, '720p');
+                el.onloadedmetadata = () => {
+                    const w = el.videoWidth;
+                    const h = el.videoHeight;
+                    if (w && h) {
+                        setRatio(w / h);
+                    }
+                };
+            } catch (err) {
+                console.error('attachVideo error:', err);
+            }
+        };
+
+        attach();
+
+        return () => {
+            try {
+                if (el) {
+                    stream.detachVideo(id);
+                }
+            } catch (err) {
+                console.error('detachVideo error:', err);
+            }
+        };
+    }, [client, id]);
+
+    return ratio; // e.g. 1.777... for 16:9, 1.333... for 4:3
+};

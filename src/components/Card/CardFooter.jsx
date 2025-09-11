@@ -26,10 +26,10 @@ export const CardFooter = ({ items, className }) => {
                         className="flex flex-row items-center gap-2"
                         key={`footer-item-${index}`}
                     >
-                        <div className='flex-shrink-0'>
-                        <Icon className="w-5 h-5" /></div>
-                        <div className='flex-basis-0'>
-                        {item.label}</div>
+                        <div className="flex-shrink-0">
+                            <Icon className="w-5 h-5" />
+                        </div>
+                        <div className="flex-basis-0">{item.label}</div>
                     </div>
                 );
             })}

@@ -59,7 +59,10 @@ export const FormFieldRadioGroup = ({
                                     ? field.value
                                     : props.value
                             }
-                            className={cn('flex flex-col space-y-1', containerClassName)}
+                            className={cn(
+                                'flex flex-col space-y-1',
+                                containerClassName
+                            )}
                         >
                             {options?.length > 0 && (
                                 <>
@@ -69,7 +72,8 @@ export const FormFieldRadioGroup = ({
                                             className={cn(
                                                 'flex items-center space-x-3 space-y-0',
                                                 itemClassName,
-                                                item.value === field.value && selectedItemClassName,
+                                                item.value === field.value &&
+                                                    selectedItemClassName
                                             )}
                                         >
                                             <FormControl>
@@ -78,7 +82,12 @@ export const FormFieldRadioGroup = ({
                                                     className={radioClassName}
                                                 />
                                             </FormControl>
-                                            <FormLabel className={cn('font-normal', labelClassName)}>
+                                            <FormLabel
+                                                className={cn(
+                                                    'font-normal',
+                                                    labelClassName
+                                                )}
+                                            >
                                                 {isFunction(renderItem)
                                                     ? renderItem(item)
                                                     : item.label ||

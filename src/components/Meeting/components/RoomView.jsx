@@ -7,31 +7,33 @@ export const RoomView = ({ users, currentUser, className }) => {
     const { t } = useTranslations();
 
     return (
-        <>
-            {users?.length > 0 && (
+        <div
+            className={cn(
+                'relative flex flex-col w-full h-full items-stretch justify-center px-4',
+                className
+            )}
+        >
+            {users.length > 0 && (
                 <div
                     className={cn(
-                        'grid gap-4 h-full place-items-center p-4',
-                        [
-                            users.length === 1 && 'grid-cols-1',
-                            users.length === 2 && 'grid-cols-2',
-                            users.length === 3 && 'grid-cols-3',
-                            users.length === 4 && 'grid-cols-2',
-                            users.length > 4 && 'grid-cols-3',
-                        ],
-                        className
+                        'grid gap-4 justify-center content-center auto-rows-min',
+                        users.length === 1 && 'grid-cols-1',
+                        users.length > 1 && 'grid-cols-1 sm:grid-cols-2'
                     )}
                 >
                     {users.map((user) => (
-                        <ParticipantView
+                        <div
                             key={`participant-${user.userId}`}
-                            id={user.userId}
-                        />
+                            className="bg-gray-900 rounded-lg aspect-video relative overflow-hidden flex justify-center items-center"
+                        >
+                            <ParticipantView id={user.userId} />
+                        </div>
                     ))}
                 </div>
             )}
-            {(users?.length === 0 || !users?.length) && (
-                <div className="p-4 w-full h-screen items-center justify-center flex dark">
+
+            {users.length === 0 && (
+                <div className="p-4 w-full h-full flex items-center justify-center">
                     <div className="flex flex-col items-center justify-center">
                         <Spinner />
                         <div className="text-gray-500 mt-2">
@@ -41,12 +43,16 @@ export const RoomView = ({ users, currentUser, className }) => {
                 </div>
             )}
 
-            <div className="absolute end-2 top-2 w-1/2 sm:w-1/3 aspect-square">
-                <ParticipantView
-                    id={currentUser.userId}
-                    className="shadow-md border-2 border-gray-700"
-                />
-            </div>
-        </>
+            {currentUser && (
+                <div className="absolute right-4 top-4 w-64 sm:w-72 aspect-video z-50">
+                    <div className="relative w-full h-full">
+                        <ParticipantView
+                            id={currentUser.userId}
+                            className="absolute inset-0 shadow-md ring-2 ring-gray-700 rounded-md"
+                        />
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };

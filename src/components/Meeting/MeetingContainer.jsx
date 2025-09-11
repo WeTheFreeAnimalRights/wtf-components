@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { MeetingContext } from './components/MeetingContext';
 import { MeetingProvider } from './components/MeetingProvider';
 
-export const MeetingContainer = ({
-    id,
-    token,
-    visitor,
-    children,
-}) => {
+export const MeetingContainer = ({ auth, visitor, children }) => {
     const [meeting, setFullMeeting] = useState({
-        id,
-        token,
+        auth,
         visitor,
+
+        // TODO: Check these
+        micOn: true,
+        camOn: true,
     });
 
     const setMeeting = (...args) => {
@@ -46,14 +44,9 @@ MeetingContainer.displayName = 'MeetingContainer';
 
 MeetingContainer.propTypes = {
     /**
-     * The ID of the room (leave empty to create one)
+     * The auth for zoom
      */
-    id: PropTypes.string,
-
-    /**
-     * The token to for videosdk
-     */
-    token: PropTypes.string.isRequired,
+    auth: PropTypes.object.isRequired,
 
     /**
      * Visitor info
