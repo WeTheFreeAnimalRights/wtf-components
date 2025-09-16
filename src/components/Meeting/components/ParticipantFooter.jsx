@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { MicOff } from 'lucide-react';
 import { isString, isUndefined } from 'lodash-es';
-import { Badge } from '../../Badge';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { cn } from '_/lib/utils';
 import { useMeeting } from '../hooks/useMeeting';
-import { useActiveSpeakers } from '../hooks/useActiveSpeakers'; // path to the hook above
 
 export const ParticipantFooter = ({ id, className }) => {
     const { t } = useTranslations();

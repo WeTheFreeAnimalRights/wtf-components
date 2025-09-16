@@ -56,7 +56,6 @@ export {
     MeetingContext,
     MeetingLoader,
     MediaAccessModal,
-    getRoomStatuses,
     EndButton,
     ChatButton,
     MicToggleButton,
@@ -64,7 +63,6 @@ export {
     MeetingToggleButton,
     useChatVisitor,
     useChatReportReasons,
-    useEndMeeting,
     useMeeting,
 } from './components/Meeting';
 export { PirschScript } from './components/PirschScript';

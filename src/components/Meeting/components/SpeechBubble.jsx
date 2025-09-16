@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { cn } from '_/lib/utils';
 import { Image } from '../../Image';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { useFormatDate } from '../../../hooks/useFormatDate';
+import { cn } from '_/lib/utils';
 
 export const SpeechBubble = ({
     children,

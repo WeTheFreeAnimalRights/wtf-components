@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
-import { getRoomStatuses } from './helpers/getRoomStatuses';
-import { Button } from '../Button';
 import { RoomView } from './components/RoomView';
 import { parseParticipants } from './helpers/parseParticipants';
-import { Spinner } from '../Spinner';
-import { Empty } from '../Empty';
-import { isFunction } from 'lodash-es';
 import { useMeeting } from './hooks/useMeeting';
+import { useMeetingLifecycle } from './hooks/useMeetingLifeCycle';
 
-export const ConnectedRoomView = ({ emptyMessage }) => {
+export const ConnectedRoomView = ({ emptyMessage, onMeetingEnded }) => {
     const { t } = useTranslations();
     const { meeting } = useMeeting();
     const { client} = meeting;
 
     const [all, setAll] = useState([]);
     const [current, setCurrent] = useState(null);
+
+    useMeetingLifecycle({
+        onDisconnected: onMeetingEnded,
+        onSessionClosed: onMeetingEnded,
+        onSelfRemoved: onMeetingEnded,
+        onReconnectEnd: onMeetingEnded,
+    });
 
     useEffect(() => {
         const onUserChange = () => {

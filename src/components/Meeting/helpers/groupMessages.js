@@ -5,15 +5,23 @@ export const groupMessages = (list = [], userId) => {
         // Get the last element
         const lastElement = last(result);
 
+        let data = {};
+        try {
+            data = JSON.parse(item.message);
+        } catch (e) {
+            console.error('Error decoding message:', e, item.message);
+        }
+
         // The item to be sent
         const finalItem = {
             ...item,
-            type: item.payload?.type || 'message',
-            resource: item.payload?.resource,
+            message: data?.message || '',
+            type: data?.type || 'message',
+            resource: data?.resource,
         };
 
         // If the last element has the same sender
-        if (lastElement && lastElement.sender.id === String(item.senderId)) {
+        if (lastElement && lastElement.sender.id === item.sender.userId) {
             // Push the new text
             lastElement.texts.push(finalItem);
             return result;
@@ -25,10 +33,10 @@ export const groupMessages = (list = [], userId) => {
             {
                 id: item.id,
                 sender: {
-                    id: String(item.senderId),
-                    name: item.senderName,
+                    id: item.sender.userId,
+                    name: item.sender.name,
                 },
-                received: String(item.senderId) !== String(userId),
+                received: item.sender.userId !== userId,
                 texts: [finalItem],
             },
         ];

@@ -1,18 +1,17 @@
-import { Fragment, useContext, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { trim } from 'lodash-es';
 import { CornerDownLeft, Plus, X } from 'lucide-react';
-import { usePubSub } from '@videosdk.live/react-sdk';
 import { Button } from '../Button';
 import { groupMessages } from './helpers/groupMessages';
 import { SpeechBubble } from './components/SpeechBubble';
-import { MeetingContext } from './components/MeetingContext';
-import { cn } from '_/lib/utils';
 import { ResourcesChatPlugin } from './chat-plugins/ResourcesChatPlugin';
 import { AutoScrollContainer } from '../AutoScrollContainer';
 import { ChatPluginsList } from './chat-plugins/ChatPluginsList';
 import { PromptsChatPlugin } from './chat-plugins/PromptsChatPlugin';
 import { AutosizeTextarea } from '_/components/autosize-textarea';
+import { useMeeting } from './hooks/useMeeting';
 import { useIsMobile } from '_/hooks/use-mobile';
+import { cn } from '_/lib/utils';
 
 export const ChatView = ({
     className,
@@ -20,30 +19,69 @@ export const ChatView = ({
     plugins = ['resources'],
     prompts = [],
 }) => {
-    const { meeting } = useContext(MeetingContext);
-    const { publish, messages } = usePubSub(`conversation-${meeting.id}`);
-    const groupedMessages = groupMessages(messages, meeting.visitor.id);
+    const { meeting } = useMeeting();
+    const { client } = meeting;
+    const chat = client.getChatClient();
+    const currentUser = client.getCurrentUserInfo();
+
+    // Local history state (start with existing history)
+    const [history, setHistory] = useState(() => {
+        try {
+            return chat.getHistory?.() || [];
+        } catch (err) {
+            console.error('chat.getHistory error:', err);
+            return [];
+        }
+    });
+
+    // Grouped view derived from local history
+    const groupedMessages = groupMessages(history, currentUser.userId);
+
     const [currentMessage, setCurrentMessage] = useState('');
     const [pluginsVisible, setPluginsVisible] = useState(false);
     const [selectedPlugin, setSelectedPlugin] = useState('');
 
     const isMobile = useIsMobile();
+    const inputRef = useRef();
 
     const setInputMessage = (message = '') => {
         setCurrentMessage(message);
-
-        // Focus on the input
         if (inputRef.current) {
             inputRef.current.focus();
         }
     };
 
-    const sendMessage = (message, resource = null, type = 'message') => {
-        publish(trim(message), { persist: true }, { type, resource }, null);
+    const sendMessage = async (message, resource = null, type = 'message') => {
+        const payload = {
+            type,
+            message: trim(message),
+            resource,
+        };
+
+        try {
+            await chat.sendToAll(JSON.stringify(payload));
+        } catch (err) {
+            console.error('chat.sendToAll error:', err);
+        }
         setInputMessage('');
     };
 
-    const inputRef = useRef();
+    // Listen for incoming messages
+    useEffect(() => {
+        const handler = (msg) => {
+            setHistory((prev) => [...prev, msg]);
+        };
+
+        client.on('chat-on-message', handler);
+
+        return () => {
+            try {
+                client.off('chat-on-message', handler);
+            } catch (err) {
+                console.error('chat.off unsubscribe error:', err);
+            }
+        };
+    }, [chat]);
 
     return (
         <div className={cn('flex flex-col flex-basis-0 h-full', className)}>
@@ -74,11 +112,11 @@ export const ChatView = ({
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    sendMessage(currentMessage);
+                    if (trim(currentMessage).length > 0) {
+                        sendMessage(currentMessage);
+                    }
                 }}
-                className={cn(
-                    'flex flex-row items-center gap-2 mt-4 relative px-12'
-                )}
+                className={cn('flex flex-row items-center gap-2 mt-4 relative px-12')}
             >
                 {plugins.length > 0 && (
                     <Button
@@ -117,32 +155,31 @@ export const ChatView = ({
                     }}
                     onKeyDown={(event) => {
                         if (isMobile) {
-                            // On mobile: Shift+Enter sends message, Enter adds a new line
+                            // Mobile: Shift+Enter sends, Enter = newline
                             if (event.key === 'Enter' && event.shiftKey) {
                                 event.preventDefault();
-                                sendMessage(event.target.value);
-                            } else if (
-                                event.key === 'Enter' &&
-                                !event.shiftKey
-                            ) {
+                                if (trim(event.target.value).length > 0) {
+                                    sendMessage(event.target.value);
+                                }
+                            } else if (event.key === 'Enter' && !event.shiftKey) {
                                 event.preventDefault();
                                 setCurrentMessage((prev) => prev + '\n');
                             }
                         } else {
-                            // On desktop: Enter sends message, Shift+Enter adds a new line
+                            // Desktop: Enter sends, Shift+Enter = newline
                             if (event.key === 'Enter' && !event.shiftKey) {
                                 event.preventDefault();
-                                sendMessage(event.target.value);
-                            } else if (
-                                event.key === 'Enter' &&
-                                event.shiftKey
-                            ) {
+                                if (trim(event.target.value).length > 0) {
+                                    sendMessage(event.target.value);
+                                }
+                            } else if (event.key === 'Enter' && event.shiftKey) {
                                 event.preventDefault();
                                 setCurrentMessage((prev) => prev + '\n');
                             }
                         }
                     }}
                 />
+
                 <Button
                     variant="simple"
                     size="small-icon"
@@ -155,18 +192,13 @@ export const ChatView = ({
 
             {pluginsVisible && plugins.length > 0 && (
                 <div className="p-4 bg-muted mt-4 rounded-md">
-                    {!selectedPlugin && (
-                        <ChatPluginsList onSelect={setSelectedPlugin} />
-                    )}
+                    {!selectedPlugin && <ChatPluginsList onSelect={setSelectedPlugin} />}
+
                     {selectedPlugin === 'resources' && (
                         <ResourcesChatPlugin
                             resources={resources}
                             onSelect={(resource) =>
-                                sendMessage(
-                                    'resource sent',
-                                    resource,
-                                    'resource'
-                                )
+                                sendMessage('resource sent', resource, 'resource')
                             }
                             onCancel={() => {
                                 setPluginsVisible(false);
@@ -174,6 +206,7 @@ export const ChatView = ({
                             }}
                         />
                     )}
+
                     {selectedPlugin === 'prompts' && prompts?.length > 0 && (
                         <PromptsChatPlugin
                             onSelect={setInputMessage}
