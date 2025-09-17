@@ -103,6 +103,10 @@ export default {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
             },
+            screens: {
+                '2xl': '1750px',
+                '3xl': '2145px',
+            },
         },
     },
     plugins: [require('tailwindcss-animate')],
