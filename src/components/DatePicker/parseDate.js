@@ -4,7 +4,11 @@ import { isEmpty, isString } from 'lodash-es';
 export const parseDate = (value = '', withTime = false) => {
     if (isString(value)) {
         if (!isEmpty(value)) {
-            return new Date(value);
+            if (withTime) {
+                return new Date(value);
+            } else {
+                return new Date(value + 'T00:00:00');
+            }
         } else {
             return startOfToday();
         }
