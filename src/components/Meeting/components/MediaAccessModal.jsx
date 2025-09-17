@@ -171,3 +171,5 @@ export const MediaAccessModal = ({
         </ModalContainer>
     );
 };
+
+MediaAccessModal.displayName = 'MediaAccessModal';

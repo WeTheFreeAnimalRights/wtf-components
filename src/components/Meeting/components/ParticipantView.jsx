@@ -39,3 +39,5 @@ export const ParticipantView = ({ id, className }) => {
         </div>
     );
 };
+
+ParticipantView.displayName = 'ParticipantView';

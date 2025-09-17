@@ -74,3 +74,5 @@ export const ConnectedRoomView = ({ emptyMessage, onMeetingEnded }) => {
         </div>
     );
 };
+
+ConnectedRoomView.displayName = 'ConnectedRoomView';

@@ -22,3 +22,5 @@ export const ToggleButton = ({ className, components, value, onChange }) => {
         </Button>
     );
 };
+
+ToggleButton.displayName = 'ToggleButton';

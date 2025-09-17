@@ -31,3 +31,5 @@ export const MeetingDuration = ({ startedAt }) => {
 
     return <span className="text-muted-foreground">{duration}</span>;
 };
+
+MeetingDuration.displayName = 'MeetingDuration';

@@ -110,3 +110,5 @@ export const CamToggleButton = () => {
         />
     );
 };
+
+CamToggleButton.displayName = 'CamToggleButton';

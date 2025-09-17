@@ -17,3 +17,5 @@ export const EndButton = () => {
         </Tooltip>
     );
 };
+
+EndButton.displayName = 'EndButton';

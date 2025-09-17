@@ -121,3 +121,5 @@ export const MicToggleButton = () => {
         />
     );
 };
+
+MicToggleButton.displayName = 'MicToggleButton';

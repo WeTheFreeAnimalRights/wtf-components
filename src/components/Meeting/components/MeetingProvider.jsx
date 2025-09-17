@@ -32,3 +32,5 @@ export const MeetingProvider = ({ children }) => {
 
     return children;
 };
+
+MeetingProvider.displayName = 'MeetingProvider';

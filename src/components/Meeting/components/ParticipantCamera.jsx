@@ -142,3 +142,5 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
         </div>
     );
 };
+
+ParticipantCamera.displayName = 'ParticipantCamera';

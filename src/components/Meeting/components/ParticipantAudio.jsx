@@ -108,3 +108,5 @@ export const ParticipantAudio = ({ id }) => {
     // Zoom SDK handles remote audio internally, so nothing to render here.
     return null;
 };
+
+ParticipantAudio.displayName = 'ParticipantAudio';

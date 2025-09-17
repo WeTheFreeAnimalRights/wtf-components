@@ -139,3 +139,5 @@ export const SpeechBubble = ({
         </div>
     );
 };
+
+SpeechBubble.displayName = 'SpeechBubble';

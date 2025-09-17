@@ -89,3 +89,5 @@ export const ParticipantFooter = ({ id, className }) => {
         </div>
     );
 };
+
+ParticipantFooter.displayName = 'ParticipantFooter';

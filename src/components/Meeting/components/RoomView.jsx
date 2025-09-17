@@ -13,7 +13,7 @@ export const RoomView = ({ users, currentUser, className }) => {
                 className
             )}
         >
-            {users.length > 0 && (
+            {users?.length > 0 && (
                 <div
                     className={cn(
                         'grid gap-4 justify-center content-center auto-rows-min',
@@ -32,7 +32,7 @@ export const RoomView = ({ users, currentUser, className }) => {
                 </div>
             )}
 
-            {users.length === 0 && (
+            {users?.length === 0 && (
                 <div className="p-4 w-full h-full flex items-center justify-center">
                     <div className="flex flex-col items-center justify-center">
                         <Spinner />
@@ -56,3 +56,5 @@ export const RoomView = ({ users, currentUser, className }) => {
         </div>
     );
 };
+
+RoomView.displayName = 'RoomView';

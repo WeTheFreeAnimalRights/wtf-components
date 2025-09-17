@@ -15,7 +15,7 @@ export const MeetingLoader = ({ id, children, className }) => {
     ];
 
     const repeatUntil = (data) => {
-        return Boolean(data[0].activist);
+        return Boolean(data[0].activist) || true;
     };
 
     return (
@@ -28,3 +28,5 @@ export const MeetingLoader = ({ id, children, className }) => {
         </Preloader>
     );
 };
+
+MeetingLoader.displayName = 'MeetingLoader';

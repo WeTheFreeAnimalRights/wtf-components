@@ -51,6 +51,8 @@ export const ChatView = ({
         }
     };
 
+    const hasPlugins = plugins?.length > 0;
+
     const sendMessage = async (message, resource = null, type = 'message') => {
         const payload = {
             type,
@@ -116,9 +118,9 @@ export const ChatView = ({
                         sendMessage(currentMessage);
                     }
                 }}
-                className={cn('flex flex-row items-center gap-2 mt-4 relative px-12')}
+                className={cn('flex flex-row items-center gap-2 mt-4 relative ps-12 pe-12', !hasPlugins && 'ps-0')}
             >
-                {plugins.length > 0 && (
+                {hasPlugins && (
                     <Button
                         variant="gray"
                         size="small-icon"
@@ -190,7 +192,7 @@ export const ChatView = ({
                 </Button>
             </form>
 
-            {pluginsVisible && plugins.length > 0 && (
+            {pluginsVisible && hasPlugins && (
                 <div className="p-4 bg-muted mt-4 rounded-md">
                     {!selectedPlugin && <ChatPluginsList onSelect={setSelectedPlugin} />}
 
