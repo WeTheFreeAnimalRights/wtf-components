@@ -7,6 +7,7 @@ import { TextInput } from '../../TextInput';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { Empty } from '../../Empty';
 import { ToggleGroupInput } from '../../ToggleGroupInput';
+import { hasOnScreenKeyboard } from '../../../helpers/hasOnScreenKeyboard';
 
 export const ResourcesChatPlugin = ({ resources, onSelect, onCancel }) => {
     const { t } = useTranslations();
@@ -59,7 +60,7 @@ export const ResourcesChatPlugin = ({ resources, onSelect, onCancel }) => {
             <div className="mb-1 flex flex-row items-center gap-2">
                 <TextInput
                     innerLeftContent={<Search className="w-4 h-4" />}
-                    autoFocus
+                    autoFocus={!hasOnScreenKeyboard()}
                     placeholder={t('resources-chat-plugin-search')}
                     className="flex-grow"
                     maxLength={100}

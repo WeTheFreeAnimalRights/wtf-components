@@ -75,27 +75,26 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
 
                 if (mounted && ref.current && el && !ref.current.contains(el)) {
                     ref.current.appendChild(el);
-                    // const video = el.querySelector('video');
-                    // if (video) {
-                    //     const applyRatio = () => {
-                    //         const w = video.videoWidth;
-                    //         const h = video.videoHeight;
-                    //         if (w && h) {
-                    //             const ratio = w / h;
-                    //             console.log('Aspect ratio:', ratio, w, h);
-                    //             // Set wrapper aspect directly
-                    //             if (ref.current) {
-                    //                 ref.current.style.aspectRatio = `${w} / ${h}`;
-                    //             }
-                    //         }
-                    //     };
+                    const video = el.querySelector('video');
+                    if (video) {
+                        const applyRatio = () => {
+                            const w = video.videoWidth;
+                            const h = video.videoHeight;
+                            if (w && h) {
+                                const ratio = w / h;
+                                // Set wrapper aspect directly
+                                if (ref.current) {
+                                    ref.current.style.aspectRatio = `${w} / ${h}`;
+                                }
+                            }
+                        };
 
-                    //     if (video.readyState >= 1) {
-                    //         applyRatio();
-                    //     }
-                    //     video.addEventListener('loadedmetadata', applyRatio);
-                    //     video.addEventListener('resize', applyRatio);
-                    // }
+                        if (video.readyState >= 1) {
+                            applyRatio();
+                        }
+                        video.addEventListener('loadedmetadata', applyRatio);
+                        video.addEventListener('resize', applyRatio);
+                    }
                 }
             } catch (err) {
                 console.error('attachVideo error:', err);
@@ -127,7 +126,10 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
 
     if (videoOn) {
         return (
-            <video-player-container className="relative w-full h-full">
+            <video-player-container className="relative" style={{
+                width: '100%',
+                height: '100%',
+            }}>
                 <div className="w-full h-full" ref={ref} />
             </video-player-container>
         );

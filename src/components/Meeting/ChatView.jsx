@@ -8,6 +8,7 @@ import { ResourcesChatPlugin } from './chat-plugins/ResourcesChatPlugin';
 import { AutoScrollContainer } from '../AutoScrollContainer';
 import { ChatPluginsList } from './chat-plugins/ChatPluginsList';
 import { PromptsChatPlugin } from './chat-plugins/PromptsChatPlugin';
+import { hasOnScreenKeyboard } from '../../helpers/hasOnScreenKeyboard';
 import { AutosizeTextarea } from '_/components/autosize-textarea';
 import { useMeeting } from './hooks/useMeeting';
 import { useIsMobile } from '_/hooks/use-mobile';
@@ -46,8 +47,13 @@ export const ChatView = ({
 
     const setInputMessage = (message = '') => {
         setCurrentMessage(message);
-        if (inputRef.current) {
+        if (inputRef.current && !hasOnScreenKeyboard()) {
             inputRef.current.focus();
+        }
+
+        if (hasOnScreenKeyboard()) {
+            setPluginsVisible(false);
+            setSelectedPlugin('');
         }
     };
 
@@ -129,7 +135,7 @@ export const ChatView = ({
                         onClick={() => {
                             setPluginsVisible(!pluginsVisible);
                             setSelectedPlugin('');
-                            if (pluginsVisible && inputRef.current) {
+                            if (pluginsVisible && inputRef.current && !hasOnScreenKeyboard()) {
                                 inputRef.current.focus();
                             }
                         }}

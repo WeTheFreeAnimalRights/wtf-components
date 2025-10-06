@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import ZoomVideo from '@zoom/videosdk';
+import { useTranslations } from '../../../hooks/useTranslations';
 import { useMeeting } from '../hooks/useMeeting';
+import { RoomView } from './RoomView';
 
 export const MeetingProvider = ({ children }) => {
     const { meeting, setMeeting } = useMeeting();
     const [loading, setLoading] = useState(true);
+    const { t } = useTranslations();
 
     useEffect(() => {
         const client = ZoomVideo.createClient();
@@ -27,7 +30,7 @@ export const MeetingProvider = ({ children }) => {
     }, []);
 
     if (loading) {
-        return 'LLLLOOAADING';
+        return <RoomView users={[]} loadingMessage={t('connecting')} />;
     }
 
     return children;

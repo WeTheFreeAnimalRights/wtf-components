@@ -31,6 +31,7 @@ export const getRequestObject = (requestConfig) => {
         // If there is any suffix to the url
         url += '/' + requestConfig.segments.join('/');
     }
+
     if (isPlainObject(requestConfig.params)) {
         const urlParams = new URLSearchParams();
         for (const param in requestConfig.params) {

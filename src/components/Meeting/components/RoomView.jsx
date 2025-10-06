@@ -3,7 +3,7 @@ import { useTranslations } from '../../../hooks/useTranslations';
 import { Spinner } from '../../Spinner';
 import { cn } from '_/lib/utils';
 
-export const RoomView = ({ users, currentUser, className }) => {
+export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
     const { t } = useTranslations();
 
     return (
@@ -37,14 +37,14 @@ export const RoomView = ({ users, currentUser, className }) => {
                     <div className="flex flex-col items-center justify-center">
                         <Spinner />
                         <div className="text-gray-500 mt-2">
-                            {t('user-joining-call')}
+                            {loadingMessage || t('waiting-for-user')}
                         </div>
                     </div>
                 </div>
             )}
 
             {currentUser && (
-                <div className="absolute right-4 top-4 w-64 sm:w-72 aspect-video z-50">
+                <div className="absolute right-4 top-4 w-48 sm:w-72 aspect-video z-50">
                     <div className="relative w-full h-full">
                         <ParticipantView
                             id={currentUser.userId}

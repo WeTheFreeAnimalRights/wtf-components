@@ -20,24 +20,39 @@ export const ConnectedRoomView = ({ emptyMessage, onMeetingEnded }) => {
         onReconnectEnd: onMeetingEnded,
     });
 
-    useEffect(() => {
-        const onUserChange = () => {
-            const { all, current } = parseParticipants(meeting);
-            setAll(all);
-            setCurrent(current);
-        };
+useEffect(() => {
+  if (!client) return;
 
-        onUserChange();
+  const reconcile = () => {
+    const { all, current } = parseParticipants(meeting);
+    setAll(all);
+    setCurrent(current);
+  };
 
-        client.on('user-added', onUserChange);
-        client.on('user-removed', onUserChange);
+  // Event handlers just trigger reconcile
+  const onUserChange = () => reconcile();
+  const onConnection = () => reconcile();
 
-        return () => {
-            client.off('user-added', onUserChange);
-            client.off('user-removed', onUserChange);
-        };
-    }, [client]);
+  // Initial populate
+  reconcile();
 
+  // Subscribe broadly
+  client.on?.('user-added', onUserChange);
+  client.on?.('user-removed', onUserChange);
+  client.on?.('user-updated', onUserChange);
+  client.on?.('connection-change', onConnection);
+
+  // Lightweight periodic reconcile to catch silent refreshes
+  const interval = setInterval(reconcile, 3000);
+
+  return () => {
+    client.off?.('user-added', onUserChange);
+    client.off?.('user-removed', onUserChange);
+    client.off?.('user-updated', onUserChange);
+    client.off?.('connection-change', onConnection);
+    clearInterval(interval);
+  };
+}, [client]);
     return (
         <div className="col-span-3 flex-grow basis-0 overflow-hidden relative flex items-center justify-center">
             <RoomView

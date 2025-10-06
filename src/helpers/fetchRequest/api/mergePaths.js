@@ -1,6 +1,6 @@
 export const mergePaths = (basePath, relativePath) => {
     // Parse the base URL
-    const url = new URL(basePath);
+    const url = new URL(basePath, window.location.origin);
 
     // Extract the pathname
     let baseSegments = url.pathname.split('/').filter(Boolean);
