@@ -1,6 +1,6 @@
 import { isFunction, isUndefined } from 'lodash-es';
 import React, { forwardRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import { Minus, Plus } from 'lucide-react';
 import { TextInput } from '../TextInput';
 import { cn } from '_/lib/utils';
@@ -16,6 +16,7 @@ export const NumberInput = forwardRef(
             className,
             inputClassName,
             onChange,
+            numberType = 'int',
             ...props
         },
         ref
@@ -29,6 +30,8 @@ export const NumberInput = forwardRef(
             }
         }, [isControlled, value]);
 
+        const step = numberType === 'int' ? 1 : 0.5;
+
         const updateValue = (newValue) => {
             const clampedValue = Math.max(0, newValue);
             if (!isControlled) {
@@ -40,9 +43,9 @@ export const NumberInput = forwardRef(
             }
         };
         const increment = () =>
-            updateValue((isControlled ? value : internalValue) + 1);
+            updateValue((isControlled ? value : internalValue) + step);
         const decrement = () =>
-            updateValue((isControlled ? value : internalValue) - 1);
+            updateValue((isControlled ? value : internalValue) - step);
 
         return (
             <div className={cn('w-full max-w-[280px] space-y-2', className)}>
@@ -60,12 +63,13 @@ export const NumberInput = forwardRef(
                     <TextInput
                         ref={ref}
                         type="number"
+                        step={step}
                         min={min}
                         max={max}
                         name={name}
                         value={internalValue}
                         onChange={(e) => {
-                            const newValue = parseInt(e.target.value, 10);
+                            const newValue = numberType === 'int' ? parseInt(e.target.value, 10) : parseFloat(e.target.value, 10);
                             if (!isNaN(newValue) && newValue >= 0) {
                                 updateValue(newValue);
                             }
