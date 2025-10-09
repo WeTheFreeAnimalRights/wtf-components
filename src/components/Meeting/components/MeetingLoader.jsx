@@ -26,7 +26,13 @@ export const MeetingLoader = ({ id, children, className }) => {
     return (
         <Preloader
             requests={requests}
-            customPreloader={() => <RoomView className={cn('h-dvh', className)} users={[]} loadingMessage={t('waiting-for-activist')} />}
+            customPreloader={() => (
+                <RoomView
+                    className={cn('h-dvh', className)}
+                    users={[]}
+                    loadingMessage={t('waiting-for-activist')}
+                />
+            )}
             repeatUntil={repeatUntil}
         >
             {children}

@@ -18,8 +18,7 @@ export const SpeechBubble = ({
     const [expanded, setExpanded] = useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const textRef = useRef(null);
-    const {theme} = useTheme();
-
+    const { theme } = useTheme();
 
     useEffect(() => {
         if (textRef.current) {
@@ -135,7 +134,11 @@ export const SpeechBubble = ({
                                 ? 'M14 12 Q7 -2, 0 12 Q7 9, 14 12 Z'
                                 : 'M0 12 Q7 -2, 14 12 Q7 9, 0 12 Z'
                         }
-                        fill={theme === 'light' && received ? '#f1f5f9' : '#1e293b'}
+                        fill={
+                            theme === 'light' && received
+                                ? '#f1f5f9'
+                                : '#1e293b'
+                        }
                     />
                 </svg>
             )}

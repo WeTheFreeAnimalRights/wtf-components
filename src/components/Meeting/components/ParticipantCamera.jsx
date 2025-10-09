@@ -126,10 +126,13 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
 
     if (videoOn) {
         return (
-            <video-player-container className="relative" style={{
-                width: '100%',
-                height: '100%',
-            }}>
+            <video-player-container
+                className="relative"
+                style={{
+                    width: '100%',
+                    height: '100%',
+                }}
+            >
                 <div className="w-full h-full" ref={ref} />
             </video-player-container>
         );

@@ -99,7 +99,10 @@ export const NotificationsDropdown = ({
                     <div className="relative">
                         <Bell className="w-4 h-4" />
                         {newItems > 0 && (
-                            <Badge variant="simple" className="absolute -end-[12px] -top-[12px] px-1.5">
+                            <Badge
+                                variant="simple"
+                                className="absolute -end-[12px] -top-[12px] px-1.5"
+                            >
                                 {newItems}
                             </Badge>
                         )}

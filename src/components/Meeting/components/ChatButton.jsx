@@ -15,7 +15,10 @@ export const ChatButton = forwardRef(
         const { client } = meeting;
 
         const chat = useMemo(() => client.getChatClient(), [client]);
-        const currentUser = useMemo(() => client.getCurrentUserInfo(), [client]);
+        const currentUser = useMemo(
+            () => client.getCurrentUserInfo(),
+            [client]
+        );
 
         const [newMessages, setNewMessages] = useState(0);
 
@@ -54,7 +57,10 @@ export const ChatButton = forwardRef(
 
                     // Ignore messages from self for "new" count
                     const senderId = msg?.sender?.userId;
-                    const isSelf = senderId && currentUser?.userId && senderId === currentUser.userId;
+                    const isSelf =
+                        senderId &&
+                        currentUser?.userId &&
+                        senderId === currentUser.userId;
 
                     if (!chatVisible && !isSelf) {
                         setNewMessages((n) => n + 1);
@@ -91,7 +97,10 @@ export const ChatButton = forwardRef(
         return (
             <Button ref={ref} className={cn('relative', className)} {...props}>
                 {newMessages > 0 && (
-                    <Badge variant="simple" className="absolute end-0 top-0 translate-x-1/3 -translate-y-1/3">
+                    <Badge
+                        variant="simple"
+                        className="absolute end-0 top-0 translate-x-1/3 -translate-y-1/3"
+                    >
                         {newMessages}
                     </Badge>
                 )}

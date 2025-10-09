@@ -13,15 +13,18 @@ export const EndButton = () => {
 
     return (
         <Tooltip message={t('chat-end-tooltip')}>
-            <Button variant="gray" onClick={() => {
-                confirm({
-                    title: t('end-meeting-confirm-title'),
-                    message: t('end-meeting-confirm-message'),
-                    callback: () => {
-                        client.leave();
-                    },
-                });
-            }}>
+            <Button
+                variant="gray"
+                onClick={() => {
+                    confirm({
+                        title: t('end-meeting-confirm-title'),
+                        message: t('end-meeting-confirm-message'),
+                        callback: () => {
+                            client.leave();
+                        },
+                    });
+                }}
+            >
                 <LogOut className="w-4 h-4" />
             </Button>
         </Tooltip>

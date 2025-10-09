@@ -13,7 +13,9 @@ export const CamToggleButton = () => {
 
     const readSelfVideoOn = () => {
         try {
-            const me = currentUser?.userId ? client.getUser(currentUser.userId) : null;
+            const me = currentUser?.userId
+                ? client.getUser(currentUser.userId)
+                : null;
             if (!me) {
                 return false;
             }
@@ -48,7 +50,8 @@ export const CamToggleButton = () => {
                 return;
             }
             const s = typeof state === 'string' ? state.toLowerCase() : state;
-            const on = s === true || s === 'on' || s === 'start' || s === 'active';
+            const on =
+                s === true || s === 'on' || s === 'start' || s === 'active';
             setCameraOn(on);
         };
 
@@ -104,7 +107,7 @@ export const CamToggleButton = () => {
     return (
         <ToggleButton
             components={{ on: Video, off: VideoOff }}
-            value={cameraOn}      // true = camera is on
+            value={cameraOn} // true = camera is on
             disabled={busy}
             onChange={toggleCam}
         />

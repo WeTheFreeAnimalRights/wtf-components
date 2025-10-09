@@ -18,7 +18,7 @@ export const MeetingProvider = ({ children, className }) => {
                 meeting.auth.meetingNumber,
                 meeting.auth.signature,
                 meeting.auth.userName,
-                meeting.auth.passwword,
+                meeting.auth.passwword
             );
 
             setMeeting('client', client);
@@ -31,7 +31,13 @@ export const MeetingProvider = ({ children, className }) => {
     }, []);
 
     if (loading) {
-        return <RoomView className={cn('h-dvh', className)} users={[]} loadingMessage={t('connecting')} />;
+        return (
+            <RoomView
+                className={cn('h-dvh', className)}
+                users={[]}
+                loadingMessage={t('connecting')}
+            />
+        );
     }
 
     return children;

@@ -124,7 +124,10 @@ export const ChatView = ({
                         sendMessage(currentMessage);
                     }
                 }}
-                className={cn('flex flex-row items-center gap-2 mt-4 relative ps-12 pe-12', !hasPlugins && 'ps-0')}
+                className={cn(
+                    'flex flex-row items-center gap-2 mt-4 relative ps-12 pe-12',
+                    !hasPlugins && 'ps-0'
+                )}
             >
                 {hasPlugins && (
                     <Button
@@ -135,7 +138,11 @@ export const ChatView = ({
                         onClick={() => {
                             setPluginsVisible(!pluginsVisible);
                             setSelectedPlugin('');
-                            if (pluginsVisible && inputRef.current && !hasOnScreenKeyboard()) {
+                            if (
+                                pluginsVisible &&
+                                inputRef.current &&
+                                !hasOnScreenKeyboard()
+                            ) {
                                 inputRef.current.focus();
                             }
                         }}
@@ -169,7 +176,10 @@ export const ChatView = ({
                                 if (trim(event.target.value).length > 0) {
                                     sendMessage(event.target.value);
                                 }
-                            } else if (event.key === 'Enter' && !event.shiftKey) {
+                            } else if (
+                                event.key === 'Enter' &&
+                                !event.shiftKey
+                            ) {
                                 event.preventDefault();
                                 setCurrentMessage((prev) => prev + '\n');
                             }
@@ -180,7 +190,10 @@ export const ChatView = ({
                                 if (trim(event.target.value).length > 0) {
                                     sendMessage(event.target.value);
                                 }
-                            } else if (event.key === 'Enter' && event.shiftKey) {
+                            } else if (
+                                event.key === 'Enter' &&
+                                event.shiftKey
+                            ) {
                                 event.preventDefault();
                                 setCurrentMessage((prev) => prev + '\n');
                             }
@@ -200,13 +213,19 @@ export const ChatView = ({
 
             {pluginsVisible && hasPlugins && (
                 <div className="p-4 bg-muted mt-4 rounded-md">
-                    {!selectedPlugin && <ChatPluginsList onSelect={setSelectedPlugin} />}
+                    {!selectedPlugin && (
+                        <ChatPluginsList onSelect={setSelectedPlugin} />
+                    )}
 
                     {selectedPlugin === 'resources' && (
                         <ResourcesChatPlugin
                             resources={resources}
                             onSelect={(resource) =>
-                                sendMessage('resource sent', resource, 'resource')
+                                sendMessage(
+                                    'resource sent',
+                                    resource,
+                                    'resource'
+                                )
                             }
                             onCancel={() => {
                                 setPluginsVisible(false);

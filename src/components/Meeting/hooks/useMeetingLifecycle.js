@@ -118,7 +118,8 @@ export const useMeetingLifecycle = (opts = {}) => {
                 return;
             }
             const removedSelf =
-                Array.isArray(users) && users.some((u) => u?.userId === me.userId);
+                Array.isArray(users) &&
+                users.some((u) => u?.userId === me.userId);
             if (removedSelf) {
                 setReconnecting(false);
                 setEndReason('removed');

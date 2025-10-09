@@ -13,7 +13,9 @@ export const MicToggleButton = () => {
 
     const readSelfMuted = () => {
         try {
-            const me = currentUser?.userId ? client.getUser(currentUser.userId) : null;
+            const me = currentUser?.userId
+                ? client.getUser(currentUser.userId)
+                : null;
             if (!me) {
                 return false;
             }
@@ -30,7 +32,9 @@ export const MicToggleButton = () => {
         }
     };
 
-    const [microphoneMuted, setMicrophoneMuted] = useState(() => readSelfMuted());
+    const [microphoneMuted, setMicrophoneMuted] = useState(() =>
+        readSelfMuted()
+    );
     const [busy, setBusy] = useState(false); // prevent double taps
 
     // Keep local state in sync with SDK
@@ -51,7 +55,8 @@ export const MicToggleButton = () => {
                 return;
             }
             const s = typeof state === 'string' ? state.toLowerCase() : state;
-            const active = s === true || s === 'on' || s === 'start' || s === 'active';
+            const active =
+                s === true || s === 'on' || s === 'start' || s === 'active';
             setMicrophoneMuted(!active);
         };
 
