@@ -67,6 +67,16 @@ export const FeedbackForm = ({
                 if (isFunction(onVote)) {
                     onVote(id);
                 }
+
+                if (typeof plausible === 'function') {
+                    plausible('Feedback', {
+                        props: {
+                            code: code.code,
+                            feedback_option_id: id,
+                            resource_id: resourceId,
+                        }
+                    });
+                }
             }
         );
     };
