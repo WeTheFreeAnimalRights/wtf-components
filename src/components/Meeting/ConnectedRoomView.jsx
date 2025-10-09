@@ -5,7 +5,7 @@ import { parseParticipants } from './helpers/parseParticipants';
 import { useMeeting } from './hooks/useMeeting';
 import { useMeetingLifecycle } from './hooks/useMeetingLifeCycle';
 
-export const ConnectedRoomView = ({ emptyMessage, onMeetingEnded }) => {
+export const ConnectedRoomView = ({ emptyMessage, onMeetingEnded, loadingMessage }) => {
     const { t } = useTranslations();
     const { meeting } = useMeeting();
     const { client} = meeting;
@@ -59,6 +59,7 @@ useEffect(() => {
                 users={all}
                 currentUser={current}
                 emptyMessage={emptyMessage}
+                loadingMessage={loadingMessage}
             />
             {/* {meeting.status === statuses.joined && (
                 <RoomView

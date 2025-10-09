@@ -3,8 +3,9 @@ import ZoomVideo from '@zoom/videosdk';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { useMeeting } from '../hooks/useMeeting';
 import { RoomView } from './RoomView';
+import { cn } from '_/lib/utils';
 
-export const MeetingProvider = ({ children }) => {
+export const MeetingProvider = ({ children, className }) => {
     const { meeting, setMeeting } = useMeeting();
     const [loading, setLoading] = useState(true);
     const { t } = useTranslations();
@@ -30,7 +31,7 @@ export const MeetingProvider = ({ children }) => {
     }, []);
 
     if (loading) {
-        return <RoomView users={[]} loadingMessage={t('connecting')} />;
+        return <RoomView className={cn('h-dvh', className)} users={[]} loadingMessage={t('connecting')} />;
     }
 
     return children;

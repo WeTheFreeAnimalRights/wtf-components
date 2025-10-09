@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Image } from '../../Image';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { useFormatDate } from '../../../hooks/useFormatDate';
+import { useTheme } from '../../../hooks/useTheme';
 import { cn } from '_/lib/utils';
 
 export const SpeechBubble = ({
@@ -17,6 +18,8 @@ export const SpeechBubble = ({
     const [expanded, setExpanded] = useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const textRef = useRef(null);
+    const {theme} = useTheme();
+
 
     useEffect(() => {
         if (textRef.current) {
@@ -132,7 +135,7 @@ export const SpeechBubble = ({
                                 ? 'M14 12 Q7 -2, 0 12 Q7 9, 14 12 Z'
                                 : 'M0 12 Q7 -2, 14 12 Q7 9, 0 12 Z'
                         }
-                        fill="#1e293b"
+                        fill={theme === 'light' && received ? '#f1f5f9' : '#1e293b'}
                     />
                 </svg>
             )}

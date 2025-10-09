@@ -232,7 +232,7 @@ export const MediaAccessModal = ({
             {t('media-access-modal-title')}{' '}
           </div>
         }
-        description={t('media-access-modal-description')}
+        description={t('media-access-modal-desc ription')}
         showDescription={false}
         showCloseButton={false}
         className="w-10/12 sm:w-2/3 lg:w-[900px] h-auto p-0 gap-0 border-0 max-w-[500px] rounded-md"
