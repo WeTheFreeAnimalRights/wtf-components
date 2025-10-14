@@ -2,25 +2,51 @@ const fs = require('fs');
 const path = require('path');
 const babelParser = require('@babel/parser');
 
-module.exports = async (
-    platform,
-    searchDir = path.resolve(process.cwd(), './src')
-) => {
-    const outputFile = path.resolve(process.cwd(), './_translations.json');
+// Parse CLI args
+const args = process.argv.slice(2);
+const isDev = args.includes('-D') || args.includes('--dev');
+const dirs = [];
+let paramPlatform = '';
 
-    console.log(`Downloading translations for platform ${platform}...`);
+for (let i = 0; i < args.length; i++) {
+    if (args[i] === '-d' || args[i] === '--dir') {
+        const next = args[i + 1];
+        if (next && !next.startsWith('-')) {
+            dirs.push(path.resolve(process.cwd(), next));
+        }
+    }
+
+    if (args[i] === '-p' || args[i] === '--platform') {
+        const next = args[i + 1];
+        if (next && !next.startsWith('-')) {
+            paramPlatform = next;
+        }
+    }
+}
+
+const baseUrl = isDev
+    ? 'https://dev.api.mystats.wtf'
+    : 'https://api.mystats.wtf';
+
+module.exports = async (platform) => {
+    const outputFile = path.resolve(process.cwd(), './_translations.json');
+    const searchDirs = dirs.length ? dirs : [path.resolve(process.cwd(), './src')];
+
+    const usedPlatform = paramPlatform || platform;
+
+    console.log(`Downloading translations from ${baseUrl} for platform ${usedPlatform}...`);
     const response = await fetch(
-        `https://api.mystats.wtf/api/public/v1/contents?filter[platform]=${platform}`,
+        `${baseUrl}/api/public/v1/contents?filter[platform]=${usedPlatform}`,
         {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                'Accept-Language': 'en',
             },
         }
     );
-    const apiData = await response.json();
 
-    // Transform API response into a key-value object
+    const apiData = await response.json();
     const backendTranslations = apiData.data.reduce((acc, item) => {
         acc[item.key] = item.value;
         return acc;
@@ -63,7 +89,6 @@ module.exports = async (
                     const key = firstArg.value;
                     const value = backendTranslations[firstArg.value] || '';
 
-                    // Only add new translations not in backendTranslations
                     if (!backendTranslations.hasOwnProperty(firstArg.value)) {
                         translations.add({ key, value });
                     }
@@ -82,22 +107,20 @@ module.exports = async (
     };
 
     const allTranslations = {};
-    const files = getJsFiles(searchDir);
 
-    files.forEach((file) => {
-        console.log(`Inspecting "${file}"...`);
-        const translations = parseFile(file);
-        translations.forEach((obj) => {
-            if (!allTranslations[obj.key]) {
-                allTranslations[obj.key] = obj.value;
-            }
-        });
-    });
+    for (const dir of searchDirs) {
+        const files = getJsFiles(dir);
+        for (const file of files) {
+            console.log(`Inspecting "${file}"...`);
+            const translations = parseFile(file);
+            translations.forEach((obj) => {
+                if (!allTranslations[obj.key]) {
+                    allTranslations[obj.key] = obj.value;
+                }
+            });
+        }
+    }
 
-    fs.writeFileSync(
-        outputFile,
-        JSON.stringify(allTranslations, null, 2),
-        'utf-8'
-    );
+    fs.writeFileSync(outputFile, JSON.stringify(allTranslations, null, 2), 'utf-8');
     console.log(`Translation strings extracted to ${outputFile}`);
 };
