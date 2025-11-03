@@ -76,7 +76,7 @@ export const ParticipantFooter = ({ id, className }) => {
             <div className="flex-grow">
                 {webcamOn && (
                     <div className="bg-background/80 py-1 px-2 rounded-md inline-block text-sm">
-                        {participant?.displayName + ' - ' + id}
+                        {participant?.displayName}
                     </div>
                 )}
             </div>

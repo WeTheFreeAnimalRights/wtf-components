@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isFunction } from 'lodash-es';
 import { getFeedbackKey } from './getFeedbackKey';
 import { useTranslations } from '../../hooks/useTranslations';
 import { useRequest } from '../../hooks/useRequest';
@@ -10,7 +11,6 @@ import { Alert } from '../Alert';
 import { Button } from '../Button';
 import { FeedbackIcon } from '../FeedbackIcon';
 import { Spinner } from '../Spinner';
-import { isFunction } from 'lodash-es';
 import { cn } from '_/lib/utils';
 
 export const FeedbackForm = ({

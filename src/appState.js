@@ -26,6 +26,10 @@ export const currentCodeState = createGlobalState({
     default: null,
 });
 
+export const reportOptionsState = createGlobalState({
+    default: [],
+});
+
 export const currentChatVisitorState = createGlobalState({
     default: null,
 });

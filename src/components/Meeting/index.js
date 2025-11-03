@@ -4,6 +4,8 @@ export { ChatView } from './ChatView';
 export { RoomView } from './components/RoomView';
 export { EndButton } from './components/EndButton';
 export { ChatButton } from './components/ChatButton';
+export { ReportForm } from './components/ReportForm';
+export { InactivityGuardModal } from './components/InactivityGuardModal';
 export { MicToggleButton } from './components/MicToggleButton';
 export { CamToggleButton } from './components/CamToggleButton';
 export { MeetingDuration } from './components/MeetingDuration';

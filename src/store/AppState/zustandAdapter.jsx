@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash-es';
 import { createStore, useStore } from 'zustand';
 
 /**
@@ -10,9 +11,16 @@ export const createGlobalState = ({ default: defaultValue }) =>
  * Hook to use global state (like useRecoilState / useAtom)
  */
 export const useGlobalState = (store) => {
-    const value = useStore(store, (state) => state.value);
-    const setValue = (val) => store.setState({ value: val });
-    return [value, setValue];
+  const value = useStore(store, (s) => s.value);
+  const setValue = (valOrUpdater) => {
+    if (isFunction(valOrUpdater)) {
+      const curr = store.getState().value;
+      store.setState({ value: valOrUpdater(curr) });
+    } else {
+      store.setState({ value: valOrUpdater });
+    }
+  };
+  return [value, setValue];
 };
 
 /**

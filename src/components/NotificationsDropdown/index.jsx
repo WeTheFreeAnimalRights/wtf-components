@@ -29,6 +29,7 @@ import {
 import { cn } from '_/lib/utils';
 
 export const NotificationsDropdown = ({
+    items,
     onSelect,
     onMore,
     className,
@@ -38,59 +39,15 @@ export const NotificationsDropdown = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const { t } = useTranslations();
-    const { notifications } = useNotifications();
 
     const limit = 5;
+    const {notifications} = useNotifications();
+    const usedItems = notifications || items;
 
-    const _items = [
-        {
-            message: "There's a new chat",
-            type: 'chats',
-            isNew: true,
-            url: '/chats',
-            date: new Date(),
-        },
-        {
-            message: 'Your code is expiring',
-            type: 'codes',
-            isNew: true,
-            url: '/codes',
-            date: new Date('05/26/2025'),
-        },
-        {
-            message: 'There is another announcement',
-            type: 'announcements',
-            isNew: false,
-            url: '/announcements',
-            date: new Date('05/20/2025'),
-        },
-        {
-            message: 'New event in Amsterdam, Netherlands coming soon',
-            type: 'events',
-            isNew: false,
-            url: '/events',
-            date: new Date('05/20/2025'),
-        },
-        {
-            message: 'MyChats has now launched',
-            type: 'chats',
-            isNew: false,
-            url: '/chats',
-            date: new Date('05/15/2025'),
-        },
-        {
-            message:
-                'Training for how to do outreach the right way is now live',
-            type: 'trainings',
-            isNew: false,
-            url: '/trainings',
-            date: new Date('05/01/2025'),
-        },
-    ];
-
-    const newItems = getNewCount(_items);
-    const notificationItems = _items.slice(0, limit);
-    const moreNotifications = _items.length > limit;
+    // Get all the data
+    const newItems = getNewCount(usedItems);
+    const notificationItems = usedItems.slice(0, limit);
+    const moreNotifications = usedItems.length > limit;
 
     return (
         <DropdownMenu onOpenChange={setIsOpen} open={isOpen}>
@@ -196,6 +153,36 @@ export const NotificationsDropdown = ({
 
 NotificationsDropdown.displayName = 'NotificationsDropdown';
 NotificationsDropdown.propTypes = {
+    /**
+     * Notification items
+     */
+    items: PropTypes.shape({
+        /**
+         * Message of the notification
+         */
+        message: PropTypes.string,
+
+        /**
+         * Type of notification
+         */
+        type: PropTypes.oneOf(['codes', 'events', 'trainings', 'teams', 'chats', 'announcements']),
+
+        /**
+         * Is notification new
+         */
+        isNew: PropTypes.bool,
+
+        /**
+         * Location of notification
+         */
+        url: PropTypes.string,
+
+        /**
+         * Moment of notification
+         */
+        date: PropTypes.object,
+    }),
+
     /**
      * Whether to show a badge or not
      */

@@ -13,8 +13,9 @@ export const MediaAccessModal = ({
   open,
   onClose,
   onDevicesSelected, // optional: ({ audioDeviceId, videoDeviceId }) => void
-  cam = true, // camera optional
-  // mic is ALWAYS required in this flow
+  cam = true,        // camera optional
+  autoClose = true,  // <-- default true: only autoclose if already granted at open
+  // mic is ALWAYS required
   ...props
 }) => {
   const { t } = useTranslations();
@@ -34,7 +35,7 @@ export const MediaAccessModal = ({
   const [labelsAvailable, setLabelsAvailable] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Autofocus ref for Continue
+  // Autofocus for Continue
   const continueBtnRef = useRef(null);
 
   // ----- Device helpers -----
@@ -81,6 +82,7 @@ export const MediaAccessModal = ({
       setLabelsAvailable(list.some((d) => !!d.label));
       parseDevices(list);
 
+      // Normalize selections post-permission
       setSelectedMicId((prev) => {
         if (!prev || prev.includes(DEFAULT_SENTINEL)) {
           const firstReal = list.find((d) => d.kind === 'audioinput' && d.deviceId)?.deviceId;
@@ -100,7 +102,11 @@ export const MediaAccessModal = ({
     }
   }, [parseDevices]);
 
-  // Pre-check existing permissions; if granted, skip the "Grant" step
+  // ---- Pre-check at OPEN:
+  // If mic is already granted AND autoClose is true -> immediately close (no dropdowns).
+  // Otherwise:
+  // - If already granted but autoClose is false -> show selectors (skip grant step).
+  // - If not granted -> show Grant button.
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
@@ -119,13 +125,29 @@ export const MediaAccessModal = ({
         const micIsGranted = micState?.state === 'granted';
         const camIsGranted = cam ? (camState?.state === 'granted') : false;
 
+        if (!cancelled && micIsGranted && autoClose && !hasRequested) {
+          // Already granted at open → do NOT render modal, just close and notify
+          if (isFunction(onDevicesSelected)) {
+            onDevicesSelected({
+              audioDeviceId: '',             // system default mic
+              videoDeviceId: camIsGranted ? '' : '',
+            });
+          }
+          if (isFunction(onClose)) onClose();
+          return; // stop here – no UI
+        }
+
+        // Otherwise continue normal UI: enumerate and set state
         await enumerate();
 
         if (!cancelled) {
           if (micIsGranted || camIsGranted) {
+            // Skip grant step; show selectors immediately
             setMicGranted(micIsGranted);
             setCamGranted(camIsGranted);
             setHasRequested(true);
+          } else {
+            setHasRequested(false);
           }
         }
       } catch (e) {
@@ -135,7 +157,7 @@ export const MediaAccessModal = ({
     })();
 
     return () => { cancelled = true; };
-  }, [open, cam, enumerate]);
+  }, [open, cam, autoClose, onClose, onDevicesSelected, enumerate]);
 
   // Hot-plug listener
   useEffect(() => {
@@ -148,7 +170,6 @@ export const MediaAccessModal = ({
   // Autofocus Continue when selectors appear
   useEffect(() => {
     if (hasRequested && (micGranted || camGranted)) {
-      // wait a tick so the button is mounted
       if (typeof requestAnimationFrame === 'function') {
         requestAnimationFrame(() => continueBtnRef.current?.focus?.());
       } else {
@@ -157,7 +178,7 @@ export const MediaAccessModal = ({
     }
   }, [hasRequested, micGranted, camGranted]);
 
-  // ----- Request permission first (broad) -----
+  // ----- Request permission (broad) -----
   const requestPermissions = async () => {
     try {
       setErrorMessage('');
@@ -173,6 +194,9 @@ export const MediaAccessModal = ({
 
       await enumerate();
       stream.getTracks().forEach((t) => t.stop());
+
+      // NOTE: Even if autoClose===true, do NOT auto-close after user grants;
+      // we want to show dropdowns so they can pick specific devices.
     } catch (error) {
       console.error('Permission request failed:', error);
       setCamGranted(false);
@@ -220,7 +244,7 @@ export const MediaAccessModal = ({
       const isCamSentinel = selectedCamId.includes(DEFAULT_SENTINEL);
 
       onDevicesSelected({
-        audioDeviceId: isMicSentinel ? '' : selectedMicId,
+        audioDeviceId: isMicSentinel ? '' : selectedMicId,                 // '' => system default
         videoDeviceId: camGranted ? (isCamSentinel ? '' : selectedCamId) : '',
       });
     }
@@ -245,6 +269,7 @@ export const MediaAccessModal = ({
     <ModalContainer
       open={open}
       onOpenChange={(value) => {
+        // Prevent closing until mic is granted and something is selected
         if (!value) {
           const canClose = micGranted && !!selectedMicId;
           if (canClose) {
@@ -294,7 +319,7 @@ export const MediaAccessModal = ({
                 'We need microphone access for calls.')}
           </p>
 
-          {/* Step 1: ask for permissions — skipped automatically if already granted */}
+          {/* Step 1: ask for permissions — shown only if grants not present at open */}
           {!hasRequested && (
             <>
               <Button className="w-full mt-4" onClick={requestPermissions}>
