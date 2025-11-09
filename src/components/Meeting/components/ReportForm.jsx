@@ -6,9 +6,14 @@ import { Button } from '../../Button';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { useChatReportReasons } from '../hooks/useChatReportReasons';
 import { useMeeting } from '../hooks/useMeeting';
-import { GeneratedStandardForm, StandardRadioGroup, StandardTextarea } from '../../StandardForm';
+import {
+    GeneratedStandardForm,
+    StandardRadioGroup,
+    StandardTextarea,
+} from '../../StandardForm';
 import { reportOptionsState } from '../../../appState';
 import { useGlobalState } from '../../../store';
+import { useEndMeeting } from '../hooks/useEndMeeting';
 
 export const ReportForm = ({ id, api = 'public', token, meetingId }) => {
     const { t } = useTranslations();
@@ -20,6 +25,9 @@ export const ReportForm = ({ id, api = 'public', token, meetingId }) => {
     // Get the report options
     const [reportOptions] = useGlobalState(reportOptionsState);
 
+    // End the meeting
+    const { endMeeting } = useEndMeeting();
+
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <Tooltip message={t('chat-report-tooltip')}>
@@ -30,7 +38,9 @@ export const ReportForm = ({ id, api = 'public', token, meetingId }) => {
                 </PopoverTrigger>
             </Tooltip>
             <PopoverContent className="w-80" align="end">
-                <h2 className="text-lg font-semibold mb-4">{t('chat-report-title')}</h2>
+                <h2 className="text-lg font-semibold mb-4">
+                    {t('chat-report-title')}
+                </h2>
                 <GeneratedStandardForm
                     requestObject={{
                         url: 'chats',
@@ -40,13 +50,15 @@ export const ReportForm = ({ id, api = 'public', token, meetingId }) => {
                         bearer: token,
                         parseStandardBody: (body) => ({
                             ...body,
-                            ... (meetingId ? {
-                                meeting_id: meetingId,
-                            } : {}),
+                            ...(meetingId
+                                ? {
+                                      meeting_id: meetingId,
+                                  }
+                                : {}),
                         }),
                     }}
                     onSuccess={() => {
-                        client.leave(client.isHost());
+                        endMeeting();
                         setOpen(false);
                     }}
                     onCancel={() => {
@@ -57,7 +69,11 @@ export const ReportForm = ({ id, api = 'public', token, meetingId }) => {
                         {t('chat-report-reason')}
                     </StandardRadioGroup>
 
-                    <StandardTextarea name="comment" maxLength={255} className="mt-6">
+                    <StandardTextarea
+                        name="comment"
+                        maxLength={255}
+                        className="mt-6"
+                    >
                         {t('chat-report-comment')}
                     </StandardTextarea>
                 </GeneratedStandardForm>

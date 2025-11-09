@@ -1,4 +1,5 @@
 import { isPlainObject, isString } from 'lodash-es';
+import { parseJson } from './parseJson';
 
 export const filtersDecode = (str = '', defaultValues = {}) => {
     // If an empty thing is passed, then ignore it
@@ -7,12 +8,7 @@ export const filtersDecode = (str = '', defaultValues = {}) => {
     }
 
     const jsonStr = atob(str);
-    let final;
-    try {
-        final = JSON.parse(jsonStr);
-    } catch (error) {
-        console.error(error);
-    }
+    const final = parseJson(jsonStr);
 
     if (isPlainObject(final)) {
         return {

@@ -36,7 +36,7 @@ export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
                 <div className="p-4 w-full h-full flex items-center justify-center">
                     <div className="flex flex-col items-center justify-center">
                         <Spinner />
-                        <div className="text-gray-500 mt-2">
+                        <div className="mt-3 italic text-sm text-muted-foreground">
                             {loadingMessage || t('waiting-for-user')}
                         </div>
                     </div>

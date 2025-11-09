@@ -1,16 +1,13 @@
 import { last } from 'lodash-es';
+import { parseMessage } from './parseMessage';
 
 export const groupMessages = (list = [], userId) => {
     return list.reduce((result, item) => {
         // Get the last element
         const lastElement = last(result);
 
-        let data = {};
-        try {
-            data = JSON.parse(item.message);
-        } catch (e) {
-            console.error('Error decoding message:', e, item.message);
-        }
+        // Get the data
+        const data = parseMessage(item);
 
         // The item to be sent
         const finalItem = {

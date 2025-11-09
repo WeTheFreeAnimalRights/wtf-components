@@ -31,7 +31,9 @@ export const FiltersBox = ({ children, className, onApplied }) => {
                     <Filter className="w-4 h-4 me-2" />
                     {t('filters-box-title')}
                     {filtersCount > 0 && (
-                        <Badge variant="simple" className="ms-2">{filtersCount}</Badge>
+                        <Badge variant="simple" className="ms-2">
+                            {filtersCount}
+                        </Badge>
                     )}
                 </Button>
             </PopoverTrigger>

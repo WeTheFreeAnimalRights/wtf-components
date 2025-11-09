@@ -1,3 +1,5 @@
+import { parseJson } from "../../helpers/parseJson";
+
 export class SecureStore {
     static encryptionKey = '3movies-mystats-16012025';
     static VERSION_PREFIX = 'v2:'; // new scheme marker
@@ -12,7 +14,8 @@ export class SecureStore {
     static #b64FromBytes(bytes) {
         // safe for 0..255
         let bin = '';
-        for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        for (let i = 0; i < bytes.length; i++)
+            bin += String.fromCharCode(bytes[i]);
         return btoa(bin);
     }
     static #bytesFromB64(b64) {
@@ -53,7 +56,9 @@ export class SecureStore {
         const decoded = atob(data)
             .split('')
             .map((char, i) =>
-                String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length))
+                String.fromCharCode(
+                    char.charCodeAt(0) ^ key.charCodeAt(i % key.length)
+                )
             )
             .join('');
         return decoded;
@@ -97,7 +102,7 @@ export class SecureStore {
 
         try {
             const json = SecureStore.decrypt(encryptedData);
-            const data = JSON.parse(json);
+            const data = parseJson(json);
 
             if (data.expiresAt && Date.now() > data.expiresAt) {
                 localStorage.removeItem(key);

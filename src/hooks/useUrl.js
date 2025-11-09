@@ -41,9 +41,10 @@ export const useUrl = () => {
     }
 
     // Navigate to new url
-    const [location, navigate] = useLocation();
+    const [,navigate] = useLocation();
     const setUrl = (data, ...params) => {
-        const newUrl = getUrl(
+        const prefix = data.prefix || '';
+        const newUrl = prefix + getUrl(
             isUndefined(data.language) ? language : data.language,
             isUndefined(data.code) ? code : data.code,
             isUndefined(data.preview) ? preview : data.preview

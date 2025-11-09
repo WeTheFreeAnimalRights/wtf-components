@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { trim } from 'lodash-es';
 import { CornerDownLeft, Plus, X } from 'lucide-react';
 import { Button } from '../Button';
+import { Preloader } from '../Preloader';
 import { groupMessages } from './helpers/groupMessages';
 import { SpeechBubble } from './components/SpeechBubble';
 import { ResourcesChatPlugin } from './chat-plugins/ResourcesChatPlugin';
@@ -9,10 +10,14 @@ import { AutoScrollContainer } from '../AutoScrollContainer';
 import { ChatPluginsList } from './chat-plugins/ChatPluginsList';
 import { PromptsChatPlugin } from './chat-plugins/PromptsChatPlugin';
 import { hasOnScreenKeyboard } from '../../helpers/hasOnScreenKeyboard';
+import { useGlobalState } from '../../store';
+import { currentMeetingState } from '../../appState';
 import { AutosizeTextarea } from '_/components/autosize-textarea';
 import { useMeeting } from './hooks/useMeeting';
 import { useIsMobile } from '_/hooks/use-mobile';
 import { cn } from '_/lib/utils';
+import { useSendMessage } from './hooks/useSendMessage';
+import { parseJson } from '../../helpers/parseJson';
 
 export const ChatView = ({
     className,
@@ -59,19 +64,11 @@ export const ChatView = ({
 
     const hasPlugins = plugins?.length > 0;
 
+    const { sendMessage: _sendMessage} = useSendMessage({isActivist: hasPlugins});
     const sendMessage = async (message, resource = null, type = 'message') => {
-        const payload = {
-            type,
-            message: trim(message),
-            resource,
-        };
-
-        try {
-            await chat.sendToAll(JSON.stringify(payload));
-        } catch (err) {
-            console.error('chat.sendToAll error:', err);
-        }
-        setInputMessage('');
+        _sendMessage(message, resource, type, () => {
+            setInputMessage('');
+        });
     };
 
     // Listen for incoming messages
@@ -91,7 +88,42 @@ export const ChatView = ({
         };
     }, [chat]);
 
+    const [currentMeeting] = useGlobalState(currentMeetingState);
+    const requests = [
+        {
+            url: 'chats',
+            api: 'public',
+            segments: [currentMeeting.id, 'messages'],
+            method: 'get',
+            params: {
+                sort: 'created_at',
+            },
+            callback: ({ data: { data } }) => {
+                setHistory(data.map(item => {
+                    const metaData = parseJson(item.metaData);
+                    return {
+                        id: item.id,
+                        message: JSON.stringify({
+                            message: item.message || '',
+                            type: item.resource ? 'resource' : 'message',
+                            resource: item.resource,
+                            sender: {
+                                userId: item.sender.id || 'no-id',
+                                name: item.sender.name || 'no-name',
+                            },
+                        }),
+                        sender: {
+                            userId: metaData?.userId,
+                            displayName: metaData?.displayName,
+                        },
+                    };
+                }));
+            },
+        },
+    ];
+
     return (
+    <Preloader requests={requests} className="w-auto h-auto bg-transparent p-0 flex-col flex-basis-0 h-full">
         <div className={cn('flex flex-col flex-basis-0 h-full', className)}>
             <AutoScrollContainer className="flex-grow">
                 {groupedMessages.map((item) => (
@@ -247,5 +279,6 @@ export const ChatView = ({
                 </div>
             )}
         </div>
+    </Preloader>
     );
 };

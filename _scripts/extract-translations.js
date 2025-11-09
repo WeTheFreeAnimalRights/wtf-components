@@ -30,11 +30,15 @@ const baseUrl = isDev
 
 module.exports = async (platform) => {
     const outputFile = path.resolve(process.cwd(), './_translations.json');
-    const searchDirs = dirs.length ? dirs : [path.resolve(process.cwd(), './src')];
+    const searchDirs = dirs.length
+        ? dirs
+        : [path.resolve(process.cwd(), './src')];
 
     const usedPlatform = paramPlatform || platform;
 
-    console.log(`Downloading translations from ${baseUrl} for platform ${usedPlatform}...`);
+    console.log(
+        `Downloading translations from ${baseUrl} for platform ${usedPlatform}...`
+    );
     const response = await fetch(
         `${baseUrl}/api/public/v1/contents?filter[platform]=${usedPlatform}`,
         {
@@ -121,6 +125,10 @@ module.exports = async (platform) => {
         }
     }
 
-    fs.writeFileSync(outputFile, JSON.stringify(allTranslations, null, 2), 'utf-8');
+    fs.writeFileSync(
+        outputFile,
+        JSON.stringify(allTranslations, null, 2),
+        'utf-8'
+    );
     console.log(`Translation strings extracted to ${outputFile}`);
 };

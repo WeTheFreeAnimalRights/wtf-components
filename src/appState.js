@@ -47,3 +47,7 @@ export const analyticsState = createGlobalState({
         visitId: SecureStore.get('visitId' || 0),
     },
 });
+
+export const currentMeetingState = createGlobalState({
+    default: {},
+});

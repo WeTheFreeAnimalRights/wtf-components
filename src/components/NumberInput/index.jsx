@@ -69,7 +69,10 @@ export const NumberInput = forwardRef(
                         name={name}
                         value={internalValue}
                         onChange={(e) => {
-                            const newValue = numberType === 'int' ? parseInt(e.target.value, 10) : parseFloat(e.target.value, 10);
+                            const newValue =
+                                numberType === 'int'
+                                    ? parseInt(e.target.value, 10)
+                                    : parseFloat(e.target.value, 10);
                             if (!isNaN(newValue) && newValue >= 0) {
                                 updateValue(newValue);
                             }

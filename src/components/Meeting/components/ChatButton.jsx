@@ -5,6 +5,7 @@ import { Badge } from '../../Badge';
 import newMessageSound from '../../../resources/sounds/new-message.mp3';
 import { cn } from '_/lib/utils';
 import { useMeeting } from '../hooks/useMeeting';
+import { parseMessage } from '../helpers/parseMessage';
 
 // Preload the sound once (note: some browsers require a user gesture before audio can play)
 const messageSound = new Audio(newMessageSound);
@@ -62,7 +63,10 @@ export const ChatButton = forwardRef(
                         currentUser?.userId &&
                         senderId === currentUser.userId;
 
-                    if (!chatVisible && !isSelf) {
+                    // Get the data
+                    const data = parseMessage(msg);
+
+                    if (!chatVisible && !isSelf && !data.type === 'end') {
                         setNewMessages((n) => n + 1);
 
                         // Try to play the notification sound

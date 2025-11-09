@@ -41,7 +41,7 @@ export const NotificationsDropdown = ({
     const { t } = useTranslations();
 
     const limit = 5;
-    const {notifications} = useNotifications();
+    const { notifications } = useNotifications();
     const usedItems = notifications || items;
 
     // Get all the data
@@ -165,7 +165,14 @@ NotificationsDropdown.propTypes = {
         /**
          * Type of notification
          */
-        type: PropTypes.oneOf(['codes', 'events', 'trainings', 'teams', 'chats', 'announcements']),
+        type: PropTypes.oneOf([
+            'codes',
+            'events',
+            'trainings',
+            'teams',
+            'chats',
+            'announcements',
+        ]),
 
         /**
          * Is notification new

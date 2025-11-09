@@ -62,7 +62,7 @@ export const PreloaderStates = ({
                 <div className="flex flex-col items-center justify-center text-center">
                     <Spinner />
                     {loadingMessage && (
-                        <div className="mt-3 italic text-sm">
+                        <div className="mt-3 italic text-sm text-muted-foreground">
                             {loadingMessage}
                         </div>
                     )}

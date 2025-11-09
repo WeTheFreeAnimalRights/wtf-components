@@ -37,7 +37,7 @@ export const SpeechBubble = ({
                 received
                     ? 'bg-muted text-foreground ms-3 me-auto'
                     : 'bg-[#1e293b] text-white ms-auto me-3',
-                item.type === 'message' && 'p-2',
+                (item.type === 'message' || item.type === 'end') && 'p-2',
                 item.type === 'resource' && 'p-1',
                 className
             )}
@@ -48,12 +48,13 @@ export const SpeechBubble = ({
             )}
 
             {/* Message Content with Read More */}
-            {item.type === 'message' && (
+            {(item.type === 'message' || item.type === 'end') && (
                 <span
                     ref={textRef}
                     className={cn(
                         'relative whitespace-pre-wrap break-words inline-block w-full transition-all',
-                        expanded ? 'max-h-full' : 'max-h-20 overflow-hidden'
+                        expanded ? 'max-h-full' : 'max-h-20 overflow-hidden',
+                        item.type === 'end' && 'italic text-muted-foreground'
                     )}
                 >
                     {children}
@@ -76,7 +77,7 @@ export const SpeechBubble = ({
             {item.type === 'resource' && (
                 <div className="w-full h-auto bg-black/30 rounded-md relative z-10">
                     <Image
-                        src={item.resource.image}
+                        src={item.resource.image || item.resource.imageUrl}
                         className="rounded-md w-full aspect-video overflow-hidden"
                     />
                     <div className="p-2">
@@ -106,7 +107,7 @@ export const SpeechBubble = ({
                     onClick={() => setExpanded(true)}
                     className="text-xs text-muted-foreground underline mt-1"
                 >
-                    Read more
+                    {t('chat-read-more')}
                 </button>
             )}
 
