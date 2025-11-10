@@ -17,21 +17,21 @@ export const useEndMeeting = () => {
     const [currentMeeting] = useGlobalState(currentMeetingState);
     const { loading, request } = useRequest();
     const sendEndRequest = async () => {
-        // return await request(
-        //     {
-        //         url: 'chats',
-        //         api: 'public',
-        //         segments: [currentMeeting.id, 'end'],
-        //         method: 'put',
-        //         body: {
-        //             meeting_id: currentMeeting.meetingId,
-        //         },
-        //     },
-        //     undefined,
-        //     (data) => {
-        //         console.info('Ended the meeting');
-        //     }
-        // );
+        return await request(
+            {
+                url: 'chats',
+                api: 'public',
+                segments: [currentMeeting.id, 'end'],
+                method: 'put',
+                body: {
+                    meeting_id: currentMeeting.meetingId,
+                },
+            },
+            undefined,
+            () => {
+                console.info('Ended the meeting');
+            }
+        );
     };
 
     return {
@@ -39,11 +39,11 @@ export const useEndMeeting = () => {
         endMeeting: () => {
             // Send a message to all participants that the meeting has ended
             sendMessage(t('chat-left-meeting'), null, 'end', () => {
-                // Leave from the zoom meeting
-                client.leave();
-
                 // End the meeting request
                 sendEndRequest();
+
+                // Leave from the zoom meeting
+                client.leave();
             });
         },
     };

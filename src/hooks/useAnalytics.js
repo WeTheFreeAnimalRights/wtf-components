@@ -12,6 +12,7 @@ export const useAnalytics = () => {
     const { url } = useUrl();
 
     return {
+        analytics,
         sendVisit: async ({
             codeId,
             usedCodeDialog = false,

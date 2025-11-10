@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useActiveSpeakers } from './useActiveSpeakers';
+import { useMeeting } from './useMeeting';
 
 /**
  * useInactivityStages (JS)
@@ -11,22 +13,100 @@ export const useInactivityStages = ({
     warnAfterMs = 15000,
     actionAfterMs = 30000, // must be > warnAfterMs
 } = {}) => {
+    const meetingContext = useMeeting();
+    const client = meetingContext?.meeting?.client;
+    const activeSpeakers = useActiveSpeakers(client, 1500, 250);
+
     const [phase, setPhase] = useState('active'); // "active" | "warn" | "actioned"
     const [secondsIdle, setSecondsIdle] = useState(0);
+    const [participantCount, setParticipantCount] = useState(0);
+    const [selfUserId, setSelfUserId] = useState(null);
+    const [windowInactive, setWindowInactive] = useState(() => {
+        if (typeof document === 'undefined') return false;
+        return document.visibilityState !== 'visible';
+    });
 
     const lastActiveAt = useRef(Date.now());
     const warnTimer = useRef(null);
     const actionTimer = useRef(null);
     const tickerRef = useRef(null);
+    const shouldMonitorRef = useRef(false);
 
-    const clearTimers = () => {
+    useEffect(() => {
+        if (typeof document === 'undefined') return undefined;
+
+        const handleVisibility = () => {
+            setWindowInactive(document.visibilityState !== 'visible');
+        };
+
+        document.addEventListener('visibilitychange', handleVisibility);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibility);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!client || typeof client.getCurrentUserInfo !== 'function') {
+            setSelfUserId(null);
+            return;
+        }
+
+        try {
+            const currentUser = client.getCurrentUserInfo();
+            setSelfUserId(currentUser?.userId ?? null);
+        } catch {
+            setSelfUserId(null);
+        }
+    }, [client]);
+
+    useEffect(() => {
+        if (!client || typeof client.getAllUser !== 'function') {
+            setParticipantCount(0);
+            return;
+        }
+
+        const updateCount = () => {
+            try {
+                const list = client.getAllUser?.() ?? [];
+                setParticipantCount(Array.isArray(list) ? list.length : 0);
+            } catch {
+                setParticipantCount(0);
+            }
+        };
+
+        const events = [
+            'user-added',
+            'user-removed',
+            'user-updated',
+            'connection-change',
+        ];
+
+        events.forEach((event) => client.on?.(event, updateCount));
+        updateCount();
+
+        return () => {
+            events.forEach((event) => client.off?.(event, updateCount));
+        };
+    }, [client]);
+
+    const clearTimers = useCallback(() => {
         if (warnTimer.current) window.clearTimeout(warnTimer.current);
         if (actionTimer.current) window.clearTimeout(actionTimer.current);
-    };
+    }, []);
 
-    const scheduleTimers = () => {
+    useEffect(() => {
+        return () => {
+            clearTimers();
+        };
+    }, [clearTimers]);
+
+    const scheduleTimers = useCallback(() => {
         clearTimers();
-        // Schedule both timers from "last activity"
+        if (!shouldMonitorRef.current) {
+            return;
+        }
+
         warnTimer.current = window.setTimeout(() => {
             setPhase((p) => (p === 'active' ? 'warn' : p));
         }, warnAfterMs);
@@ -34,71 +114,70 @@ export const useInactivityStages = ({
         actionTimer.current = window.setTimeout(() => {
             setPhase('actioned');
         }, actionAfterMs);
-    };
+    }, [clearTimers, warnAfterMs, actionAfterMs]);
+
+    const resetActivity = useCallback(() => {
+        lastActiveAt.current = Date.now();
+        setSecondsIdle(0);
+        scheduleTimers();
+    }, [scheduleTimers]);
 
     const acknowledge = () => {
         // Explicit user confirmation: “Still here”
-        lastActiveAt.current = Date.now();
         setPhase('active');
-        setSecondsIdle(0);
-        scheduleTimers();
+        if (shouldMonitorRef.current) {
+            resetActivity();
+        } else {
+            lastActiveAt.current = Date.now();
+            setSecondsIdle(0);
+            clearTimers();
+        }
     };
 
+    const hasEnoughParticipants = participantCount >= 2;
+    const selfSpeaking =
+        hasEnoughParticipants && selfUserId
+            ? activeSpeakers.has(selfUserId)
+            : false;
+
+    const shouldMonitor =
+        windowInactive && (!hasEnoughParticipants || !selfSpeaking);
+
     useEffect(() => {
-        const onActivity = () => {
-            // Ignore activity while warning/actioned to keep the modal up
-            if (phase !== 'active') return;
-            lastActiveAt.current = Date.now();
-            // Re-arm timers from now
-            scheduleTimers();
-        };
+        shouldMonitorRef.current = shouldMonitor;
+    }, [shouldMonitor]);
 
-        const events = [
-            'mousemove',
-            'mousedown',
-            'mouseup',
-            'keydown',
-            'keyup',
-            'scroll',
-            'wheel',
-            'click',
-            'touchstart',
-            'touchmove',
-            'touchend',
-            'pointerdown',
-            'pointermove',
-        ];
-        events.forEach((e) =>
-            window.addEventListener(e, onActivity, { passive: true })
-        );
+    useEffect(() => {
+        if (shouldMonitor) {
+            setPhase('active');
+            resetActivity();
+            return;
+        }
 
-        // Idle seconds ticker
+        clearTimers();
+        setPhase('active');
+        lastActiveAt.current = Date.now();
+        setSecondsIdle(0);
+    }, [shouldMonitor, resetActivity, clearTimers]);
+
+    useEffect(() => {
+        if (!shouldMonitor) {
+            if (tickerRef.current) window.clearTimeout(tickerRef.current);
+            return;
+        }
+
         const tick = () => {
             const diff = Math.max(0, Date.now() - lastActiveAt.current);
             setSecondsIdle(Math.floor(diff / 1000));
             tickerRef.current = window.setTimeout(tick, 1000);
         };
 
-        // Coming back to visible shouldn’t auto-dismiss if we’re already warning
-        const onVisibility = () => {
-            if (document.visibilityState === 'visible' && phase === 'active') {
-                lastActiveAt.current = Date.now();
-                scheduleTimers();
-            }
-        };
-        document.addEventListener('visibilitychange', onVisibility);
-
-        // start
-        scheduleTimers();
         tick();
 
         return () => {
-            events.forEach((e) => window.removeEventListener(e, onActivity));
-            document.removeEventListener('visibilitychange', onVisibility);
-            clearTimers();
             if (tickerRef.current) window.clearTimeout(tickerRef.current);
         };
-    }, [warnAfterMs, actionAfterMs, phase]);
+    }, [shouldMonitor]);
 
     const inactive = phase === 'warn' || phase === 'actioned';
     const escalated = phase === 'actioned';

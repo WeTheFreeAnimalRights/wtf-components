@@ -57,7 +57,7 @@ export const StarRating = ({
         await request(
             {
                 url: 'chats',
-                api: token ? 'public' : 'private',
+                api: token ? 'private' : 'public',
                 segments: [chatId],
                 method: 'put',
                 bearer: token,
