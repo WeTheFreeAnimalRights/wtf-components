@@ -1,35 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { differenceInSeconds } from 'date-fns';
+import React from 'react';
+import { cn } from '_/lib/utils';
+import { Hourglass } from 'lucide-react';
+import { Tooltip } from '../../Tooltip';
+import { useTranslations } from '../../../hooks/useTranslations';
+import { DurationGuardModal } from './DurationGuardModal';
+import { useMeetingAutoEndTimer } from '../hooks/useMeetingAutoEndTimer';
+import { formatMsToClock } from '../helpers/formatMsToClock';
 
-export const MeetingDuration = ({ startedAt }) => {
-    const [duration, setDuration] = useState('00:00');
-    const [startTime, setStartTime] = useState(new Date(startedAt));
+export const MeetingDuration = ({
+    startedAt,
+    warnAfterMs = 20 * 60 * 1000,
+    autoCloseDelayMs = 5 * 60 * 1000,
+    className,
+    showIcon = true,
+    showGuard = true,
+    autoEndOnExpire = true,
+}) => {
+    const { t } = useTranslations();
+    const { timePassedMs, timeLeftMs, hasWarned } = useMeetingAutoEndTimer({
+        startedAt,
+        warnAfterMs,
+        autoCloseDelayMs,
+    });
 
-    useEffect(() => {
-        if (!startedAt) {
-            setStartTime(new Date());
-        }
+    const elapsedLabel = formatMsToClock(timePassedMs);
+    const remainingLabel = formatMsToClock(timeLeftMs);
 
-        const updateDuration = () => {
-            const now = new Date();
-            const diffInSeconds = differenceInSeconds(now, startTime);
-            const hours = Math.floor(diffInSeconds / 3600);
-            const secondsLeft = diffInSeconds - hours * 3600;
-            const minutes = Math.floor(secondsLeft / 60);
-            const seconds = secondsLeft % 60;
+    const display = (
+        <span
+            className={cn(
+                'text-muted-foreground flex flex-row items-center',
+                className,
+                hasWarned && 'cursor-help animate-pulse'
+            )}
+        >
+            {showIcon && (
+                <Hourglass
+                    className={cn(
+                        'w-4 h-4 me-1',
+                        hasWarned && 'text-red-500'
+                    )}
+                />
+            )}
+            {hasWarned ? (
+                <span className="font-semibold text-red-500">
+                    {remainingLabel}
+                </span>
+            ) : (
+                elapsedLabel
+            )}
+        </span>
+    );
 
-            setDuration(
-                `${hours ? String(hours).padStart(2, '0') + ':' : ''}${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-            );
-        };
-
-        updateDuration();
-        const interval = setInterval(updateDuration, 1000);
-
-        return () => clearInterval(interval);
-    }, [startedAt]);
-
-    return <span className="text-muted-foreground">{duration}</span>;
+    return (
+        <>
+            {hasWarned ? (
+                <Tooltip
+                    message={t('meeting-duration-tooltip', [remainingLabel])}
+                >
+                    {display}
+                </Tooltip>
+            ) : (
+                display
+            )}
+            {showGuard && (
+                <DurationGuardModal
+                    startedAt={startedAt}
+                    warnAfterMs={warnAfterMs}
+                    autoCloseDelayMs={autoCloseDelayMs}
+                    autoEndOnExpire={autoEndOnExpire}
+                />
+            )}
+        </>
+    );
 };
 
 MeetingDuration.displayName = 'MeetingDuration';
