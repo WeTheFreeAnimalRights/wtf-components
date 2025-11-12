@@ -217,6 +217,9 @@ export {
     SidebarProvider,
     SidebarTrigger,
     SidebarRail,
+    SidebarMenuSub,
+    SidebarMenuSubItem,
+    SidebarMenuSubButton,
     useSidebar,
 } from './_shadcn/components/sidebar';
 export {
