@@ -16,8 +16,8 @@ import { useEndMeeting } from '../hooks/useEndMeeting';
  * - onEscalate: fires once when phase becomes "actioned"
  */
 export const InactivityGuardModal = ({
-    warnAfterMs = 10_000,
-    actionAfterMs = 30_000,
+    warnAfterMs = 30_000,
+    actionAfterMs = 40_000,
     onBecameInactive,
     onEscalate,
     onResume,
