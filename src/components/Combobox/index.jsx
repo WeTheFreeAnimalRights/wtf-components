@@ -1,5 +1,5 @@
 import { debounce, isEmpty, isFunction } from 'lodash-es';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Check, ChevronsUpDown } from 'lucide-react';
 
@@ -37,14 +37,17 @@ export const Combobox = ({
     const [value, setValue] = useState('');
     const [selected, setSelected] = useState(selectedParam);
 
+    const initializedRef = useRef(false);
+
     useEffect(() => {
         setSelected(selectedParam);
         if (selectedParam && selectedParam.id) {
-            setValue(selectedParam.id.toString());
+            const nextValue = selectedParam.id.toString();
+            setValue(nextValue);
 
-            // If there is a callback, call it
-            if (isFunction(onSelect)) {
-                onSelect(selectedParam.id.toString(), selectedParam);
+            if (!initializedRef.current && isFunction(onSelect)) {
+                initializedRef.current = true;
+                onSelect(nextValue, selectedParam);
             }
         }
     }, [selectedParam]);
