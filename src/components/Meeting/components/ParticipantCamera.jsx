@@ -4,6 +4,7 @@ import { useMeeting } from '../hooks/useMeeting';
 
 export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
     const ref = useRef(null);
+    const meetingClosedRef = useRef(false);
     const { meeting } = useMeeting();
     const { client } = meeting;
 
@@ -58,13 +59,29 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
         run();
     }, [client, participant?.userId, currentUser?.userId, meeting.camOn]);
 
+    // Track if the meeting/session has closed so we can skip SDK calls
+    useEffect(() => {
+        const onConnectionChange = ({ state }) => {
+            if (state === 'Closed' || state === 'Disconnected') {
+                meetingClosedRef.current = true;
+            } else if (state === 'Connected' || state === 'Reconnected') {
+                meetingClosedRef.current = false;
+            }
+        };
+
+        client.on?.('connection-change', onConnectionChange);
+        return () => {
+            client.off?.('connection-change', onConnectionChange);
+        };
+    }, [client]);
+
     // Attach/detach video DOM when state flips
     useEffect(() => {
         const stream = client.getMediaStream();
         let mounted = true;
 
         const attach = async () => {
-            if (!videoOn) {
+            if (!videoOn || meetingClosedRef.current) {
                 return;
             }
             try {
@@ -102,6 +119,13 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
         };
 
         const detach = () => {
+            if (meetingClosedRef.current) {
+                if (ref.current) {
+                    ref.current.innerHTML = '';
+                }
+                return;
+            }
+
             try {
                 stream.detachVideo(id);
             } catch (err) {

@@ -126,7 +126,7 @@ DatePicker.propTypes = {
     /**
      * Value of the time picker (date object)
      */
-    value: PropTypes.oneOfType(PropTypes.object, PropTypes.string),
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
 
     /**
      * Called when the value is changed
