@@ -1,6 +1,7 @@
 import { ParticipantView } from './ParticipantView';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { Spinner } from '../../Spinner';
+import { ErrorBoundary } from '../../ErrorBoundary';
 import { cn } from '_/lib/utils';
 
 export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
@@ -26,7 +27,9 @@ export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
                             key={`participant-${user.userId}`}
                             className="bg-gray-900 rounded-lg aspect-video relative overflow-hidden flex justify-center items-center"
                         >
-                            <ParticipantView id={user.userId} />
+                            <ErrorBoundary>
+                                <ParticipantView id={user.userId} />
+                            </ErrorBoundary>
                         </div>
                     ))}
                 </div>
@@ -46,10 +49,12 @@ export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
             {currentUser && (
                 <div className="absolute right-4 top-4 w-48 sm:w-72 aspect-video z-50">
                     <div className="relative w-full h-full">
-                        <ParticipantView
-                            id={currentUser.userId}
-                            className="absolute inset-0 shadow-md ring-2 ring-gray-700 rounded-md"
-                        />
+                        <ErrorBoundary>
+                            <ParticipantView
+                                id={currentUser.userId}
+                                className="absolute inset-0 shadow-md ring-2 ring-gray-700 rounded-md"
+                            />
+                        </ErrorBoundary>
                     </div>
                 </div>
             )}

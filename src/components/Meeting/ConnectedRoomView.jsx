@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { RoomView } from './components/RoomView';
 import { InactivityGuardModal } from './components/InactivityGuardModal';
 import { parseParticipants } from './helpers/parseParticipants';
@@ -116,7 +117,9 @@ export const ConnectedRoomView = ({
                 loadingMessage={loadingMessage}
             />
 
-            <InactivityGuardModal />
+            <ErrorBoundary>
+                <InactivityGuardModal />
+            </ErrorBoundary>
         </div>
     );
 };

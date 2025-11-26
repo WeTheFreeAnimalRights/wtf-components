@@ -1,4 +1,4 @@
-import { parseJson } from "../../helpers/parseJson";
+import { parseJson } from '../../helpers/parseJson';
 
 export class SecureStore {
     static encryptionKey = '3movies-mystats-16012025';

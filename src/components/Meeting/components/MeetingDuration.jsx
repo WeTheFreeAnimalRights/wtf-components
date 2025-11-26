@@ -36,10 +36,7 @@ export const MeetingDuration = ({
         >
             {showIcon && (
                 <Hourglass
-                    className={cn(
-                        'w-4 h-4 me-1',
-                        hasWarned && 'text-red-500'
-                    )}
+                    className={cn('w-4 h-4 me-1', hasWarned && 'text-red-500')}
                 />
             )}
             {hasWarned ? (

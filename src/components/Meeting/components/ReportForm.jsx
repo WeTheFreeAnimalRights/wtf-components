@@ -4,8 +4,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '../../Popover';
 import { Tooltip } from '../../Tooltip';
 import { Button } from '../../Button';
 import { useTranslations } from '../../../hooks/useTranslations';
-import { useChatReportReasons } from '../hooks/useChatReportReasons';
-import { useMeeting } from '../hooks/useMeeting';
 import {
     GeneratedStandardForm,
     StandardRadioGroup,
@@ -17,9 +15,6 @@ import { useEndMeeting } from '../hooks/useEndMeeting';
 
 export const ReportForm = ({ id, api = 'public', token, meetingId }) => {
     const { t } = useTranslations();
-    const reasons = useChatReportReasons();
-    const { meeting } = useMeeting();
-    const { client } = meeting;
     const [open, setOpen] = useState(false);
 
     // Get the report options

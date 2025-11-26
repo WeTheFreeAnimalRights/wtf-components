@@ -6,4 +6,4 @@ export const parseJson = (str) => {
         console.error('JSON parse error:', e, str);
     }
     return data;
-}
+};

@@ -61,12 +61,14 @@ export const StarRating = ({
                 segments: [chatId],
                 method: 'put',
                 bearer: token,
-                body: token ? {
-                    activist_rating: stars,
-                } : {
-                    visitor_rating: stars,
-                    meeting_id: meetingId,
-                },
+                body: token
+                    ? {
+                          activist_rating: stars,
+                      }
+                    : {
+                          visitor_rating: stars,
+                          meeting_id: meetingId,
+                      },
             },
             undefined,
             (data) => {
@@ -84,34 +86,52 @@ export const StarRating = ({
     const displayRating = hoveredStar || rating;
 
     return (
-        <div className={cn('flex flex-col relative', !staticMode && 'items-center ')}>
+        <div
+            className={cn(
+                'flex flex-col relative',
+                !staticMode && 'items-center '
+            )}
+        >
             {loading && (
                 <div className="absolute left-0 top-0 right-0 bottom-0 bg-background/90 z-10 text-center">
                     <Spinner className="inline-block w-8 h-8" />
                 </div>
             )}
-            <div className={cn('flex space-x-1', containerClassName)} onMouseLeave={() => !staticMode && setHoveredStar(0)}>
+            <div
+                className={cn('flex space-x-1', containerClassName)}
+                onMouseLeave={() => !staticMode && setHoveredStar(0)}
+            >
                 {[1, 2, 3, 4, 5].map((star) => (
-                    <div key={star} className="relative" onMouseEnter={() => !staticMode && setHoveredStar(star)}>
+                    <div
+                        key={star}
+                        className="relative"
+                        onMouseEnter={() => !staticMode && setHoveredStar(star)}
+                    >
                         <Star
                             className={cn(
                                 'w-8 h-8 transition-colors',
                                 displayRating >= star
-                                    ? fillClassName || 'fill-wtf-pink text-wtf-pink'
+                                    ? fillClassName ||
+                                          'fill-wtf-pink text-wtf-pink'
                                     : 'text-gray-400',
                                 !staticMode && 'cursor-pointer',
                                 starClassName
                             )}
                             onClick={() => !staticMode && save(star)}
                         />
-                        {displayRating >= star - 0.5 && displayRating < star && (
-                            <div className="absolute top-0 left-0 w-8 h-8 overflow-hidden">
-                                <Star
-                                    className={cn('w-8 h-8 fill-wtf-pink text-wtf-pink', fillClassName, starClassName)}
-                                    style={{ clipPath: 'inset(0 50% 0 0)' }}
-                                />
-                            </div>
-                        )}
+                        {displayRating >= star - 0.5 &&
+                            displayRating < star && (
+                                <div className="absolute top-0 left-0 w-8 h-8 overflow-hidden">
+                                    <Star
+                                        className={cn(
+                                            'w-8 h-8 fill-wtf-pink text-wtf-pink',
+                                            fillClassName,
+                                            starClassName
+                                        )}
+                                        style={{ clipPath: 'inset(0 50% 0 0)' }}
+                                    />
+                                </div>
+                            )}
                     </div>
                 ))}
             </div>

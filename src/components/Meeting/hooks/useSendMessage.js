@@ -1,11 +1,11 @@
 import { isFunction, trim } from 'lodash-es';
-import { formatInTimeZone } from 'date-fns-tz'
+import { formatInTimeZone } from 'date-fns-tz';
 import { useRequest } from '../../../hooks/useRequest';
 import { useGlobalState } from '../../../store';
 import { currentMeetingState } from '../../../appState';
 import { useMeeting } from './useMeeting';
 
-export const useSendMessage = ({isActivist = false} = {}) => {
+export const useSendMessage = ({ isActivist = false } = {}) => {
     const { meeting } = useMeeting();
     const { client } = meeting;
     const chat = client.getChatClient();
@@ -14,7 +14,7 @@ export const useSendMessage = ({isActivist = false} = {}) => {
     const [currentMeeting] = useGlobalState(currentMeetingState);
     const { loading, request } = useRequest();
     const currentUser = client.getCurrentUserInfo();
-    const sendRequest = async ({message, date, resource, type}) => {
+    const sendRequest = async ({ message, date, resource, type }) => {
         return await request(
             {
                 url: 'chats',
@@ -23,7 +23,11 @@ export const useSendMessage = ({isActivist = false} = {}) => {
                 method: 'post',
                 body: {
                     meeting_id: currentMeeting.meetingId,
-                    sent_at: formatInTimeZone(date, 'UTC', 'yyyy-MM-dd HH:mm:ss'),
+                    sent_at: formatInTimeZone(
+                        date,
+                        'UTC',
+                        'yyyy-MM-dd HH:mm:ss'
+                    ),
                     message: type === 'message' ? message : null,
                     resource_id: type === 'resource' ? resource?.id : null,
                     user_id: isActivist ? currentMeeting?.activist?.id : null,
@@ -42,7 +46,12 @@ export const useSendMessage = ({isActivist = false} = {}) => {
 
     return {
         loading,
-        sendMessage: async (_message, resource = null, type = 'message', callback) => {
+        sendMessage: async (
+            _message,
+            resource = null,
+            type = 'message',
+            callback
+        ) => {
             const message = trim(_message);
 
             // Send to zoom and backend

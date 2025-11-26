@@ -64,7 +64,9 @@ export const ChatView = ({
 
     const hasPlugins = plugins?.length > 0;
 
-    const { sendMessage: _sendMessage} = useSendMessage({isActivist: hasPlugins});
+    const { sendMessage: _sendMessage } = useSendMessage({
+        isActivist: hasPlugins,
+    });
     const sendMessage = async (message, resource = null, type = 'message') => {
         _sendMessage(message, resource, type, () => {
             setInputMessage('');
@@ -99,186 +101,194 @@ export const ChatView = ({
                 sort: 'created_at',
             },
             callback: ({ data: { data } }) => {
-                setHistory(data.map(item => {
-                    const metaData = parseJson(item.metaData);
-                    return {
-                        id: item.id,
-                        message: JSON.stringify({
-                            message: item.message || '',
-                            type: item.resource ? 'resource' : 'message',
-                            resource: item.resource,
+                setHistory(
+                    data.map((item) => {
+                        const metaData = parseJson(item.metaData);
+                        return {
+                            id: item.id,
+                            message: JSON.stringify({
+                                message: item.message || '',
+                                type: item.resource ? 'resource' : 'message',
+                                resource: item.resource,
+                                sender: {
+                                    userId: item.sender.id || 'no-id',
+                                    name: item.sender.name || 'no-name',
+                                },
+                            }),
                             sender: {
-                                userId: item.sender.id || 'no-id',
-                                name: item.sender.name || 'no-name',
+                                userId: metaData?.userId,
+                                displayName: metaData?.displayName,
                             },
-                        }),
-                        sender: {
-                            userId: metaData?.userId,
-                            displayName: metaData?.displayName,
-                        },
-                    };
-                }));
+                        };
+                    })
+                );
             },
         },
     ];
 
     return (
-    <Preloader requests={requests} className="w-auto h-auto bg-transparent p-0 flex-col flex-basis-0 h-full">
-        <div className={cn('flex flex-col flex-basis-0 h-full', className)}>
-            <AutoScrollContainer className="flex-grow">
-                {groupedMessages.map((item) => (
-                    <Fragment key={`message-${item.id}`}>
-                        {item.texts.map((text, index) => (
-                            <SpeechBubble
-                                className={index === 0 ? 'mt-2' : 'mt-1'}
-                                key={`text-${text.id}`}
-                                received={item.received}
-                                tail={index === item.texts.length - 1}
-                                author={
-                                    item.received &&
-                                    item.sender.name &&
-                                    index === item.texts.length - 1
-                                }
-                                timestamp={text.timestamp}
-                                item={text}
-                            >
-                                {text.message}
-                            </SpeechBubble>
-                        ))}
-                    </Fragment>
-                ))}
-            </AutoScrollContainer>
+        <Preloader
+            requests={requests}
+            className="w-auto h-auto bg-transparent p-0 flex-col flex-basis-0 h-full"
+        >
+            <div className={cn('flex flex-col flex-basis-0 h-full', className)}>
+                <AutoScrollContainer className="flex-grow">
+                    {groupedMessages.map((item) => (
+                        <Fragment key={`message-${item.id}`}>
+                            {item.texts.map((text, index) => (
+                                <SpeechBubble
+                                    className={index === 0 ? 'mt-2' : 'mt-1'}
+                                    key={`text-${text.id}`}
+                                    received={item.received}
+                                    tail={index === item.texts.length - 1}
+                                    author={
+                                        item.received &&
+                                        item.sender.name &&
+                                        index === item.texts.length - 1
+                                    }
+                                    timestamp={text.timestamp}
+                                    item={text}
+                                >
+                                    {text.message}
+                                </SpeechBubble>
+                            ))}
+                        </Fragment>
+                    ))}
+                </AutoScrollContainer>
 
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    if (trim(currentMessage).length > 0) {
-                        sendMessage(currentMessage);
-                    }
-                }}
-                className={cn(
-                    'flex flex-row items-center gap-2 mt-4 relative ps-12 pe-12',
-                    !hasPlugins && 'ps-0'
-                )}
-            >
-                {hasPlugins && (
-                    <Button
-                        variant="gray"
-                        size="small-icon"
-                        type="button"
-                        className="absolute start-1 bottom-1"
-                        onClick={() => {
-                            setPluginsVisible(!pluginsVisible);
-                            setSelectedPlugin('');
-                            if (
-                                pluginsVisible &&
-                                inputRef.current &&
-                                !hasOnScreenKeyboard()
-                            ) {
-                                inputRef.current.focus();
-                            }
-                        }}
-                    >
-                        {pluginsVisible ? (
-                            <X className="w-4 h-4" />
-                        ) : (
-                            <Plus className="w-4 h-4" />
-                        )}
-                    </Button>
-                )}
-
-                <AutosizeTextarea
-                    ref={inputRef}
-                    className="flex-grow"
-                    value={currentMessage}
-                    maxLength={255}
-                    minHeight={26}
-                    maxHeight={150}
-                    onChange={(event) => setCurrentMessage(event.target.value)}
-                    autoFocus
-                    onFocus={() => {
-                        setPluginsVisible(false);
-                        setSelectedPlugin('');
-                    }}
-                    onKeyDown={(event) => {
-                        if (isMobile) {
-                            // Mobile: Shift+Enter sends, Enter = newline
-                            if (event.key === 'Enter' && event.shiftKey) {
-                                event.preventDefault();
-                                if (trim(event.target.value).length > 0) {
-                                    sendMessage(event.target.value);
-                                }
-                            } else if (
-                                event.key === 'Enter' &&
-                                !event.shiftKey
-                            ) {
-                                event.preventDefault();
-                                setCurrentMessage((prev) => prev + '\n');
-                            }
-                        } else {
-                            // Desktop: Enter sends, Shift+Enter = newline
-                            if (event.key === 'Enter' && !event.shiftKey) {
-                                event.preventDefault();
-                                if (trim(event.target.value).length > 0) {
-                                    sendMessage(event.target.value);
-                                }
-                            } else if (
-                                event.key === 'Enter' &&
-                                event.shiftKey
-                            ) {
-                                event.preventDefault();
-                                setCurrentMessage((prev) => prev + '\n');
-                            }
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        if (trim(currentMessage).length > 0) {
+                            sendMessage(currentMessage);
                         }
                     }}
-                />
-
-                <Button
-                    variant="simple"
-                    size="small-icon"
-                    type="submit"
-                    className="absolute end-1 bottom-1"
+                    className={cn(
+                        'flex flex-row items-center gap-2 mt-4 relative ps-12 pe-12',
+                        !hasPlugins && 'ps-0'
+                    )}
                 >
-                    <CornerDownLeft className="w-4 h-4" />
-                </Button>
-            </form>
-
-            {pluginsVisible && hasPlugins && (
-                <div className="p-4 bg-muted mt-4 rounded-md">
-                    {!selectedPlugin && (
-                        <ChatPluginsList onSelect={setSelectedPlugin} />
+                    {hasPlugins && (
+                        <Button
+                            variant="gray"
+                            size="small-icon"
+                            type="button"
+                            className="absolute start-1 bottom-1"
+                            onClick={() => {
+                                setPluginsVisible(!pluginsVisible);
+                                setSelectedPlugin('');
+                                if (
+                                    pluginsVisible &&
+                                    inputRef.current &&
+                                    !hasOnScreenKeyboard()
+                                ) {
+                                    inputRef.current.focus();
+                                }
+                            }}
+                        >
+                            {pluginsVisible ? (
+                                <X className="w-4 h-4" />
+                            ) : (
+                                <Plus className="w-4 h-4" />
+                            )}
+                        </Button>
                     )}
 
-                    {selectedPlugin === 'resources' && (
-                        <ResourcesChatPlugin
-                            resources={resources}
-                            onSelect={(resource) =>
-                                sendMessage(
-                                    'resource sent',
-                                    resource,
-                                    'resource'
-                                )
+                    <AutosizeTextarea
+                        ref={inputRef}
+                        className="flex-grow"
+                        value={currentMessage}
+                        maxLength={255}
+                        minHeight={26}
+                        maxHeight={150}
+                        onChange={(event) =>
+                            setCurrentMessage(event.target.value)
+                        }
+                        autoFocus
+                        onFocus={() => {
+                            setPluginsVisible(false);
+                            setSelectedPlugin('');
+                        }}
+                        onKeyDown={(event) => {
+                            if (isMobile) {
+                                // Mobile: Shift+Enter sends, Enter = newline
+                                if (event.key === 'Enter' && event.shiftKey) {
+                                    event.preventDefault();
+                                    if (trim(event.target.value).length > 0) {
+                                        sendMessage(event.target.value);
+                                    }
+                                } else if (
+                                    event.key === 'Enter' &&
+                                    !event.shiftKey
+                                ) {
+                                    event.preventDefault();
+                                    setCurrentMessage((prev) => prev + '\n');
+                                }
+                            } else {
+                                // Desktop: Enter sends, Shift+Enter = newline
+                                if (event.key === 'Enter' && !event.shiftKey) {
+                                    event.preventDefault();
+                                    if (trim(event.target.value).length > 0) {
+                                        sendMessage(event.target.value);
+                                    }
+                                } else if (
+                                    event.key === 'Enter' &&
+                                    event.shiftKey
+                                ) {
+                                    event.preventDefault();
+                                    setCurrentMessage((prev) => prev + '\n');
+                                }
                             }
-                            onCancel={() => {
-                                setPluginsVisible(false);
-                                setSelectedPlugin('');
-                            }}
-                        />
-                    )}
+                        }}
+                    />
 
-                    {selectedPlugin === 'prompts' && prompts?.length > 0 && (
-                        <PromptsChatPlugin
-                            onSelect={setInputMessage}
-                            onCancel={() => {
-                                setPluginsVisible(false);
-                                setSelectedPlugin('');
-                            }}
-                            items={prompts}
-                        />
-                    )}
-                </div>
-            )}
-        </div>
-    </Preloader>
+                    <Button
+                        variant="simple"
+                        size="small-icon"
+                        type="submit"
+                        className="absolute end-1 bottom-1"
+                    >
+                        <CornerDownLeft className="w-4 h-4" />
+                    </Button>
+                </form>
+
+                {pluginsVisible && hasPlugins && (
+                    <div className="p-4 bg-muted mt-4 rounded-md">
+                        {!selectedPlugin && (
+                            <ChatPluginsList onSelect={setSelectedPlugin} />
+                        )}
+
+                        {selectedPlugin === 'resources' && (
+                            <ResourcesChatPlugin
+                                resources={resources}
+                                onSelect={(resource) =>
+                                    sendMessage(
+                                        'resource sent',
+                                        resource,
+                                        'resource'
+                                    )
+                                }
+                                onCancel={() => {
+                                    setPluginsVisible(false);
+                                    setSelectedPlugin('');
+                                }}
+                            />
+                        )}
+
+                        {selectedPlugin === 'prompts' &&
+                            prompts?.length > 0 && (
+                                <PromptsChatPlugin
+                                    onSelect={setInputMessage}
+                                    onCancel={() => {
+                                        setPluginsVisible(false);
+                                        setSelectedPlugin('');
+                                    }}
+                                    items={prompts}
+                                />
+                            )}
+                    </div>
+                )}
+            </div>
+        </Preloader>
     );
 };

@@ -11,7 +11,7 @@ export const useEndMeeting = () => {
     const { client } = meeting;
 
     // To be used to send the chat message
-    const {sendMessage} = useSendMessage();
+    const { sendMessage } = useSendMessage();
 
     // Send a request to BE that the meeting was ended
     const [currentMeeting] = useGlobalState(currentMeetingState);
@@ -47,4 +47,4 @@ export const useEndMeeting = () => {
             });
         },
     };
-}
+};

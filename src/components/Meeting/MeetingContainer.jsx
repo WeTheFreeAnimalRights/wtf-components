@@ -10,7 +10,7 @@ export const MeetingContainer = ({ auth, visitor, children }) => {
 
         // TODO: Check these
         micOn: true,
-        camOn: true,
+        camOn: false,
     });
 
     const setMeeting = (...args) => {

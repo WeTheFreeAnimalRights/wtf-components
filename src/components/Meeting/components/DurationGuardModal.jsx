@@ -26,11 +26,13 @@ export const DurationGuardModal = ({
 }) => {
     const { t } = useTranslations();
     const { endMeeting } = useEndMeeting();
-    const { timeLeftMs, autoCloseDuration, hasWarned } = useMeetingAutoEndTimer({
-        startedAt,
-        warnAfterMs,
-        autoCloseDelayMs,
-    });
+    const { timeLeftMs, autoCloseDuration, hasWarned } = useMeetingAutoEndTimer(
+        {
+            startedAt,
+            warnAfterMs,
+            autoCloseDelayMs,
+        }
+    );
 
     const [modalOpen, setModalOpen] = useState(false);
     const [acknowledged, setAcknowledged] = useState(false);

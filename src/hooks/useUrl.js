@@ -41,14 +41,16 @@ export const useUrl = () => {
     }
 
     // Navigate to new url
-    const [,navigate] = useLocation();
+    const [, navigate] = useLocation();
     const setUrl = (data, ...params) => {
         const prefix = data.prefix || '';
-        const newUrl = prefix + getUrl(
-            isUndefined(data.language) ? language : data.language,
-            isUndefined(data.code) ? code : data.code,
-            isUndefined(data.preview) ? preview : data.preview
-        );
+        const newUrl =
+            prefix +
+            getUrl(
+                isUndefined(data.language) ? language : data.language,
+                isUndefined(data.code) ? code : data.code,
+                isUndefined(data.preview) ? preview : data.preview
+            );
         navigate(newUrl, ...params);
     };
 

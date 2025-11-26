@@ -66,7 +66,7 @@ export const ChatButton = forwardRef(
                     // Get the data
                     const data = parseMessage(msg);
 
-                    if (!chatVisible && !isSelf && !data.type === 'end') {
+                    if (!chatVisible && !isSelf && data.type !== 'end') {
                         setNewMessages((n) => n + 1);
 
                         // Try to play the notification sound
