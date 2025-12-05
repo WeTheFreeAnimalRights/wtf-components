@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { isFunction, isPlainObject } from 'lodash-es';
 import { Alert } from '../Alert';
 import { Empty } from '../Empty';
 import { Spinner } from '../Spinner';
+import { Button } from '../Button';
 import { useDevelopmentMode } from '../../hooks/useDevelopmentMode';
+import { useTranslations } from '../../hooks/useTranslations';
 
 // Shad CN
 import { cn } from '_/lib/utils';
@@ -20,12 +23,17 @@ export const PreloaderStates = ({
     customError,
     errorVideo,
     renderChildren,
+    cancelUrl,
     _id,
 }) => {
     const { developmentMode } = useDevelopmentMode();
+    const { t } = useTranslations();
 
     // Toast for optional errros
     const { toast } = useToast();
+
+    // If the cancel url is provided
+    const [, navigate] = useLocation();
 
     useEffect(() => {
         if (error && error?.config?.optional) {
@@ -65,6 +73,17 @@ export const PreloaderStates = ({
                         <div className="mt-3 italic text-sm text-muted-foreground">
                             {loadingMessage}
                         </div>
+                    )}
+                    {cancelUrl && (
+                        <Button
+                            variant="secondary"
+                            className="mt-3"
+                            onClick={() => {
+                                navigate(cancelUrl);
+                            }}
+                        >
+                            {t('footer-cancel')}
+                        </Button>
                     )}
                 </div>
             </div>

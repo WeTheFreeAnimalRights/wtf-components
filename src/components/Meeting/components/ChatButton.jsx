@@ -6,6 +6,7 @@ import newMessageSound from '../../../resources/sounds/new-message.mp3';
 import { cn } from '_/lib/utils';
 import { useMeeting } from '../hooks/useMeeting';
 import { parseMessage } from '../helpers/parseMessage';
+import { playAudio } from '../../../helpers/playAudio';
 
 // Preload the sound once (note: some browsers require a user gesture before audio can play)
 const messageSound = new Audio(newMessageSound);
@@ -70,13 +71,7 @@ export const ChatButton = forwardRef(
                         setNewMessages((n) => n + 1);
 
                         // Try to play the notification sound
-                        try {
-                            messageSound.currentTime = 0;
-                            // Some browsers block autoplay without prior gesture; ignore failure
-                            messageSound.play().catch(() => {});
-                        } catch (err) {
-                            console.error('messageSound play error:', err);
-                        }
+                        playAudio(messageSound);
                     }
                 } catch (err) {
                     console.error('handleIncoming error:', err);

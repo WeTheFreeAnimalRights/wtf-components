@@ -1,6 +1,6 @@
 {
     "name": "@wethefree/components",
-    "version": "1.3.18",
+    "version": "1.4.1",
     "author": "Ciprian Mocanu",
     "license": "ISC",
     "dependencies": {

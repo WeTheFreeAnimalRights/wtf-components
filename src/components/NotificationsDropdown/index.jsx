@@ -36,6 +36,7 @@ export const NotificationsDropdown = ({
     variant = 'ghost',
     size = 'icon',
     align = 'center',
+    subtitle,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const { t } = useTranslations();
@@ -68,7 +69,12 @@ export const NotificationsDropdown = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align={align}>
                 <DropdownMenuLabel>
-                    {t('notifications-title')}
+                    <div className="flex flex-row items-center">
+                        <div className="flex-grow">
+                            {t('notifications-title')}
+                        </div>
+                        {subtitle}
+                    </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {notificationItems.length === 0 && (

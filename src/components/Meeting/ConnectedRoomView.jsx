@@ -5,8 +5,13 @@ import { RoomView } from './components/RoomView';
 import { InactivityGuardModal } from './components/InactivityGuardModal';
 import { parseParticipants } from './helpers/parseParticipants';
 import { useMeeting } from './hooks/useMeeting';
-import { useMeetingLifecycle } from './hooks/useMeetingLifeCycle';
+import { useMeetingLifecycle } from './hooks/useMeetingLifecycle';
 import { parseMessage } from './helpers/parseMessage';
+import meetingEndedSound from '../../resources/sounds/meeting-end.mp3';
+import { playAudio } from '../../helpers/playAudio';
+
+// Preload the sound once (note: some browsers require a user gesture before audio can play)
+const endSound = new Audio(meetingEndedSound);
 
 export const ConnectedRoomView = ({
     emptyMessage,
@@ -45,6 +50,7 @@ export const ConnectedRoomView = ({
                 const data = parseMessage(msg);
                 if (data.type === 'end') {
                     handleMeetingEnded();
+                    playAudio(endSound);
                 }
             } catch (err) {
                 console.error('handleIncoming error:', err);

@@ -1,4 +1,5 @@
 import { Mic, Video, RefreshCcw } from 'lucide-react';
+import { useLocation } from 'wouter';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { isFunction } from 'lodash-es';
 import { useTranslations } from '../../../hooks/useTranslations';
@@ -6,6 +7,7 @@ import { Alert } from '../../Alert';
 import { Button } from '../../Button';
 import { Modal, ModalContainer } from '../../Modal';
 import { Select } from '../../Select';
+import { cn } from '_/lib/utils';
 
 const DEFAULT_SENTINEL = '__default__';
 
@@ -15,6 +17,7 @@ export const MediaAccessModal = ({
     onDevicesSelected, // optional: ({ audioDeviceId, videoDeviceId }) => void
     cam = true, // camera optional
     autoClose = true, // <-- default true: only autoclose if already granted at open
+    cancelUrl,
     // mic is ALWAYS required
     ...props
 }) => {
@@ -282,6 +285,9 @@ export const MediaAccessModal = ({
         if (isFunction(onClose)) onClose();
     };
 
+    // If the cancel url is provided
+    const [, navigate] = useLocation();
+
     const camOptions = videoInputs.map((d, idx) => ({
         value:
             d.deviceId && String(d.deviceId).length
@@ -361,12 +367,26 @@ export const MediaAccessModal = ({
                     {/* Step 1: ask for permissions — shown only if grants not present at open */}
                     {!hasRequested && (
                         <>
-                            <Button
-                                className="w-full mt-4"
-                                onClick={requestPermissions}
+                            <div
+                                className={cn(
+                                    'grid grid-cols-1 gap-4 mt-4',
+                                    cancelUrl && 'grid-cols-2'
+                                )}
                             >
-                                {t('media-access-modal-grant-permissions')}
-                            </Button>
+                                <Button onClick={requestPermissions}>
+                                    {t('media-access-modal-grant-permissions')}
+                                </Button>
+                                {cancelUrl && (
+                                    <Button
+                                        variant="secondary"
+                                        onClick={() => {
+                                            navigate(cancelUrl);
+                                        }}
+                                    >
+                                        {t('media-access-modal-grant-cancel')}
+                                    </Button>
+                                )}
+                            </div>
                             {!labelsAvailable && (
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                                     {t(
@@ -477,14 +497,30 @@ export const MediaAccessModal = ({
                                 </div>
                             )}
 
-                            <Button
-                                ref={continueBtnRef}
-                                autoFocus
-                                className="w-full mt-6"
-                                onClick={finish}
+                            <div
+                                className={cn(
+                                    'grid grid-cols-1 gap-4 mt-6',
+                                    cancelUrl && 'grid-cols-2'
+                                )}
                             >
-                                {t('common-continue') || 'Continue'}
-                            </Button>
+                                <Button
+                                    ref={continueBtnRef}
+                                    autoFocus
+                                    onClick={finish}
+                                >
+                                    {t('common-continue') || 'Continue'}
+                                </Button>
+                                {cancelUrl && (
+                                    <Button
+                                        variant="secondary"
+                                        onClick={() => {
+                                            navigate(cancelUrl);
+                                        }}
+                                    >
+                                        {t('media-access-modal-grant-cancel')}
+                                    </Button>
+                                )}
+                            </div>
                         </div>
                     )}
 

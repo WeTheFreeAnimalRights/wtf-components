@@ -17,13 +17,16 @@ export const GeneratedStandardFooter = ({
 
     submitButtonClassName,
     cancelButtonClassName,
+    cancelButtonVariant = 'secondary',
+    className,
+    buttonsReverse = false,
 
     loading,
     submitted,
 }) => {
     const { t } = useTranslations();
 
-    const [location, navigate] = useLocation();
+    const [, navigate] = useLocation();
 
     if (isUndefined(cancelUrl) && !isFunction(onCancel)) {
         return (
@@ -48,31 +51,39 @@ export const GeneratedStandardFooter = ({
         );
     }
 
+    const cancelButton = (
+        <Button
+            type="button"
+            className={cn(
+                'w-full flex-grow basis-0 sm:w-auto sm:grow-0',
+                cancelButtonClassName
+            )}
+            disabled={loading}
+            variant={cancelButtonVariant}
+            onClick={() => {
+                if (isFunction(onCancel)) {
+                    onCancel();
+                } else {
+                    navigate(cancelUrl);
+                }
+            }}
+        >
+            {footerLabels.cancel || t('footer-cancel')}
+        </Button>
+    );
+
     return (
         <>
             {disabledSubmit && disabledMessage && (
                 <Alert>{disabledMessage}</Alert>
             )}
-            <div className="flex flex-row items-center gap-4 mt-8">
-                <Button
-                    type="button"
-                    className={cn(
-                        'w-full flex-grow basis-0 sm:w-auto sm:grow-0',
-                        cancelButtonClassName
-                    )}
-                    disabled={loading}
-                    variant="secondary"
-                    onClick={() => {
-                        if (isFunction(onCancel)) {
-                            onCancel();
-                        } else {
-                            navigate(cancelUrl);
-                        }
-                    }}
-                >
-                    {footerLabels.cancel || t('footer-cancel')}
-                </Button>
-
+            <div
+                className={cn(
+                    'flex flex-row items-center gap-4 mt-8',
+                    className
+                )}
+            >
+                {!buttonsReverse && cancelButton}
                 <Button
                     type="submit"
                     variant={submitted ? 'simple' : 'default'}
@@ -86,6 +97,7 @@ export const GeneratedStandardFooter = ({
                         ? footerLabels.done || t('footer-done')
                         : footerLabels.submit || t('footer-submit')}
                 </Button>
+                {buttonsReverse && cancelButton}
             </div>
         </>
     );

@@ -4,6 +4,11 @@ import { useTranslations } from '../../../hooks/useTranslations';
 import { useMeeting } from '../hooks/useMeeting';
 import { RoomView } from './RoomView';
 import { cn } from '_/lib/utils';
+import meetingStartedSound from '../../../resources/sounds/meeting-start.mp3';
+import { playAudio } from '../../../helpers/playAudio';
+
+// Preload the sound once (note: some browsers require a user gesture before audio can play)
+const startSound = new Audio(meetingStartedSound);
 
 export const MeetingProvider = ({ children, className }) => {
     const { meeting, setMeeting } = useMeeting();
@@ -23,6 +28,9 @@ export const MeetingProvider = ({ children, className }) => {
 
             setMeeting('client', client);
             setLoading(false);
+
+            // Play sound
+            playAudio(startSound);
         };
         connect();
         return () => {

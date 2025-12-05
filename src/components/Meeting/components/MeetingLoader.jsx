@@ -1,9 +1,7 @@
 import { Preloader } from '../../Preloader';
-import { RoomView } from './RoomView';
 import { useTranslations } from '../../../hooks/useTranslations';
-import { cn } from '_/lib/utils';
 
-export const MeetingLoader = ({ id, children, className }) => {
+export const MeetingLoader = ({ id, children, className, cancelUrl }) => {
     const { t } = useTranslations();
 
     const requests = [
@@ -19,21 +17,15 @@ export const MeetingLoader = ({ id, children, className }) => {
     ];
 
     const repeatUntil = (data) => {
-        // TODO: Change this
-        return Boolean(data[0].activist) || true;
+        return Boolean(data[0].activist);
     };
 
     return (
         <Preloader
             requests={requests}
-            customPreloader={() => (
-                <RoomView
-                    className={cn('h-dvh', className)}
-                    users={[]}
-                    loadingMessage={t('waiting-for-activist')}
-                />
-            )}
+            loadingMessage={t('waiting-for-activist')}
             repeatUntil={repeatUntil}
+            cancelUrl={cancelUrl}
         >
             {children}
         </Preloader>

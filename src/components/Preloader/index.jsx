@@ -32,6 +32,7 @@ export const Preloader = ({
     repeatUntil,
     renderChildren,
     repeatInterval = 1000,
+    cancelUrl,
     _id,
 }) => {
     const [loading, setLoading] = useState(true);
@@ -123,6 +124,7 @@ export const Preloader = ({
             customError={customError}
             errorVideo={errorVideo}
             renderChildren={renderChildren}
+            cancelUrl={cancelUrl}
             _id={_id}
         >
             {children}
