@@ -1,6 +1,6 @@
 {
     "name": "@wethefree/components",
-    "version": "1.4.1",
+    "version": "1.4.2-t2",
     "author": "Ciprian Mocanu",
     "license": "ISC",
     "dependencies": {
@@ -8,6 +8,7 @@
         "@dnd-kit/sortable": "^8.0.0",
         "@dnd-kit/utilities": "^3.2.2",
         "@hookform/resolvers": "^3.9.0",
+        "@laravel/echo-react": "^2.2.6",
         "@radix-ui/react-accordion": "^1.2.3",
         "@radix-ui/react-avatar": "^1.1.1",
         "@radix-ui/react-checkbox": "^1.1.1",
@@ -155,6 +156,7 @@
         },
         "./base.css": "./src/base.css",
         "./tailwind.config": "./tailwind.config.js",
+        "./defaultViteServerOptions": "./defaultViteServerOptions.mjs",
         "./_scripts/confirm-deployment": "./_scripts/confirm-deployment.js",
         "./_scripts/copy-env": "./_scripts/copy-env.js",
         "./_scripts/deploy-build": "./_scripts/deploy-build.js",

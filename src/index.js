@@ -32,7 +32,7 @@ export {
 } from './components/LanguagePicker';
 export { Modal, ModalTrigger, ModalContainer } from './components/Modal';
 export { MultiSelect } from './components/MultiSelect';
-export { NotificationsDropdown } from './components/NotificationsDropdown';
+export { NotificationsDropdown, getNewNotifications, getNewCount } from './components/NotificationsDropdown';
 export { NumberInput, FormFieldNumberInput } from './components/NumberInput';
 export { Pagination } from './components/Pagination';
 export { Switch } from './components/Switch';
@@ -300,6 +300,7 @@ export { getLocale } from './helpers/getLocale';
 export { getLocaleFormat } from './helpers/getLocaleFormat';
 export { handleGuardedNavigation } from './helpers/handleGuardedNavigation';
 export { formatDate } from './helpers/formatDate';
+export { forcePusherXHR } from './helpers/forcePusherXHR';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';
@@ -318,6 +319,11 @@ export { useAnalytics } from './hooks/useAnalytics';
 export { useWarnOnExit } from './hooks/useWarnOnExit';
 export { useFormatDate } from './hooks/useFormatDate';
 export { useNotifications } from './hooks/useNotifications';
+export {
+    configureSocket,
+    buildSocketConfig,
+    useSocket,
+} from './hooks/useSocket';
 
 // Store
 export * from './store';

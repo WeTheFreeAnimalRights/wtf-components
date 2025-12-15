@@ -157,6 +157,9 @@ export const NotificationsDropdown = ({
     );
 };
 
+export {getNewNotifications} from './getNewNotifications';
+export {getNewCount} from './getNewCount';
+
 NotificationsDropdown.displayName = 'NotificationsDropdown';
 NotificationsDropdown.propTypes = {
     /**

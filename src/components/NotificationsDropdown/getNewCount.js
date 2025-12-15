@@ -1,3 +1,6 @@
-export const getNewCount = (items = []) => {
-    return items.filter((item) => item.isNew).length;
+import { getNewNotifications } from "./getNewNotifications";
+
+export const getNewCount = (items = [], extra) => {
+    const newItems = getNewNotifications(items, extra);
+    return newItems.length;
 };
