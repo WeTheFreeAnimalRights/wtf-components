@@ -28,7 +28,8 @@ const readEnvConfig = () => {
 
 export const buildSocketConfig = (config = {}) => {
     const cookieHeader = typeof document === 'undefined' ? '' : document.cookie;
-    const xsrfToken = typeof document === 'undefined' ? '' : getCookie('XSRF-TOKEN');
+    const xsrfToken =
+        typeof document === 'undefined' ? '' : getCookie('XSRF-TOKEN');
 
     const merged = {
         broadcaster: 'reverb',
@@ -58,7 +59,9 @@ export const buildSocketConfig = (config = {}) => {
     }
 
     if (!merged.wsPort && !merged.wssPort) {
-        throw new Error('Socket config missing wsPort or wssPort. Provide at least one.');
+        throw new Error(
+            'Socket config missing wsPort or wssPort. Provide at least one.'
+        );
     }
 
     return merged;

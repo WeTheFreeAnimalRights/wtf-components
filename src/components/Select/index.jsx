@@ -26,6 +26,7 @@ export const Select = forwardRef(
             required = false,
             disabled = false,
             className,
+            contentClassName,
             align,
             ...props
         },
@@ -48,7 +49,13 @@ export const Select = forwardRef(
                 {...props}
             >
                 {formControl ? <FormControl>{trigger}</FormControl> : trigger}
-                <ShadSelectContent align={align}>
+                <ShadSelectContent
+                    align={align}
+                    className={cn(
+                        'max-h-[70vh] overflow-y-auto',
+                        contentClassName
+                    )}
+                >
                     <ShadSelectGroup>
                         {placeholder && (
                             <ShadSelectLabel>{placeholder}</ShadSelectLabel>
@@ -124,4 +131,9 @@ Select.propTypes = {
      * Optional extra classname to the select box
      */
     className: PropTypes.string,
+
+    /**
+     * Optional extra classname to the dropdown content
+     */
+    contentClassName: PropTypes.string,
 };

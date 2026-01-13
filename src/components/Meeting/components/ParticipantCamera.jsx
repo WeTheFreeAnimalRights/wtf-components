@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimalIcon } from '../../AnimalIcon';
 import { useMeeting } from '../hooks/useMeeting';
+import { ParticipantNoCamera } from './ParticipantNoCamera';
 
 export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
     const ref = useRef(null);
     const meetingClosedRef = useRef(false);
     const { meeting } = useMeeting();
-    const { client } = meeting;
+    const { client, camOn } = meeting;
 
     const participant = useMemo(() => client.getUser(id), [client, id]);
     const currentUser = useMemo(() => client.getCurrentUserInfo(), [client]);
@@ -75,13 +75,16 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
         };
     }, [client]);
 
+    const isLocalUser = currentUser?.userId === participant?.userId;
+    const shouldShowVideo = videoOn && (!isLocalUser || camOn);
+
     // Attach/detach video DOM when state flips
     useEffect(() => {
         const stream = client.getMediaStream();
         let mounted = true;
 
         const attach = async () => {
-            if (!videoOn || meetingClosedRef.current) {
+            if (!shouldShowVideo || meetingClosedRef.current) {
                 return;
             }
             try {
@@ -136,7 +139,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
             }
         };
 
-        if (videoOn) {
+        if (shouldShowVideo) {
             attach();
         } else {
             detach();
@@ -146,9 +149,9 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
             mounted = false;
             detach();
         };
-    }, [client, id, videoOn]);
+    }, [camOn, client, id, shouldShowVideo]);
 
-    if (videoOn) {
+    if (shouldShowVideo) {
         return (
             <video-player-container
                 className="relative"
@@ -163,12 +166,10 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
     }
 
     return (
-        <div className="relative w-full h-full flex flex-col items-center justify-center gap-2 py-4 box-border">
-            <AnimalIcon variant="light" index={animalIndex} />
-            <div className="bg-background/80 py-1 px-2 rounded-md inline-block text-sm">
-                {participant?.displayName}
-            </div>
-        </div>
+        <ParticipantNoCamera
+            name={participant?.displayName}
+            animalIndex={animalIndex}
+        />
     );
 };
 

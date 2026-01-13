@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useEcho } from '@laravel/echo-react';
 import { configureSocket } from './configureSocket';
+import { camelizeObject } from '../../helpers/camelizeObject';
 
 const visibilityMap = {
     presence: 'presence',
@@ -22,11 +23,25 @@ export const useSocket = ({
     const visibility = visibilityMap[channelType] || 'presence';
     const events = useMemo(() => event, [event]);
 
-    const { listen, stopListening, leave, leaveChannel, channel: getChannel } = useEcho(
+    const wrappedCallback = useMemo(() => {
+        if (!callback) {
+            return callback;
+        }
+
+        return (...args) => callback(...args.map((arg) => camelizeObject(arg)));
+    }, [callback]);
+
+    const {
+        listen,
+        stopListening,
+        leave,
+        leaveChannel,
+        channel: getChannel,
+    } = useEcho(
         channel,
         events,
-        callback,
-        [callback],
+        wrappedCallback,
+        [wrappedCallback],
         visibility
     );
 

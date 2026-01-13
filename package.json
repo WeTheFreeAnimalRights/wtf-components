@@ -1,6 +1,6 @@
 {
     "name": "@wethefree/components",
-    "version": "1.4.2-t2",
+    "version": "1.4.2-t4",
     "author": "Ciprian Mocanu",
     "license": "ISC",
     "dependencies": {
@@ -42,6 +42,7 @@
         "cmdk": "^1.0.0",
         "hls.js": "^1.5.13",
         "input-otp": "^1.4.2",
+        "js-sha256": "^0.11.1",
         "lucide-react": "^0.439.0",
         "next-themes": "^0.3.0",
         "react-day-picker": "^8.10.1",

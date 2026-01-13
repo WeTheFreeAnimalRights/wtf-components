@@ -1,4 +1,4 @@
-import { getNewNotifications } from "./getNewNotifications";
+import { getNewNotifications } from './getNewNotifications';
 
 export const getNewCount = (items = [], extra) => {
     const newItems = getNewNotifications(items, extra);

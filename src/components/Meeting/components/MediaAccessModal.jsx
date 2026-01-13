@@ -1,555 +1,436 @@
-import { Mic, Video, RefreshCcw } from 'lucide-react';
-import { useLocation } from 'wouter';
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { isFunction } from 'lodash-es';
-import { useTranslations } from '../../../hooks/useTranslations';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert } from '../../Alert';
 import { Button } from '../../Button';
 import { Modal, ModalContainer } from '../../Modal';
 import { Select } from '../../Select';
-import { cn } from '_/lib/utils';
-
-const DEFAULT_SENTINEL = '__default__';
+import { Checkbox } from '../../Checkbox';
+import { ParticipantNoCamera } from './ParticipantNoCamera';
+import { useTranslations } from '../../../hooks/useTranslations';
+import { useCountdown } from '../../../hooks/useCountdown';
+import { Tooltip } from '../../Tooltip';
 
 export const MediaAccessModal = ({
     open,
     onClose,
-    onDevicesSelected, // optional: ({ audioDeviceId, videoDeviceId }) => void
-    cam = true, // camera optional
-    autoClose = true, // <-- default true: only autoclose if already granted at open
-    cancelUrl,
-    // mic is ALWAYS required
+    onCancel,
+    onDevicesSelected,
+    children,
+    cam = true,
+    startWithCameraOn = true,
+    countdown,
+    continueDisabled,
+    cancelDisabled,
+    continueTooltip,
     ...props
 }) => {
     const { t } = useTranslations();
+    const [videoDevices, setVideoDevices] = useState([]);
+    const [audioDevices, setAudioDevices] = useState([]);
+    const [selectedVideo, setSelectedVideo] = useState('');
+    const [selectedAudio, setSelectedAudio] = useState('');
+    const [hasPermission, setHasPermission] = useState(false);
+    const [requesting, setRequesting] = useState(false);
+    const [canceled, setCanceled] = useState(false);
+    const [error, setError] = useState('');
+    const [cameraOn, setCameraOn] = useState(startWithCameraOn);
 
-    // Permission / flow state
-    const [hasRequested, setHasRequested] = useState(false);
-    const [camGranted, setCamGranted] = useState(false);
-    const [micGranted, setMicGranted] = useState(false);
+    const videoRef = useRef(null);
+    const streamRef = useRef(null);
 
-    // Device lists + selections
-    const [videoInputs, setVideoInputs] = useState([]);
-    const [audioInputs, setAudioInputs] = useState([]);
-    const [selectedCamId, setSelectedCamId] = useState('');
-    const [selectedMicId, setSelectedMicId] = useState('');
+    const stopStream = useCallback(() => {
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach((track) => track.stop());
+            streamRef.current = null;
+        }
+        if (videoRef.current) {
+            videoRef.current.srcObject = null;
+        }
+    }, []);
 
-    // UI state
-    const [labelsAvailable, setLabelsAvailable] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    // Autofocus for Continue
-    const continueBtnRef = useRef(null);
-
-    // ----- Device helpers -----
-    const parseDevices = useCallback(
-        (devices) => {
-            const vids = [];
-            const auds = [];
-            devices.forEach((d) => {
-                if (d.kind === 'videoinput') {
-                    vids.push({
-                        deviceId: d.deviceId,
-                        label: d.label || 'Camera',
-                        kind: d.kind,
-                        groupId: d.groupId,
-                    });
-                } else if (d.kind === 'audioinput') {
-                    auds.push({
-                        deviceId: d.deviceId,
-                        label: d.label || 'Microphone',
-                        kind: d.kind,
-                        groupId: d.groupId,
-                    });
-                }
-            });
-            setVideoInputs(vids);
-            setAudioInputs(auds);
-
-            if (!selectedCamId && vids.length) {
-                const first =
-                    vids[0].deviceId && String(vids[0].deviceId).length
-                        ? String(vids[0].deviceId)
-                        : `${DEFAULT_SENTINEL}-cam-0`;
-                setSelectedCamId(first);
-            }
-            if (!selectedMicId && auds.length) {
-                const first =
-                    auds[0].deviceId && String(auds[0].deviceId).length
-                        ? String(auds[0].deviceId)
-                        : `${DEFAULT_SENTINEL}-mic-0`;
-                setSelectedMicId(first);
-            }
-        },
-        [selectedCamId, selectedMicId]
-    );
-
-    const enumerate = useCallback(async () => {
+    const readDevices = useCallback(async () => {
+        if (!navigator.mediaDevices?.enumerateDevices) return;
         try {
             const list = await navigator.mediaDevices.enumerateDevices();
-            setLabelsAvailable(list.some((d) => !!d.label));
-            parseDevices(list);
+            const videos = list.filter((d) => d.kind === 'videoinput');
+            const audios = list.filter((d) => d.kind === 'audioinput');
+            setVideoDevices(videos);
+            setAudioDevices(audios);
 
-            // Normalize selections post-permission
-            setSelectedMicId((prev) => {
-                if (!prev || prev.includes(DEFAULT_SENTINEL)) {
-                    const firstReal = list.find(
-                        (d) => d.kind === 'audioinput' && d.deviceId
-                    )?.deviceId;
-                    return firstReal
-                        ? String(firstReal)
-                        : prev || `${DEFAULT_SENTINEL}-mic-0`;
-                }
-                return prev;
+            const videoIds = videos.map(
+                (d, idx) => d.deviceId || `video-${idx}`
+            );
+            const audioIds = audios.map(
+                (d, idx) => d.deviceId || `audio-${idx}`
+            );
+
+            setSelectedVideo((prev) => {
+                if (prev && videoIds.includes(prev)) return prev;
+                return videoIds[0] || '';
             });
-            setSelectedCamId((prev) => {
-                if (!prev || prev.includes(DEFAULT_SENTINEL)) {
-                    const firstReal = list.find(
-                        (d) => d.kind === 'videoinput' && d.deviceId
-                    )?.deviceId;
-                    return firstReal
-                        ? String(firstReal)
-                        : prev || `${DEFAULT_SENTINEL}-cam-0`;
-                }
-                return prev;
+
+            setSelectedAudio((prev) => {
+                if (prev && audioIds.includes(prev)) return prev;
+                return audioIds[0] || '';
             });
         } catch (err) {
-            console.error('enumerateDevices failed', err);
+            console.error('Failed to enumerate devices', err);
         }
-    }, [parseDevices]);
+    }, []);
 
-    // ---- Pre-check at OPEN:
-    // If mic is already granted AND autoClose is true -> immediately close (no dropdowns).
-    // Otherwise:
-    // - If already granted but autoClose is false -> show selectors (skip grant step).
-    // - If not granted -> show Grant button.
-    useEffect(() => {
-        if (!open) return;
-        let cancelled = false;
-
-        (async () => {
-            try {
-                const canQuery = !!navigator.permissions?.query;
-                let micState = null;
-                let camState = null;
-
-                if (canQuery) {
-                    micState = await navigator.permissions
-                        .query({ name: 'microphone' })
-                        .catch(() => null);
-                    camState = cam
-                        ? await navigator.permissions
-                              .query({ name: 'camera' })
-                              .catch(() => null)
-                        : null;
-                }
-
-                const micIsGranted = micState?.state === 'granted';
-                const camIsGranted = cam
-                    ? camState?.state === 'granted'
-                    : false;
-
-                if (!cancelled && micIsGranted && autoClose && !hasRequested) {
-                    // Already granted at open → do NOT render modal, just close and notify
-                    if (isFunction(onDevicesSelected)) {
-                        onDevicesSelected({
-                            audioDeviceId: '', // system default mic
-                            videoDeviceId: camIsGranted ? '' : '',
-                        });
-                    }
-                    if (isFunction(onClose)) onClose();
-                    return; // stop here – no UI
-                }
-
-                // Otherwise continue normal UI: enumerate and set state
-                await enumerate();
-
-                if (!cancelled) {
-                    if (micIsGranted || camIsGranted) {
-                        // Skip grant step; show selectors immediately
-                        setMicGranted(micIsGranted);
-                        setCamGranted(camIsGranted);
-                        setHasRequested(true);
-                    } else {
-                        setHasRequested(false);
-                    }
-                }
-            } catch (e) {
-                console.debug('Permission pre-check skipped', e);
-                await enumerate();
-            }
-        })();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [open, cam, autoClose, onClose, onDevicesSelected, enumerate]);
-
-    // Hot-plug listener
-    useEffect(() => {
-        if (!navigator.mediaDevices?.addEventListener) return;
-        const handler = () => enumerate();
-        navigator.mediaDevices.addEventListener('devicechange', handler);
-        return () =>
-            navigator.mediaDevices.removeEventListener('devicechange', handler);
-    }, [enumerate]);
-
-    // Autofocus Continue when selectors appear
-    useEffect(() => {
-        if (hasRequested && (micGranted || camGranted)) {
-            if (typeof requestAnimationFrame === 'function') {
-                requestAnimationFrame(() => continueBtnRef.current?.focus?.());
-            } else {
-                setTimeout(() => continueBtnRef.current?.focus?.(), 0);
-            }
+    const startStream = useCallback(async () => {
+        if (!navigator.mediaDevices?.getUserMedia) {
+            setError('This browser cannot access media devices.');
+            return;
         }
-    }, [hasRequested, micGranted, camGranted]);
 
-    // ----- Request permission (broad) -----
-    const requestPermissions = async () => {
+        setRequesting(true);
+        setError('');
+
         try {
-            setErrorMessage('');
-            setHasRequested(true);
+            const shouldUseExactVideo =
+                !!selectedVideo &&
+                selectedVideo !== 'default' &&
+                !selectedVideo.startsWith('video-');
+            const shouldUseExactAudio =
+                !!selectedAudio &&
+                selectedAudio !== 'default' &&
+                !selectedAudio.startsWith('audio-');
 
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: !!cam,
-                audio: true, // mic mandatory
-            });
+            const constraints = {
+                audio: shouldUseExactAudio
+                    ? { deviceId: { exact: selectedAudio } }
+                    : true,
+                video: cam
+                    ? shouldUseExactVideo
+                        ? { deviceId: { exact: selectedVideo } }
+                        : true
+                    : false,
+            };
 
-            setCamGranted(!!cam && stream.getVideoTracks().length > 0);
-            setMicGranted(stream.getAudioTracks().length > 0);
+            const stream =
+                await navigator.mediaDevices.getUserMedia(constraints);
+            stopStream();
 
-            await enumerate();
-            stream.getTracks().forEach((t) => t.stop());
+            streamRef.current = stream;
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+                if (typeof videoRef.current.play === 'function') {
+                    videoRef.current.play().catch(() => {});
+                }
+            }
+            if (cam) {
+                stream.getVideoTracks().forEach((track) => {
+                    track.enabled = cameraOn;
+                });
+            }
+            setHasPermission(true);
+            await readDevices();
+        } catch (err) {
+            console.error('Unable to start media preview', err);
+            setError(
+                err?.message ||
+                    'We could not access your microphone/camera. Please allow permissions and try again.'
+            );
+            setHasPermission(false);
+        } finally {
+            setRequesting(false);
+        }
+    }, [cam, readDevices, selectedAudio, selectedVideo, stopStream]);
 
-            // NOTE: Even if autoClose===true, do NOT auto-close after user grants;
-            // we want to show dropdowns so they can pick specific devices.
-        } catch (error) {
-            console.error('Permission request failed:', error);
-            setCamGranted(false);
-            setMicGranted(false);
-
+    const checkExistingPermission = useCallback(async () => {
+        if (!navigator.permissions?.query) return;
+        try {
+            const mic = await navigator.permissions
+                .query({ name: 'microphone' })
+                .catch(() => null);
+            const camera = cam
+                ? await navigator.permissions
+                      .query({ name: 'camera' })
+                      .catch(() => null)
+                : null;
             if (
-                error?.name === 'NotAllowedError' ||
-                error?.name === 'SecurityError'
+                mic?.state === 'granted' &&
+                (!cam || camera?.state === 'granted')
             ) {
-                setErrorMessage(
-                    t?.('media-access-modal-permission-denied') ||
-                        'Permission denied. We need microphone access for calls. Please enable it in your browser settings.'
-                );
-            } else if (error?.name === 'NotFoundError') {
-                setErrorMessage(
-                    t?.('media-access-modal-no-devices-found') ||
-                        'No compatible microphone (or camera) was found. Please connect a device and try again.'
-                );
-            } else {
-                setErrorMessage(
-                    (t?.('media-access-modal-generic-error-prefix') ||
-                        'An error occurred while trying to access your microphone/camera. ') +
-                        (error?.message || '')
-                );
+                await startStream();
+            }
+        } catch (err) {
+            console.warn('Permission pre-check failed', err);
+        }
+    }, [cam, startStream]);
+
+    useEffect(() => {
+        if (!open) {
+            stopStream();
+            setHasPermission(false);
+            setError('');
+            return;
+        }
+        readDevices();
+        checkExistingPermission();
+    }, [checkExistingPermission, open, readDevices, stopStream]);
+
+    useEffect(() => {
+        if (!open || !hasPermission) return;
+        startStream();
+    }, [open, hasPermission, selectedAudio, selectedVideo, startStream]);
+
+    useEffect(() => {
+        if (!cam || !hasPermission || !streamRef.current) return;
+        const stream = streamRef.current;
+        stream.getVideoTracks().forEach((track) => {
+            track.enabled = cameraOn;
+        });
+        if (cameraOn && videoRef.current) {
+            videoRef.current.srcObject = stream;
+            if (typeof videoRef.current.play === 'function') {
+                videoRef.current.play().catch(() => {});
             }
         }
-    };
+    }, [cam, cameraOn, hasPermission]);
 
-    // ----- Validate selections and finish -----
-    const finish = () => {
-        if (!micGranted) {
-            setErrorMessage(
-                t?.('media-access-modal-mic-required-permission') ||
-                    'Microphone access is required. Please allow microphone permissions.'
-            );
-            return;
-        }
-        if (!selectedMicId) {
-            setErrorMessage(
-                t?.('media-access-modal-select-microphone-required') ||
-                    'Please select a microphone.'
-            );
-            return;
-        }
+    useEffect(() => () => stopStream(), [stopStream]);
 
-        if (isFunction(onDevicesSelected)) {
-            const isMicSentinel = selectedMicId.includes(DEFAULT_SENTINEL);
-            const isCamSentinel = selectedCamId.includes(DEFAULT_SENTINEL);
+    useEffect(() => {
+        setCameraOn(startWithCameraOn);
+    }, [startWithCameraOn]);
 
+    const handleProceed = () => {
+        endCountdown();
+        if (onDevicesSelected) {
             onDevicesSelected({
-                audioDeviceId: isMicSentinel ? '' : selectedMicId, // '' => system default
-                videoDeviceId: camGranted
-                    ? isCamSentinel
-                        ? ''
-                        : selectedCamId
-                    : '',
+                audioDeviceId: selectedAudio || '',
+                videoDeviceId: cam ? selectedVideo || '' : '',
+                cameraOn,
             });
         }
-        if (isFunction(onClose)) onClose();
+        if (onClose) onClose();
     };
 
-    // If the cancel url is provided
-    const [, navigate] = useLocation();
+    const handleCancel = () => {
+        endCountdown();
+        setCanceled(true);
+        if (onCancel) onCancel();
+    };
 
-    const camOptions = videoInputs.map((d, idx) => ({
-        value:
-            d.deviceId && String(d.deviceId).length
-                ? String(d.deviceId)
-                : `${DEFAULT_SENTINEL}-cam-${idx}`,
-        label: d.label || (idx === 0 ? 'Default camera' : `Camera ${idx + 1}`),
-    }));
-
-    const micOptions = audioInputs.map((d, idx) => ({
-        value:
-            d.deviceId && String(d.deviceId).length
-                ? String(d.deviceId)
-                : `${DEFAULT_SENTINEL}-mic-${idx}`,
+    const videoOptions = videoDevices.map((device, idx) => ({
+        value: device.deviceId || `video-${idx}`,
         label:
-            d.label ||
-            (idx === 0 ? 'Default microphone' : `Microphone ${idx + 1}`),
+            device.label ||
+            (device.deviceId === 'default'
+                ? t('media-acess-modal-default-camera')
+                : t('media-acess-modal-camera-count', {
+                      count: idx + 1,
+                  })),
     }));
+
+    const audioOptions = audioDevices.map((device, idx) => ({
+        value: device.deviceId || `audio-${idx}`,
+        label:
+            device.label ||
+            (device.deviceId === 'default'
+                ? t('media-acess-modal-default-microphone')
+                : t('media-acess-modal-microphone-count', {
+                      count: idx + 1,
+                  })),
+    }));
+
+    // Countdown
+    const {
+        value: countdownValue,
+        start: startCountdown,
+        end: endCountdown,
+    } = useCountdown(countdown, () => {
+        if (onCancel) onCancel();
+    });
+
+    useEffect(() => {
+        if (!open) {
+            endCountdown();
+            return;
+        }
+
+        if (countdown !== undefined && countdown !== null) {
+            startCountdown();
+        }
+    }, [countdown, endCountdown, open, startCountdown]);
 
     return (
         <ModalContainer
             open={open}
             onOpenChange={(value) => {
-                // Prevent closing until mic is granted and something is selected
-                if (!value) {
-                    const canClose = micGranted && !!selectedMicId;
-                    if (canClose) {
-                        if (isFunction(onClose)) onClose();
-                    } else {
-                        setErrorMessage(
-                            t?.('media-access-modal-mic-required-permission') ||
-                                'Microphone access is required. Please allow microphone and select a device to continue.'
-                        );
-                    }
-                }
+                if (!value && value === open && onClose && !canceled) onClose();
             }}
         >
             <Modal
-                title={
-                    <div className="px-6 py-5 space-y-0 bg-gray-800 text-white rounded-t-md pe-12 sm:pe-6">
-                        {t('media-access-modal-title')}{' '}
-                    </div>
-                }
-                description={t('media-access-modal-description')}
-                showDescription={false}
+                title={t('media-acess-modal-title')}
+                description={t('media-acess-modal-description')}
+                className={children ? 'w-full max-w-5xl' : 'w-full max-w-xl'}
+                contentClassName="max-h-[75vh]"
                 showCloseButton={false}
-                className="w-10/12 sm:w-2/3 lg:w-[900px] h-auto p-0 gap-0 border-0 max-w-[500px] rounded-md"
-                contentClassName="bg-gray-100 dark:bg-gray-900 rounded-b-md max-h-[75vh] pt-6"
-                headerClassName="space-y-0 border-b border-gray-300 dark:border-gray-500"
-                setWidth={false}
                 overflow
                 {...props}
             >
-                <div className="p-6 pt-0">
-                    <div className="flex flex-row items-center gap-2 mb-2">
-                        <Mic className="w-6 h-6" />
-                        {cam && <Video className="w-6 h-6" />}
+                <div className="flex flex-col gap-6 max-h-[80vh] overflow-y-auto">
+                    <div
+                        className={`grid grid-cols-1 ${
+                            children ? 'lg:grid-cols-2' : ''
+                        } gap-4`}
+                    >
+                        <div className="relative rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-white overflow-hidden min-h-[320px] flex flex-col items-stretch">
+                            <div className="relative aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center h-full">
+                                {cam && hasPermission && cameraOn && (
+                                    <video
+                                        ref={videoRef}
+                                        muted
+                                        autoPlay
+                                        playsInline
+                                        className="w-full h-full object-cover aspect-video"
+                                    />
+                                )}
+                                {hasPermission && (!cam || !cameraOn) && (
+                                    <div className="absolute inset-0 flex items-center justify-center left-0 top-0 right-0 bottom-0">
+                                        <ParticipantNoCamera name="You" />
+                                    </div>
+                                )}
+                                {!hasPermission && (
+                                    <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm flex flex-col items-center justify-center gap-3 left-0 top-0 right-0 bottom-0">
+                                        <div className="text-center text-sm text-gray-200 px-6">
+                                            {t(
+                                                'media-acess-modal-permission-overlay'
+                                            )}
+                                        </div>
+                                        <Button
+                                            onClick={startStream}
+                                            disabled={requesting}
+                                        >
+                                            {requesting
+                                                ? t(
+                                                      'media-acess-modal-requesting'
+                                                  )
+                                                : t(
+                                                      'media-acess-modal-request-permissions'
+                                                  )}
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
+
+                            {hasPermission && (
+                                <div className="p-4 space-y-2 bg-gray-50 dark:bg-gray-900 flex-1">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-gray-300">
+                                            {t('media-acess-modal-camera')}
+                                        </span>
+                                        <label className="flex items-center gap-2 text-xs text-gray-200">
+                                            <span className="text-muted-foreground">
+                                                {cameraOn
+                                                    ? t('camera-on')
+                                                    : t('camera-off')}
+                                            </span>
+                                            <Checkbox
+                                                className="h-4 w-4"
+                                                checked={cameraOn}
+                                                disabled={
+                                                    !cam || !hasPermission
+                                                }
+                                                onCheckedChange={(value) =>
+                                                    setCameraOn(!!value)
+                                                }
+                                            />
+                                        </label>
+                                    </div>
+
+                                    {cam && (
+                                        <Select
+                                            value={selectedVideo}
+                                            onValueChange={setSelectedVideo}
+                                            options={videoOptions}
+                                            placeholder={t(
+                                                'media-acess-modal-choose-camera'
+                                            )}
+                                            disabled={!hasPermission}
+                                        />
+                                    )}
+
+                                    <div className="space-y-2">
+                                        <span className="text-sm text-gray-300">
+                                            {t('media-acess-modal-microphone')}
+                                        </span>
+                                        <Select
+                                            value={selectedAudio}
+                                            onValueChange={setSelectedAudio}
+                                            options={audioOptions}
+                                            placeholder={t(
+                                                'media-acess-modal-choose-microphone'
+                                            )}
+                                            disabled={!hasPermission}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {children && (
+                            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 min-h-[320px] flex items-center justify-center">
+                                <div className="w-full flex items-center justify-center">
+                                    {children}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
-                    <h2 className="text-lg font-bold">
-                        {cam
-                            ? t('media-access-modal-enable-cam-mic-title') ||
-                              'Enable your camera and microphone'
-                            : t('media-access-modal-enable-mic-title') ||
-                              'Enable your microphone'}
-                    </h2>
-
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {cam
-                            ? t(
-                                  'media-access-modal-enable-cam-mic-description'
-                              ) ||
-                              'We need microphone access (required) and camera (optional) for calls.'
-                            : t('media-access-modal-enable-mic-description') ||
-                              'We need microphone access for calls.'}
-                    </p>
-
-                    {/* Step 1: ask for permissions — shown only if grants not present at open */}
-                    {!hasRequested && (
-                        <>
-                            <div
-                                className={cn(
-                                    'grid grid-cols-1 gap-4 mt-4',
-                                    cancelUrl && 'grid-cols-2'
-                                )}
-                            >
-                                <Button onClick={requestPermissions}>
-                                    {t('media-access-modal-grant-permissions')}
-                                </Button>
-                                {cancelUrl && (
-                                    <Button
-                                        variant="secondary"
-                                        onClick={() => {
-                                            navigate(cancelUrl);
-                                        }}
-                                    >
-                                        {t('media-access-modal-grant-cancel')}
-                                    </Button>
-                                )}
-                            </div>
-                            {!labelsAvailable && (
-                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                                    {t(
-                                        'media-access-modal-labels-hidden-hint'
-                                    ) ||
-                                        'Device names may appear generic until you grant access. Click “Grant permissions” to reveal exact names.'}
-                                </p>
-                            )}
-                        </>
-                    )}
-
-                    {/* Step 2: selectors (mic required; cam optional) */}
-                    {hasRequested && (micGranted || camGranted) && (
-                        <div className="mt-4 space-y-3">
-                            {/* Microphone (REQUIRED) */}
-                            {micGranted ? (
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                        {t(
-                                            'media-access-modal-microphone-label'
-                                        ) || 'Microphone'}
-                                    </label>
-                                    <div className="flex gap-2">
-                                        <Select
-                                            value={selectedMicId}
-                                            onValueChange={setSelectedMicId}
-                                            options={micOptions}
-                                            placeholder={
-                                                micOptions.length
-                                                    ? t(
-                                                          'media-access-modal-microphone-placeholder'
-                                                      ) || 'Choose microphone'
-                                                    : t(
-                                                          'media-access-modal-no-microphone'
-                                                      ) || 'No microphone found'
-                                            }
-                                            align="start"
-                                            disabled={micOptions.length === 0}
-                                            className="w-full"
-                                        />
-                                        <Button
-                                            type="button"
-                                            variant="secondary"
-                                            onClick={enumerate}
-                                            className="shrink-0"
-                                            title={
-                                                t(
-                                                    'media-access-modal-refresh'
-                                                ) || 'Refresh'
-                                            }
-                                        >
-                                            <RefreshCcw className="w-4 h-4" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <Alert
-                                    className="mt-2"
-                                    variant="destructive"
-                                    title={t('media-access-modal-error-title')}
-                                >
-                                    {t?.(
-                                        'media-access-modal-mic-required-permission'
-                                    ) ||
-                                        'Microphone access is required. Please enable it in your browser settings and try again.'}
-                                </Alert>
-                            )}
-
-                            {/* Camera (OPTIONAL) */}
-                            {cam && camGranted && (
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                        {t('media-access-modal-camera-label') ||
-                                            'Camera'}
-                                    </label>
-                                    <div className="flex gap-2">
-                                        <Select
-                                            value={selectedCamId}
-                                            onValueChange={setSelectedCamId}
-                                            options={camOptions}
-                                            placeholder={
-                                                camOptions.length
-                                                    ? t(
-                                                          'media-access-modal-camera-placeholder'
-                                                      ) || 'Choose camera'
-                                                    : t(
-                                                          'media-access-modal-no-camera'
-                                                      ) || 'No camera found'
-                                            }
-                                            align="start"
-                                            disabled={camOptions.length === 0}
-                                            className="w-full"
-                                        />
-                                        <Button
-                                            type="button"
-                                            variant="secondary"
-                                            onClick={enumerate}
-                                            className="shrink-0"
-                                            title={
-                                                t(
-                                                    'media-access-modal-refresh'
-                                                ) || 'Refresh'
-                                            }
-                                        >
-                                            <RefreshCcw className="w-4 h-4" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div
-                                className={cn(
-                                    'grid grid-cols-1 gap-4 mt-6',
-                                    cancelUrl && 'grid-cols-2'
-                                )}
-                            >
-                                <Button
-                                    ref={continueBtnRef}
-                                    autoFocus
-                                    onClick={finish}
-                                >
-                                    {t('common-continue') || 'Continue'}
-                                </Button>
-                                {cancelUrl && (
-                                    <Button
-                                        variant="secondary"
-                                        onClick={() => {
-                                            navigate(cancelUrl);
-                                        }}
-                                    >
-                                        {t('media-access-modal-grant-cancel')}
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Errors (permission or validation) */}
-                    {errorMessage && (
+                    {error && (
                         <Alert
-                            className="mt-6"
                             variant="destructive"
-                            title={t('media-access-modal-error-title')}
+                            title={t('media-acess-modal-error-title')}
                         >
-                            {errorMessage}
+                            {error}
                         </Alert>
                     )}
 
-                    {/* Help text when permission denied */}
-                    {errorMessage && (
-                        <div className="mt-6">
-                            <h3 className="font-bold">
-                                {t(
-                                    'media-access-modal-how-to-enable-permissions-title'
-                                )}
-                            </h3>
-                            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                {t(
-                                    'media-access-modal-how-to-enable-permissions-description'
-                                )}
+                    <div className="flex justify-end gap-3">
+                        {onCancel && (
+                            <Button
+                                variant="ghost"
+                                onClick={handleCancel}
+                                disabled={cancelDisabled}
+                            >
+                                {t('media-acess-modal-cancel', [
+                                    countdownValue,
+                                ])}
+                            </Button>
+                        )}
+                        <Tooltip
+                            message={
+                                continueTooltip ||
+                                (!hasPermission
+                                    ? t('media-acess-modal-tooltip-permission')
+                                    : requesting
+                                      ? t(
+                                            'media-acess-modal-tooltip-requesting'
+                                        )
+                                      : t('media-access-modal-toltip-proceed'))
+                            }
+                            asChild
+                            className="max-w-xs text-center"
+                        >
+                            <div>
+                                <Button
+                                    onClick={handleProceed}
+                                    disabled={
+                                        !hasPermission ||
+                                        requesting ||
+                                        continueDisabled
+                                    }
+                                >
+                                    {t('media-acess-modal-proceed', [
+                                        countdownValue,
+                                    ])}
+                                </Button>
                             </div>
-                        </div>
-                    )}
+                        </Tooltip>
+                    </div>
                 </div>
             </Modal>
         </ModalContainer>
