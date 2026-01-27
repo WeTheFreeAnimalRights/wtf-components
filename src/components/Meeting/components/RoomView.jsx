@@ -2,9 +2,17 @@ import { ParticipantView } from './ParticipantView';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { Spinner } from '../../Spinner';
 import { ErrorBoundary } from '../../ErrorBoundary';
+import { Progress } from '../../../_shadcn/components/progress';
 import { cn } from '_/lib/utils';
 
-export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
+export const RoomView = ({
+    users,
+    currentUser,
+    loadingMessage,
+    className,
+    countdownActive = false,
+    countdownPercent = 0,
+}) => {
     const { t } = useTranslations();
 
     return (
@@ -42,6 +50,12 @@ export const RoomView = ({ users, currentUser, loadingMessage, className }) => {
                         <div className="mt-3 italic text-sm text-muted-foreground">
                             {loadingMessage || t('waiting-for-user')}
                         </div>
+                        {countdownActive && (
+                            <Progress
+                                value={countdownPercent}
+                                className="mt-3 w-56 max-w-full h-1.5"
+                            />
+                        )}
                     </div>
                 </div>
             )}

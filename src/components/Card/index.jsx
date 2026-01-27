@@ -35,6 +35,7 @@ export const Card = forwardRef(
             title = '',
             active,
             activeLabels,
+            showInactive = true,
             description = '',
             headerAction,
             customizer = false,
@@ -92,6 +93,7 @@ export const Card = forwardRef(
                                     className="px-6 py-4 pb-3 pe-4"
                                     active={active}
                                     labels={activeLabels}
+                                    showInactive={showInactive}
                                 >
                                     {pretitle}
                                 </CardActiveTitle>
@@ -122,6 +124,7 @@ export const Card = forwardRef(
                                             <CardActiveTitle
                                                 active={active}
                                                 labels={activeLabels}
+                                                showInactive={showInactive}
                                             >
                                                 {title}
                                             </CardActiveTitle>

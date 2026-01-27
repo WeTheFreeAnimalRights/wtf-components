@@ -24,7 +24,7 @@ export const Combobox = ({
     placeholder,
     searchPlaceholder,
     disabled = false,
-    options = [],
+    options,
     emptyMessage,
     selected: selectedParam,
     onSelect,
@@ -59,7 +59,7 @@ export const Combobox = ({
         searchPlaceholder || t('combo-search-placeholder');
 
     const [searchText, setSearchText] = useState('');
-    const [filteredOptions, setFilteredOptions] = useState(options);
+    const [filteredOptions, setFilteredOptions] = useState(options || []);
 
     const { loading, error, request } = useRequest();
 
@@ -104,7 +104,7 @@ export const Combobox = ({
 
     // If the options change
     useEffect(() => {
-        setFilteredOptions(options);
+        setFilteredOptions(options || []);
         setSearchText('');
     }, [options]);
 

@@ -204,7 +204,9 @@ export const MediaAccessModal = ({
                 cameraOn,
             });
         }
-        if (onClose) onClose();
+        if (onClose) onClose({
+            cameraOn,
+        });
     };
 
     const handleCancel = () => {
@@ -259,7 +261,9 @@ export const MediaAccessModal = ({
         <ModalContainer
             open={open}
             onOpenChange={(value) => {
-                if (!value && value === open && onClose && !canceled) onClose();
+                if (!value && value === open && onClose && !canceled) onClose({
+                    cameraOn,
+                });
             }}
         >
             <Modal
@@ -274,7 +278,7 @@ export const MediaAccessModal = ({
                 <div className="flex flex-col gap-6 max-h-[80vh] overflow-y-auto">
                     <div
                         className={`grid grid-cols-1 ${
-                            children ? 'lg:grid-cols-2' : ''
+                            children ? 'sm:grid-cols-2' : ''
                         } gap-4`}
                     >
                         <div className="relative rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-white overflow-hidden min-h-[320px] flex flex-col items-stretch">

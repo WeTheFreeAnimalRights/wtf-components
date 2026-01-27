@@ -1,6 +1,6 @@
 {
     "name": "@wethefree/components",
-    "version": "1.4.2-t4",
+    "version": "1.4.2-t10",
     "author": "Ciprian Mocanu",
     "license": "ISC",
     "dependencies": {
@@ -8,7 +8,6 @@
         "@dnd-kit/sortable": "^8.0.0",
         "@dnd-kit/utilities": "^3.2.2",
         "@hookform/resolvers": "^3.9.0",
-        "@laravel/echo-react": "^2.2.6",
         "@radix-ui/react-accordion": "^1.2.3",
         "@radix-ui/react-avatar": "^1.1.1",
         "@radix-ui/react-checkbox": "^1.1.1",
@@ -73,6 +72,7 @@
         "dotenv": "^16.5.0",
         "lodash-es": "^4.17.21",
         "prop-types": "^15.8.1",
+        "@laravel/echo-react": "^2.2.6",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "valibot": "^1.1.0",
@@ -113,6 +113,7 @@
         "@testing-library/jest-dom": "^6.6.3",
         "@videosdk.live/react-sdk": "^0.3.4",
         "@vitejs/plugin-react": "^4.4.1",
+        "@laravel/echo-react": "^2.2.6",
         "autoprefixer": "^10.4.21",
         "babel-jest": "^29.7.0",
         "babel-plugin-module-resolver": "^5.0.2",

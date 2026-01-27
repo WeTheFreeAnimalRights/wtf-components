@@ -13,7 +13,7 @@ const readEnvConfig = () => {
         VITE_REVERB_HOST,
         VITE_REVERB_PORT,
         VITE_REVERB_SCHEME,
-        VITE_PRIVATE_API_BASE = '',
+        VITE_REVERB_AUTH_ENDPOINT,
     } = import.meta.env;
 
     return {
@@ -21,7 +21,7 @@ const readEnvConfig = () => {
         wsHost: VITE_REVERB_HOST,
         wsPort: VITE_REVERB_PORT,
         wssPort: VITE_REVERB_PORT,
-        authEndpoint: `${VITE_PRIVATE_API_BASE}/../broadcasting/auth`,
+        authEndpoint: VITE_REVERB_AUTH_ENDPOINT,
         forceTLS: VITE_REVERB_SCHEME === 'https',
     };
 };

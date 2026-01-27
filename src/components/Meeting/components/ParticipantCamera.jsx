@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { isString } from 'lodash-es';
 import { useMeeting } from '../hooks/useMeeting';
 import { ParticipantNoCamera } from './ParticipantNoCamera';
 
 export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
     const ref = useRef(null);
     const meetingClosedRef = useRef(false);
-    const { meeting } = useMeeting();
+    const { meeting, setMeeting } = useMeeting();
     const { client, camOn } = meeting;
 
     const participant = useMemo(() => client.getUser(id), [client, id]);
@@ -22,13 +23,26 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
         const onUserUpdated = () => {
             const p = client.getUser(id);
             if (p) {
-                setVideoOn(!!p.bVideoOn);
+                const on = !!p.bVideoOn;
+                setVideoOn(on);
+                if (currentUser?.userId === id && meeting.camOn !== on) {
+                    setMeeting('camOn', on);
+                }
             }
         };
 
         const onVideoActiveChange = ({ userId, state }) => {
             if (userId === id) {
-                setVideoOn(state === 'Active');
+                const s = isString(state) ? state.toLowerCase() : state;
+                const on =
+                    s === 'on' ||
+                    s === 'start' ||
+                    s === 'active' ||
+                    s === true;
+                setVideoOn(on);
+                if (currentUser?.userId === id && meeting.camOn !== on) {
+                    setMeeting('camOn', on);
+                }
             }
         };
 
@@ -39,7 +53,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
             client.off('user-updated', onUserUpdated);
             client.off('video-active-change', onVideoActiveChange);
         };
-    }, [client, id]);
+    }, [client, currentUser?.userId, id, meeting.camOn, setMeeting]);
 
     // Start local AV if this tile is the local user and toggles say so
     useEffect(() => {
@@ -49,6 +63,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
                 if (meeting.camOn) {
                     try {
                         await stream.startVideo();
+                        setVideoOn(true);
                     } catch (err) {
                         console.error('startVideo error:', err);
                         setVideoOn(false);
@@ -76,7 +91,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
     }, [client]);
 
     const isLocalUser = currentUser?.userId === participant?.userId;
-    const shouldShowVideo = videoOn && (!isLocalUser || camOn);
+    const shouldShowVideo = isLocalUser ? camOn : videoOn;
 
     // Attach/detach video DOM when state flips
     useEffect(() => {
@@ -149,7 +164,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
             mounted = false;
             detach();
         };
-    }, [camOn, client, id, shouldShowVideo]);
+    }, [camOn, client, id, shouldShowVideo, videoOn]);
 
     if (shouldShowVideo) {
         return (

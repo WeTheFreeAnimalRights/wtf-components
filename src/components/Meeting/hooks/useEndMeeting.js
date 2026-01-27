@@ -1,3 +1,4 @@
+import { isFunction } from 'lodash-es';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { useRequest } from '../../../hooks/useRequest';
 import { useGlobalState } from '../../../store';
@@ -36,14 +37,19 @@ export const useEndMeeting = () => {
 
     return {
         loading,
-        endMeeting: () => {
+        endMeeting: (onComplete) => {
             // Send a message to all participants that the meeting has ended
             sendMessage(t('chat-left-meeting'), null, 'end', () => {
                 // End the meeting request
-                sendEndRequest();
+                sendEndRequest().finally(() => {
+                    // Leave from the zoom meeting
+                    client.leave();
 
-                // Leave from the zoom meeting
-                client.leave();
+                    // Trigger onComplete
+                    if (isFunction(onComplete)) {
+                        onComplete();
+                    }
+                });
             });
         },
     };

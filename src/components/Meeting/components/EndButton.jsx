@@ -1,4 +1,4 @@
-import { LogOut } from 'lucide-react';
+import { PhoneOff } from 'lucide-react';
 import { Button } from '../../Button';
 import { Tooltip } from '../../Tooltip';
 import { Spinner } from '../../Spinner';
@@ -24,7 +24,7 @@ export const EndButton = () => {
             )}
             <Tooltip message={t('chat-end-tooltip')}>
                 <Button
-                    variant="gray"
+                    variant="destructive"
                     onClick={() => {
                         confirm({
                             title: t('end-meeting-confirm-title'),
@@ -35,7 +35,7 @@ export const EndButton = () => {
                         });
                     }}
                 >
-                    <LogOut className="w-4 h-4" />
+                    <PhoneOff className="w-4 h-4" />
                 </Button>
             </Tooltip>
         </>
