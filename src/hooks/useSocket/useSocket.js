@@ -1,6 +1,5 @@
-import { useEffect, useMemo } from 'react';
-import { useEcho } from '@laravel/echo-react';
-import { configureSocket } from './configureSocket';
+import { useCallback, useMemo, useRef } from 'react';
+import { configureSocket, getPusherClient } from './configureSocket';
 import { camelizeObject } from '../../helpers/camelizeObject';
 
 const visibilityMap = {
@@ -9,19 +8,38 @@ const visibilityMap = {
     public: 'public',
 };
 
+const getChannelName = (channel, visibility) => {
+    if (visibility === 'private') {
+        return `private-${channel}`;
+    }
+
+    if (visibility === 'presence') {
+        return `presence-${channel}`;
+    }
+
+    return channel;
+};
+
 export const useSocket = ({
     channel,
     event,
     callback,
     channelType = 'presence',
-    autoListen = true,
     configOverrides,
 }) => {
-    // Ensure Echo is configured before subscribing
-    configureSocket(configOverrides);
-
     const visibility = visibilityMap[channelType] || 'presence';
-    const events = useMemo(() => event, [event]);
+    const events = useMemo(() => {
+        if (!event) {
+            return [];
+        }
+
+        return Array.isArray(event) ? event : [event];
+    }, [event]);
+    const channelName = useMemo(
+        () => getChannelName(channel, visibility),
+        [channel, visibility]
+    );
+    const channelRef = useRef(null);
 
     const wrappedCallback = useMemo(() => {
         if (!callback) {
@@ -31,31 +49,70 @@ export const useSocket = ({
         return (...args) => callback(...args.map((arg) => camelizeObject(arg)));
     }, [callback]);
 
-    const {
-        listen,
-        stopListening,
-        leave,
-        leaveChannel,
-        channel: getChannel,
-    } = useEcho(
-        channel,
-        events,
-        wrappedCallback,
-        [wrappedCallback],
-        visibility
+    const ensureChannel = useCallback(() => {
+        const client = getPusherClient() || configureSocket(configOverrides);
+        if (!client) {
+            return null;
+        }
+
+        if (!channelRef.current) {
+            channelRef.current = client.subscribe(channelName);
+        }
+
+        return channelRef.current;
+    }, [channelName, configOverrides]);
+
+    const bindEvents = useCallback(
+        (channelInstance) => {
+            if (!channelInstance || !wrappedCallback) {
+                return;
+            }
+
+            events.forEach((eventName) => {
+                channelInstance.bind(eventName, wrappedCallback);
+            });
+        },
+        [events, wrappedCallback]
     );
 
-    useEffect(() => {
-        if (!autoListen) {
-            stopListening();
+    const unbindEvents = useCallback(
+        (channelInstance) => {
+            if (!channelInstance || !wrappedCallback) {
+                return;
+            }
+
+            events.forEach((eventName) => {
+                channelInstance.unbind(eventName, wrappedCallback);
+            });
+        },
+        [events, wrappedCallback]
+    );
+
+    const listen = useCallback(() => {
+        const channelInstance = ensureChannel();
+        bindEvents(channelInstance);
+    }, [bindEvents, ensureChannel]);
+
+    const stopListening = useCallback(() => {
+        unbindEvents(channelRef.current);
+    }, [unbindEvents]);
+
+    const leave = useCallback(() => {
+        const client = getPusherClient();
+        if (!client || !channelRef.current) {
+            return;
         }
-    }, [autoListen, stopListening]);
+
+        unbindEvents(channelRef.current);
+        client.unsubscribe(channelName);
+        channelRef.current = null;
+    }, [channelName, unbindEvents]);
 
     return {
         listen,
         stopListening,
         leave,
-        leaveChannel,
-        channel: getChannel,
+        leaveChannel: leave,
+        channel: () => channelRef.current,
     };
 };

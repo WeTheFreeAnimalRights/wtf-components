@@ -1,7 +1,8 @@
-import { configureEcho } from '@laravel/echo-react';
+import Pusher from 'pusher-js';
 import { getCookie } from '../../helpers/fetchRequest/getCookie';
 
 let socketConfigured = false;
+let pusherClient = null;
 
 const readEnvConfig = () => {
     if (typeof import.meta === 'undefined' || !import.meta.env) {
@@ -32,9 +33,7 @@ export const buildSocketConfig = (config = {}) => {
         typeof document === 'undefined' ? '' : getCookie('XSRF-TOKEN');
 
     const merged = {
-        broadcaster: 'reverb',
         cluster: '',
-        encrypted: true,
         disableStats: true,
         auth: {
             headers: {
@@ -69,14 +68,15 @@ export const buildSocketConfig = (config = {}) => {
 
 export const configureSocket = (config = {}) => {
     if (socketConfigured || typeof window === 'undefined') {
-        return;
+        return pusherClient;
     }
 
     const mergedConfig = buildSocketConfig(config);
     const authOverrides = config.auth || {};
+    const { key, ...options } = mergedConfig;
 
-    configureEcho({
-        ...mergedConfig,
+    pusherClient = new Pusher(key, {
+        ...options,
         auth: {
             ...mergedConfig.auth,
             ...authOverrides,
@@ -88,4 +88,8 @@ export const configureSocket = (config = {}) => {
     });
 
     socketConfigured = true;
+
+    return pusherClient;
 };
+
+export const getPusherClient = () => pusherClient;
