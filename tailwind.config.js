@@ -4,7 +4,7 @@ export default {
     content: ['./src/**/*.{js,jsx}'],
     safelist: [
         {
-            pattern: /(min-h|min-w|max-w|w|h|aspect)-.+/,
+            pattern: /(min-h|min-w|max-w|w|h|aspect|bg-cyan)-.+/,
         },
     ],
     prefix: '',

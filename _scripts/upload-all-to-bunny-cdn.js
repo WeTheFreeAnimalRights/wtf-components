@@ -110,7 +110,7 @@ const deleteCDNFile = async (cdnData, filePath) => {
     if (response.ok) {
         console.log(`🗑️ Deleted: ${filePath}`);
     } else {
-        throw new Error(`Failed to delete ${filePath}: ${response.statusText}`);
+        console.error(`Failed to delete ${filePath}: ${response.statusText}`);
     }
 };
 

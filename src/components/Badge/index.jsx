@@ -35,6 +35,7 @@ Badge.propTypes = {
         'cyan',
         'pink',
         'gray',
+        'blurred',
     ]),
 
     /**

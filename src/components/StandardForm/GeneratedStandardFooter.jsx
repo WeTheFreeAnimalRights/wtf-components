@@ -16,6 +16,7 @@ export const GeneratedStandardFooter = ({
     disabledMessage,
 
     submitButtonClassName,
+    submitButtonVariant = 'default',
     cancelButtonClassName,
     cancelButtonVariant = 'secondary',
     className,
@@ -36,7 +37,7 @@ export const GeneratedStandardFooter = ({
                 )}
                 <Button
                     type="submit"
-                    variant={submitted ? 'simple' : 'default'}
+                    variant={submitted ? 'simple' : submitButtonVariant}
                     className={cn(
                         'w-full sm:w-auto mt-8',
                         submitButtonClassName
@@ -86,7 +87,7 @@ export const GeneratedStandardFooter = ({
                 {!buttonsReverse && cancelButton}
                 <Button
                     type="submit"
-                    variant={submitted ? 'simple' : 'default'}
+                    variant={submitted ? 'simple' : submitButtonVariant}
                     className={cn(
                         'w-full flex-grow basis-0 sm:w-auto sm:grow-0',
                         submitButtonClassName

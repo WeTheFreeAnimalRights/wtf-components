@@ -24,6 +24,7 @@ const badgeVariants = cva(
                 pink: `border-transparent ${colors.pink}`,
                 gray: `border-transparent ${colors.gray}`,
                 outline: 'text-foreground',
+                blurred: 'border border-white rounded-md py-1.5 px-3 text-sm text-white backdrop-blur-md bg-black/30',
             },
         },
         defaultVariants: {},

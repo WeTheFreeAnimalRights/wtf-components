@@ -306,6 +306,9 @@ export { handleGuardedNavigation } from './helpers/handleGuardedNavigation';
 export { formatDate } from './helpers/formatDate';
 export { forcePusherXHR } from './helpers/forcePusherXHR';
 export { playAudio } from './helpers/playAudio';
+export { reorderByIds } from './helpers/reorderByIds';
+export { scrollToSection } from './helpers/scrollToSection';
+export { sharePage } from './helpers/sharePage';
 
 // Hooks
 export { useListingParams } from './hooks/useListingParams';

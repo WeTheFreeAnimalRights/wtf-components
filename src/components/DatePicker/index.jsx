@@ -23,6 +23,7 @@ export const DatePicker = forwardRef(
             formControl = false,
             clearable = false,
             showTime = false,
+            mode = 'single',
             ...props
         },
         ref
@@ -90,7 +91,7 @@ export const DatePicker = forwardRef(
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
                     <Calendar
-                        mode="single"
+                        mode={mode}
                         selected={new Date(value)}
                         onSelect={(newValue) => {
                             if (!showTime) {

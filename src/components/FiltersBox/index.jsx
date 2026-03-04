@@ -11,7 +11,7 @@ import { FiltersBoxFooter } from './FiltersBoxFooter';
 import { getAppliedFiltersCount } from '../../helpers/getAppliedFiltersCount';
 import { getSchema } from '../StandardForm/helpers/getSchema';
 
-export const FiltersBox = ({ children, className, onApplied }) => {
+export const FiltersBox = ({ children, className, onApplied, showCount = true, label }) => {
     const { t } = useTranslations();
 
     // Are the filters open
@@ -29,8 +29,8 @@ export const FiltersBox = ({ children, className, onApplied }) => {
             <PopoverTrigger asChild>
                 <Button variant="outline" className={className}>
                     <Filter className="w-4 h-4 me-2" />
-                    {t('filters-box-title')}
-                    {filtersCount > 0 && (
+                    {label || t('filters-box-title')}
+                    {showCount && filtersCount > 0 && (
                         <Badge variant="simple" className="ms-2">
                             {filtersCount}
                         </Badge>

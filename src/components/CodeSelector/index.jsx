@@ -10,11 +10,13 @@ import { Spinner } from '../Spinner';
 import { Alert } from '../Alert';
 import { CodeInput } from '../CodeInput';
 import { Button } from '../Button';
+import { cn } from '_/lib/utils';
 
 export const CodeSelector = ({
     className = '',
     onCodeSelect,
     platform = '3movies',
+    autoTheme = false,
 }) => {
     // Code related things
     const { code, selected, setCode, defaultCode } = useCode();
@@ -109,7 +111,7 @@ export const CodeSelector = ({
             <ModalTrigger>
                 <button
                     type="button"
-                    className={`hidden bg-gray-700 hover:bg-gray-500 sm:flex flex-row items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors group ${className}`}
+                    className={cn(`hidden sm:flex flex-row items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors group`, autoTheme ? 'bg-gray-100 hover:bg-gray-50 text-gray-300 hover:text-gray-100 dark:bg-gray-700 dark:hover:bg-gray-500' : 'bg-gray-700 hover:bg-gray-500 text-gray-300 hover:text-gray-100', className)}
                     onClick={() => setModalVisible(true)}
                     title={
                         code.empty

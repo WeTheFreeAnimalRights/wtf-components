@@ -36,6 +36,7 @@ export const GeneratedStandardForm = ({
     footerCancelButtonVariant,
     footerClassName,
     footerButtonsReverse = false,
+    footerSubmitButtonVariant = 'default',
     toastMessage,
     onAllDone,
     showError = true,
@@ -128,6 +129,7 @@ export const GeneratedStandardForm = ({
                     className={footerClassName}
                     buttonsReverse={footerButtonsReverse}
                     submitButtonClassName={footerSubmitButtonClassName}
+                    submitButtonVariant={footerSubmitButtonVariant}
                     cancelButtonClassName={footerCancelButtonClassName}
                     cancelButtonVariant={footerCancelButtonVariant}
                 />

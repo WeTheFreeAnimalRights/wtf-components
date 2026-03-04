@@ -25,6 +25,8 @@ const buttonVariants = cva(
                 'wtf-pink':
                     'bg-wtf-pink text-white hover:bg-wtf-pink/90 rounded-full',
                 gray: `${colors['gray']} hover:bg-gray-100/80 dark:hover:bg-gray-700/80`,
+                cyan: `bg-cyan-400 hover:bg-cyan-500 dark:bg-cyan-600 text-white dark:hover:bg-cyan-300 dark:hover:text-cyan-900`,
+                'cyan-outline': 'border border-cyan-500 dark:border-cyan-600 bg-transparent hover:bg-cyan-500 dark:hover:bg-cyan-600 text-cyan-500 hover:text-white dark:hover:text-black',
             },
             size: {
                 default: 'h-10 px-4 py-2',
