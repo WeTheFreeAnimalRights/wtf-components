@@ -8,7 +8,8 @@ import { useSendMessage } from '../hooks/useSendMessage';
 
 export const useEndMeeting = () => {
     const { t } = useTranslations();
-    const { meeting } = useMeeting();
+    const meetingContext = useMeeting() || {};
+    const meeting = meetingContext.meeting || {};
     const { client } = meeting;
 
     // To be used to send the chat message
@@ -18,6 +19,10 @@ export const useEndMeeting = () => {
     const [currentMeeting] = useGlobalState(currentMeetingState);
     const { loading, request } = useRequest();
     const sendEndRequest = async () => {
+        if (!currentMeeting?.id || !currentMeeting?.meetingId) {
+            return undefined;
+        }
+
         return await request(
             {
                 url: 'chats',
@@ -43,7 +48,7 @@ export const useEndMeeting = () => {
                 // End the meeting request
                 sendEndRequest().finally(() => {
                     // Leave from the zoom meeting
-                    client.leave();
+                    client?.leave?.();
 
                     // Trigger onComplete
                     if (isFunction(onComplete)) {

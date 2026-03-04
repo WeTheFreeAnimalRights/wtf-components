@@ -12,12 +12,16 @@ export const Confirm = () => {
     return (
         <ModalContainer
             open={Boolean(confirmObj.visible)}
-            onOpenChange={(value) =>
+            onOpenChange={(value) => {
+                if (!value && confirmObj.hideCancel === true) {
+                    return;
+                }
+
                 setConfirmObj({
                     ...confirmObj,
                     visible: value,
-                })
-            }
+                });
+            }}
         >
             <Modal
                 title={confirmObj.title}

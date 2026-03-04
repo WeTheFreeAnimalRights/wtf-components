@@ -92,7 +92,6 @@ export const useSocket = ({
 
     const listen = useCallback(() => {
         const channelInstance = ensureChannel();
-        console.log('>>channelInstance', channelInstance);
         bindEvents(channelInstance);
     }, [bindEvents, ensureChannel]);
 

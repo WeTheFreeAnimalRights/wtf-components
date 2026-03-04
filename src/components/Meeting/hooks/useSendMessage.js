@@ -6,15 +6,20 @@ import { currentMeetingState } from '../../../appState';
 import { useMeeting } from './useMeeting';
 
 export const useSendMessage = ({ isActivist = false } = {}) => {
-    const { meeting } = useMeeting();
+    const meetingContext = useMeeting() || {};
+    const meeting = meetingContext.meeting || {};
     const { client } = meeting;
-    const chat = client.getChatClient();
+    const chat = client?.getChatClient?.();
 
     // Send a request to BE that the meeting was ended
     const [currentMeeting] = useGlobalState(currentMeetingState);
     const { loading, request } = useRequest();
-    const currentUser = client.getCurrentUserInfo();
+    const currentUser = client?.getCurrentUserInfo?.();
     const sendRequest = async ({ message, date, resource, type }) => {
+        if (!currentMeeting?.id || !currentMeeting?.meetingId) {
+            return undefined;
+        }
+
         return await request(
             {
                 url: 'chats',
@@ -61,7 +66,9 @@ export const useSendMessage = ({ isActivist = false } = {}) => {
                 resource,
             };
             try {
-                await chat.sendToAll(JSON.stringify(payload));
+                if (chat?.sendToAll) {
+                    await chat.sendToAll(JSON.stringify(payload));
+                }
 
                 // Not the end message
                 if (type !== 'end') {

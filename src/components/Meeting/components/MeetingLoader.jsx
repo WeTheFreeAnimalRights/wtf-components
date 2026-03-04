@@ -2,31 +2,31 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useTranslations } from '../../../hooks/useTranslations';
 import { buildSocketConfig } from '../../../hooks/useSocket';
+import { useCountdown } from '../../../hooks/useCountdown';
 import { useChatSocket } from '../hooks/useChatSocket';
+import { useEndMeeting } from '../hooks/useEndMeeting';
+import { useConfirm } from '../../Confirm';
 import { MediaAccessModal } from './MediaAccessModal';
 import { PreloaderStates } from '../../Preloader/PreloaderStates';
 import { getStatusFromMeeting } from '../helpers/getStatusFromMeeting';
-import { useCountdown } from '../../../hooks/useCountdown';
-import { Progress } from '../../../_shadcn/components/progress';
-import { Button } from '../../Button';
 
-const NO_ACTIVISTS_COUNTDOWN_SECONDS = 30;
+const NO_ACTIVIST_TIMEOUT_SECONDS = 60 * 5; // 5 minutes
 
 export const MeetingLoader = ({
     item,
     children,
     className,
     cancelUrl,
-    resourcesUrl,
     socketConfig,
+    onStatusChange,
 }) => {
     const { t } = useTranslations();
+    const { confirm } = useConfirm();
+    const { endMeeting } = useEndMeeting();
 
     const [status, setStatus] = useState(getStatusFromMeeting(item));
     const [activist, setActivist] = useState(item.activist || {});
     const [mediaPermissionsChecked, setMediaPermissionsChecked] =
-        useState(false);
-    const [noActivistsCountdownDone, setNoActivistsCountdownDone] =
         useState(false);
     const [, navigate] = useLocation();
 
@@ -34,6 +34,8 @@ export const MeetingLoader = ({
         () => buildSocketConfig(socketConfig),
         [socketConfig]
     );
+    const shouldRunNoActivistCountdown =
+        mediaPermissionsChecked && status !== 'entered';
 
     const { listen, leave } = useChatSocket({
         meeting: item,
@@ -53,33 +55,51 @@ export const MeetingLoader = ({
     }, [listen, leave]);
 
     const {
-        percent: noActivistsCountdownPercent,
-        start: startNoActivistsCountdown,
-        end: endNoActivistsCountdown,
-    } = useCountdown(NO_ACTIVISTS_COUNTDOWN_SECONDS, () => {
-        setNoActivistsCountdownDone(true);
-    });
-
-    useEffect(() => {
-        if (status !== 'no_activists_available') {
-            endNoActivistsCountdown();
-            setNoActivistsCountdownDone(false);
+        start: startNoActivistCountdown,
+        end: endNoActivistCountdown,
+    } = useCountdown(NO_ACTIVIST_TIMEOUT_SECONDS, () => {
+        if (!shouldRunNoActivistCountdown) {
             return;
         }
 
-        setNoActivistsCountdownDone(false);
-        startNoActivistsCountdown();
-    }, [endNoActivistsCountdown, startNoActivistsCountdown, status]);
+        confirm({
+            title: t('end-meeting-confirm-title'),
+            message: t('end-meeting-confirm-message'),
+            hideCancel: true,
+            callback: () => {
+                endMeeting();
+            },
+        });
+    });
 
-    const tooltipMessage = t(`tooltip-continue-${status}`, [
-        activist?.name,
-        status,
+    useEffect(() => {
+        if (!shouldRunNoActivistCountdown) {
+            endNoActivistCountdown();
+            return;
+        }
+
+        startNoActivistCountdown();
+    }, [
+        endNoActivistCountdown,
+        shouldRunNoActivistCountdown,
+        startNoActivistCountdown,
     ]);
+
+    useEffect(() => {
+        if (!onStatusChange) {
+            return;
+        }
+
+        onStatusChange(status, {
+            activist,
+            item,
+        });
+    }, [activist, item, onStatusChange, status]);
 
     return (
         <>
             <MediaAccessModal
-                open={status !== 'loading' && !mediaPermissionsChecked}
+                open={!mediaPermissionsChecked}
                 onClose={() => {
                     setMediaPermissionsChecked(true);
                 }}
@@ -90,35 +110,13 @@ export const MeetingLoader = ({
                           }
                         : undefined
                 }
-                continueDisabled={status !== 'entered'}
-                continueTooltip={tooltipMessage}
             >
                 <div className="text-sm text-center">
                     <div>{t(`meeting-status-${status}`, [activist?.name])}</div>
-                    {status === 'no_activists_available' && (
-                        <div className="mt-3 flex flex-col items-center gap-3">
-                            {!noActivistsCountdownDone && resourcesUrl && (
-                                <Progress
-                                    value={noActivistsCountdownPercent}
-                                    className="w-56 max-w-full h-1.5"
-                                />
-                            )}
-                            {noActivistsCountdownDone && resourcesUrl && (
-                                <Button
-                                    variant="simple"
-                                    onClick={() => {
-                                        navigate(resourcesUrl);
-                                    }}
-                                >
-                                    {t('view-resources')}
-                                </Button>
-                            )}
-                        </div>
-                    )}
                 </div>
             </MediaAccessModal>
             <PreloaderStates
-                loading={status === 'loading' || !mediaPermissionsChecked}
+                loading={!mediaPermissionsChecked}
                 loadingMessage={t('waiting-for-activist')}
                 className={className}
             >
