@@ -8,4 +8,4 @@ export const getStatusFromMeeting = (item) => {
     }
 
     return 'loading';
-}
+};

@@ -11,7 +11,13 @@ import { FiltersBoxFooter } from './FiltersBoxFooter';
 import { getAppliedFiltersCount } from '../../helpers/getAppliedFiltersCount';
 import { getSchema } from '../StandardForm/helpers/getSchema';
 
-export const FiltersBox = ({ children, className, onApplied, showCount = true, label }) => {
+export const FiltersBox = ({
+    children,
+    className,
+    onApplied,
+    showCount = true,
+    label,
+}) => {
     const { t } = useTranslations();
 
     // Are the filters open

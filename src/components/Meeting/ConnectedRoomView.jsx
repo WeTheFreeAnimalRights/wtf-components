@@ -199,9 +199,7 @@ export const ConnectedRoomView = ({
                 currentUser={current}
                 emptyMessage={emptyMessage}
                 loadingMessage={
-                    countdownActive
-                        ? endingMessage
-                        : loadingMessage
+                    countdownActive ? endingMessage : loadingMessage
                 }
                 countdownActive={countdownActive}
                 countdownPercent={countdownPercent}

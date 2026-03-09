@@ -70,7 +70,10 @@ export const useSocket = ({
 
             events.forEach((eventName) => {
                 if (eventName) {
-                    channelInstance.bind(`App\\Events\\${eventName}`, wrappedCallback);
+                    channelInstance.bind(
+                        `App\\Events\\${eventName}`,
+                        wrappedCallback
+                    );
                 }
             });
         },

@@ -1,20 +1,20 @@
-import { isArray, isUndefined } from 'lodash-es';
+import { isArray, isFunction, isUndefined } from 'lodash-es';
 
 export const traverseElements = (
     children,
-    displayNames = [],
+    matcher = () => false,
     callback,
     level = 0
 ) => {
     const handleChild = (child, index = 0) => {
-        if (displayNames.includes(child?.type?.displayName)) {
+        if (isFunction(matcher) && matcher(child)) {
             return callback(child, level, index);
         }
 
         if (child?.props?.children) {
             const result = traverseElements(
                 child.props.children,
-                displayNames,
+                matcher,
                 callback,
                 level + 1
             );

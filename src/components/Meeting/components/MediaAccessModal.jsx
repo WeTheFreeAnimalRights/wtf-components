@@ -204,9 +204,10 @@ export const MediaAccessModal = ({
                 cameraOn,
             });
         }
-        if (onClose) onClose({
-            cameraOn,
-        });
+        if (onClose)
+            onClose({
+                cameraOn,
+            });
     };
 
     const handleCancel = () => {
@@ -261,9 +262,10 @@ export const MediaAccessModal = ({
         <ModalContainer
             open={open}
             onOpenChange={(value) => {
-                if (!value && value === open && onClose && !canceled) onClose({
-                    cameraOn,
-                });
+                if (!value && value === open && onClose && !canceled)
+                    onClose({
+                        cameraOn,
+                    });
             }}
         >
             <Modal

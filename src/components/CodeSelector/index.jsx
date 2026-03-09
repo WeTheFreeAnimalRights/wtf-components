@@ -111,7 +111,13 @@ export const CodeSelector = ({
             <ModalTrigger>
                 <button
                     type="button"
-                    className={cn(`hidden sm:flex flex-row items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors group`, autoTheme ? 'bg-gray-100 hover:bg-gray-50 text-gray-300 hover:text-gray-100 dark:bg-gray-700 dark:hover:bg-gray-500' : 'bg-gray-700 hover:bg-gray-500 text-gray-300 hover:text-gray-100', className)}
+                    className={cn(
+                        `hidden sm:flex flex-row items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors group`,
+                        autoTheme
+                            ? 'bg-gray-100 hover:bg-gray-50 text-gray-300 hover:text-gray-100 dark:bg-gray-700 dark:hover:bg-gray-500'
+                            : 'bg-gray-700 hover:bg-gray-500 text-gray-300 hover:text-gray-100',
+                        className
+                    )}
                     onClick={() => setModalVisible(true)}
                     title={
                         code.empty

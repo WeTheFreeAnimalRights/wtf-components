@@ -14,7 +14,7 @@ export const FiltersBoxFooter = ({ loading }) => {
                 disabled={loading}
                 variant="secondary"
                 onClick={() => {
-                    standardForm.reset();
+                    standardForm.form.reset();
                 }}
             >
                 {t('clear-all')}

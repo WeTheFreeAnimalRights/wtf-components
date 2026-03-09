@@ -35,10 +35,7 @@ export const ParticipantCamera = ({ id, animalIndex = 2 }) => {
             if (userId === id) {
                 const s = isString(state) ? state.toLowerCase() : state;
                 const on =
-                    s === 'on' ||
-                    s === 'start' ||
-                    s === 'active' ||
-                    s === true;
+                    s === 'on' || s === 'start' || s === 'active' || s === true;
                 setVideoOn(on);
                 if (currentUser?.userId === id && meeting.camOn !== on) {
                     setMeeting('camOn', on);

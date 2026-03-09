@@ -54,23 +54,21 @@ export const MeetingLoader = ({
         };
     }, [listen, leave]);
 
-    const {
-        start: startNoActivistCountdown,
-        end: endNoActivistCountdown,
-    } = useCountdown(NO_ACTIVIST_TIMEOUT_SECONDS, () => {
-        if (!shouldRunNoActivistCountdown) {
-            return;
-        }
+    const { start: startNoActivistCountdown, end: endNoActivistCountdown } =
+        useCountdown(NO_ACTIVIST_TIMEOUT_SECONDS, () => {
+            if (!shouldRunNoActivistCountdown) {
+                return;
+            }
 
-        confirm({
-            title: t('end-meeting-confirm-title'),
-            message: t('end-meeting-confirm-message'),
-            hideCancel: true,
-            callback: () => {
-                endMeeting();
-            },
+            confirm({
+                title: t('end-meeting-confirm-title'),
+                message: t('end-meeting-confirm-message'),
+                hideCancel: true,
+                callback: () => {
+                    endMeeting();
+                },
+            });
         });
-    });
 
     useEffect(() => {
         if (!shouldRunNoActivistCountdown) {

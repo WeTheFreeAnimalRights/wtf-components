@@ -34,7 +34,7 @@ export const FormFieldRadioGroup = ({
     ...props
 }) => {
     const standardForm = useContext(StandardFormContext);
-    const form = formParam || standardForm.instance;
+    const form = formParam || standardForm.form.instance;
 
     return (
         <FormField

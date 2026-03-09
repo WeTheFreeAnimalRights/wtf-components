@@ -7,7 +7,6 @@ import { GeneratedStandardFooter } from './GeneratedStandardFooter';
 import { useTranslations } from '../../hooks/useTranslations';
 import { useStandardForm } from '../../hooks/useStandardForm';
 import { getSchema } from './helpers/getSchema';
-import { parseChildren } from './helpers/parseChildren';
 
 // Shad CN
 import { cn } from '_/lib/utils';
@@ -20,7 +19,7 @@ export const GeneratedStandardForm = ({
     onLoading,
     options,
     footer,
-    children: componentChildren,
+    children,
     className,
 
     formRef,
@@ -62,7 +61,7 @@ export const GeneratedStandardForm = ({
     }, [submitted]);
 
     // Parse the children
-    const { schema } = getSchema(componentChildren);
+    const { schema } = getSchema(children);
 
     // Standard form
     const { error, loading, form } = useStandardForm({
@@ -88,11 +87,10 @@ export const GeneratedStandardForm = ({
         options,
     });
 
-    const children = parseChildren(componentChildren, { error, loading, form });
-
     return (
         <StandardForm
             form={form}
+            loading={loading}
             className={cn('relative', className)}
             formRef={formRef}
         >
