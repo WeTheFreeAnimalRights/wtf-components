@@ -1,5 +1,5 @@
-import { create } from '@storybook/theming/create';
-import { styled } from '@storybook/theming';
+import { create } from 'storybook/theming/create';
+import { styled } from 'storybook/theming';
 
 export default create({
     base: 'dark',

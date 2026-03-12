@@ -1,4 +1,4 @@
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { DataTable, Column, Filters, Order, Search } from './index';
 import { Confirm } from '../Confirm';
 import { transformServerData } from '../../helpers/transformServerData';

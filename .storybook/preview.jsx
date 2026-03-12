@@ -4,6 +4,12 @@ import { AppStateProvider } from '../src/store/AppState';
 
 export default {
     tags: [],
+
+    initialGlobals: {
+        backgrounds: {
+            value: 'light'
+        }
+    }
 };
 
 const getBackgroundClass = (background) => {
@@ -12,11 +18,10 @@ const getBackgroundClass = (background) => {
 
 export const parameters = {
     backgrounds: {
-        default: 'light',
-        values: [
-            { name: 'light', value: '#ffffff' },
-            { name: 'dark', value: '#000000' },
-        ],
+        options: {
+            light: { name: 'light', value: '#ffffff' },
+            dark: { name: 'dark', value: '#000000' }
+        }
     },
     controls: {
         matchers: {
