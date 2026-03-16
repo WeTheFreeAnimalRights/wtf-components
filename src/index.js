@@ -51,6 +51,7 @@ export { Resource } from './components/Resource';
 export { AnimalIcon } from './components/AnimalIcon';
 export { Image } from './components/Image';
 export { CodeSelector } from './components/CodeSelector';
+export { ChatBot } from './components/ChatBot';
 export {
     MeetingContainer,
     RoomView,
@@ -342,6 +343,10 @@ export { fetchRequest } from './helpers/fetchRequest';
 export { setupApi } from './helpers/fetchRequest/api/setupApi';
 export { getCookie } from './helpers/fetchRequest/getCookie';
 export { getPublicApiEndpoints } from './helpers/fetchRequest/api/getPublicApiEndpoints';
+export { getChatBotConversationRequestObject } from './helpers/chatBot/getChatBotConversationRequestObject';
+export { getChatBotConversationMessagesRequestObject } from './helpers/chatBot/getChatBotConversationMessagesRequestObject';
+export { getEndChatBotConversationRequestObject } from './helpers/chatBot/getEndChatBotConversationRequestObject';
+export { getSendChatBotConversationMessageRequestObject } from './helpers/chatBot/getSendChatBotConversationMessageRequestObject';
 
 // Base CSS
 import './base.css';

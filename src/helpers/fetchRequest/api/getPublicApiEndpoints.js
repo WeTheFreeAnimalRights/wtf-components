@@ -60,5 +60,10 @@ export const getPublicApiEndpoints = () => {
          * Newsletter options
          */
         newsletterOptions: '/newsletter-lists',
+
+        /**
+         * Chatbot conversations
+         */
+        chatBotConversations: '/chatbot-conversations',
     };
 };

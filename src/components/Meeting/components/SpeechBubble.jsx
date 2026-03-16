@@ -5,12 +5,15 @@ import { useFormatDate } from '../../../hooks/useFormatDate';
 import { useTheme } from '../../../hooks/useTheme';
 import { cn } from '_/lib/utils';
 
+const COLLAPSED_MESSAGE_HEIGHT = 80;
+
 export const SpeechBubble = ({
     children,
     received = false,
     tail = true,
     author = false,
     timestamp = false,
+    truncate = true,
     className,
     item,
 }) => {
@@ -22,8 +25,9 @@ export const SpeechBubble = ({
 
     useEffect(() => {
         if (textRef.current) {
-            setIsOverflowing(textRef.current.scrollHeight > 500);
-            // Adjusted threshold (80px = ~4-5 lines)
+            setIsOverflowing(
+                textRef.current.scrollHeight > COLLAPSED_MESSAGE_HEIGHT
+            );
         }
     }, [children]);
 
@@ -53,13 +57,15 @@ export const SpeechBubble = ({
                     ref={textRef}
                     className={cn(
                         'relative whitespace-pre-wrap break-words inline-block w-full transition-all',
-                        expanded ? 'max-h-full' : 'max-h-20 overflow-hidden',
+                        !truncate || expanded
+                            ? 'max-h-full'
+                            : 'max-h-20 overflow-hidden',
                         item.type === 'end' && 'italic text-muted-foreground'
                     )}
                 >
                     {children}
 
-                    {(expanded || !isOverflowing) && timestamp && (
+                    {(!truncate || expanded || !isOverflowing) && timestamp && (
                         <span
                             className={cn(
                                 'inline-flex items-end float-end text-xs opacity-75 ms-2 mt-1 whitespace-nowrap',
@@ -102,7 +108,7 @@ export const SpeechBubble = ({
             )}
 
             {/* Read More Button (Only if Text Overflows) */}
-            {!expanded && isOverflowing && (
+            {truncate && !expanded && isOverflowing && (
                 <button
                     onClick={() => setExpanded(true)}
                     className="text-xs text-muted-foreground underline mt-1"
@@ -112,7 +118,7 @@ export const SpeechBubble = ({
             )}
 
             {/* Floating Timestamp (always at bottom-right) */}
-            {!expanded && isOverflowing && timestamp && (
+            {truncate && !expanded && isOverflowing && timestamp && (
                 <span className="inline-flex items-end float-end text-xs text-muted-foreground opacity-75 ms-2 mt-1 whitespace-nowrap">
                     {formattedDate}
                 </span>

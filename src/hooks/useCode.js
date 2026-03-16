@@ -20,7 +20,7 @@ export const useCode = () => {
     }
 
     // Set the code
-    const setCode = (newCode, setLocalStorage = true, ...params) => {
+    const setCode = (newCode, setLocalStorage = true, shouldRedirect = true, prefix, ...params) => {
         const _newCode = newCode || defaultCode;
 
         // Store in app store
@@ -32,12 +32,13 @@ export const useCode = () => {
         }
 
         // Navigate to new url (if needed)
-        if (_newCode.code !== url.code) {
+        if (_newCode.code !== url.code && shouldRedirect) {
             setUrl(
                 {
                     code: _newCode.code,
+                    prefix,
                 },
-                ...params
+                ...params,
             );
         }
     };

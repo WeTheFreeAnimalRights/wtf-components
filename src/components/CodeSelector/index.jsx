@@ -17,6 +17,7 @@ export const CodeSelector = ({
     onCodeSelect,
     platform = '3movies',
     autoTheme = false,
+    setCodeParams = [],
 }) => {
     // Code related things
     const { code, selected, setCode, defaultCode } = useCode();
@@ -70,7 +71,7 @@ export const CodeSelector = ({
 
         // Get the code
         const firstCode = data.data.find(Boolean);
-        setCode(firstCode);
+        setCode(firstCode, ...setCodeParams);
 
         // Hide the modal and reset the form
         setModalVisible(false);
@@ -205,7 +206,7 @@ export const CodeSelector = ({
                                         e.preventDefault();
 
                                         // Set the app store
-                                        setCode(defaultCode);
+                                        setCode(defaultCode, ...setCodeParams);
 
                                         // Hide the modal and reset the form
                                         setModalVisible(false);
