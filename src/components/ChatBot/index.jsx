@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { trim } from 'lodash-es';
-import { CornerDownLeft, PhoneOff } from 'lucide-react';
+import { CornerDownLeft } from 'lucide-react';
 import { cn } from '_/lib/utils';
 import { useIsMobile } from '_/hooks/use-mobile';
 import { AutosizeTextarea } from '_/components/autosize-textarea';
@@ -14,8 +14,6 @@ import { Empty } from '../Empty';
 import { Spinner } from '../Spinner';
 import { SpeechBubble } from '../Meeting/components/SpeechBubble';
 import { useTranslations } from '../../hooks/useTranslations';
-import { Tooltip } from '../Tooltip';
-import { useConfirm } from '../Confirm';
 import { Resource } from '../Resource';
 import { getResourceUrl } from '../../helpers/getResourceUrl';
 import { groupChatBotMessages } from './helpers/groupChatBotMessages';
@@ -74,7 +72,6 @@ export const ChatBot = ({
         endingConversation,
     } = useChatBot();
     const { t, currentLanguage } = useTranslations();
-    const { confirm } = useConfirm();
     const [currentMessage, setCurrentMessage] = useState('');
     const [conversationEnded, setConversationEnded] = useState(false);
     const [endedConversationResources, setEndedConversationResources] =
@@ -104,6 +101,7 @@ export const ChatBot = ({
         }
 
         const startKey = JSON.stringify([name, email, locale, platform]);
+        console.log('>>startKey', startKey, startedRef.current);
         if (startedRef.current === startKey) {
             return;
         }
@@ -212,6 +210,8 @@ export const ChatBot = ({
             }
         );
     };
+
+    console.log('>>conversationEnded', conversationEnded, loading && groupedMessages.length >= 0, error && !conversationId);
 
     if (!visible) {
         return null;
@@ -362,7 +362,7 @@ export const ChatBot = ({
                                     type: 'message',
                                 }}
                             >
-                                <span className="inline-flex items-center gap-2">
+                                <span className="inline-flex items-center gap-2 italic text-muted-foreground">
                                     <Spinner className="w-4 h-4" />
                                     {thinkingLabel}
                                 </span>
