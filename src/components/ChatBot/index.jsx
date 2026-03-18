@@ -49,6 +49,7 @@ export const ChatBot = ({
     email,
     platform,
     visible = true,
+    endRequested = false,
     className,
     placeholder,
     emptyTitle,
@@ -57,6 +58,7 @@ export const ChatBot = ({
     assistantLabel,
     autoStart = true,
     onConversationStarted,
+    onConversationStartError,
     onMessageSent,
 }) => {
     const {
@@ -80,6 +82,7 @@ export const ChatBot = ({
     const inputRef = useRef(null);
     const startedRef = useRef('');
     const previousVisibleRef = useRef(visible);
+    const previousEndRequestedRef = useRef(endRequested);
     const isMobile = useIsMobile();
     const finalPlaceholder = placeholder || t('chatbot-placeholder');
     const finalEmptyTitle = emptyTitle || t('chatbot-empty-title');
@@ -108,8 +111,21 @@ export const ChatBot = ({
         startedRef.current = startKey;
         setConversationEnded(false);
         setEndedConversationResources([]);
-        start({ name, email, locale, platform }, false, onConversationStarted);
-    }, [autoStart, email, locale, name, platform, visible]);
+        start(
+            { name, email, locale, platform },
+            onConversationStartError,
+            onConversationStarted
+        );
+    }, [
+        autoStart,
+        email,
+        locale,
+        name,
+        onConversationStartError,
+        onConversationStarted,
+        platform,
+        visible,
+    ]);
 
     useEffect(() => {
         const becameHidden = previousVisibleRef.current && !visible;
@@ -129,6 +145,31 @@ export const ChatBot = ({
         previousVisibleRef.current = visible;
     }, [
         visible,
+        conversationId,
+        conversationEnded,
+        endingConversation,
+        sharedResources,
+    ]);
+
+    useEffect(() => {
+        const becameEndRequested =
+            !previousEndRequestedRef.current && endRequested;
+
+        if (
+            becameEndRequested &&
+            conversationId &&
+            !conversationEnded &&
+            !endingConversation
+        ) {
+            endConversation(conversationId, false, () => {
+                setConversationEnded(true);
+                setEndedConversationResources(sharedResources);
+            });
+        }
+
+        previousEndRequestedRef.current = endRequested;
+    }, [
+        endRequested,
         conversationId,
         conversationEnded,
         endingConversation,
@@ -343,38 +384,8 @@ export const ChatBot = ({
                         event.preventDefault();
                         submitMessage(currentMessage);
                     }}
-                    className="flex flex-row items-center gap-2 mt-4 relative ps-12 pe-12"
+                    className="flex flex-row items-center gap-2 mt-4 relative pe-12"
                 >
-                    <Tooltip message={t('chatbot-end-tooltip')}>
-                        <Button
-                            variant="destructive"
-                            size="small-icon"
-                            type="button"
-                            className="absolute start-1 bottom-1"
-                            disabled={!conversationId || endingConversation}
-                            onClick={() => {
-                                confirm({
-                                    title: t('chatbot-end-confirm-title'),
-                                    message: t('chatbot-end-confirm-message'),
-                                    callback: () => {
-                                        endConversation(
-                                            conversationId,
-                                            false,
-                                            () => {
-                                                setConversationEnded(true);
-                                                setEndedConversationResources(
-                                                    sharedResources
-                                                );
-                                            }
-                                        );
-                                    },
-                                });
-                            }}
-                        >
-                            <PhoneOff className="w-4 h-4" />
-                        </Button>
-                    </Tooltip>
-
                     <AutosizeTextarea
                         ref={inputRef}
                         className="flex-grow"
@@ -442,6 +453,7 @@ ChatBot.propTypes = {
     email: PropTypes.string,
     platform: PropTypes.string,
     visible: PropTypes.bool,
+    endRequested: PropTypes.bool,
     className: PropTypes.string,
     placeholder: PropTypes.string,
     emptyTitle: PropTypes.string,
@@ -450,5 +462,6 @@ ChatBot.propTypes = {
     assistantLabel: PropTypes.string,
     autoStart: PropTypes.bool,
     onConversationStarted: PropTypes.func,
+    onConversationStartError: PropTypes.func,
     onMessageSent: PropTypes.func,
 };

@@ -55,6 +55,7 @@ Button.propTypes = {
      */
     size: PropTypes.oneOf([
         'default',
+        'xs',
         'sm',
         'lg',
         'icon',
