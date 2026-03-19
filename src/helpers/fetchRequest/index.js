@@ -1,4 +1,4 @@
-import { isFunction, isNull } from 'lodash-es';
+import { each, isFunction, isNull, map } from 'lodash-es';
 import { camelizeObject } from '../camelizeObject';
 import { getEmptyAuthToken } from '../getEmptyAuthToken';
 import { globals } from '../globals';
@@ -60,6 +60,13 @@ export const fetchRequest = async (requestConfig = {}) => {
     // If there's a file to be uploaded, then remove the content type
     if (requestConfig.upload) {
         headers.delete('Content-Type');
+    }
+
+    // If user adds extra headers
+    if (requestConfig.headers) {
+        each(requestConfig.headers, (value, key) => {
+            headers.append(key, value);
+        });
     }
 
     // Fetch

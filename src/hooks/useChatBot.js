@@ -8,6 +8,7 @@ import { getSendChatBotConversationMessageRequestObject } from '../helpers/chatB
 import {
     createLocalChatBotUserMessage,
     getChatBotConversationId,
+    getChatBotConversationToken,
     getChatBotResponseData,
     mergeChatBotResponseMessage,
     normalizeChatBotMessage,
@@ -42,6 +43,17 @@ export const useChatBot = () => {
         error: endConversationError,
         setError: setEndConversationError,
     } = useRequest();
+    const conversationToken = getChatBotConversationToken(conversation);
+
+    const getConversationHeaders = (token = conversationToken) => {
+        if (!token) {
+            return undefined;
+        }
+
+        return {
+            'X-Conversation-Token': token,
+        };
+    };
 
     const start = async (config = {}, onError, onSuccess, onLoading) => {
         setMessages([]);
@@ -53,9 +65,16 @@ export const useChatBot = () => {
             onLoading
         );
         const conversationId = getChatBotConversationId(response);
+        const nextConversationToken = getChatBotConversationToken(response);
 
         if (conversationId) {
-            await fetchMessages(conversationId);
+            await fetchMessages(
+                conversationId,
+                undefined,
+                undefined,
+                undefined,
+                nextConversationToken
+            );
         }
 
         if (typeof onSuccess === 'function') {
@@ -69,7 +88,8 @@ export const useChatBot = () => {
         conversationId = getChatBotConversationId(conversation),
         onError,
         onSuccess,
-        onLoading
+        onLoading,
+        token = conversationToken
     ) => {
         if (!conversationId) {
             return [];
@@ -78,6 +98,7 @@ export const useChatBot = () => {
         const response = await requestMessages(
             getChatBotConversationMessagesRequestObject({
                 conversationId,
+                headers: getConversationHeaders(token),
             }),
             onError,
             (data) => {
@@ -99,7 +120,8 @@ export const useChatBot = () => {
         conversationId = getChatBotConversationId(conversation),
         onError,
         onSuccess,
-        onLoading
+        onLoading,
+        token = conversationToken
     ) => {
         const message = trim(content);
 
@@ -117,6 +139,7 @@ export const useChatBot = () => {
             getSendChatBotConversationMessageRequestObject({
                 conversationId,
                 message,
+                headers: getConversationHeaders(token),
             }),
             (error, request) => {
                 setMessages((currentMessages) =>
@@ -170,7 +193,8 @@ export const useChatBot = () => {
         conversationId = getChatBotConversationId(conversation),
         onError,
         onSuccess,
-        onLoading
+        onLoading,
+        token = conversationToken
     ) => {
         if (!conversationId) {
             return null;
@@ -179,6 +203,7 @@ export const useChatBot = () => {
         const response = await requestEndConversation(
             getEndChatBotConversationRequestObject({
                 conversationId,
+                headers: getConversationHeaders(token),
             }),
             onError,
             (data) => {
@@ -197,6 +222,7 @@ export const useChatBot = () => {
     return {
         conversation,
         conversationId: getChatBotConversationId(conversation),
+        conversationToken,
         messages,
         setMessages,
         start,

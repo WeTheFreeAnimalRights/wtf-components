@@ -101,7 +101,6 @@ export const ChatBot = ({
         }
 
         const startKey = JSON.stringify([name, email, locale, platform]);
-        console.log('>>startKey', startKey, startedRef.current);
         if (startedRef.current === startKey) {
             return;
         }
@@ -210,8 +209,6 @@ export const ChatBot = ({
             }
         );
     };
-
-    console.log('>>conversationEnded', conversationEnded, loading && groupedMessages.length >= 0, error && !conversationId);
 
     if (!visible) {
         return null;

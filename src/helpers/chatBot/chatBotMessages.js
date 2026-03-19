@@ -2,6 +2,10 @@ export const getChatBotConversationId = (conversation) => {
     return conversation?.data?.id || conversation?.id || null;
 };
 
+export const getChatBotConversationToken = (conversation) => {
+    return conversation?.token;
+};
+
 export const getChatBotResponseData = (response) => {
     if (Array.isArray(response)) {
         return response;
