@@ -4,6 +4,7 @@ export const getChatBotConversationRequestObject = ({
     locale,
     platform,
     body = {},
+    analyticsId,
     ...requestConfig
 } = {}) => {
     return {
@@ -15,6 +16,7 @@ export const getChatBotConversationRequestObject = ({
             visitor_email: email,
             locale,
             platform,
+            analytics_event_id: analyticsId,
             ...body,
         },
         ...requestConfig,

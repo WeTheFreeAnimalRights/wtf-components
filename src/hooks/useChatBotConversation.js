@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useRequest } from './useRequest';
 import { getChatBotConversationRequestObject } from '../helpers/chatBot/getChatBotConversationRequestObject';
+import { useAnalytics } from './useAnalytics';
 
 export const useChatBotConversation = () => {
     const [conversation, setConversation] = useState(null);
     const { loading, error, setError, request } = useRequest();
+    const { analytics } = useAnalytics();
 
     const startConversation = async (
         { name, email, locale, platform, body, ...requestConfig } = {},
@@ -19,6 +21,7 @@ export const useChatBotConversation = () => {
                 locale,
                 platform,
                 body,
+                analyticsId: analytics?.visitId || null,
                 ...requestConfig,
             }),
             onError,
