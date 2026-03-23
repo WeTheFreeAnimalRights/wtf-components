@@ -1,3 +1,6 @@
+# This repo is OLD
+Please use [wtf-ui](https://github.com/WeTheFreeAnimalRights/wtf-ui)
+
 ![we the free](https://github.com/WeTheFreeAnimalRights/MyStats.wtf-new/blob/main/public/images/wtf-logo-badge.png?raw=true)
 
 ## WTF Components
